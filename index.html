@@ -1209,6 +1209,458 @@ footer p{
   .ai-help-panel{right:14px;bottom:70px}
 }
 
+
+/* ================================
+   LIFEPASS MODERN HOMEPAGE THEME
+   ================================ */
+
+:root{
+  --navy:#0b1026;
+  --navy2:#151a3b;
+  --blue:#5b5cf0;
+  --cyan:#16d9c4;
+  --green:#7cf29a;
+  --purple:#8b5cf6;
+  --light:#f6f7ff;
+  --white:#fff;
+  --text:#12162b;
+  --muted:#6c7187;
+  --border:#e5e7f2;
+  --shadow:0 24px 70px rgba(25,24,70,.12);
+  --radius:24px;
+}
+
+body{
+  background:
+    radial-gradient(circle at 12% 8%,rgba(139,92,246,.08),transparent 25%),
+    radial-gradient(circle at 90% 18%,rgba(22,217,196,.08),transparent 25%),
+    var(--light);
+}
+
+.nav{
+  height:78px;
+  padding:0 5%;
+  background:rgba(255,255,255,.86);
+  border-bottom:1px solid rgba(229,231,242,.75);
+  box-shadow:0 8px 30px rgba(19,22,55,.04);
+}
+
+.brand-mark{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#0b1026 0%,#5b5cf0 55%,#16d9c4 100%);
+  box-shadow:0 10px 28px rgba(91,92,240,.25);
+}
+
+.brand-text{
+  color:#0b1026;
+  letter-spacing:2.5px;
+}
+
+.brand-text span{
+  color:#16bfae;
+}
+
+.nav-links a{
+  color:#535971;
+  transition:.2s ease;
+}
+.nav-links a:hover{color:#5b5cf0}
+
+.btn{
+  border-radius:14px;
+  padding:12px 18px;
+}
+.btn-primary{
+  background:#0b1026;
+}
+.btn-blue{
+  background:linear-gradient(135deg,#5b5cf0,#16bfae);
+  box-shadow:0 12px 30px rgba(91,92,240,.24);
+}
+.btn-outline{
+  background:rgba(255,255,255,.92);
+  border:1px solid #dfe2ef;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:calc(100vh - 78px);
+  padding:86px 5%;
+  grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr);
+  gap:72px;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(22,217,196,.20),transparent 25%),
+    radial-gradient(circle at 64% 78%,rgba(139,92,246,.14),transparent 28%),
+    linear-gradient(135deg,#fafaff 0%,#f2f5ff 52%,#eefcf9 100%);
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  border:1px solid rgba(91,92,240,.08);
+  border-radius:50%;
+  right:-170px;
+  top:-180px;
+  pointer-events:none;
+}
+
+.hero > div{position:relative;z-index:1}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 13px;
+  border:1px solid #dfe2f1;
+  background:rgba(255,255,255,.78);
+  border-radius:999px;
+  color:#555b75;
+  box-shadow:0 8px 25px rgba(35,38,80,.05);
+}
+
+.badge-dot{
+  width:8px;
+  height:8px;
+  background:#16bfae;
+  border-radius:50%;
+  box-shadow:0 0 0 5px rgba(22,191,174,.10);
+}
+
+.hero h1{
+  font-size:clamp(48px,6vw,78px);
+  line-height:.98;
+  letter-spacing:-3px;
+  color:#0b1026;
+  max-width:760px;
+  margin-top:22px;
+}
+
+.gradient-text{
+  display:block;
+  background:linear-gradient(90deg,#5b5cf0 5%,#8b5cf6 46%,#16bfae 95%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero > div:first-child > p{
+  max-width:680px;
+  font-size:18px;
+  line-height:1.75;
+  color:#666c83;
+  margin-top:25px;
+}
+
+.hero-buttons{margin-top:30px;gap:12px}
+
+.trust-row{
+  margin-top:28px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.trust-row span{
+  padding:9px 12px;
+  border-radius:11px;
+  background:rgba(255,255,255,.75);
+  border:1px solid #e4e6f0;
+  color:#5f6479;
+  font-size:12px;
+  font-weight:700;
+}
+.trust-row b{color:#16bfae}
+
+.hero-card{
+  border-radius:32px;
+  padding:26px;
+  background:
+    linear-gradient(145deg,rgba(11,16,38,.98),rgba(25,31,72,.98));
+  box-shadow:0 35px 90px rgba(20,22,62,.22);
+  border:1px solid rgba(255,255,255,.10);
+  min-height:500px;
+}
+
+.live-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(22,217,196,.10);
+  border:1px solid rgba(22,217,196,.22);
+  color:#79f3df;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.1px;
+}
+
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#7cf29a;
+  box-shadow:0 0 0 4px rgba(124,242,154,.10);
+}
+
+.hero-card h2{
+  font-size:35px!important;
+  line-height:1.08;
+  letter-spacing:-1px;
+}
+
+.passport-preview{
+  margin-top:28px;
+  padding:22px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#fff,#f0f2ff);
+  color:#10152e;
+  box-shadow:0 25px 55px rgba(0,0,0,.20);
+  border:1px solid rgba(255,255,255,.8);
+}
+
+.preview-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#555b75;
+  font-size:12px;
+}
+
+.preview-top strong{
+  color:#0b1026;
+  letter-spacing:2px;
+}
+
+.preview-id{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  color:#5b5cf0;
+  font-weight:800;
+}
+
+.preview-product{
+  margin-top:28px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.product-icon{
+  width:58px;height:58px;
+  border-radius:17px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#e9e9ff,#d9fbf5);
+  color:#5b5cf0;
+}
+
+.product-icon svg{width:31px;height:31px}
+
+.preview-product h3{
+  font-size:18px;
+  margin:0;
+}
+.preview-product p{
+  color:#777d91;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.status{
+  display:inline-flex;
+  margin-top:22px;
+  padding:8px 11px;
+  border-radius:10px;
+  background:#eafcf1;
+  color:#15945b;
+  font-size:11px;
+  font-weight:900;
+}
+
+.hero-metrics{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.hero-metric{
+  padding:12px;
+  border-radius:13px;
+  background:#f5f6fb;
+  border:1px solid #e6e8f1;
+}
+.hero-metric strong{
+  display:block;
+  color:#10152e;
+  font-size:16px;
+}
+.hero-metric span{
+  display:block;
+  margin-top:4px;
+  color:#7a8093;
+  font-size:10px;
+}
+
+.section{
+  padding:100px 5%;
+}
+
+.section-head h2{
+  color:#0b1026;
+  font-size:42px;
+  letter-spacing:-1.7px;
+}
+.section-head p{
+  color:#73788c;
+  line-height:1.7;
+}
+
+.feature-grid{
+  gap:16px;
+}
+
+.feature{
+  border:1px solid #e3e5f0;
+  border-radius:22px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 12px 35px rgba(29,32,76,.05);
+  transition:.25s ease;
+}
+.feature:hover{
+  transform:translateY(-5px);
+  box-shadow:0 22px 50px rgba(29,32,76,.10);
+  border-color:#d2d5ed;
+}
+
+.feature-icon,.product-card .emoji{
+  width:52px;height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:linear-gradient(135deg,#eeedff,#e4fbf7);
+  color:#5b5cf0;
+}
+.feature-icon svg,.product-card .emoji svg{
+  width:27px;height:27px;
+  stroke:currentColor;
+}
+
+.product-grid{gap:15px}
+
+.product-card{
+  background:#fff;
+  border:1px solid #e4e6f0;
+  border-radius:21px;
+  box-shadow:0 10px 28px rgba(25,28,70,.04);
+  transition:.25s ease;
+}
+.product-card:hover{
+  transform:translateY(-5px);
+  border-color:#d1d4ed;
+  box-shadow:0 20px 45px rgba(25,28,70,.09);
+}
+.product-card h3{color:#171b32}
+.product-card p{color:#777d91}
+
+.section-dark-cta{
+  margin:20px 5% 90px;
+  border-radius:32px;
+  padding:72px 8%;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(22,217,196,.18),transparent 28%),
+    linear-gradient(135deg,#0b1026,#20255a);
+  box-shadow:0 30px 75px rgba(18,20,56,.20);
+}
+
+.inquiry-section{
+  background:#fff;
+}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:55px;
+  }
+  .hero-card{min-height:auto}
+  .hero h1{letter-spacing:-2px}
+}
+
+@media(max-width:560px){
+  .nav{padding:0 4%}
+  .brand-text{font-size:18px}
+  .nav-actions .btn-outline{display:none}
+  .hero{padding:48px 5%}
+  .hero h1{font-size:47px}
+  .hero-card{padding:18px}
+  .hero-metrics{grid-template-columns:1fr}
+  .section{padding:70px 5%}
+}
+
+
+/* OWNER MEDIA + CAMERA */
+.owner-media-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.media-btn{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--navy);
+  border-radius:12px;
+  padding:10px 13px;
+  font-weight:800;
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+.media-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(7,26,51,.08)}
+.camera-stage{
+  background:#071a33;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  min-height:260px;
+}
+#cameraVideo{
+  width:100%;
+  display:block;
+  max-height:420px;
+  object-fit:cover;
+  background:#020914;
+}
+.camera-hint{
+  color:#c9d9e8;
+  font-size:12px;
+  line-height:1.5;
+  padding:10px 0 0;
+}
+.scan-camera-wrap{
+  display:none;
+  margin-top:18px;
+}
+.scan-camera-wrap.active{display:block}
+#scanCameraVideo{
+  width:100%;
+  max-height:360px;
+  background:#020914;
+  border-radius:16px;
+  display:block;
+  object-fit:cover;
+}
+.scan-status{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -1222,7 +1674,13 @@ footer p{
 <nav class="nav">
 
     <div class="brand" onclick="showHome()">
-        <div class="brand-mark">LP</div>
+        <div class="brand-mark" aria-label="LIFEPASS">
+      <svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="7" y="4" width="18" height="24" rx="3"></rect>
+        <circle cx="16" cy="13" r="4"></circle>
+        <path d="M11 22c1.7-3 8.3-3 10 0"></path>
+      </svg>
+    </div>
         <div class="brand-text">LIFE<span>PASS</span></div>
     </div>
 
@@ -1273,6 +1731,15 @@ footer p{
             preserving purchase details, warranty, service records,
             documents and ownership history — all in one place.
         </p>
+
+        <div style="display:flex;align-items:center;gap:10px;max-width:590px;margin-top:22px;padding:7px;background:#fff;border:1px solid #e2e4ef;border-radius:16px;box-shadow:0 10px 28px rgba(30,34,80,.06)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#777d91" stroke-width="2" stroke-linecap="round">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path>
+            </svg>
+            <input id="heroPassportSearch" type="text" placeholder="Enter a LIFEPASS ID to verify a product"
+                   style="border:0;outline:0;flex:1;background:transparent;color:#12162b;font-size:13px;padding:9px">
+            <button class="btn btn-blue" style="padding:10px 14px" onclick="heroVerifyPassport()">Verify</button>
+        </div>
 
         <div class="hero-buttons">
 
@@ -1401,7 +1868,7 @@ footer p{
     <div class="feature-grid">
 
         <div class="feature">
-            <div class="feature-icon">🪪</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M13 10h5M13 14h4"/></svg></div>
             <h3>Digital Identity</h3>
             <p>
                 Give every product a unique LIFEPASS ID that can
@@ -1410,7 +1877,7 @@ footer p{
         </div>
 
         <div class="feature">
-            <div class="feature-icon">🛠️</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17l3 3 5.2-5.2a4 4 0 0 0 5.3-5.3l-2.4 2.4-2.8-2.8z"/></svg></div>
             <h3>Service History</h3>
             <p>
                 Keep repairs, maintenance and service records
@@ -1419,7 +1886,7 @@ footer p{
         </div>
 
         <div class="feature">
-            <div class="feature-icon">🔄</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></div>
             <h3>Ownership Transfer</h3>
             <p>
                 Transfer the product's history to a new owner
@@ -1428,7 +1895,7 @@ footer p{
         </div>
 
         <div class="feature">
-            <div class="feature-icon">📄</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg></div>
             <h3>Documents</h3>
             <p>
                 Store important warranty, invoice and product
@@ -1437,7 +1904,7 @@ footer p{
         </div>
 
         <div class="feature">
-            <div class="feature-icon">🔐</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
             <h3>Passcode Protection</h3>
             <p>
                 Protect passport editing with a dedicated
@@ -1446,7 +1913,7 @@ footer p{
         </div>
 
         <div class="feature">
-            <div class="feature-icon">📱</div>
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h3v3h3M14 20v-3M17 20h3"/></svg></div>
             <h3>QR Access</h3>
             <p>
                 Generate a QR code that can quickly open a
@@ -1477,49 +1944,49 @@ footer p{
     <div class="product-grid">
 
         <div class="product-card">
-            <div class="emoji">💻</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="11" rx="1.5"/><path d="M3 19h18"/><path d="M8 19l1-3h6l1 3"/></svg></div>
             <h3>Laptop</h3>
             <p>Computers & notebooks</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">📱</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg></div>
             <h3>Smartphone</h3>
             <p>Mobile devices</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">🚲</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8 3 8m-3-8h4l2 8m-6-5h5"/></svg></div>
             <h3>Bicycle</h3>
             <p>Cycles & mobility</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">📷</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h4l1.5-2h5L16 8h4v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg></div>
             <h3>Camera</h3>
             <p>Photography equipment</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">🎮</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10c2 0 3.5 1.5 4 4l1 5c.3 1.5-1.5 2.4-2.6 1.3L16 15H8l-3.4 3.3C3.5 19.4 1.7 18.5 2 17l1-5c.5-2.5 2-4 4-4z"/><path d="M8 11v4M6 13h4"/><circle cx="16.5" cy="12" r=".7"/><circle cx="18.5" cy="14" r=".7"/></svg></div>
             <h3>Gaming Console</h3>
             <p>Gaming devices</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">🤖</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M8 16h8"/><path d="M3 11v4M21 11v4"/></svg></div>
             <h3>Robot</h3>
             <p>Robotics products</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">📺</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
             <h3>Television</h3>
             <p>Home electronics</p>
         </div>
 
         <div class="product-card">
-            <div class="emoji">⚙️</div>
+            <div class="emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h8"/><circle cx="9" cy="16" r="1"/><circle cx="15" cy="16" r="1"/></svg></div>
             <h3>Appliance</h3>
             <p>Home appliances</p>
         </div>
@@ -1596,7 +2063,7 @@ footer p{
 <!-- NEXT STEP CTA -->
 <section class="final-cta">
     <h2>Ready to create your first passport?</h2>
-    <p>Start with one product today. The next LIFEPASS versions can add secure cloud storage, authentication, ownership transfers and service networks.</p>
+    <p>Start with one product today. LIFEPASS is built to grow with secure storage, account protection, ownership transfers and service networks.</p>
     <button class="btn btn-primary" onclick="openCreate()">Create My LIFEPASS →</button>
 </section>
 
@@ -1934,14 +2401,24 @@ footer p{
             <div class="form-group">
                 <label>Product image</label>
                 <label class="upload-drop" for="productImage">
-                    <strong>📷 Choose product image</strong>
+                    <strong>Choose product image</strong>
                     <div style="font-size:12px;color:var(--muted);margin-top:5px">
-                        Upload directly from your browser. Images are stored securely after setup.
+                        Select an image from this device.
                     </div>
                     <div id="productImageName" class="file-name">No image selected</div>
                 </label>
-                <input id="productImage" type="file" accept="image/*" style="display:none"
+                <input id="productImage" type="file" accept="image/*" capture="environment" style="display:none"
                        onchange="showSelectedFile(this,'productImageName')">
+                <div class="owner-media-tools">
+                    <button class="media-btn" type="button" onclick="openOwnerCamera()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M4 8h4l2-3h4l2 3h4v11H4z"/>
+                          <circle cx="12" cy="13.5" r="3.2"/>
+                        </svg>
+                        Use camera
+                    </button>
+                </div>
             </div>
 
             <div class="ai-panel" style="margin:18px 0">
@@ -1955,11 +2432,11 @@ footer p{
 
                 <div class="ai-grid">
                     <div class="ai-card">
-                        <strong>📄 Proof of purchase</strong>
+                        <strong>Proof of purchase</strong>
                         <span>Upload an invoice, receipt, or other ownership evidence.</span>
                     </div>
                     <div class="ai-card">
-                        <strong>🎥 Verification video</strong>
+                        <strong>Verification video</strong>
                         <span>Show the product and its identifying details clearly.</span>
                     </div>
                 </div>
@@ -1975,7 +2452,7 @@ footer p{
 
                 <div class="form-group">
                     <label>Verification video</label>
-                    <input id="verificationVideo" type="file" accept="video/*"
+                    <input id="verificationVideo" type="file" accept="video/*" capture="environment"
                            onchange="showSelectedFile(this,'verificationVideoName')">
                     <div id="verificationVideoName" class="file-name">No video selected</div>
                 </div>
@@ -2029,6 +2506,31 @@ footer p{
 
 
 
+
+<!-- OWNER CAMERA MODAL -->
+<div class="modal" id="cameraModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Capture product image</h2>
+      <button class="close" onclick="closeCameraModal()">×</button>
+    </div>
+    <p class="auth-subtitle" style="margin-bottom:15px">
+      Allow camera access, position the product clearly, then capture an image.
+    </p>
+    <div class="camera-stage">
+      <video id="cameraVideo" playsinline autoplay muted></video>
+    </div>
+    <div class="owner-media-tools">
+      <button class="btn btn-blue" type="button" onclick="captureProductPhoto()">Capture photo</button>
+      <button class="media-btn" type="button" onclick="closeCameraModal()">Cancel</button>
+    </div>
+    <div class="camera-hint">
+      Camera access is used only while this capture window is open.
+    </div>
+    <canvas id="cameraCanvas" style="display:none"></canvas>
+  </div>
+</div>
+
 <!-- MFA MODAL -->
 <div class="modal" id="mfaModal">
   <div class="modal-box">
@@ -2067,44 +2569,52 @@ footer p{
 </div>
 
 <!-- SCAN MODAL -->
-
 <div class="modal" id="scanModal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>Find Passport</h2>
-
-            <button class="close"
-                    onclick="closeModal('scanModal')">
-                ×
-            </button>
-
-        </div>
-
-
-        <p style="color:var(--muted);line-height:1.6">
-            Search or verify a LIFEPASS passport using its unique ID.
-            You can also paste an ID from a QR code.
-        </p>
-
-        <div class="form-group" style="margin-top:20px">
-            <label>LIFEPASS ID</label>
-            <input id="searchId" placeholder="LP-XXXXXXXX" autocomplete="off" oninput="normalizePassportId(this)">
-            <small style="display:block;color:var(--muted);margin-top:7px">Example: LP-7X4K92AB</small>
-        </div>
-
-        <button class="btn btn-blue" style="width:100%" onclick="verifyPassportCode()">
-            ✓ Verify & View Passport
-        </button>
-
-        <div id="verifyResult" style="margin-top:16px"></div>
-
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Find a LIFEPASS</h2>
+      <button class="close" onclick="closeModal('scanModal');stopScanCamera()">×</button>
     </div>
 
-</div>
+    <p style="color:var(--muted);line-height:1.6">
+      Enter a LIFEPASS ID or scan the passport QR code.
+    </p>
 
+    <div class="form-group" style="margin-top:20px">
+      <label>LIFEPASS ID</label>
+      <input id="searchId" placeholder="LP-XXXXXXXX" autocomplete="off"
+             oninput="normalizePassportId(this)">
+      <small style="display:block;color:var(--muted);margin-top:7px">
+        Example: LP-7X4K92AB
+      </small>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="btn btn-blue" onclick="verifyPassportCode()">
+        ✓ Verify
+      </button>
+      <button class="media-btn" type="button" onclick="toggleScanCamera()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8h4l2-3h4l2 3h4v11H4z"/>
+          <circle cx="12" cy="13.5" r="3.2"/>
+        </svg>
+        Scan with camera
+      </button>
+    </div>
+
+    <div class="scan-camera-wrap" id="scanCameraWrap">
+      <video id="scanCameraVideo" playsinline autoplay muted></video>
+      <div class="scan-status" id="scanCameraStatus">
+        Point the camera at a LIFEPASS QR code.
+      </div>
+      <button class="media-btn" type="button" style="margin-top:10px"
+              onclick="stopScanCamera()">Stop camera</button>
+    </div>
+
+    <div id="verifyResult" style="margin-top:16px"></div>
+  </div>
+</div>
 
 <!-- EDIT MODAL -->
 
@@ -2587,7 +3097,7 @@ document.getElementById("passportForm").addEventListener("submit", async functio
                     await insertPassport(reader.result);
                 }catch(error){
                     console.error(error);
-                    alert(error.message || "Could not save passport.");
+                    alert(error.message || "Could not save your passport. Please try again.");
                 }finally{
                     if(submitButton) submitButton.disabled = false;
                 }
@@ -2599,7 +3109,7 @@ document.getElementById("passportForm").addEventListener("submit", async functio
         }
     }catch(error){
         console.error(error);
-        alert(error.message || "Could not save passport.");
+        alert(error.message || "Could not save your passport. Please try again.");
         if(submitButton) submitButton.disabled = false;
     }
 });
@@ -2616,7 +3126,7 @@ async function renderDashboard(){
     try{
         products=await getProducts(true);
     }catch(error){
-        alert("Could not load your passports from Supabase. Check your database policies.");
+        alert("Could not load your passports right now. Please try again.");
         return;
     }
 
@@ -2739,6 +3249,194 @@ function generateQR(text){
         correctLevel:QRCode.CorrectLevel.H
     });
 }
+
+
+/* =========================
+   OWNER MEDIA + CAMERA
+========================= */
+
+let ownerCameraStream = null;
+let scanCameraStream = null;
+let scanFrameTimer = null;
+
+async function openOwnerCamera(){
+  await refreshUser();
+  if(!currentUser){
+    alert("Please sign in to use the camera for your passport.");
+    return;
+  }
+
+  try{
+    ownerCameraStream = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:"environment"}},
+      audio:false
+    });
+
+    const video = document.getElementById("cameraVideo");
+    video.srcObject = ownerCameraStream;
+    openModal("cameraModal");
+  }catch(error){
+    console.error(error);
+    alert("Camera access was not allowed. Check your browser camera permission and try again.");
+  }
+}
+
+function closeCameraModal(){
+  stopOwnerCamera();
+  closeModal("cameraModal");
+}
+
+function stopOwnerCamera(){
+  if(ownerCameraStream){
+    ownerCameraStream.getTracks().forEach(track=>track.stop());
+    ownerCameraStream = null;
+  }
+  const video = document.getElementById("cameraVideo");
+  if(video) video.srcObject = null;
+}
+
+async function captureProductPhoto(){
+  const video = document.getElementById("cameraVideo");
+  const canvas = document.getElementById("cameraCanvas");
+  const input = document.getElementById("productImage");
+
+  if(!video || !video.videoWidth){
+    alert("Camera is not ready yet.");
+    return;
+  }
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+
+  canvas.toBlob(function(blob){
+    if(!blob){
+      alert("Could not capture the image.");
+      return;
+    }
+
+    const file = new File([blob], "product-camera.jpg", {type:"image/jpeg"});
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+    showSelectedFile(input,"productImageName");
+    closeCameraModal();
+  },"image/jpeg",0.92);
+}
+
+/* =========================
+   QR CAMERA SEARCH
+========================= */
+
+async function toggleScanCamera(){
+  const wrap = document.getElementById("scanCameraWrap");
+
+  if(scanCameraStream){
+    stopScanCamera();
+    return;
+  }
+
+  if(!("mediaDevices" in navigator) || !navigator.mediaDevices.getUserMedia){
+    alert("Camera scanning is not supported by this browser. Enter the LIFEPASS ID manually.");
+    return;
+  }
+
+  try{
+    scanCameraStream = await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:"environment"}},
+      audio:false
+    });
+
+    const video = document.getElementById("scanCameraVideo");
+    video.srcObject = scanCameraStream;
+    wrap.classList.add("active");
+
+    const status = document.getElementById("scanCameraStatus");
+    status.textContent = "Point the camera at the LIFEPASS QR code.";
+
+    startQRDetection();
+  }catch(error){
+    console.error(error);
+    alert("Camera access was not allowed. You can still enter the LIFEPASS ID manually.");
+  }
+}
+
+function stopScanCamera(){
+  if(scanFrameTimer){
+    clearInterval(scanFrameTimer);
+    scanFrameTimer = null;
+  }
+
+  if(scanCameraStream){
+    scanCameraStream.getTracks().forEach(track=>track.stop());
+    scanCameraStream = null;
+  }
+
+  const video = document.getElementById("scanCameraVideo");
+  if(video) video.srcObject = null;
+
+  const wrap = document.getElementById("scanCameraWrap");
+  if(wrap) wrap.classList.remove("active");
+}
+
+async function startQRDetection(){
+  const video = document.getElementById("scanCameraVideo");
+  const status = document.getElementById("scanCameraStatus");
+
+  if(!("BarcodeDetector" in window)){
+    status.textContent = "QR scanning is not available in this browser. Enter the passport ID manually.";
+    return;
+  }
+
+  let detector;
+  try{
+    detector = new BarcodeDetector({formats:["qr_code"]});
+  }catch(error){
+    status.textContent = "QR scanning is not available in this browser. Enter the passport ID manually.";
+    return;
+  }
+
+  if(scanFrameTimer) clearInterval(scanFrameTimer);
+
+  scanFrameTimer = setInterval(async()=>{
+    if(!scanCameraStream || !video.videoWidth) return;
+
+    try{
+      const codes = await detector.detect(video);
+      if(!codes.length) return;
+
+      const raw = (codes[0].rawValue || "").trim();
+      if(!raw) return;
+
+      let id = raw;
+
+      try{
+        const url = new URL(raw, window.location.href);
+        const fromUrl = url.searchParams.get("passport");
+        if(fromUrl) id = fromUrl;
+      }catch(_){}
+
+      id = decodeURIComponent(id).trim().toUpperCase();
+
+      const match = id.match(/LP-[A-Z0-9]{6,20}/);
+      if(match){
+        document.getElementById("searchId").value = match[0];
+        stopScanCamera();
+        await verifyPassportCode();
+      }
+    }catch(error){
+      console.debug("QR detection:",error);
+    }
+  },500);
+}
+
+/* Stop camera if the page is left */
+window.addEventListener("beforeunload",()=>{
+  stopOwnerCamera();
+  stopScanCamera();
+});
+
 
 /* =========================
    OPEN PASSPORT FROM QR
@@ -3146,6 +3844,29 @@ window.addEventListener("load", async function(){
     await openPassportFromQR();
 });
 
+</script>
+
+
+<script>
+function heroVerifyPassport(){
+  const el=document.getElementById('heroPassportSearch');
+  const value=(el?.value||'').trim();
+  if(!value){
+    if(typeof openScan==='function') openScan();
+    return;
+  }
+  if(typeof openScan==='function') openScan();
+  setTimeout(()=>{
+    const candidates=['passportSearch','scanId','searchId','verifyId','passportId'];
+    for(const id of candidates){
+      const input=document.getElementById(id);
+      if(input){ input.value=value; break; }
+    }
+    const btns=[...document.querySelectorAll('button')];
+    const verify=btns.find(b=>/search|verify/i.test(b.textContent||'') && b.offsetParent!==null);
+    if(verify) verify.click();
+  },120);
+}
 </script>
 
 </body>
