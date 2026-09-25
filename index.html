@@ -883,6 +883,148 @@ footer p{
     font-size:13px;
 }
 
+
+/* PREMIUM HOMEPAGE ENHANCEMENTS */
+.hero{
+    position:relative;
+    overflow:hidden;
+}
+.hero::before,
+.hero::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+    filter:blur(2px);
+}
+.hero::before{
+    width:340px;
+    height:340px;
+    right:-100px;
+    top:-120px;
+    background:radial-gradient(circle,rgba(16,191,208,.18),transparent 68%);
+}
+.hero::after{
+    width:260px;
+    height:260px;
+    left:-120px;
+    bottom:-120px;
+    background:radial-gradient(circle,rgba(8,121,209,.16),transparent 68%);
+}
+.hero > div{position:relative;z-index:1}
+
+.hero h1{
+    font-size:clamp(48px,6vw,78px);
+    line-height:1.02;
+    letter-spacing:-4px;
+    max-width:780px;
+}
+.hero p{
+    max-width:650px;
+    font-size:18px;
+    line-height:1.75;
+    margin-top:22px;
+    color:#53677c;
+}
+.hero-buttons{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.hero-buttons .btn{padding:14px 20px}
+
+.trust-row{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    margin-top:30px;
+    color:#53677c;
+    font-size:12px;
+    font-weight:800;
+}
+.trust-row span{display:flex;align-items:center;gap:7px}
+.trust-row b{color:var(--green);font-size:16px}
+
+.hero-card{
+    position:relative;
+    background:linear-gradient(145deg,#ffffff,#eef8fc);
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:32px;
+    padding:30px;
+    box-shadow:0 30px 90px rgba(5,27,53,.16);
+    min-height:470px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+.hero-card::before{
+    content:"";
+    position:absolute;
+    inset:12px;
+    border:1px solid rgba(8,121,209,.08);
+    border-radius:24px;
+    pointer-events:none;
+}
+
+.live-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    width:max-content;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#e9fbf6;
+    color:#087c60;
+    font-size:11px;
+    font-weight:900;
+}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#19b992;box-shadow:0 0 0 5px rgba(25,185,146,.12)}
+
+.hero-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:18px;
+}
+.hero-metric{background:rgba(255,255,255,.72);border:1px solid var(--border);border-radius:15px;padding:13px}
+.hero-metric strong{display:block;color:var(--navy);font-size:18px}
+.hero-metric span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+
+.section.alt{background:#fff}
+.section-dark-cta{
+    margin:0 6% 90px;
+    padding:55px;
+    border-radius:32px;
+    background:linear-gradient(135deg,#071a33,#0b568d 60%,#0879d1);
+    color:white;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 25px 70px rgba(7,26,51,.2);
+}
+.section-dark-cta::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-100px;top:-130px;background:rgba(16,191,208,.18)}
+.section-dark-cta > *{position:relative;z-index:1}
+.section-dark-cta h2{font-size:40px;letter-spacing:-2px}
+.section-dark-cta p{color:#c6d8e8;max-width:650px;line-height:1.7;margin:10px 0 22px}
+
+.inquiry-section{background:#f8fbfd}
+.inquiry-wrap{max-width:1000px;margin:auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
+.inquiry-info,.inquiry-card{background:white;border:1px solid var(--border);border-radius:24px;padding:30px;box-shadow:0 12px 40px rgba(5,27,53,.05)}
+.inquiry-info h3,.inquiry-card h3{color:var(--navy);font-size:24px}
+.inquiry-info p{color:var(--muted);line-height:1.7;margin-top:10px}
+.inquiry-points{margin-top:22px;display:grid;gap:12px}
+.inquiry-point{display:flex;gap:12px;align-items:flex-start}
+.inquiry-point b{color:var(--blue)}
+.inquiry-point span{color:var(--muted);font-size:13px;line-height:1.5}
+.inquiry-email{display:inline-flex;margin-top:22px;padding:12px 15px;border-radius:12px;background:#edf8fd;color:var(--navy);font-weight:900;text-decoration:none}
+.inquiry-card .form-group{margin-bottom:13px}
+.inquiry-card textarea{min-height:110px;resize:vertical}
+
+.final-cta{text-align:center;padding:90px 6%;background:linear-gradient(180deg,#fff,#eef8fc)}
+.final-cta h2{font-size:44px;color:var(--navy);letter-spacing:-2px}
+.final-cta p{max-width:650px;margin:12px auto 24px;color:var(--muted);line-height:1.7}
+
+@media(max-width:800px){
+    .inquiry-wrap{grid-template-columns:1fr}
+    .section-dark-cta{margin:0 5% 65px;padding:35px 25px}
+    .section-dark-cta h2{font-size:32px}
+}
+
 /* MOBILE */
 
 @media(max-width:900px){
@@ -987,6 +1129,7 @@ footer p{
         <a href="#features">Features</a>
         <a href="#products">Products</a>
         <a href="#how">How it works</a>
+        <a href="#contact">Contact</a>
     </div>
 
     <div class="nav-actions">
@@ -1040,13 +1183,21 @@ footer p{
 
         </div>
 
+        <div class="trust-row">
+            <span><b>✓</b> Unique product identity</span>
+            <span><b>✓</b> QR-ready passport</span>
+            <span><b>✓</b> Built for product history</span>
+        </div>
+
     </div>
 
 
     <div class="hero-card">
 
         <div>
-            <small style="opacity:.7">
+            <div class="live-pill"><span class="live-dot"></span> LIFEPASS SYSTEM ONLINE</div>
+
+            <small style="opacity:.7;display:block;margin-top:18px">
                 LIFEPASS DIGITAL IDENTITY
             </small>
 
@@ -1084,6 +1235,12 @@ footer p{
             <span class="status">
                 ● VERIFIED PRODUCT
             </span>
+
+            <div class="hero-metrics">
+                <div class="hero-metric"><strong>01</strong><span>Digital ID</span></div>
+                <div class="hero-metric"><strong>∞</strong><span>Product history</span></div>
+                <div class="hero-metric"><strong>QR</strong><span>Quick access</span></div>
+            </div>
 
         </div>
 
@@ -1238,6 +1395,77 @@ footer p{
 
 </section>
 
+
+
+<!-- WHY LIFEPASS CTA -->
+<section class="section-dark-cta">
+    <h2>Give every product a permanent identity.</h2>
+    <p>
+        LIFEPASS turns scattered invoices, warranty details and service records
+        into one connected digital story that can stay with the product.
+    </p>
+    <button class="btn btn-blue" onclick="openCreate()">Create a Product Passport →</button>
+</section>
+
+<!-- INQUIRY / CONTACT -->
+<section class="section inquiry-section" id="contact">
+    <div class="section-head">
+        <h2>Have an idea for LIFEPASS?</h2>
+        <p>For partnerships, feedback, product questions or school/project enquiries, send us a message.</p>
+    </div>
+
+    <div class="inquiry-wrap">
+        <div class="inquiry-info">
+            <h3>Let's build the product story together.</h3>
+            <p>
+                LIFEPASS is being developed as a digital product passport platform.
+                Your feedback can help shape the next version.
+            </p>
+
+            <div class="inquiry-points">
+                <div class="inquiry-point"><b>01</b><span>Product passport and QR questions</span></div>
+                <div class="inquiry-point"><b>02</b><span>Partnership and business enquiries</span></div>
+                <div class="inquiry-point"><b>03</b><span>Feedback, suggestions and bug reports</span></div>
+            </div>
+
+            <a class="inquiry-email" href="mailto:lifepass.tech@gmail.com?subject=LIFEPASS%20Enquiry">
+                ✉ lifepass.tech@gmail.com
+            </a>
+        </div>
+
+        <div class="inquiry-card">
+            <h3>Send an enquiry</h3>
+            <form onsubmit="sendInquiry(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your name</label>
+                        <input id="inquiryName" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Your email</label>
+                        <input id="inquiryEmail" type="email" required placeholder="you@example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input id="inquirySubject" required placeholder="Partnership / Feedback / Question">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="inquiryMessage" required placeholder="Tell us how we can help..."></textarea>
+                </div>
+                <button class="btn btn-blue" type="submit">Send Enquiry →</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- NEXT STEP CTA -->
+<section class="final-cta">
+    <h2>Ready to create your first passport?</h2>
+    <p>Start with one product today. The next LIFEPASS versions can add secure cloud storage, authentication, ownership transfers and service networks.</p>
+    <button class="btn btn-primary" onclick="openCreate()">Create My LIFEPASS →</button>
+</section>
 
 <!-- HOW IT WORKS -->
 
@@ -1822,6 +2050,8 @@ footer p{
             <a href="#features">Features</a>
             <a href="#products">Products</a>
             <a href="#how">How it works</a>
+            <a href="#contact">Contact</a>
+            <a href="mailto:lifepass.tech@gmail.com">Email</a>
 
         </div>
 
@@ -2696,6 +2926,30 @@ function saveEdit(){
 
     alert("Passport updated successfully.");
 
+}
+
+
+/* =========================
+   INQUIRY EMAIL
+========================= */
+
+function sendInquiry(event){
+    event.preventDefault();
+
+    const name = document.getElementById("inquiryName").value.trim();
+    const email = document.getElementById("inquiryEmail").value.trim();
+    const subject = document.getElementById("inquirySubject").value.trim();
+    const message = document.getElementById("inquiryMessage").value.trim();
+
+    const body =
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n\n" +
+        message;
+
+    window.location.href =
+        "mailto:lifepass.tech@gmail.com" +
+        "?subject=" + encodeURIComponent("LIFEPASS Enquiry: " + subject) +
+        "&body=" + encodeURIComponent(body);
 }
 
 
