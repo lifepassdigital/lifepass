@@ -7,13 +7,17 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
 html{scroll-behavior:smooth}
+
 body{
 font-family:Arial,Helvetica,sans-serif;
 background:#050b16;
 color:#fff;
-line-height:1.5
+line-height:1.5;
+min-height:100vh
 }
+
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 
@@ -27,7 +31,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 background:rgba(5,11,22,.94);
-backdrop-filter:blur(15px);
+backdrop-filter:blur(18px);
 border-bottom:1px solid #172338
 }
 
@@ -46,8 +50,7 @@ border-radius:12px;
 display:grid;
 place-items:center;
 background:linear-gradient(135deg,#2563eb,#06b6d4);
-font-size:13px;
-font-weight:900
+font-size:13px
 }
 
 .navlinks{
@@ -66,14 +69,20 @@ border-radius:9px
 
 .navlinks button:hover{
 background:#111d30;
-color:#fff
+color:white
 }
 
-.loginBtn{
+.accountBtn{
 background:#fff!important;
 color:#07111f!important;
-font-weight:800
+font-weight:800;
+max-width:220px;
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis
 }
+
+/* HERO */
 
 .hero{
 min-height:650px;
@@ -99,7 +108,7 @@ letter-spacing:1px;
 margin-bottom:20px
 }
 
-h1{
+.hero h1{
 font-size:clamp(44px,6vw,75px);
 line-height:1.02;
 margin-bottom:25px
@@ -112,7 +121,7 @@ background-clip:text;
 color:transparent
 }
 
-.hero p{
+.heroText{
 color:#9aaabd;
 font-size:18px;
 max-width:650px;
@@ -143,10 +152,13 @@ color:#fff;
 font-weight:700
 }
 
-.primary:hover,.secondary:hover{
-transform:translateY(-1px);
-filter:brightness(1.1)
+.primary:hover,
+.secondary:hover{
+filter:brightness(1.1);
+transform:translateY(-1px)
 }
+
+/* PASSPORT PREVIEW */
 
 .preview{
 padding:30px;
@@ -209,9 +221,9 @@ color:#fff;
 text-align:right
 }
 
-section{
-padding:80px 7%
-}
+/* SECTIONS */
+
+section{padding:80px 7%}
 
 .title{
 text-align:center;
@@ -224,6 +236,8 @@ margin-bottom:8px
 }
 
 .title p{color:#94a3b8}
+
+/* FEATURES */
 
 .cards{
 display:grid;
@@ -255,6 +269,8 @@ font-size:14px;
 margin-top:8px
 }
 
+/* TYPES */
+
 .types{
 display:grid;
 grid-template-columns:repeat(6,1fr);
@@ -278,6 +294,8 @@ margin-bottom:8px
 font-size:13px;
 color:#cbd5e1
 }
+
+/* STEPS */
 
 .steps{
 display:grid;
@@ -309,6 +327,8 @@ font-size:14px;
 margin-top:7px
 }
 
+/* VERIFY */
+
 .verifyBox{
 max-width:700px;
 margin:auto
@@ -329,16 +349,14 @@ color:#fff;
 outline:none
 }
 
-.search input:focus{
-border-color:#38bdf8
-}
-
 .result{
 margin-top:20px;
 display:none
 }
 
-.ai{
+/* AI */
+
+.aiSection{
 background:linear-gradient(135deg,#081a30,#061622)
 }
 
@@ -369,6 +387,8 @@ margin:12px auto 22px;
 max-width:600px
 }
 
+/* MODALS */
+
 .modal{
 position:fixed;
 inset:0;
@@ -384,12 +404,13 @@ background:#000b
 
 .modalBox{
 width:min(650px,100%);
-max-height:90vh;
+max-height:92vh;
 overflow:auto;
 padding:28px;
 border-radius:20px;
 background:#0b1728;
-border:1px solid #263850
+border:1px solid #263850;
+box-shadow:0 30px 100px #000
 }
 
 .modalHeader{
@@ -442,15 +463,9 @@ min-height:90px;
 resize:vertical
 }
 
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-border-color:#38bdf8
-}
-
 .submit{
 width:100%;
-margin-top:20px;
+margin-top:18px;
 padding:14px;
 border:0;
 border-radius:10px;
@@ -462,7 +477,8 @@ font-weight:800
 .message{
 text-align:center;
 margin-top:14px;
-font-size:14px
+font-size:14px;
+color:#94a3b8
 }
 
 .divider{
@@ -482,6 +498,173 @@ background:#263850;
 flex:1
 }
 
+.passwordBox{
+position:relative
+}
+
+.passwordBox input{
+width:100%;
+padding-right:50px
+}
+
+.eye{
+position:absolute;
+right:8px;
+top:50%;
+transform:translateY(-50%);
+background:none;
+border:0;
+color:#94a3b8;
+padding:8px
+}
+
+/* PROFILE */
+
+.profileCard{
+text-align:center
+}
+
+.profileAvatar{
+width:76px;
+height:76px;
+margin:0 auto 15px;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+font-size:25px;
+font-weight:900
+}
+
+.profileEmail{
+color:#94a3b8;
+font-size:14px;
+margin-top:5px
+}
+
+.profileStatus{
+margin:20px 0;
+padding:12px;
+border-radius:10px;
+background:#052e1b;
+color:#4ade80;
+font-size:13px
+}
+
+/* AI CHAT */
+
+.aiChat{
+width:min(720px,100%);
+height:min(650px,92vh);
+padding:0;
+overflow:hidden;
+display:flex;
+flex-direction:column
+}
+
+.chatHeader{
+padding:18px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #203149
+}
+
+.chatIdentity{
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.chatAvatar{
+width:42px;
+height:42px;
+display:grid;
+place-items:center;
+border-radius:12px;
+background:linear-gradient(135deg,#2563eb,#06b6d4)
+}
+
+.chatStatus{
+font-size:12px;
+color:#4ade80
+}
+
+.chatMessages{
+flex:1;
+overflow-y:auto;
+padding:20px
+}
+
+.msg{
+max-width:82%;
+padding:12px 15px;
+border-radius:15px;
+margin-bottom:12px;
+font-size:14px;
+white-space:pre-wrap
+}
+
+.aiMsg{
+background:#14243a;
+color:#dbeafe;
+border-top-left-radius:4px
+}
+
+.userMsg{
+margin-left:auto;
+background:#1d4ed8;
+border-top-right-radius:4px
+}
+
+.chatInputArea{
+padding:14px;
+border-top:1px solid #203149
+}
+
+.chatInputRow{
+display:flex;
+gap:8px;
+align-items:center
+}
+
+.chatInput{
+flex:1;
+padding:13px;
+border:1px solid #263850;
+border-radius:11px;
+background:#050b16;
+color:#fff;
+outline:none
+}
+
+.iconButton{
+width:45px;
+height:45px;
+border:1px solid #263850;
+border-radius:11px;
+background:#101d30;
+color:#fff
+}
+
+.iconButton:hover{
+background:#172943
+}
+
+.micListening{
+background:#b91c1c!important;
+border-color:#ef4444!important
+}
+
+.chatHint{
+font-size:11px;
+color:#64748b;
+margin-top:7px;
+text-align:center
+}
+
+/* FOOTER */
+
 footer{
 padding:35px 7%;
 display:flex;
@@ -492,23 +675,59 @@ font-size:13px;
 border-top:1px solid #172338
 }
 
+/* RESPONSIVE */
+
 @media(max-width:900px){
+
 .hero{grid-template-columns:1fr}
+
 .cards{grid-template-columns:1fr 1fr}
+
 .types{grid-template-columns:repeat(3,1fr)}
+
 .steps{grid-template-columns:1fr 1fr}
+
 }
 
 @media(max-width:600px){
-.navlinks button:not(.loginBtn){display:none}
-.hero{padding:60px 5%}
-section{padding:60px 5%}
-.cards,.steps{grid-template-columns:1fr}
-.types{grid-template-columns:repeat(2,1fr)}
-.formGrid{grid-template-columns:1fr}
-.full{grid-column:auto}
-.search{flex-direction:column}
-footer{flex-direction:column}
+
+.navlinks button:not(.accountBtn){
+display:none
+}
+
+.hero{
+padding:60px 5%
+}
+
+section{
+padding:60px 5%
+}
+
+.cards,
+.steps{
+grid-template-columns:1fr
+}
+
+.types{
+grid-template-columns:repeat(2,1fr)
+}
+
+.formGrid{
+grid-template-columns:1fr
+}
+
+.full{
+grid-column:auto
+}
+
+.search{
+flex-direction:column
+}
+
+footer{
+flex-direction:column
+}
+
 }
 </style>
 </head>
@@ -516,6 +735,7 @@ footer{flex-direction:column}
 <body>
 
 <!-- NAVBAR -->
+
 <nav>
 
 <div class="logo">
@@ -525,19 +745,22 @@ footer{flex-direction:column}
 
 <div class="navlinks">
 
-<button onclick="go('features')">
+<button onclick="goTo('features')">
 Features
 </button>
 
-<button onclick="go('how')">
+<button onclick="goTo('how')">
 How it works
 </button>
 
-<button onclick="go('verify')">
+<button onclick="goTo('verify')">
 Verify
 </button>
 
-<button class="loginBtn" onclick="openLogin()">
+<button
+id="accountBtn"
+class="accountBtn"
+onclick="openLogin()">
 Login
 </button>
 
@@ -547,6 +770,7 @@ Login
 
 
 <!-- HERO -->
+
 <section class="hero">
 
 <div>
@@ -563,7 +787,7 @@ Keep it forever.
 </span>
 </h1>
 
-<p>
+<p class="heroText">
 LIFEPASS gives products a digital identity.
 Keep ownership, warranty, purchase, service
 and verification information connected to the product.
@@ -571,13 +795,15 @@ and verification information connected to the product.
 
 <div class="buttons">
 
-<button class="primary"
+<button
+class="primary"
 onclick="openCreate()">
 + Create Product Passport
 </button>
 
-<button class="secondary"
-onclick="go('verify')">
+<button
+class="secondary"
+onclick="goTo('verify')">
 Verify a Passport
 </button>
 
@@ -639,6 +865,7 @@ LIFEPASS DIGITAL PASSPORT
 
 
 <!-- FEATURES -->
+
 <section id="features">
 
 <div class="title">
@@ -656,49 +883,37 @@ Everything important about a product in one place.
 <div class="card">
 <div class="icon">🪪</div>
 <h3>Digital Identity</h3>
-<p>
-Every product receives a unique LIFEPASS ID.
-</p>
+<p>Every product receives a unique LIFEPASS ID.</p>
 </div>
 
 <div class="card">
 <div class="icon">🛡️</div>
 <h3>Verification</h3>
-<p>
-Keep verification information connected to the product.
-</p>
+<p>Keep verification information connected to the product.</p>
 </div>
 
 <div class="card">
 <div class="icon">🔧</div>
 <h3>Service History</h3>
-<p>
-Keep repairs and maintenance records together.
-</p>
+<p>Keep repairs and maintenance records together.</p>
 </div>
 
 <div class="card">
 <div class="icon">📄</div>
 <h3>Documents</h3>
-<p>
-Keep invoices, receipts and warranty information.
-</p>
+<p>Keep invoices, receipts and warranty information.</p>
 </div>
 
 <div class="card">
 <div class="icon">🔄</div>
 <h3>Ownership History</h3>
-<p>
-The passport follows the product between owners.
-</p>
+<p>The passport follows the product between owners.</p>
 </div>
 
 <div class="card">
 <div class="icon">🔗</div>
 <h3>QR Access</h3>
-<p>
-Open a product passport quickly using its QR code.
-</p>
+<p>Open a product passport quickly using its QR code.</p>
 </div>
 
 </div>
@@ -706,15 +921,14 @@ Open a product passport quickly using its QR code.
 
 
 <!-- PRODUCTS -->
+
 <section>
 
 <div class="title">
 
 <h2>Built for real products</h2>
 
-<p>
-Create a passport for almost anything you own.
-</p>
+<p>Create a passport for almost anything you own.</p>
 
 </div>
 
@@ -731,16 +945,15 @@ Create a passport for almost anything you own.
 </section>
 
 
-<!-- HOW IT WORKS -->
+<!-- HOW -->
+
 <section id="how">
 
 <div class="title">
 
 <h2>How LIFEPASS works</h2>
 
-<p>
-From product to digital history.
-</p>
+<p>From product to digital history.</p>
 
 </div>
 
@@ -749,33 +962,25 @@ From product to digital history.
 <div class="step">
 <div class="number">1</div>
 <h3>Create</h3>
-<p>
-Create your digital product passport.
-</p>
+<p>Create your digital product passport.</p>
 </div>
 
 <div class="step">
 <div class="number">2</div>
 <h3>Get your ID</h3>
-<p>
-Receive a unique LIFEPASS ID.
-</p>
+<p>Receive a unique LIFEPASS ID.</p>
 </div>
 
 <div class="step">
 <div class="number">3</div>
 <h3>Build history</h3>
-<p>
-Add warranty, service and ownership records.
-</p>
+<p>Add warranty, service and ownership records.</p>
 </div>
 
 <div class="step">
 <div class="number">4</div>
 <h3>Transfer</h3>
-<p>
-The passport can follow the product to a new owner.
-</p>
+<p>The passport can follow the product to a new owner.</p>
 </div>
 
 </div>
@@ -783,15 +988,14 @@ The passport can follow the product to a new owner.
 
 
 <!-- VERIFY -->
+
 <section id="verify">
 
 <div class="title">
 
 <h2>Verify a LIFEPASS</h2>
 
-<p>
-Enter a LIFEPASS ID to find its passport.
-</p>
+<p>Enter a LIFEPASS ID to find its passport.</p>
 
 </div>
 
@@ -801,11 +1005,10 @@ Enter a LIFEPASS ID to find its passport.
 
 <input
 id="passportSearch"
-placeholder="Example: LP-YSQ7SUCQ"
-autocomplete="off"
->
+placeholder="Example: LP-YSQ7SUCQ">
 
-<button class="primary"
+<button
+class="primary"
 onclick="searchPassport()">
 Search
 </button>
@@ -823,7 +1026,8 @@ class="result">
 
 
 <!-- AI -->
-<section class="ai">
+
+<section class="aiSection">
 
 <div class="aiBox">
 
@@ -834,14 +1038,14 @@ class="result">
 <h2>LIFEPASS Assistant</h2>
 
 <p>
-Get help understanding your passport,
-verification, warranty and product history.
+Ask questions about LIFEPASS, product passports,
+warranty, verification and product history.
 </p>
 
 <button
 class="primary"
 onclick="openAI()">
-Open Assistant
+Open AI Assistant
 </button>
 
 </div>
@@ -849,7 +1053,8 @@ Open Assistant
 </section>
 
 
-<!-- CREATE MODAL -->
+<!-- CREATE PASSPORT MODAL -->
+
 <div
 id="createModal"
 class="modal"
@@ -884,17 +1089,13 @@ placeholder="Example Laptop">
 
 </div>
 
-
 <div class="field">
 
 <label>Product Type *</label>
 
 <select id="productType" required>
 
-<option value="">
-Select type
-</option>
-
+<option value="">Select type</option>
 <option>Laptop</option>
 <option>Smartphone</option>
 <option>Bicycle</option>
@@ -909,96 +1110,69 @@ Select type
 
 </div>
 
-
 <div class="field">
 
 <label>Brand</label>
 
-<input
-id="brand"
-placeholder="Example Lenovo">
+<input id="brand" placeholder="Example Lenovo">
 
 </div>
-
 
 <div class="field">
 
 <label>Model</label>
 
-<input
-id="model"
-placeholder="Example IdeaPad">
+<input id="model" placeholder="Example IdeaPad">
 
 </div>
-
 
 <div class="field">
 
 <label>Serial Number</label>
 
-<input
-id="serial"
-placeholder="Serial number">
+<input id="serial" placeholder="Serial number">
 
 </div>
-
 
 <div class="field">
 
 <label>Purchase Date</label>
 
-<input
-id="purchaseDate"
-type="date">
+<input id="purchaseDate" type="date">
 
 </div>
-
 
 <div class="field">
 
 <label>Warranty</label>
 
-<input
-id="warranty"
-placeholder="Example 2 years">
+<input id="warranty" placeholder="Example 2 years">
 
 </div>
-
 
 <div class="field">
 
 <label>Purchase Price</label>
 
-<input
-id="purchasePrice"
-type="number"
-placeholder="₹">
+<input id="purchasePrice" type="number" placeholder="₹">
 
 </div>
-
 
 <div class="field">
 
 <label>Owner Name</label>
 
-<input
-id="ownerName"
-placeholder="Owner name">
+<input id="ownerName" placeholder="Owner name">
 
 </div>
-
 
 <div class="field">
 
 <label>Owner Email</label>
 
-<input
-id="ownerEmail"
-type="email"
-placeholder="owner@example.com">
+<input id="ownerEmail" type="email" placeholder="owner@example.com">
 
 </div>
-
 
 <div class="field full">
 
@@ -1009,7 +1183,6 @@ id="description"
 placeholder="Product information..."></textarea>
 
 </div>
-
 
 <div class="field full">
 
@@ -1024,17 +1197,11 @@ accept="image/*">
 
 </div>
 
-
-<button
-class="submit"
-type="submit">
+<button class="submit" type="submit">
 Create LIFEPASS
 </button>
 
-<div
-id="formMessage"
-class="message">
-</div>
+<div id="formMessage" class="message"></div>
 
 </form>
 
@@ -1043,6 +1210,7 @@ class="message">
 
 
 <!-- LOGIN MODAL -->
+
 <div
 id="loginModal"
 class="modal"
@@ -1052,7 +1220,7 @@ onclick="outsideClose(event,'loginModal')">
 
 <div class="modalHeader">
 
-<h2>LIFEPASS Login</h2>
+<h2 id="authTitle">Welcome to LIFEPASS</h2>
 
 <button
 class="close"
@@ -1062,15 +1230,24 @@ onclick="closeLogin()">
 
 </div>
 
+<p
+id="authSubtitle"
+style="color:#94a3b8;margin-bottom:20px">
+Sign in to manage your product passports.
+</p>
+
+
 <button
 class="submit"
 onclick="googleLogin()">
 Continue with Google
 </button>
 
+
 <div class="divider">
 OR
 </div>
+
 
 <div class="field">
 
@@ -1079,35 +1256,53 @@ OR
 <input
 id="loginEmail"
 type="email"
-placeholder="Email address">
+placeholder="you@example.com">
 
 </div>
 
+
 <br>
+
 
 <div class="field">
 
 <label>Password</label>
 
+<div class="passwordBox">
+
 <input
 id="loginPassword"
 type="password"
-placeholder="Password">
+placeholder="Minimum 6 characters">
+
+<button
+type="button"
+class="eye"
+onclick="togglePassword()">
+👁
+</button>
 
 </div>
 
+</div>
+
+
 <button
+id="authSubmit"
 class="submit"
 onclick="emailLogin()">
 Sign In
 </button>
 
+
 <button
+id="switchAuth"
 class="secondary"
 style="width:100%;margin-top:10px"
-onclick="emailSignup()">
-Create Account
+onclick="switchAuthMode()">
+Create a new account
 </button>
+
 
 <div
 id="loginMessage"
@@ -1118,23 +1313,166 @@ class="message">
 </div>
 
 
+<!-- PROFILE MODAL -->
+
+<div
+id="profileModal"
+class="modal"
+onclick="outsideClose(event,'profileModal')">
+
+<div class="modalBox profileCard">
+
+<div class="modalHeader">
+
+<h2>Your Profile</h2>
+
+<button
+class="close"
+onclick="closeProfile()">
+×
+</button>
+
+</div>
+
+<div class="profileAvatar" id="profileAvatar">
+U
+</div>
+
+<h2 id="profileName">
+User
+</h2>
+
+<div
+id="profileEmail"
+class="profileEmail">
+</div>
+
+<div class="profileStatus">
+● You are currently logged in
+</div>
+
+<button
+class="submit"
+onclick="openCreateFromProfile()">
++ Create Product Passport
+</button>
+
+<button
+class="secondary"
+style="width:100%;margin-top:10px"
+onclick="logout()">
+Log Out
+</button>
+
+</div>
+</div>
+
+
+<!-- AI CHAT MODAL -->
+
+<div
+id="aiModal"
+class="modal"
+onclick="outsideClose(event,'aiModal')">
+
+<div class="modalBox aiChat">
+
+<div class="chatHeader">
+
+<div class="chatIdentity">
+
+<div class="chatAvatar">
+✦
+</div>
+
+<div>
+
+<strong>LIFEPASS Assistant</strong>
+
+<div class="chatStatus">
+● Online
+</div>
+
+</div>
+
+</div>
+
+<button
+class="close"
+onclick="closeAI()">
+×
+</button>
+
+</div>
+
+
+<div
+id="chatMessages"
+class="chatMessages">
+
+<div class="msg aiMsg">
+Hi! I'm the LIFEPASS Assistant. 👋
+
+I can help you understand product passports,
+LIFEPASS IDs, verification, warranty records,
+ownership history and the LIFEPASS website.
+
+What would you like to know?
+</div>
+
+</div>
+
+
+<div class="chatInputArea">
+
+<div class="chatInputRow">
+
+<button
+id="micButton"
+class="iconButton"
+onclick="startVoice()"
+title="Speak">
+🎤
+</button>
+
+<input
+id="chatInput"
+class="chatInput"
+placeholder="Ask LIFEPASS Assistant..."
+onkeydown="chatKey(event)">
+
+<button
+class="iconButton"
+onclick="sendAI()"
+title="Send">
+➤
+</button>
+
+</div>
+
+<div class="chatHint">
+Type your question or use the microphone.
+</div>
+
+</div>
+
+</div>
+</div>
+
+
 <footer>
 
-<span>
-© 2026 LIFEPASS
-</span>
+<span>© 2026 LIFEPASS</span>
 
-<span>
-Every product has a story. Keep it forever.
-</span>
+<span>Every product has a story. Keep it forever.</span>
 
 </footer>
 
 
-<!-- =========================================================
-     EVERYTHING BELOW IS JAVASCRIPT
-     NO SECOND FILE IS REQUIRED
-     ========================================================= -->
+<!-- =====================================================
+     JAVASCRIPT
+     EVERYTHING IS INSIDE THIS SINGLE FILE
+     ===================================================== -->
 
 <script type="module">
 
@@ -1160,17 +1498,17 @@ SUPABASE_KEY
 );
 
 
-/* SHORTCUT */
+/* GLOBAL AUTH MODE */
 
-const $ = id =>
-document.getElementById(id);
+let signupMode = false;
 
 
 /* NAVIGATION */
 
-window.go = function(id){
+window.goTo = function(id){
 
-const element = $(id);
+const element =
+document.getElementById(id);
 
 if(element){
 
@@ -1183,35 +1521,39 @@ behavior:"smooth"
 };
 
 
-/* CREATE MODAL */
+/* CREATE */
 
 window.openCreate = async function(){
 
 const {
-data:{user}
+data:{
+session
+}
 } =
-await supabase.auth.getUser();
+await supabase.auth.getSession();
 
-if(!user){
-
-alert(
-"Please login first."
-);
+if(!session){
 
 openLogin();
+
+document.getElementById("loginMessage").textContent =
+"Please sign in before creating a passport.";
 
 return;
 
 }
 
-$("createModal").classList.add("show");
+document
+.getElementById("createModal")
+.classList.add("show");
 
 };
 
 
 window.closeCreate = function(){
 
-$("createModal")
+document
+.getElementById("createModal")
 .classList.remove("show");
 
 };
@@ -1221,7 +1563,8 @@ $("createModal")
 
 window.openLogin = function(){
 
-$("loginModal")
+document
+.getElementById("loginModal")
 .classList.add("show");
 
 };
@@ -1229,18 +1572,102 @@ $("loginModal")
 
 window.closeLogin = function(){
 
-$("loginModal")
+document
+.getElementById("loginModal")
 .classList.remove("show");
 
 };
 
 
-/* GOOGLE LOGIN */
+/* SWITCH LOGIN / SIGNUP */
+
+window.switchAuthMode = function(){
+
+signupMode =
+!signupMode;
+
+const title =
+document.getElementById("authTitle");
+
+const subtitle =
+document.getElementById("authSubtitle");
+
+const submit =
+document.getElementById("authSubmit");
+
+const switchButton =
+document.getElementById("switchAuth");
+
+if(signupMode){
+
+title.textContent =
+"Create your LIFEPASS account";
+
+subtitle.textContent =
+"Create an account to manage your product passports.";
+
+submit.textContent =
+"Create Account";
+
+submit.onclick =
+emailSignup;
+
+switchButton.textContent =
+"Already have an account? Sign in";
+
+}else{
+
+title.textContent =
+"Welcome to LIFEPASS";
+
+subtitle.textContent =
+"Sign in to manage your product passports.";
+
+submit.textContent =
+"Sign In";
+
+submit.onclick =
+emailLogin;
+
+switchButton.textContent =
+"Create a new account";
+
+}
+
+document.getElementById("loginMessage").textContent = "";
+
+};
+
+
+/* PASSWORD */
+
+window.togglePassword = function(){
+
+const input =
+document.getElementById("loginPassword");
+
+input.type =
+input.type === "password"
+?
+"text"
+:
+"password";
+
+};
+
+
+/* GOOGLE */
 
 window.googleLogin = async function(){
 
-$("loginMessage").textContent =
-"Opening Google login...";
+const message =
+document.getElementById("loginMessage");
+
+message.style.color =
+"#94a3b8";
+
+message.textContent =
+"Opening Google...";
 
 const {
 error
@@ -1251,14 +1678,18 @@ provider:"google",
 
 options:{
 redirectTo:
-window.location.href
+window.location.origin +
+window.location.pathname
 }
 
 });
 
 if(error){
 
-$("loginMessage").textContent =
+message.style.color =
+"#f87171";
+
+message.textContent =
 error.message;
 
 }
@@ -1271,21 +1702,26 @@ error.message;
 window.emailLogin = async function(){
 
 const email =
-$("loginEmail").value.trim();
+document.getElementById("loginEmail")
+.value.trim();
 
 const password =
-$("loginPassword").value;
+document.getElementById("loginPassword")
+.value;
+
+const message =
+document.getElementById("loginMessage");
 
 if(!email || !password){
 
-$("loginMessage").textContent =
-"Enter email and password.";
+message.textContent =
+"Please enter your email and password.";
 
 return;
 
 }
 
-$("loginMessage").textContent =
+message.textContent =
 "Signing in...";
 
 const {
@@ -1300,41 +1736,49 @@ password
 
 if(error){
 
-$("loginMessage").textContent =
+message.style.color =
+"#f87171";
+
+message.textContent =
 error.message;
 
 return;
 
 }
 
-$("loginMessage").style.color =
+message.style.color =
 "#4ade80";
 
-$("loginMessage").textContent =
+message.textContent =
 "Login successful.";
 
 setTimeout(
 closeLogin,
-700
+600
 );
 
 };
 
 
-/* SIGN UP */
+/* SIGNUP */
 
 window.emailSignup = async function(){
 
 const email =
-$("loginEmail").value.trim();
+document.getElementById("loginEmail")
+.value.trim();
 
 const password =
-$("loginPassword").value;
+document.getElementById("loginPassword")
+.value;
+
+const message =
+document.getElementById("loginMessage");
 
 if(!email || !password){
 
-$("loginMessage").textContent =
-"Enter email and password first.";
+message.textContent =
+"Enter an email and password.";
 
 return;
 
@@ -1342,45 +1786,205 @@ return;
 
 if(password.length < 6){
 
-$("loginMessage").textContent =
-"Password must be at least 6 characters.";
+message.textContent =
+"Password must contain at least 6 characters.";
 
 return;
 
 }
 
-$("loginMessage").textContent =
-"Creating account...";
+message.textContent =
+"Creating your account...";
 
 const {
+data,
 error
 } =
 await supabase.auth.signUp({
 
 email,
-password
+password,
+
+options:{
+emailRedirectTo:
+window.location.origin +
+window.location.pathname
+}
 
 });
 
 if(error){
 
-$("loginMessage").textContent =
+message.style.color =
+"#f87171";
+
+message.textContent =
 error.message;
 
 return;
 
 }
 
-$("loginMessage").style.color =
+message.style.color =
 "#4ade80";
 
-$("loginMessage").textContent =
-"Account created. Check your email if confirmation is enabled.";
+if(data.session){
+
+message.textContent =
+"Account created and you are logged in.";
+
+}else{
+
+message.textContent =
+"Account created. Check your email to confirm your account.";
+
+}
 
 };
 
 
-/* GENERATE ID */
+/* ACCOUNT UI */
+
+async function updateAccountUI(){
+
+const button =
+document.getElementById("accountBtn");
+
+if(!button)return;
+
+const {
+data:{
+session
+}
+} =
+await supabase.auth.getSession();
+
+if(session && session.user){
+
+const user =
+session.user;
+
+const name =
+user.user_metadata?.full_name ||
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
+"User";
+
+button.textContent =
+"Hi, " + name + " 👋";
+
+button.onclick =
+openProfile;
+
+}else{
+
+button.textContent =
+"Login";
+
+button.onclick =
+openLogin;
+
+}
+
+}
+
+
+/* PROFILE */
+
+window.openProfile = async function(){
+
+const {
+data:{
+session
+}
+} =
+await supabase.auth.getSession();
+
+if(!session){
+
+openLogin();
+
+return;
+
+}
+
+const user =
+session.user;
+
+const name =
+user.user_metadata?.full_name ||
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
+"User";
+
+const initial =
+name.charAt(0).toUpperCase();
+
+document.getElementById("profileAvatar")
+.textContent =
+initial;
+
+document.getElementById("profileName")
+.textContent =
+name;
+
+document.getElementById("profileEmail")
+.textContent =
+user.email || "";
+
+document
+.getElementById("profileModal")
+.classList.add("show");
+
+};
+
+
+window.closeProfile = function(){
+
+document
+.getElementById("profileModal")
+.classList.remove("show");
+
+};
+
+
+window.openCreateFromProfile = function(){
+
+closeProfile();
+
+setTimeout(
+openCreate,
+200
+);
+
+};
+
+
+/* LOGOUT */
+
+window.logout = async function(){
+
+const {
+error
+} =
+await supabase.auth.signOut();
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+closeProfile();
+
+updateAccountUI();
+
+};
+
+
+/* CREATE PASSPORT */
 
 function generateID(){
 
@@ -1405,88 +2009,104 @@ return "LP-" + code;
 }
 
 
-/* CREATE PASSPORT */
-
-$("passportForm")
+document
+.getElementById("passportForm")
 .addEventListener(
 "submit",
 async function(e){
 
 e.preventDefault();
 
-
 const {
-data:{user}
+data:{
+session
+}
 } =
-await supabase.auth.getUser();
+await supabase.auth.getSession();
 
+if(!session){
 
-if(!user){
+closeCreate();
 
-$("formMessage").textContent =
-"Please login first.";
+openLogin();
 
 return;
 
 }
 
+const user =
+session.user;
 
 const id =
 generateID();
 
-
 const product = {
 
-user_id:user.id,
+user_id:
+user.id,
 
-lifepass_id:id,
+lifepass_id:
+id,
 
 name:
-$("productName").value.trim(),
+document.getElementById("productName")
+.value.trim(),
 
 type:
-$("productType").value,
+document.getElementById("productType")
+.value,
 
 brand:
-$("brand").value.trim() || null,
+document.getElementById("brand")
+.value.trim() || null,
 
 model:
-$("model").value.trim() || null,
+document.getElementById("model")
+.value.trim() || null,
 
 serial:
-$("serial").value.trim() || null,
+document.getElementById("serial")
+.value.trim() || null,
 
 purchase_date:
-$("purchaseDate").value || null,
+document.getElementById("purchaseDate")
+.value || null,
 
 purchase_price:
-$("purchasePrice").value
+document.getElementById("purchasePrice")
+.value
 ?
-Number($("purchasePrice").value)
+Number(
+document.getElementById("purchasePrice")
+.value
+)
 :
 null,
 
 warranty:
-$("warranty").value.trim() || null,
+document.getElementById("warranty")
+.value.trim() || null,
 
 owner_name:
-$("ownerName").value.trim()
+document.getElementById("ownerName")
+.value.trim()
 ||
 user.email,
 
 owner_email:
-$("ownerEmail").value.trim()
+document.getElementById("ownerEmail")
+.value.trim()
 ||
 user.email,
 
 description:
-$("description").value.trim()
-||
-null,
+document.getElementById("description")
+.value.trim() || null,
 
 verified:false,
 
-verification_status:"pending",
+verification_status:
+"pending",
 
 history:[
 {
@@ -1498,9 +2118,11 @@ date:new Date().toISOString()
 ownership_history:[
 {
 owner:
-$("ownerName").value.trim()
+document.getElementById("ownerName")
+.value.trim()
 ||
 user.email,
+
 date:new Date().toISOString()
 }
 ],
@@ -1513,13 +2135,14 @@ status:"active"
 
 };
 
+const message =
+document.getElementById("formMessage");
 
-$("formMessage").style.color =
+message.style.color =
 "#67e8f9";
 
-$("formMessage").textContent =
+message.textContent =
 "Creating passport...";
-
 
 const {
 data,
@@ -1531,35 +2154,34 @@ await supabase
 .select()
 .single();
 
-
 if(error){
 
 console.error(error);
 
-$("formMessage").style.color =
+message.style.color =
 "#f87171";
 
-$("formMessage").textContent =
+message.textContent =
 error.message;
 
 return;
 
 }
 
-
-$("formMessage").style.color =
+message.style.color =
 "#4ade80";
 
-$("formMessage").textContent =
-"Passport created: " + id;
-
+message.textContent =
+"Passport created successfully: " + id;
 
 setTimeout(
 function(){
 
 closeCreate();
 
-$("passportForm").reset();
+document
+.getElementById("passportForm")
+.reset();
 
 showResult(data);
 
@@ -1575,15 +2197,14 @@ showResult(data);
 window.searchPassport = async function(){
 
 const id =
-$("passportSearch")
+document.getElementById("passportSearch")
 .value
 .trim()
 .toUpperCase();
 
-
 if(!id){
 
-showMessage(
+showResultMessage(
 "Enter a LIFEPASS ID."
 );
 
@@ -1591,11 +2212,9 @@ return;
 
 }
 
-
-showMessage(
+showResultMessage(
 "Searching..."
 );
-
 
 const {
 data,
@@ -1607,12 +2226,9 @@ await supabase
 .eq("lifepass_id",id)
 .maybeSingle();
 
-
 if(error){
 
-console.error(error);
-
-showMessage(
+showResultMessage(
 error.message
 );
 
@@ -1620,10 +2236,9 @@ return;
 
 }
 
-
 if(!data){
 
-showMessage(
+showResultMessage(
 "No passport found for " + id
 );
 
@@ -1631,24 +2246,18 @@ return;
 
 }
 
-
 showResult(data);
 
 };
 
 
-/* SHOW RESULT */
-
 function showResult(data){
 
 const result =
-$("result");
+document.getElementById("result");
 
 result.style.display =
 "block";
-
-const verified =
-data.verified === true;
 
 result.innerHTML = `
 
@@ -1664,7 +2273,7 @@ display:flex;
 justify-content:space-between;
 gap:15px;
 flex-wrap:wrap;
-margin-bottom:20px;
+margin-bottom:18px;
 ">
 
 <div>
@@ -1673,8 +2282,7 @@ margin-bottom:20px;
 font-size:11px;
 letter-spacing:2px;
 font-weight:900;
-color:#67e8f9;
-">
+color:#67e8f9">
 LIFEPASS DIGITAL PASSPORT
 </div>
 
@@ -1685,30 +2293,28 @@ ${safe(data.name || "Product")}
 </div>
 
 <div style="
-color:${verified ? "#4ade80":"#fbbf24"};
-font-weight:800
-">
-● ${verified ? "VERIFIED":"PENDING"}
+color:${data.verified ? "#4ade80":"#fbbf24"};
+font-weight:800">
+● ${data.verified ? "VERIFIED":"PENDING"}
 </div>
 
 </div>
 
-${row("LIFEPASS ID",data.lifepass_id)}
-${row("Type",data.type)}
-${row("Brand",data.brand)}
-${row("Model",data.model)}
-${row("Serial",data.serial)}
-${row("Purchase Date",data.purchase_date)}
-${row("Warranty",data.warranty)}
-${row("Owner",data.owner_name)}
+${resultRow("LIFEPASS ID",data.lifepass_id)}
+${resultRow("Type",data.type)}
+${resultRow("Brand",data.brand)}
+${resultRow("Model",data.model)}
+${resultRow("Serial",data.serial)}
+${resultRow("Purchase Date",data.purchase_date)}
+${resultRow("Warranty",data.warranty)}
+${resultRow("Owner",data.owner_name)}
 
 <div style="
 margin-top:18px;
 padding:15px;
 background:#050b16;
 border-radius:10px;
-color:#94a3b8;
-">
+color:#94a3b8">
 ${safe(data.description || "No description available.")}
 </div>
 
@@ -1722,46 +2328,36 @@ behavior:"smooth"
 }
 
 
-function row(label,value){
+function resultRow(label,value){
 
 return `
-
 <div class="row">
-
 <span>${safe(label)}</span>
-
-<strong>
-${safe(value || "-")}
-</strong>
-
+<strong>${safe(value || "-")}</strong>
 </div>
-
 `;
 
 }
 
 
-function showMessage(message){
+function showResultMessage(message){
 
 const result =
-$("result");
+document.getElementById("result");
 
 result.style.display =
 "block";
 
 result.innerHTML = `
-
 <div style="
 padding:18px;
 border-radius:12px;
 background:#0b1728;
 border:1px solid #1b3049;
 color:#94a3b8;
-text-align:center;
-">
+text-align:center">
 ${safe(message)}
 </div>
-
 `;
 
 }
@@ -1769,7 +2365,7 @@ ${safe(message)}
 
 function safe(value){
 
-return String(value)
+return String(value || "")
 .replaceAll("&","&amp;")
 .replaceAll("<","&lt;")
 .replaceAll(">","&gt;")
@@ -1779,28 +2375,388 @@ return String(value)
 }
 
 
-/* AI */
+/* =====================================================
+   AI ASSISTANT
+   ===================================================== */
 
 window.openAI = function(){
 
-alert(
-"LIFEPASS Assistant\n\n" +
-"You can ask about your product passport, " +
-"verification, warranty and product history.\n\n" +
-"AI chat integration can be connected next."
+document
+.getElementById("aiModal")
+.classList.add("show");
+
+setTimeout(
+function(){
+
+document
+.getElementById("chatInput")
+.focus();
+
+},
+100
 );
 
 };
 
 
-/* CLOSE WHEN CLICKING OUTSIDE */
+window.closeAI = function(){
+
+document
+.getElementById("aiModal")
+.classList.remove("show");
+
+};
+
+
+window.chatKey = function(event){
+
+if(event.key === "Enter"){
+
+event.preventDefault();
+
+sendAI();
+
+}
+
+};
+
+
+window.sendAI = function(){
+
+const input =
+document.getElementById("chatInput");
+
+const text =
+input.value.trim();
+
+if(!text)return;
+
+addMessage(
+text,
+"userMsg"
+);
+
+input.value = "";
+
+setTimeout(
+function(){
+
+const answer =
+localAssistant(text);
+
+addMessage(
+answer,
+"aiMsg"
+);
+
+},
+350
+);
+
+};
+
+
+function addMessage(text,type){
+
+const messages =
+document.getElementById("chatMessages");
+
+const div =
+document.createElement("div");
+
+div.className =
+"msg " + type;
+
+div.textContent =
+text;
+
+messages.appendChild(div);
+
+messages.scrollTop =
+messages.scrollHeight;
+
+}
+
+
+/*
+   This is the safe local assistant.
+   It works directly on GitHub Pages without
+   exposing an AI API key.
+*/
+
+function localAssistant(question){
+
+const q =
+question.toLowerCase();
+
+
+if(
+q.includes("what is lifepass") ||
+q.includes("what is life pass")
+){
+
+return `
+LIFEPASS is a digital product passport system.
+
+It gives a product a unique LIFEPASS ID and can
+keep information such as ownership, purchase,
+warranty, service and product history connected
+to that product.
+`;
+
+}
+
+
+if(
+q.includes("create") &&
+q.includes("passport")
+){
+
+return `
+To create a passport:
+
+1. Sign in to LIFEPASS.
+2. Click "Create Product Passport".
+3. Enter the product information.
+4. Submit the form.
+5. LIFEPASS generates a unique passport ID.
+
+You can then use that ID to find the passport.
+`;
+
+}
+
+
+if(
+q.includes("verify") ||
+q.includes("verification")
+){
+
+return `
+A LIFEPASS can be searched using its unique
+LIFEPASS ID.
+
+Go to the Verify section and enter the ID.
+The system will search the LIFEPASS database
+and display the available passport information.
+`;
+
+}
+
+
+if(
+q.includes("warranty")
+){
+
+return `
+Warranty information can be stored as part of
+a product passport.
+
+For example, you can record the warranty period
+when creating the passport.
+`;
+
+}
+
+
+if(
+q.includes("qr")
+){
+
+return `
+A QR code can be connected to a LIFEPASS ID.
+
+When someone scans the QR code, the website can
+open the corresponding passport page automatically.
+`;
+}
+
+
+if(
+q.includes("login") ||
+q.includes("sign in")
+){
+
+return `
+Use the Login button at the top of the website.
+
+You can sign in using email and password.
+Google Sign-In can also be enabled through
+your Supabase authentication settings.
+`;
+}
+
+
+if(
+q.includes("owner") ||
+q.includes("ownership")
+){
+
+return `
+LIFEPASS is designed so the digital passport
+can remain connected to the product when
+ownership changes.
+
+Ownership records can be maintained as part
+of the product history.
+`;
+}
+
+
+if(
+q.includes("hello") ||
+q.includes("hi") ||
+q.includes("hey")
+){
+
+return `
+Hello! 👋
+
+I'm the LIFEPASS Assistant.
+
+You can ask me about:
+• Product passports
+• LIFEPASS IDs
+• Verification
+• Warranty
+• Ownership
+• QR codes
+• Creating a passport
+• Login
+`;
+}
+
+
+return `
+I can currently help with LIFEPASS topics such as:
+
+• What is LIFEPASS?
+• How do I create a passport?
+• How does verification work?
+• How do I use a LIFEPASS ID?
+• How does warranty information work?
+• How does ownership history work?
+• How can QR codes be used?
+• How do I log in?
+
+Try asking one of these questions.
+`;
+
+}
+
+
+/* =====================================================
+   MICROPHONE
+   ===================================================== */
+
+let recognition = null;
+
+window.startVoice = function(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+alert(
+"Voice input is not supported by this browser. Try Google Chrome."
+);
+
+return;
+
+}
+
+if(recognition){
+
+recognition.stop();
+
+recognition = null;
+
+return;
+
+}
+
+recognition =
+new SpeechRecognition();
+
+recognition.lang =
+"en-IN";
+
+recognition.interimResults =
+false;
+
+recognition.continuous =
+false;
+
+const mic =
+document.getElementById("micButton");
+
+recognition.onstart =
+function(){
+
+mic.classList.add(
+"micListening"
+);
+
+mic.textContent =
+"⏹";
+
+};
+
+recognition.onresult =
+function(event){
+
+const text =
+event.results[0][0].transcript;
+
+document.getElementById("chatInput")
+.value =
+text;
+
+sendAI();
+
+};
+
+recognition.onerror =
+function(event){
+
+console.log(
+"Voice error:",
+event.error
+);
+
+};
+
+recognition.onend =
+function(){
+
+mic.classList.remove(
+"micListening"
+);
+
+mic.textContent =
+"🎤";
+
+recognition =
+null;
+
+};
+
+recognition.start();
+
+};
+
+
+/* OUTSIDE MODAL */
 
 window.outsideClose =
 function(event,id){
 
 if(event.target.id === id){
 
-$(id)
+document
+.getElementById(id)
 .classList.remove("show");
 
 }
@@ -1808,28 +2764,31 @@ $(id)
 };
 
 
-/* AUTH STATE */
+/* AUTH SESSION */
 
 supabase.auth.onAuthStateChange(
-(event,session)=>{
+function(event,session){
 
 console.log(
-"Authentication:",
+"Supabase auth:",
 event
+);
+
+setTimeout(
+updateAccountUI,
+0
 );
 
 }
 );
 
 
-/* START */
+/* INITIAL LOAD */
 
-console.log(
-"LIFEPASS loaded successfully."
-);
+updateAccountUI();
 
 </script>
 
 </body>
 </html>
-```
+
