@@ -1661,6 +1661,54 @@ body{
   font-size:13px;
 }
 
+
+/* ===== ONE UNIFIED LIFEPASS ASSISTANT ===== */
+.lp-assistant{
+  position:fixed;right:22px;bottom:22px;width:min(390px,calc(100vw - 28px));
+  background:#fff;border:1px solid var(--border);border-radius:22px;
+  box-shadow:0 24px 70px rgba(4,22,42,.22);z-index:100;overflow:hidden;
+  display:none;
+}
+.lp-assistant.open{display:block}
+.lp-assistant-head{
+  padding:16px 18px;background:linear-gradient(135deg,#071a33,#0b4760);
+  color:#fff;display:flex;align-items:center;justify-content:space-between
+}
+.lp-assistant-title{font-weight:900}.lp-assistant-sub{font-size:11px;color:#cde8ed;margin-top:3px}
+.lp-assistant-body{padding:14px}
+.lp-chat{
+  height:180px;overflow:auto;background:#f7fafc;border:1px solid var(--border);
+  border-radius:14px;padding:12px;margin-bottom:10px
+}
+.lp-msg{font-size:12px;line-height:1.55;margin:7px 0;padding:9px 11px;border-radius:12px;max-width:90%}
+.lp-msg.ai{background:#fff;border:1px solid var(--border);color:var(--navy)}
+.lp-msg.user{background:#071a33;color:#fff;margin-left:auto}
+.lp-ai-input-row{display:flex;gap:8px}
+.lp-ai-input{
+  flex:1;border:1px solid var(--border);border-radius:12px;padding:11px 12px;
+  outline:none
+}
+.lp-ai-mic,.lp-ai-send{
+  border:0;border-radius:12px;width:44px;cursor:pointer;font-weight:900
+}
+.lp-ai-mic{background:#eaf7fa;color:#087f92}.lp-ai-send{background:#0879d1;color:#fff}
+.lp-ai-mic.listening{background:#ffe9ed;color:#b21f39}
+.lp-assistant-tools{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.lp-assistant-tools button{
+  border:1px solid var(--border);background:#fff;border-radius:10px;padding:7px 9px;
+  font-size:11px;cursor:pointer
+}
+.lp-ai-note{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.4}
+.lp-assistant-toggle{
+  position:fixed;right:22px;bottom:22px;z-index:101;border:0;border-radius:999px;
+  padding:13px 17px;background:linear-gradient(135deg,#0879d1,#0aa9a2);
+  color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(8,121,209,.26);cursor:pointer
+}
+@media(max-width:600px){
+  .lp-assistant-toggle{right:14px;bottom:14px}
+  .lp-assistant{right:14px;bottom:70px}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -2422,8 +2470,7 @@ body{
             </div>
 
             <div class="ai-panel" style="margin:18px 0">
-                <span class="ai-badge">LIFEPASS TRUST CHECK</span>
-                <h3 style="margin-top:10px">Verify before a passport becomes trusted</h3>
+                <span class="ai-badge">TRUST CHECK</span><h3 style="margin-top:10px">Verify before a passport becomes trusted</h3>
                 <p style="margin-top:7px;color:#c9d8e8;font-size:13px;line-height:1.6">
                     Upload purchase evidence and a short product verification video.
                     A review workflow can mark the submission as pending, approved, or rejected.
@@ -2551,21 +2598,6 @@ body{
   </div>
 </div>
 
-<!-- AI HELP -->
-<button class="ai-help-fab" type="button" onclick="toggleAIHelp()">✦ LIFEPASS AI</button>
-<div class="ai-help-panel" id="aiHelpPanel">
-  <div class="ai-help-head">LIFEPASS AI Assistant</div>
-  <div class="ai-help-body">
-    <p id="aiHelpText">
-      I can explain how passports, QR verification, product evidence and account security work.
-    </p>
-    <div class="ai-quick">
-      <button onclick="aiHelp('passport')">Create passport</button>
-      <button onclick="aiHelp('verify')">Verification</button>
-      <button onclick="aiHelp('qr')">QR code</button>
-      <button onclick="aiHelp('security')">Account security</button>
-    </div>
-  </div>
 </div>
 
 <!-- SCAN MODAL -->
@@ -3627,19 +3659,161 @@ function agentMessage(type){
 }
 
 
+
 /* =========================
-   GOOGLE SIGN-IN
+   UNIFIED LIFEPASS ASSISTANT
+========================= */
+
+let lifepassRecognition = null;
+let lifepassListening = false;
+
+function toggleLifepassAssistant(){
+  document.getElementById("lpAssistant")?.classList.toggle("open");
+}
+
+function addAssistantMessage(text, who="ai"){
+  const chat=document.getElementById("lpChat");
+  if(!chat) return;
+  const div=document.createElement("div");
+  div.className="lp-msg " + (who==="user" ? "user" : "ai");
+  div.textContent=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function assistantQuick(text){
+  const input=document.getElementById("lpAiInput");
+  if(input) input.value=text;
+  sendLifepassAssistant();
+}
+
+function getAssistantReply(text){
+  const q=text.toLowerCase();
+
+  if(q.includes("create") || q.includes("passport")){
+    return "To create a passport, sign in first, choose Create Passport, enter the product details, add the available evidence, and submit it for verification.";
+  }
+  if(q.includes("verify")){
+    return "Enter the LIFEPASS ID or use the camera QR scanner. A trusted status should only appear after the verification workflow approves the record.";
+  }
+  if(q.includes("qr") || q.includes("scan")){
+    return "Open Search or Verify, choose Scan with camera, allow camera access, and point the camera at the passport QR.";
+  }
+  if(q.includes("security") || q.includes("login") || q.includes("password")){
+    return "Use your own account, a strong password and two-step verification. Never share account passwords or private verification material.";
+  }
+  if(q.includes("camera") || q.includes("photo") || q.includes("image")){
+    return "The owner can choose an image from the device or use the camera while creating a passport. Camera access is requested only when you use that feature.";
+  }
+  if(q.includes("google")){
+    return "Google sign-in requires Google to be enabled and configured in the authentication provider settings, including the correct callback URL.";
+  }
+  return "I can help with passports, verification, QR scanning, camera uploads, account security, and Google sign-in. Try one of the quick options below.";
+}
+
+function sendLifepassAssistant(){
+  const input=document.getElementById("lpAiInput");
+  const text=(input?.value || "").trim();
+  if(!text) return;
+
+  addAssistantMessage(text,"user");
+  input.value="";
+
+  setTimeout(()=>{
+    addAssistantMessage(getAssistantReply(text),"ai");
+  },180);
+}
+
+function toggleLifepassVoice(){
+  const Button=document.getElementById("lpAiMic");
+
+  if(lifepassListening && lifepassRecognition){
+    lifepassRecognition.stop();
+    return;
+  }
+
+  const SpeechRecognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    alert("Voice input is not supported by this browser. You can type your question instead.");
+    return;
+  }
+
+  const recognition=new SpeechRecognition();
+  recognition.lang="en-IN";
+  recognition.interimResults=false;
+  recognition.continuous=false;
+
+  recognition.onstart=()=>{
+    lifepassListening=true;
+    Button?.classList.add("listening");
+    if(Button) Button.textContent="Stop";
+  };
+
+  recognition.onresult=(event)=>{
+    const transcript=event.results[0][0].transcript;
+    const input=document.getElementById("lpAiInput");
+    if(input) input.value=transcript;
+    sendLifepassAssistant();
+  };
+
+  recognition.onerror=(event)=>{
+    console.warn("Voice input:",event.error);
+    if(event.error==="not-allowed"){
+      alert("Microphone access was blocked. Allow microphone access in your browser settings and try again.");
+    }
+  };
+
+  recognition.onend=()=>{
+    lifepassListening=false;
+    Button?.classList.remove("listening");
+    if(Button) Button.textContent="Mic";
+    lifepassRecognition=null;
+  };
+
+  lifepassRecognition=recognition;
+  recognition.start();
+}
+
+/* =========================
+   GOOGLE SIGN-IN ERROR HANDLING
 ========================= */
 
 async function signInWithGoogle(){
-    const { error } = await supabaseClient.auth.signInWithOAuth({
-        provider:"google",
-        options:{
-            redirectTo:"https://lifepassdigital.github.io/lifepass/"
-        }
+  try{
+    const redirectTo=window.location.origin + window.location.pathname;
+
+    const {data,error}=await supabaseClient.auth.signInWithOAuth({
+      provider:"google",
+      options:{
+        redirectTo
+      }
     });
-    if(error) alert(error.message || "Google sign-in could not start.");
+
+    if(error){
+      console.error("Google sign-in:",error);
+      alert(
+        "Google sign-in is not configured yet. In Supabase, enable Google under " +
+        "Authentication → Sign In / Providers and add the Google Client ID/Secret. " +
+        "Then add this site's URL to the allowed redirect URLs."
+      );
+    }
+  }catch(error){
+    console.error(error);
+    alert("Google sign-in could not start. Please check the Google provider configuration.");
+  }
 }
+
+/* Handle the return from an OAuth provider. */
+window.addEventListener("load",async()=>{
+  try{
+    const {data}=await supabaseClient.auth.getSession();
+    if(data?.session) await refreshUser();
+  }catch(error){
+    console.debug("Auth session:",error);
+  }
+});
+
 
 /* =========================
    MFA / 2-STEP VERIFICATION
@@ -3749,20 +3923,6 @@ async function uploadLifepassFile(file,folder,userId){
    AI HELP
 ========================= */
 
-function toggleAIHelp(){
-    document.getElementById("aiHelpPanel")?.classList.toggle("show");
-}
-
-function aiHelp(topic){
-    const messages={
-        passport:"A product passport stores the product identity, purchase information, warranty, history and verification status in one record.",
-        verify:"Verification should use evidence and a review process. An uploaded video can support review, but an AI result alone should not be presented as proof that a product is genuine.",
-        qr:"The QR contains the LIFEPASS URL and passport ID. Scanning it lets the website look up the passport record.",
-        security:"Use Supabase Auth for accounts, strong passwords and MFA. Never put a Supabase service-role key in index.html."
-    };
-    const el=document.getElementById("aiHelpText");
-    if(el) el.textContent=messages[topic] || messages.passport;
-}
 
 /* =========================
    VERIFICATION SUBMISSION
@@ -3868,6 +4028,53 @@ function heroVerifyPassport(){
   },120);
 }
 </script>
+
+
+<!-- ONE UNIFIED AI ASSISTANT -->
+<button class="lp-assistant-toggle" type="button" onclick="toggleLifepassAssistant()">
+  Assistant
+</button>
+
+<div class="lp-assistant" id="lpAssistant">
+  <div class="lp-assistant-head">
+    <div>
+      <div class="lp-assistant-title">LIFEPASS Assistant</div>
+      <div class="lp-assistant-sub">Ask by typing or speaking</div>
+    </div>
+    <button type="button" onclick="toggleLifepassAssistant()"
+            style="background:none;border:0;color:#fff;font-size:22px;cursor:pointer">×</button>
+  </div>
+
+  <div class="lp-assistant-body">
+    <div class="lp-chat" id="lpChat">
+      <div class="lp-msg ai">
+        Hi. I can help you create a passport, find a passport, understand verification,
+        or troubleshoot your account.
+      </div>
+    </div>
+
+    <div class="lp-ai-input-row">
+      <input class="lp-ai-input" id="lpAiInput"
+             placeholder="Ask something..." autocomplete="off"
+             onkeydown="if(event.key==='Enter') sendLifepassAssistant()">
+      <button class="lp-ai-mic" id="lpAiMic" type="button"
+              onclick="toggleLifepassVoice()" aria-label="Use microphone">Mic</button>
+      <button class="lp-ai-send" type="button"
+              onclick="sendLifepassAssistant()" aria-label="Send">↑</button>
+    </div>
+
+    <div class="lp-assistant-tools">
+      <button type="button" onclick="assistantQuick('How do I create a passport?')">Create</button>
+      <button type="button" onclick="assistantQuick('How do I verify a passport?')">Verify</button>
+      <button type="button" onclick="assistantQuick('How does the QR work?')">QR</button>
+      <button type="button" onclick="assistantQuick('How do I secure my account?')">Security</button>
+    </div>
+
+    <div class="lp-ai-note">
+      Voice input uses your browser's microphone permission. It is only active while you are using the microphone button.
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
