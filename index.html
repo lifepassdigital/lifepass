@@ -1,28 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>LIFEPASS — Digital Product Passport</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    LIFEPASS — Digital Product Passport
+  </title>
 
   <meta
     name="description"
-    content="LIFEPASS creates a secure digital passport for products, preserving ownership, warranty, service and verification history."
-  />
+    content="LIFEPASS — Every product has a story. Keep it forever."
+  >
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #07111f;
-      color: #ffffff;
-      min-height: 100vh;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        #06101d;
+
+      color:
+        #ffffff;
+
+      min-height:
+        100vh;
     }
 
     button,
@@ -36,563 +58,1393 @@
       cursor: pointer;
     }
 
-    /* NAVBAR */
+
+    /* =====================================================
+       NAVBAR
+       ===================================================== */
 
     nav {
-      width: 100%;
-      padding: 18px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(7,17,31,0.92);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(15px);
+
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        1000;
+
+      width:
+        100%;
+
+      padding:
+        17px 6%;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      background:
+        rgba(6,16,29,0.92);
+
+      backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,0.08);
     }
+
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: 1px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        11px;
+
+      font-size:
+        22px;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        1px;
     }
+
 
     .logo-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 21px;
-      box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+
+      width:
+        43px;
+
+      height:
+        43px;
+
+      border-radius:
+        13px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #06b6d4
+        );
+
+      box-shadow:
+        0 8px 30px
+        rgba(37,99,235,0.35);
+
+      font-size:
+        15px;
     }
+
 
     .nav-links {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        7px;
     }
+
 
     .nav-links button {
-      background: transparent;
-      border: 0;
-      color: #cbd5e1;
-      padding: 10px 14px;
-      border-radius: 9px;
+
+      border:
+        0;
+
+      background:
+        transparent;
+
+      color:
+        #aebdd0;
+
+      padding:
+        10px 13px;
+
+      border-radius:
+        9px;
+
+      transition:
+        0.2s;
     }
+
 
     .nav-links button:hover {
-      background: rgba(255,255,255,0.07);
-      color: white;
+
+      color:
+        white;
+
+      background:
+        rgba(255,255,255,0.07);
     }
+
 
     .login-btn {
-      background: white !important;
-      color: #07111f !important;
-      font-weight: 700;
+
+      background:
+        #ffffff !important;
+
+      color:
+        #07111f !important;
+
+      font-weight:
+        800;
     }
 
-    /* HERO */
+
+    /* =====================================================
+       HERO
+       ===================================================== */
 
     .hero {
-      min-height: 650px;
-      padding: 90px 7%;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 60px;
-      align-items: center;
+
+      min-height:
+        680px;
+
+      padding:
+        90px 7%;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1.1fr 0.9fr;
+
+      gap:
+        60px;
+
+      align-items:
+        center;
+
       background:
-        radial-gradient(circle at 10% 20%, rgba(37,99,235,0.20), transparent 30%),
-        radial-gradient(circle at 90% 40%, rgba(6,182,212,0.15), transparent 30%);
+
+        radial-gradient(
+          circle at 8% 20%,
+          rgba(37,99,235,0.23),
+          transparent 32%
+        ),
+
+        radial-gradient(
+          circle at 90% 30%,
+          rgba(6,182,212,0.18),
+          transparent 32%
+        );
     }
+
 
     .badge {
-      display: inline-block;
-      padding: 8px 14px;
-      border: 1px solid rgba(56,189,248,0.3);
-      border-radius: 30px;
-      color: #67e8f9;
-      background: rgba(6,182,212,0.08);
-      margin-bottom: 22px;
-      font-size: 13px;
-      font-weight: 700;
+
+      display:
+        inline-block;
+
+      padding:
+        8px 14px;
+
+      border-radius:
+        30px;
+
+      color:
+        #67e8f9;
+
+      background:
+        rgba(6,182,212,0.08);
+
+      border:
+        1px solid
+        rgba(103,232,249,0.25);
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        1px;
+
+      margin-bottom:
+        22px;
     }
+
 
     .hero h1 {
-      font-size: clamp(45px, 6vw, 76px);
-      line-height: 1.02;
-      margin-bottom: 24px;
+
+      font-size:
+        clamp(45px, 6vw, 76px);
+
+      line-height:
+        1.02;
+
+      margin-bottom:
+        25px;
     }
+
 
     .gradient-text {
-      background: linear-gradient(90deg, #60a5fa, #22d3ee);
-      -webkit-background-clip: text;
-      color: transparent;
+
+      background:
+        linear-gradient(
+          90deg,
+          #60a5fa,
+          #22d3ee
+        );
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      color:
+        transparent;
     }
+
 
     .hero p {
-      color: #a8b5c7;
-      font-size: 18px;
-      line-height: 1.7;
-      max-width: 650px;
-      margin-bottom: 32px;
+
+      max-width:
+        670px;
+
+      color:
+        #a8b6c8;
+
+      font-size:
+        18px;
+
+      line-height:
+        1.7;
+
+      margin-bottom:
+        32px;
     }
+
 
     .hero-buttons {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
+
+      display:
+        flex;
+
+      gap:
+        13px;
+
+      flex-wrap:
+        wrap;
     }
 
-    .primary-btn,
-    .secondary-btn {
-      padding: 14px 21px;
-      border-radius: 12px;
-      border: 0;
-      font-weight: 700;
-    }
 
     .primary-btn {
-      background: linear-gradient(135deg, #2563eb, #0891b2);
-      color: white;
-      box-shadow: 0 10px 30px rgba(37,99,235,0.25);
+
+      border:
+        0;
+
+      border-radius:
+        12px;
+
+      padding:
+        14px 20px;
+
+      color:
+        white;
+
+      font-weight:
+        800;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #0891b2
+        );
+
+      box-shadow:
+        0 10px 30px
+        rgba(37,99,235,0.25);
     }
+
 
     .secondary-btn {
-      background: rgba(255,255,255,0.07);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.1);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      border-radius:
+        12px;
+
+      padding:
+        14px 20px;
+
+      color:
+        white;
+
+      background:
+        rgba(255,255,255,0.06);
+
+      font-weight:
+        700;
     }
 
-    /* PRODUCT CARD */
+
+    /* =====================================================
+       PASSPORT PREVIEW
+       ===================================================== */
 
     .passport-preview {
-      background: linear-gradient(145deg, #101f35, #0b1729);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 25px;
-      padding: 28px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-      transform: rotate(1deg);
+
+      padding:
+        30px;
+
+      border-radius:
+        25px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #11223a,
+          #091727
+        );
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      box-shadow:
+        0 35px 80px
+        rgba(0,0,0,0.35);
+
+      transform:
+        rotate(1deg);
     }
+
 
     .passport-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      margin-bottom:
+        28px;
     }
+
 
     .passport-label {
-      color: #67e8f9;
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: 800;
+
+      color:
+        #67e8f9;
+
+      font-size:
+        11px;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        2px;
     }
+
 
     .verified {
-      color: #4ade80;
-      font-size: 13px;
-      font-weight: 700;
+
+      color:
+        #4ade80;
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
     }
+
 
     .passport-product {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 28px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        18px;
+
+      margin-bottom:
+        27px;
     }
+
 
     .product-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #1d4ed8, #0891b2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
+
+      width:
+        72px;
+
+      height:
+        72px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1d4ed8,
+          #0891b2
+        );
+
+      font-size:
+        30px;
     }
+
 
     .passport-product h3 {
-      font-size: 21px;
-      margin-bottom: 6px;
+
+      font-size:
+        21px;
+
+      margin-bottom:
+        6px;
     }
+
 
     .passport-product p {
-      color: #94a3b8;
-      font-size: 13px;
+
+      color:
+        #94a3b8;
+
+      font-size:
+        13px;
     }
+
 
     .passport-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 13px 0;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      color: #94a3b8;
-      font-size: 14px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      padding:
+        13px 0;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,0.07);
+
+      color:
+        #94a3b8;
+
+      font-size:
+        14px;
     }
+
 
     .passport-row strong {
-      color: white;
+
+      color:
+        white;
+
+      text-align:
+        right;
     }
 
-    /* SECTIONS */
+
+    /* =====================================================
+       GENERAL SECTIONS
+       ===================================================== */
 
     section {
-      padding: 85px 7%;
+
+      padding:
+        85px 7%;
     }
+
 
     .section-title {
-      text-align: center;
-      margin-bottom: 50px;
+
+      text-align:
+        center;
+
+      margin-bottom:
+        50px;
     }
+
 
     .section-title h2 {
-      font-size: 38px;
-      margin-bottom: 12px;
+
+      font-size:
+        38px;
+
+      margin-bottom:
+        12px;
     }
+
 
     .section-title p {
-      color: #94a3b8;
+
+      color:
+        #94a3b8;
     }
+
+
+    /* =====================================================
+       FEATURES
+       ===================================================== */
 
     .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:
+        20px;
     }
+
 
     .feature-card {
-      padding: 28px;
-      background: #0c192b;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      transition: 0.25s;
+
+      padding:
+        28px;
+
+      border-radius:
+        18px;
+
+      background:
+        #0b192b;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+      transition:
+        0.25s;
     }
+
 
     .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(34,211,238,0.3);
+
+      transform:
+        translateY(-5px);
+
+      border-color:
+        rgba(34,211,238,0.35);
     }
+
 
     .feature-icon {
-      font-size: 30px;
-      margin-bottom: 18px;
+
+      font-size:
+        30px;
+
+      margin-bottom:
+        17px;
     }
+
 
     .feature-card h3 {
-      margin-bottom: 10px;
+
+      margin-bottom:
+        10px;
     }
+
 
     .feature-card p {
-      color: #94a3b8;
-      line-height: 1.6;
-      font-size: 14px;
+
+      color:
+        #94a3b8;
+
+      line-height:
+        1.6;
+
+      font-size:
+        14px;
     }
 
-    /* PRODUCT TYPES */
+
+    /* =====================================================
+       PRODUCT TYPES
+       ===================================================== */
 
     .product-types {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 14px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(6,1fr);
+
+      gap:
+        14px;
     }
+
 
     .type-card {
-      background: #0c192b;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 22px 12px;
-      text-align: center;
+
+      padding:
+        22px 10px;
+
+      text-align:
+        center;
+
+      border-radius:
+        16px;
+
+      background:
+        #0b192b;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
     }
+
 
     .type-card div {
-      font-size: 30px;
-      margin-bottom: 10px;
+
+      font-size:
+        29px;
+
+      margin-bottom:
+        10px;
     }
+
 
     .type-card span {
-      color: #cbd5e1;
-      font-size: 13px;
+
+      color:
+        #cbd5e1;
+
+      font-size:
+        13px;
     }
 
-    /* HOW IT WORKS */
+
+    /* =====================================================
+       STEPS
+       ===================================================== */
 
     .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap:
+        18px;
     }
+
 
     .step {
-      background: #0c192b;
-      border-radius: 18px;
-      padding: 25px;
-      border: 1px solid rgba(255,255,255,0.07);
+
+      padding:
+        25px;
+
+      border-radius:
+        18px;
+
+      background:
+        #0b192b;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
     }
+
 
     .step-number {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #1d4ed8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      margin-bottom: 18px;
+
+      width:
+        38px;
+
+      height:
+        38px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        50%;
+
+      background:
+        #1d4ed8;
+
+      font-weight:
+        900;
+
+      margin-bottom:
+        18px;
     }
+
 
     .step p {
-      color: #94a3b8;
-      margin-top: 8px;
-      line-height: 1.5;
-      font-size: 14px;
+
+      color:
+        #94a3b8;
+
+      line-height:
+        1.5;
+
+      font-size:
+        14px;
+
+      margin-top:
+        8px;
     }
 
-    /* MODAL */
+
+    /* =====================================================
+       VERIFY
+       ===================================================== */
+
+    .search-box {
+
+      max-width:
+        680px;
+
+      margin:
+        0 auto;
+
+      display:
+        flex;
+
+      gap:
+        10px;
+    }
+
+
+    .search-box input {
+
+      flex:
+        1;
+
+      min-width:
+        0;
+
+      padding:
+        15px;
+
+      border:
+        1px solid
+        #263a53;
+
+      border-radius:
+        11px;
+
+      outline:
+        none;
+
+      color:
+        white;
+
+      background:
+        #0b192b;
+    }
+
+
+    .search-box input:focus {
+
+      border-color:
+        #38bdf8;
+    }
+
+
+    /* =====================================================
+       AI
+       ===================================================== */
+
+    .ai-section {
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,0.08),
+          rgba(6,182,212,0.06)
+        );
+    }
+
+
+    .ai-card {
+
+      max-width:
+        850px;
+
+      margin:
+        auto;
+
+      padding:
+        38px;
+
+      text-align:
+        center;
+
+      border-radius:
+        23px;
+
+      background:
+        #0b192b;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
+    }
+
+
+    .ai-symbol {
+
+      width:
+        65px;
+
+      height:
+        65px;
+
+      margin:
+        0 auto 18px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #06b6d4
+        );
+
+      font-size:
+        28px;
+    }
+
+
+    .ai-card p {
+
+      max-width:
+        650px;
+
+      margin:
+        15px auto 25px;
+
+      color:
+        #94a3b8;
+
+      line-height:
+        1.7;
+    }
+
+
+    /* =====================================================
+       MODALS
+       ===================================================== */
 
     .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 500;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+
+      display:
+        none;
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        5000;
+
+      padding:
+        20px;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        rgba(0,0,0,0.78);
     }
+
 
     .modal.active {
-      display: flex;
+
+      display:
+        flex;
     }
+
 
     .modal-box {
-      width: min(650px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #0c192b;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 22px;
-      padding: 30px;
+
+      width:
+        min(650px,100%);
+
+      max-height:
+        90vh;
+
+      overflow-y:
+        auto;
+
+      padding:
+        30px;
+
+      border-radius:
+        22px;
+
+      background:
+        #0b192b;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      box-shadow:
+        0 30px 100px
+        rgba(0,0,0,0.5);
     }
+
 
     .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      margin-bottom:
+        25px;
     }
+
 
     .close-btn {
-      background: transparent;
-      border: 0;
-      color: #94a3b8;
-      font-size: 25px;
+
+      border:
+        0;
+
+      background:
+        transparent;
+
+      color:
+        #94a3b8;
+
+      font-size:
+        27px;
     }
+
 
     .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:
+        15px;
     }
+
 
     .field {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        7px;
     }
+
 
     .field.full {
-      grid-column: 1 / -1;
+
+      grid-column:
+        1 / -1;
     }
 
+
     .field label {
-      color: #cbd5e1;
-      font-size: 13px;
-      font-weight: 700;
+
+      color:
+        #cbd5e1;
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
     }
+
 
     .field input,
     .field select,
     .field textarea {
-      width: 100%;
-      background: #07111f;
-      border: 1px solid #24344b;
-      color: white;
-      padding: 12px;
-      border-radius: 9px;
-      outline: none;
+
+      width:
+        100%;
+
+      padding:
+        12px;
+
+      border:
+        1px solid
+        #263a53;
+
+      border-radius:
+        9px;
+
+      outline:
+        none;
+
+      background:
+        #06101d;
+
+      color:
+        white;
     }
 
-    .field textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
 
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
-      border-color: #38bdf8;
+
+      border-color:
+        #38bdf8;
     }
+
+
+    .field textarea {
+
+      min-height:
+        95px;
+
+      resize:
+        vertical;
+    }
+
 
     .submit-btn {
-      width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      border: 0;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #2563eb, #0891b2);
-      color: white;
-      font-weight: 800;
+
+      width:
+        100%;
+
+      margin-top:
+        22px;
+
+      padding:
+        14px;
+
+      border:
+        0;
+
+      border-radius:
+        10px;
+
+      color:
+        white;
+
+      font-weight:
+        800;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #0891b2
+        );
     }
 
-    /* SEARCH */
 
-    .search-box {
-      max-width: 650px;
-      margin: 0 auto;
-      display: flex;
-      gap: 10px;
+    .modal-note {
+
+      margin-top:
+        14px;
+
+      text-align:
+        center;
+
+      color:
+        #64748b;
+
+      font-size:
+        12px;
+
+      line-height:
+        1.5;
     }
 
-    .search-box input {
-      flex: 1;
-      padding: 15px;
-      background: #0c192b;
-      color: white;
-      border: 1px solid #24344b;
-      border-radius: 11px;
-      outline: none;
-    }
 
-    /* AI */
-
-    .ai-section {
-      background: linear-gradient(
-        135deg,
-        rgba(37,99,235,0.08),
-        rgba(6,182,212,0.06)
-      );
-    }
-
-    .ai-card {
-      max-width: 850px;
-      margin: auto;
-      padding: 35px;
-      background: #0c192b;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      text-align: center;
-    }
-
-    .ai-card p {
-      color: #94a3b8;
-      line-height: 1.7;
-      margin: 15px auto 25px;
-      max-width: 650px;
-    }
-
-    /* FOOTER */
+    /* =====================================================
+       FOOTER
+       ===================================================== */
 
     footer {
-      padding: 35px 7%;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      justify-content: space-between;
-      color: #64748b;
-      font-size: 13px;
+
+      padding:
+        35px 7%;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      color:
+        #64748b;
+
+      font-size:
+        13px;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,0.08);
     }
 
-    /* RESPONSIVE */
 
-    @media(max-width: 900px) {
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media(max-width:900px) {
+
       .hero {
-        grid-template-columns: 1fr;
-        padding-top: 60px;
+
+        grid-template-columns:
+          1fr;
+
+        padding-top:
+          60px;
       }
+
 
       .features {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+          1fr 1fr;
       }
+
 
       .product-types {
-        grid-template-columns: repeat(3, 1fr);
+
+        grid-template-columns:
+          repeat(3,1fr);
       }
+
 
       .steps {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+          1fr 1fr;
       }
+
     }
 
-    @media(max-width: 600px) {
+
+    @media(max-width:600px) {
+
       nav {
-        padding: 14px 5%;
+
+        padding:
+          14px 5%;
       }
+
 
       .nav-links button:not(.login-btn) {
-        display: none;
+
+        display:
+          none;
       }
+
 
       .hero {
-        padding: 55px 5%;
+
+        padding:
+          55px 5%;
       }
 
+
       section {
-        padding: 60px 5%;
+
+        padding:
+          60px 5%;
       }
+
 
       .features,
       .steps {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
       }
+
 
       .product-types {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+          repeat(2,1fr);
       }
+
 
       .form-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
       }
+
 
       .field.full {
-        grid-column: auto;
+
+        grid-column:
+          auto;
       }
 
-      footer {
-        flex-direction: column;
-        gap: 10px;
+
+      .search-box {
+
+        flex-direction:
+          column;
       }
+
+
+      footer {
+
+        flex-direction:
+          column;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <!-- NAVIGATION -->
+
+  <!-- =====================================================
+       NAVBAR
+       ===================================================== -->
 
   <nav>
+
     <div class="logo">
-      <div class="logo-icon">LP</div>
-      <span>LIFEPASS</span>
+
+      <div class="logo-icon">
+        LP
+      </div>
+
+      <span>
+        LIFEPASS
+      </span>
+
     </div>
 
+
     <div class="nav-links">
-      <button onclick="scrollToSection('features')">Features</button>
-      <button onclick="scrollToSection('how')">How it works</button>
-      <button onclick="scrollToSection('verify')">Verify</button>
-      <button class="login-btn" onclick="openLogin()">Login</button>
+
+      <button
+        onclick="scrollToSection('features')"
+      >
+        Features
+      </button>
+
+
+      <button
+        onclick="scrollToSection('how')"
+      >
+        How it works
+      </button>
+
+
+      <button
+        onclick="scrollToSection('verify')"
+      >
+        Verify
+      </button>
+
+
+      <button
+        class="login-btn"
+        onclick="openLogin()"
+      >
+        Login
+      </button>
+
     </div>
+
   </nav>
 
 
-  <!-- HERO -->
+  <!-- =====================================================
+       HERO
+       ===================================================== -->
 
   <main>
 
@@ -604,18 +1456,26 @@
           DIGITAL PRODUCT IDENTITY
         </div>
 
+
         <h1>
+
           Every product has a story.
+
           <span class="gradient-text">
             Keep it forever.
           </span>
+
         </h1>
 
+
         <p>
+
           LIFEPASS creates a digital passport for your products.
-          Store ownership, purchase, warranty, service and verification
-          information in one secure place.
+          Keep ownership, purchase, warranty, service and
+          verification information connected to the product.
+
         </p>
+
 
         <div class="hero-buttons">
 
@@ -625,6 +1485,7 @@
           >
             + Create Product Passport
           </button>
+
 
           <button
             class="secondary-btn"
@@ -648,11 +1509,13 @@
             LIFEPASS DIGITAL PASSPORT
           </div>
 
+
           <div class="verified">
             ● VERIFIED
           </div>
 
         </div>
+
 
         <div class="passport-product">
 
@@ -660,31 +1523,71 @@
             💻
           </div>
 
+
           <div>
-            <h3>Example Laptop</h3>
-            <p>Digital Product Passport</p>
+
+            <h3>
+              Example Laptop
+            </h3>
+
+            <p>
+              Digital Product Passport
+            </p>
+
           </div>
 
         </div>
 
-        <div class="passport-row">
-          <span>LIFEPASS ID</span>
-          <strong>LP-YSQ7SUCQ</strong>
-        </div>
 
         <div class="passport-row">
-          <span>Owner</span>
-          <strong>Verified Owner</strong>
+
+          <span>
+            LIFEPASS ID
+          </span>
+
+          <strong>
+            LP-YSQ7SUCQ
+          </strong>
+
         </div>
 
-        <div class="passport-row">
-          <span>Warranty</span>
-          <strong>Active</strong>
-        </div>
 
         <div class="passport-row">
-          <span>History</span>
-          <strong>Available</strong>
+
+          <span>
+            Owner
+          </span>
+
+          <strong>
+            Verified Owner
+          </strong>
+
+        </div>
+
+
+        <div class="passport-row">
+
+          <span>
+            Warranty
+          </span>
+
+          <strong>
+            Active
+          </strong>
+
+        </div>
+
+
+        <div class="passport-row">
+
+          <span>
+            History
+          </span>
+
+          <strong>
+            Available
+          </strong>
+
         </div>
 
       </div>
@@ -692,16 +1595,20 @@
     </section>
 
 
-    <!-- FEATURES -->
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
 
     <section id="features">
 
       <div class="section-title">
 
-        <h2>One passport. Complete history.</h2>
+        <h2>
+          One passport. Complete history.
+        </h2>
 
         <p>
-          Everything important about a product stays connected.
+          Keep important product information connected.
         </p>
 
       </div>
@@ -709,15 +1616,20 @@
 
       <div class="features">
 
+
         <div class="feature-card">
 
-          <div class="feature-icon">🪪</div>
+          <div class="feature-icon">
+            🪪
+          </div>
 
-          <h3>Digital Identity</h3>
+          <h3>
+            Digital Identity
+          </h3>
 
           <p>
-            Give every product a unique LIFEPASS ID that stays with
-            the product throughout its lifetime.
+            Give every product a unique LIFEPASS ID
+            that stays connected to the product.
           </p>
 
         </div>
@@ -725,13 +1637,17 @@
 
         <div class="feature-card">
 
-          <div class="feature-icon">🛡️</div>
+          <div class="feature-icon">
+            🛡️
+          </div>
 
-          <h3>Verification</h3>
+          <h3>
+            Verification
+          </h3>
 
           <p>
-            Keep verification information and supporting documents
-            connected to the product passport.
+            Keep product verification information
+            and supporting records together.
           </p>
 
         </div>
@@ -739,13 +1655,17 @@
 
         <div class="feature-card">
 
-          <div class="feature-icon">🔧</div>
+          <div class="feature-icon">
+            🔧
+          </div>
 
-          <h3>Service History</h3>
+          <h3>
+            Service History
+          </h3>
 
           <p>
-            Keep repairs, maintenance and important service records
-            together.
+            Keep repairs and maintenance records
+            connected to the product.
           </p>
 
         </div>
@@ -753,13 +1673,17 @@
 
         <div class="feature-card">
 
-          <div class="feature-icon">📄</div>
+          <div class="feature-icon">
+            📄
+          </div>
 
-          <h3>Documents</h3>
+          <h3>
+            Documents
+          </h3>
 
           <p>
-            Store invoices, receipts, warranty information and
-            supporting documents.
+            Store invoices, receipts and warranty
+            information with the passport.
           </p>
 
         </div>
@@ -767,12 +1691,17 @@
 
         <div class="feature-card">
 
-          <div class="feature-icon">🔄</div>
+          <div class="feature-icon">
+            🔄
+          </div>
 
-          <h3>Ownership History</h3>
+          <h3>
+            Ownership History
+          </h3>
 
           <p>
-            The passport follows the product when ownership changes.
+            The passport follows the product when
+            ownership changes.
           </p>
 
         </div>
@@ -780,32 +1709,41 @@
 
         <div class="feature-card">
 
-          <div class="feature-icon">📱</div>
+          <div class="feature-icon">
+            📱
+          </div>
 
-          <h3>QR Access</h3>
+          <h3>
+            QR Access
+          </h3>
 
           <p>
-            Use a QR code to quickly open the product's digital
-            passport.
+            Quickly open a product passport using
+            its LIFEPASS QR code.
           </p>
 
         </div>
+
 
       </div>
 
     </section>
 
 
-    <!-- PRODUCT TYPES -->
+    <!-- =====================================================
+         PRODUCT TYPES
+         ===================================================== -->
 
     <section>
 
       <div class="section-title">
 
-        <h2>Built for real products</h2>
+        <h2>
+          Built for real products
+        </h2>
 
         <p>
-          Create a passport for almost anything you own.
+          Create a passport for the products you own.
         </p>
 
       </div>
@@ -813,48 +1751,59 @@
 
       <div class="product-types">
 
+
         <div class="type-card">
           <div>💻</div>
           <span>Laptop</span>
         </div>
+
 
         <div class="type-card">
           <div>📱</div>
           <span>Smartphone</span>
         </div>
 
+
         <div class="type-card">
           <div>🚲</div>
           <span>Bicycle</span>
         </div>
+
 
         <div class="type-card">
           <div>📷</div>
           <span>Camera</span>
         </div>
 
+
         <div class="type-card">
           <div>🎮</div>
           <span>Gaming Console</span>
         </div>
+
 
         <div class="type-card">
           <div>🤖</div>
           <span>Robot</span>
         </div>
 
+
       </div>
 
     </section>
 
 
-    <!-- HOW IT WORKS -->
+    <!-- =====================================================
+         HOW IT WORKS
+         ===================================================== -->
 
     <section id="how">
 
       <div class="section-title">
 
-        <h2>How LIFEPASS works</h2>
+        <h2>
+          How LIFEPASS works
+        </h2>
 
         <p>
           From product to digital history.
@@ -865,11 +1814,16 @@
 
       <div class="steps">
 
+
         <div class="step">
 
-          <div class="step-number">1</div>
+          <div class="step-number">
+            1
+          </div>
 
-          <h3>Create</h3>
+          <h3>
+            Create
+          </h3>
 
           <p>
             Create a digital passport for your product.
@@ -880,12 +1834,16 @@
 
         <div class="step">
 
-          <div class="step-number">2</div>
+          <div class="step-number">
+            2
+          </div>
 
-          <h3>Get your ID</h3>
+          <h3>
+            Get your ID
+          </h3>
 
           <p>
-            LIFEPASS generates a unique product passport ID.
+            LIFEPASS generates a unique passport ID.
           </p>
 
         </div>
@@ -893,12 +1851,17 @@
 
         <div class="step">
 
-          <div class="step-number">3</div>
+          <div class="step-number">
+            3
+          </div>
 
-          <h3>Build history</h3>
+          <h3>
+            Build history
+          </h3>
 
           <p>
-            Add ownership, warranty, service and document records.
+            Add warranty, ownership, service and
+            document information.
           </p>
 
         </div>
@@ -906,31 +1869,41 @@
 
         <div class="step">
 
-          <div class="step-number">4</div>
+          <div class="step-number">
+            4
+          </div>
 
-          <h3>Transfer</h3>
+          <h3>
+            Transfer
+          </h3>
 
           <p>
-            The passport can stay with the product when ownership changes.
+            The passport can stay with the product
+            when ownership changes.
           </p>
 
         </div>
+
 
       </div>
 
     </section>
 
 
-    <!-- VERIFY -->
+    <!-- =====================================================
+         VERIFY
+         ===================================================== -->
 
     <section id="verify">
 
       <div class="section-title">
 
-        <h2>Verify a LIFEPASS</h2>
+        <h2>
+          Verify a LIFEPASS
+        </h2>
 
         <p>
-          Enter a LIFEPASS ID to find a passport.
+          Search using a LIFEPASS ID.
         </p>
 
       </div>
@@ -943,7 +1916,8 @@
           type="text"
           placeholder="Example: LP-YSQ7SUCQ"
           autocomplete="off"
-        />
+        >
+
 
         <button
           class="primary-btn"
@@ -958,7 +1932,7 @@
       <div
         id="searchResult"
         style="
-          max-width:650px;
+          max-width:680px;
           margin:25px auto 0;
           display:none;
         "
@@ -967,21 +1941,32 @@
     </section>
 
 
-    <!-- AI -->
+    <!-- =====================================================
+         AI ASSISTANT
+         ===================================================== -->
 
     <section class="ai-section">
 
       <div class="ai-card">
 
-        <div style="font-size:45px;">✦</div>
+        <div class="ai-symbol">
+          ✦
+        </div>
 
-        <h2>LIFEPASS Assistant</h2>
+
+        <h2>
+          LIFEPASS Assistant
+        </h2>
+
 
         <p>
+
           Get help understanding your product passport,
-          warranty information, verification process and
-          LIFEPASS features.
+          warranty information, verification process
+          and LIFEPASS features.
+
         </p>
+
 
         <button
           class="primary-btn"
@@ -997,7 +1982,9 @@
   </main>
 
 
-  <!-- CREATE PASSPORT MODAL -->
+  <!-- =====================================================
+       CREATE PASSPORT MODAL
+       ===================================================== -->
 
   <div
     id="createModal"
@@ -1006,9 +1993,13 @@
 
     <div class="modal-box">
 
+
       <div class="modal-header">
 
-        <h2>Create Product Passport</h2>
+        <h2>
+          Create Product Passport
+        </h2>
+
 
         <button
           class="close-btn"
@@ -1025,41 +2016,75 @@
         onsubmit="createPassport(event)"
       >
 
+
         <div class="form-grid">
+
 
           <div class="field">
 
-            <label>Product Name *</label>
+            <label>
+              Product Name *
+            </label>
 
             <input
               id="productName"
               required
               placeholder="Example Laptop"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Product Type *</label>
+            <label>
+              Product Type *
+            </label>
 
             <select
               id="productType"
               required
             >
 
-              <option value="">Select type</option>
+              <option value="">
+                Select type
+              </option>
 
-              <option>Laptop</option>
-              <option>Smartphone</option>
-              <option>Bicycle</option>
-              <option>Camera</option>
-              <option>Gaming Console</option>
-              <option>Robot</option>
-              <option>Television</option>
-              <option>Appliance</option>
-              <option>Other</option>
+              <option>
+                Laptop
+              </option>
+
+              <option>
+                Smartphone
+              </option>
+
+              <option>
+                Bicycle
+              </option>
+
+              <option>
+                Camera
+              </option>
+
+              <option>
+                Gaming Console
+              </option>
+
+              <option>
+                Robot
+              </option>
+
+              <option>
+                Television
+              </option>
+
+              <option>
+                Appliance
+              </option>
+
+              <option>
+                Other
+              </option>
 
             </select>
 
@@ -1068,105 +2093,123 @@
 
           <div class="field">
 
-            <label>Brand</label>
+            <label>
+              Brand
+            </label>
 
             <input
               id="brand"
               placeholder="Example: Lenovo"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Model</label>
+            <label>
+              Model
+            </label>
 
             <input
               id="model"
               placeholder="Example: IdeaPad"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Serial Number</label>
+            <label>
+              Serial Number
+            </label>
 
             <input
               id="serial"
               placeholder="Product serial number"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Purchase Date</label>
+            <label>
+              Purchase Date
+            </label>
 
             <input
               id="purchaseDate"
               type="date"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Warranty</label>
+            <label>
+              Warranty
+            </label>
 
             <input
               id="warranty"
               placeholder="Example: 2 years"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Purchase Price</label>
+            <label>
+              Purchase Price
+            </label>
 
             <input
               id="purchasePrice"
               type="number"
               placeholder="₹"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Owner Name</label>
+            <label>
+              Owner Name
+            </label>
 
             <input
               id="ownerName"
               placeholder="Owner name"
-            />
+            >
 
           </div>
 
 
           <div class="field">
 
-            <label>Owner Email</label>
+            <label>
+              Owner Email
+            </label>
 
             <input
               id="ownerEmail"
               type="email"
               placeholder="owner@example.com"
-            />
+            >
 
           </div>
 
 
           <div class="field full">
 
-            <label>Description</label>
+            <label>
+              Product Description
+            </label>
 
             <textarea
               id="description"
@@ -1178,13 +2221,15 @@
 
           <div class="field full">
 
-            <label>Product Image</label>
+            <label>
+              Product Image
+            </label>
 
             <input
               id="productImage"
               type="file"
               accept="image/*"
-            />
+            >
 
           </div>
 
@@ -1205,10 +2250,18 @@
           style="
             margin-top:15px;
             text-align:center;
-            color:#94a3b8;
             font-size:14px;
           "
         ></div>
+
+
+        <div class="modal-note">
+
+          Your passport will receive a unique
+          LIFEPASS ID after creation.
+
+        </div>
+
 
       </form>
 
@@ -1217,7 +2270,9 @@
   </div>
 
 
-  <!-- LOGIN MODAL -->
+  <!-- =====================================================
+       LOGIN MODAL
+       ===================================================== -->
 
   <div
     id="loginModal"
@@ -1226,9 +2281,13 @@
 
     <div class="modal-box">
 
+
       <div class="modal-header">
 
-        <h2>LIFEPASS Login</h2>
+        <h2>
+          LIFEPASS Login
+        </h2>
+
 
         <button
           class="close-btn"
@@ -1239,9 +2298,20 @@
 
       </div>
 
-      <p style="color:#94a3b8;margin-bottom:20px;">
-        Sign in to manage your product passports.
+
+      <p
+        style="
+          color:#94a3b8;
+          margin-bottom:20px;
+          line-height:1.5;
+        "
+      >
+        Sign in to create and manage your
+        product passports.
       </p>
+
+
+      <!-- GOOGLE -->
 
       <button
         class="submit-btn"
@@ -1249,6 +2319,7 @@
       >
         Continue with Google
       </button>
+
 
       <div
         style="
@@ -1260,6 +2331,9 @@
         or
       </div>
 
+
+      <!-- EMAIL -->
+
       <input
         id="loginEmail"
         type="email"
@@ -1267,13 +2341,15 @@
         style="
           width:100%;
           padding:13px;
-          background:#07111f;
+          background:#06101d;
           color:white;
-          border:1px solid #24344b;
+          border:1px solid #263a53;
           border-radius:9px;
           margin-bottom:10px;
+          outline:none;
         "
-      />
+      >
+
 
       <input
         id="loginPassword"
@@ -1282,12 +2358,14 @@
         style="
           width:100%;
           padding:13px;
-          background:#07111f;
+          background:#06101d;
           color:white;
-          border:1px solid #24344b;
+          border:1px solid #263a53;
           border-radius:9px;
+          outline:none;
         "
-      />
+      >
+
 
       <button
         class="submit-btn"
@@ -1296,28 +2374,32 @@
         Sign In
       </button>
 
+
       <div
         id="loginMessage"
         style="
           text-align:center;
           margin-top:15px;
-          color:#94a3b8;
           font-size:14px;
         "
       ></div>
+
 
     </div>
 
   </div>
 
 
-  <!-- FOOTER -->
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
   <footer>
 
     <div>
       © 2026 LIFEPASS
     </div>
+
 
     <div>
       Every product has a story. Keep it forever.
@@ -1326,11 +2408,18 @@
   </footer>
 
 
-  <!-- IMPORTANT:
-       JavaScript is loaded separately.
-  -->
+  <!-- =====================================================
+       IMPORTANT — APP.JS
+       THIS MUST BE THE VERY LAST SCRIPT
+       ===================================================== -->
 
-  <script type="module" src="./app.js"></script>
+  <script
+    type="module"
+    src="./app.js"
+  ></script>
+
 
 </body>
+
 </html>
+```
