@@ -1110,6 +1110,105 @@ footer p{
         grid-template-columns:1fr;
     }
 }
+
+@media(max-width:800px){
+    .section > div[style*="grid-template-columns:1.3fr .7fr"]{grid-template-columns:1fr!important;padding:25px!important}
+}
+
+/* ===== LIFEPASS PRO AUTH / VERIFICATION UPGRADE ===== */
+.auth-brand{
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.auth-brand-mark{
+  width:46px;height:46px;border-radius:14px;
+  display:grid;place-items:center;color:#fff;font-weight:900;
+  background:linear-gradient(135deg,#0879d1,#10bfd0);
+  box-shadow:0 10px 25px rgba(8,121,209,.22);
+}
+.auth-subtitle{color:var(--muted);font-size:14px;line-height:1.5;margin-top:5px}
+.auth-google{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#fff;border:1px solid var(--border);color:var(--navy);
+  border-radius:14px;padding:13px 16px;font-weight:900;cursor:pointer;
+  transition:.2s;
+}
+.auth-google:hover{transform:translateY(-1px);box-shadow:0 10px 25px rgba(5,27,53,.08)}
+.google-icon{
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  font-weight:900;font-size:15px;
+}
+.auth-divider{display:flex;align-items:center;gap:10px;color:#91a0b1;font-size:12px;margin:16px 0}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--border);flex:1}
+.security-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px
+}
+.security-chip{
+  background:#f5f9fd;border:1px solid var(--border);border-radius:13px;
+  padding:10px;font-size:11px;font-weight:800;color:var(--navy)
+}
+.security-chip span{display:block;color:var(--muted);font-weight:600;margin-top:3px}
+.ai-panel{
+  background:linear-gradient(135deg,#071a33,#0c2748);
+  color:#fff;border-radius:24px;padding:26px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden
+}
+.ai-panel:after{
+  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+  right:-70px;top:-70px;background:rgba(16,191,208,.15)
+}
+.ai-badge{
+  display:inline-flex;padding:7px 10px;border-radius:999px;
+  background:rgba(16,191,208,.14);color:#8ef2ff;font-size:11px;font-weight:900;
+  letter-spacing:.06em
+}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.ai-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:15px
+}
+.ai-card strong{display:block;margin-bottom:5px}.ai-card span{font-size:12px;color:#c9d8e8;line-height:1.5}
+.verification-flow{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px
+}
+.v-step{
+  background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px
+}
+.v-step b{display:flex;align-items:center;gap:8px;color:var(--navy)}
+.v-step small{display:block;color:var(--muted);line-height:1.5;margin-top:7px}
+.upload-drop{
+  border:1.5px dashed #a9bfd3;border-radius:16px;padding:18px;text-align:center;
+  background:#f7fbff;cursor:pointer
+}
+.upload-drop:hover{border-color:var(--blue);background:#f2f9ff}
+.file-name{font-size:12px;color:var(--muted);margin-top:8px}
+.verify-status{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;
+  font-size:11px;font-weight:900;background:#eef7f3;color:#087d59
+}
+.verify-status.pending{background:#fff7e8;color:#9a6500}
+.verify-status.rejected{background:#fff0f1;color:#a51d28}
+.ai-help-fab{
+  position:fixed;right:22px;bottom:22px;z-index:80;
+  border:0;border-radius:999px;padding:14px 17px;color:#fff;font-weight:900;
+  background:linear-gradient(135deg,#0879d1,#10bfd0);
+  box-shadow:0 15px 35px rgba(8,121,209,.28);cursor:pointer
+}
+.ai-help-panel{
+  position:fixed;right:22px;bottom:82px;width:min(360px,calc(100vw - 32px));
+  background:#fff;border:1px solid var(--border);border-radius:20px;
+  box-shadow:0 25px 70px rgba(5,27,53,.2);z-index:81;display:none;overflow:hidden
+}
+.ai-help-panel.show{display:block}
+.ai-help-head{padding:16px;background:#071a33;color:#fff;font-weight:900}
+.ai-help-body{padding:16px}.ai-help-body p{font-size:13px;color:var(--muted);line-height:1.6}
+.ai-quick{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.ai-quick button{border:1px solid var(--border);background:#f7fafc;border-radius:10px;padding:8px 10px;font-size:12px;cursor:pointer}
+@media(max-width:760px){
+  .security-strip,.ai-grid,.verification-flow{grid-template-columns:1fr}
+  .ai-help-fab{right:14px;bottom:14px}
+  .ai-help-panel{right:14px;bottom:70px}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -1137,6 +1236,10 @@ footer p{
     <div class="nav-actions">
         <button class="btn btn-outline" onclick="openLogin()">
             Login
+        </button>
+
+        <button class="btn btn-outline" onclick="openScan()">
+            Verify Passport
         </button>
 
         <button class="btn btn-blue" onclick="openCreate()">
@@ -1250,6 +1353,34 @@ footer p{
 
 </section>
 
+
+<!-- PASSPORT EXAMPLE / VERIFY -->
+<section class="section" style="padding-top:30px">
+    <div style="max-width:1100px;margin:auto;background:linear-gradient(135deg,#071a33,#0c2748);border-radius:28px;padding:34px;color:white;display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:center;box-shadow:0 25px 70px rgba(5,27,53,.16)">
+        <div>
+            <div class="live-pill"><span class="live-dot"></span> LIVE PASSPORT EXAMPLE</div>
+            <h2 style="font-size:32px;margin:15px 0 10px">Verify a product in seconds.</h2>
+            <p style="color:#c9d9e8;line-height:1.7;max-width:650px">
+                Every LIFEPASS passport gets a unique ID. Search the ID or scan its QR code to check the product record and see its digital history.
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+                <span style="background:rgba(255,255,255,.09);padding:10px 13px;border-radius:12px">Example ID: <b>LP-7X4K92AB</b></span>
+                <span style="background:rgba(25,185,146,.16);padding:10px 13px;border-radius:12px">✓ Verification ready</span>
+            </div>
+            <button class="btn btn-blue" style="margin-top:20px" onclick="openScan()">Search / Verify a Passport →</button>
+        </div>
+        <div style="background:white;border-radius:22px;padding:24px;color:var(--navy);box-shadow:0 15px 45px rgba(0,0,0,.16)">
+            <div style="font-size:12px;font-weight:900;letter-spacing:1.5px;color:var(--blue)">LIFEPASS VERIFIED</div>
+            <h3 style="font-size:24px;margin-top:8px">ThinkPad X1 Carbon</h3>
+            <p style="color:var(--muted);margin-top:5px">Lenovo • Laptop</p>
+            <div style="margin-top:18px;padding:13px;background:#f4f8fc;border-radius:14px;font-family:monospace;font-weight:800">LP-7X4K92AB</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;font-size:12px">
+                <div><span style="color:var(--muted)">Warranty</span><br><b>Active</b></div>
+                <div><span style="color:var(--muted)">History</span><br><b>3 records</b></div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- FEATURES -->
 
@@ -1430,8 +1561,8 @@ footer p{
                 <div class="inquiry-point"><b>03</b><span>Feedback, suggestions and bug reports</span></div>
             </div>
 
-            <a class="inquiry-email" href="mailto:lifepass.tech@gmail.com?subject=LIFEPASS%20Enquiry">
-                ✉ lifepass.tech@gmail.com
+            <a class="inquiry-email" href="mailto:lifepass.digital@gmail.com?subject=LIFEPASS%20Enquiry">
+                ✉ lifepass.digital@gmail.com
             </a>
         </div>
 
@@ -1614,54 +1745,48 @@ footer p{
         </div>
 
 
+        <div class="auth-brand">
+            <div class="auth-brand-mark">LP</div>
+            <div>
+                <strong style="font-size:19px;color:var(--navy)">LIFEPASS Account</strong>
+                <div class="auth-subtitle">Secure access to your product passports.</div>
+            </div>
+        </div>
+
+        <button class="auth-google" type="button" onclick="signInWithGoogle()">
+            <span class="google-icon">G</span>
+            Continue with Google
+        </button>
+
+        <div class="auth-divider">OR CONTINUE WITH EMAIL</div>
+
         <form id="authForm">
 
             <div class="form-group">
                 <label>Email</label>
-
-                <input
-                    id="authEmail"
-                    type="email"
-                    required
-                    placeholder="you@example.com">
+                <input id="authEmail" type="email" required placeholder="you@example.com" autocomplete="email">
             </div>
-
 
             <div class="form-group">
                 <label>Password</label>
-
-                <input
-                    id="authPassword"
-                    type="password"
-                    required
-                    minlength="6"
-                    placeholder="Minimum 6 characters">
+                <input id="authPassword" type="password" required minlength="8"
+                       placeholder="At least 8 characters" autocomplete="current-password">
             </div>
 
-
-            <button
-                class="btn btn-blue"
-                style="width:100%"
-                type="submit">
-
-                Continue
-
+            <button class="btn btn-blue" style="width:100%" type="submit">
+                Continue securely
             </button>
-
         </form>
 
+        <div class="security-strip">
+            <div class="security-chip">🔐 Secure<span>Supabase Auth</span></div>
+            <div class="security-chip">🛡️ 2-step<span>MFA ready</span></div>
+            <div class="security-chip">✓ Verified<span>Protected sessions</span></div>
+        </div>
 
         <div class="auth-switch">
-
-            <span id="authSwitchText">
-                Don't have an account?
-            </span>
-
-            <button onclick="toggleAuth()"
-                    id="authSwitchButton">
-                Create one
-            </button>
-
+            <span id="authSwitchText">Don't have an account?</span>
+            <button onclick="toggleAuth()" id="authSwitchButton">Create one</button>
         </div>
 
     </div>
@@ -1807,14 +1932,59 @@ footer p{
 
 
             <div class="form-group">
-
                 <label>Product image</label>
+                <label class="upload-drop" for="productImage">
+                    <strong>📷 Choose product image</strong>
+                    <div style="font-size:12px;color:var(--muted);margin-top:5px">
+                        Upload directly from your browser. Images are stored securely after setup.
+                    </div>
+                    <div id="productImageName" class="file-name">No image selected</div>
+                </label>
+                <input id="productImage" type="file" accept="image/*" style="display:none"
+                       onchange="showSelectedFile(this,'productImageName')">
+            </div>
 
-                <input
-                    id="productImage"
-                    type="file"
-                    accept="image/*">
+            <div class="ai-panel" style="margin:18px 0">
+                <span class="ai-badge">LIFEPASS TRUST CHECK</span>
+                <h3 style="margin-top:10px">Verify before a passport becomes trusted</h3>
+                <p style="margin-top:7px;color:#c9d8e8;font-size:13px;line-height:1.6">
+                    Upload purchase evidence and a short product verification video.
+                    A review workflow can mark the submission as pending, approved, or rejected.
+                    A trusted passport code should only be issued after approval.
+                </p>
 
+                <div class="ai-grid">
+                    <div class="ai-card">
+                        <strong>📄 Proof of purchase</strong>
+                        <span>Upload an invoice, receipt, or other ownership evidence.</span>
+                    </div>
+                    <div class="ai-card">
+                        <strong>🎥 Verification video</strong>
+                        <span>Show the product and its identifying details clearly.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Proof of purchase</label>
+                    <input id="proofFile" type="file" accept="image/*,.pdf" 
+                           onchange="showSelectedFile(this,'proofFileName')">
+                    <div id="proofFileName" class="file-name">No proof selected</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Verification video</label>
+                    <input id="verificationVideo" type="file" accept="video/*"
+                           onchange="showSelectedFile(this,'verificationVideoName')">
+                    <div id="verificationVideoName" class="file-name">No video selected</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Verification note</label>
+                <textarea id="verificationNote" rows="2"
+                    placeholder="Tell the reviewer what you are verifying."></textarea>
             </div>
 
 
@@ -1858,6 +2028,44 @@ footer p{
 </div>
 
 
+
+<!-- MFA MODAL -->
+<div class="modal" id="mfaModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Two-step verification</h2>
+      <button class="close" onclick="closeModal('mfaModal')">×</button>
+    </div>
+    <p class="auth-subtitle" style="margin-bottom:15px">
+      Enter the 6-digit code from your authenticator app to continue.
+    </p>
+    <div class="form-group">
+      <label>6-digit code</label>
+      <input id="mfaCode" inputmode="numeric" maxlength="6" placeholder="000000">
+    </div>
+    <button class="btn btn-blue" style="width:100%" onclick="verifyMFAChallenge()">
+      Verify securely
+    </button>
+  </div>
+</div>
+
+<!-- AI HELP -->
+<button class="ai-help-fab" type="button" onclick="toggleAIHelp()">✦ LIFEPASS AI</button>
+<div class="ai-help-panel" id="aiHelpPanel">
+  <div class="ai-help-head">LIFEPASS AI Assistant</div>
+  <div class="ai-help-body">
+    <p id="aiHelpText">
+      I can explain how passports, QR verification, product evidence and account security work.
+    </p>
+    <div class="ai-quick">
+      <button onclick="aiHelp('passport')">Create passport</button>
+      <button onclick="aiHelp('verify')">Verification</button>
+      <button onclick="aiHelp('qr')">QR code</button>
+      <button onclick="aiHelp('security')">Account security</button>
+    </div>
+  </div>
+</div>
+
 <!-- SCAN MODAL -->
 
 <div class="modal" id="scanModal">
@@ -1877,30 +2085,21 @@ footer p{
 
 
         <p style="color:var(--muted);line-height:1.6">
-            Enter a LIFEPASS ID to open a product passport.
+            Search or verify a LIFEPASS passport using its unique ID.
+            You can also paste an ID from a QR code.
         </p>
 
-
-        <div class="form-group"
-             style="margin-top:20px">
-
+        <div class="form-group" style="margin-top:20px">
             <label>LIFEPASS ID</label>
-
-            <input
-                id="searchId"
-                placeholder="LP-XXXXXXXX">
-
+            <input id="searchId" placeholder="LP-XXXXXXXX" autocomplete="off" oninput="normalizePassportId(this)">
+            <small style="display:block;color:var(--muted);margin-top:7px">Example: LP-7X4K92AB</small>
         </div>
 
-
-        <button
-            class="btn btn-blue"
-            style="width:100%"
-            onclick="searchPassport()">
-
-            View Passport
-
+        <button class="btn btn-blue" style="width:100%" onclick="verifyPassportCode()">
+            ✓ Verify & View Passport
         </button>
+
+        <div id="verifyResult" style="margin-top:16px"></div>
 
     </div>
 
@@ -2053,7 +2252,7 @@ footer p{
             <a href="#products">Products</a>
             <a href="#how">How it works</a>
             <a href="#contact">Contact</a>
-            <a href="mailto:lifepass.tech@gmail.com">Email</a>
+            <a href="mailto:lifepass.digital@gmail.com">Email</a>
 
         </div>
 
@@ -2492,7 +2691,8 @@ async function viewPassport(id){
                 <p style="margin-top:8px;opacity:.8">${passport.id}</p>
                 ${imageHTML}
             </div>
-            <div class="passport-content">
+            <div id="verificationStatusBadge" class="verify-status pending" style="margin-bottom:15px">⏳ Verification status: pending review</div>
+        <div class="passport-content">
                 <div class="passport-info">
                     <div class="info-box"><small>Product type</small><strong>${escapeHtml(passport.type)}</strong></div>
                     <div class="info-box"><small>Brand</small><strong>${escapeHtml(passport.brand || "Not added")}</strong></div>
@@ -2575,20 +2775,54 @@ async function openPassportFromQR(){
    SEARCH
 ========================= */
 
-async function searchPassport(){
-    const id=document.getElementById("searchId").value.trim().toUpperCase();
+function normalizePassportId(input){
+    input.value=input.value.toUpperCase().replace(/\s+/g,"");
+}
+
+function showVerifyResult(ok,title,message){
+    const box=document.getElementById("verifyResult");
+    if(!box) return;
+    box.className="verify-result "+(ok?"verify-ok":"verify-bad");
+    box.innerHTML=`<strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span>`;
+}
+
+async function verifyPassportCode(){
+    const input=document.getElementById("searchId");
+    const id=(input?.value || "").trim().toUpperCase();
+
+    if(!/^LP-[A-Z0-9]{6,20}$/.test(id)){
+        showVerifyResult(false,"Invalid LIFEPASS ID","Use a code like LP-7X4K92AB.");
+        return;
+    }
+
+    const button=document.querySelector('#scanModal .btn-blue');
+    if(button){ button.disabled=true; button.textContent="Checking passport…"; }
+
     try{
         const passport=await getPassportById(id);
+
         if(!passport){
-            alert("Passport not found.\n\nCheck the LIFEPASS ID.");
+            showVerifyResult(false,"Passport not found","No LIFEPASS record matches "+id+".");
             return;
         }
-        closeModal("scanModal");
-        await viewPassport(id);
+
+        const status=passport.verified !== false ? "Verified passport" : "Verification pending";
+        showVerifyResult(true,status,`${passport.name || "Product"} • ${id}`);
+
+        setTimeout(async()=>{
+            closeModal("scanModal");
+            await viewPassport(id);
+        },450);
     }catch(error){
-        console.error(error);
-        alert("Could not search passports. Check your Supabase database policies.");
+        console.error("Passport verification error:",error);
+        showVerifyResult(false,"Verification unavailable","Supabase could not complete the lookup. Check the public read policy for products.");
+    }finally{
+        if(button){ button.disabled=false; button.textContent="✓ Verify & View Passport"; }
     }
+}
+
+async function searchPassport(){
+    return verifyPassportCode();
 }
 
 /* =========================
@@ -2673,7 +2907,7 @@ function sendInquiry(event){
     const subject=document.getElementById("inquirySubject").value.trim();
     const message=document.getElementById("inquiryMessage").value.trim();
     const body="Name: "+name+"\nEmail: "+email+"\n\n"+message;
-    window.location.href="mailto:lifepass.tech@gmail.com?subject="+
+    window.location.href="mailto:lifepass.digital@gmail.com?subject="+
         encodeURIComponent("LIFEPASS Enquiry: "+subject)+
         "&body="+encodeURIComponent(body);
 }
@@ -2688,11 +2922,167 @@ function toggleAgent(){
 
 function agentMessage(type){
     let message="";
-    if(type==="create") message="Login first, then choose Create Passport and enter your product information.";
+    if(type==="create") message="Create a passport, upload product evidence, and submit the verification video. The record stays pending until it is approved.";
     if(type==="qr") message="Each passport receives a unique LIFEPASS ID and a real scannable QR code.";
     if(type==="transfer") message="Ownership transfer will be added after the core passport database is fully connected.";
     alert(message);
 }
+
+
+/* =========================
+   GOOGLE SIGN-IN
+========================= */
+
+async function signInWithGoogle(){
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider:"google",
+        options:{
+            redirectTo:"https://lifepassdigital.github.io/lifepass/"
+        }
+    });
+    if(error) alert(error.message || "Google sign-in could not start.");
+}
+
+/* =========================
+   MFA / 2-STEP VERIFICATION
+========================= */
+
+let pendingMFAChallenge = null;
+
+async function beginMFAChallenge(){
+    try{
+        const { data: aal, error: aalError } =
+            await supabaseClient.auth.mfa.getAuthenticatorAssuranceLevel();
+
+        if(aalError) return false;
+        if(!aal || aal.currentLevel === aal.nextLevel) return false;
+
+        const { data: factors, error: factorsError } =
+            await supabaseClient.auth.mfa.listFactors();
+
+        if(factorsError) return false;
+
+        const factor = (factors?.totp || []).find(f => f.status === "verified");
+        if(!factor) return false;
+
+        const { data: challenge, error: challengeError } =
+            await supabaseClient.auth.mfa.challenge({factorId:factor.id});
+
+        if(challengeError) throw challengeError;
+
+        pendingMFAChallenge = {
+            factorId:factor.id,
+            challengeId:challenge.id
+        };
+
+        openModal("mfaModal");
+        return true;
+    }catch(error){
+        console.error("MFA challenge:",error);
+        return false;
+    }
+}
+
+async function verifyMFAChallenge(){
+    const code=(document.getElementById("mfaCode")?.value || "").replace(/\D/g,"");
+
+    if(!pendingMFAChallenge || code.length!==6){
+        alert("Enter the 6-digit verification code.");
+        return;
+    }
+
+    const { error } = await supabaseClient.auth.mfa.verify({
+        factorId:pendingMFAChallenge.factorId,
+        challengeId:pendingMFAChallenge.challengeId,
+        code
+    });
+
+    if(error){
+        alert(error.message || "The verification code is incorrect.");
+        return;
+    }
+
+    pendingMFAChallenge=null;
+    closeModal("mfaModal");
+    document.getElementById("mfaCode").value="";
+    alert("Two-step verification successful.");
+    await refreshUser();
+}
+
+/* =========================
+   FILE UPLOAD HELPERS
+========================= */
+
+function showSelectedFile(input,targetId){
+    const target=document.getElementById(targetId);
+    if(!target) return;
+    const file=input.files?.[0];
+    target.textContent=file ? `${file.name} • ${(file.size/1024/1024).toFixed(2)} MB` : "No file selected";
+}
+
+async function uploadLifepassFile(file,folder,userId){
+    if(!file) return null;
+
+    if(file.size > 6 * 1024 * 1024){
+        throw new Error("Please keep uploaded files below 6 MB for this browser upload.");
+    }
+
+    const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+    const path=`${folder}/${userId}/${Date.now()}-${safeName}`;
+
+    const { error } = await supabaseClient.storage
+        .from("lifepass")
+        .upload(path,file,{
+            cacheControl:"3600",
+            upsert:false,
+            contentType:file.type || undefined
+        });
+
+    if(error) throw error;
+
+    const { data } = supabaseClient.storage
+        .from("lifepass")
+        .getPublicUrl(path);
+
+    return data?.publicUrl || null;
+}
+
+/* =========================
+   AI HELP
+========================= */
+
+function toggleAIHelp(){
+    document.getElementById("aiHelpPanel")?.classList.toggle("show");
+}
+
+function aiHelp(topic){
+    const messages={
+        passport:"A product passport stores the product identity, purchase information, warranty, history and verification status in one record.",
+        verify:"Verification should use evidence and a review process. An uploaded video can support review, but an AI result alone should not be presented as proof that a product is genuine.",
+        qr:"The QR contains the LIFEPASS URL and passport ID. Scanning it lets the website look up the passport record.",
+        security:"Use Supabase Auth for accounts, strong passwords and MFA. Never put a Supabase service-role key in index.html."
+    };
+    const el=document.getElementById("aiHelpText");
+    if(el) el.textContent=messages[topic] || messages.passport;
+}
+
+/* =========================
+   VERIFICATION SUBMISSION
+========================= */
+
+async function collectVerificationFiles(userId){
+    const proof=document.getElementById("proofFile")?.files?.[0];
+    const video=document.getElementById("verificationVideo")?.files?.[0];
+
+    let proofUrl=null;
+    let videoUrl=null;
+
+    if(proof) proofUrl=await uploadLifepassFile(proof,"proof",userId);
+    if(video) videoUrl=await uploadLifepassFile(video,"verification-video",userId);
+
+    return {proofUrl,videoUrl};
+}
+
 
 /* =========================
    LOGOUT
