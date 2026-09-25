@@ -1112,6 +1112,8 @@ footer p{
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -2064,109 +2066,149 @@ footer p{
 
 /* =========================
    LIFEPASS APPLICATION
+   Supabase-connected version
 ========================= */
 
-const STORAGE_USERS = "lifepass_users_v1";
-const STORAGE_SESSION = "lifepass_session_v1";
-const STORAGE_PRODUCTS = "lifepass_products_v1";
+const SUPABASE_URL = "https://dwidvbltikjmvfaxfrul.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Au1Agb96Uh5JCdtIQGW0tA_Was0dyLm";
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 let signupMode = false;
-
+let currentUser = null;
 
 /* =========================
-   STORAGE
+   AUTH / SESSION
 ========================= */
 
-function getUsers(){
-    return JSON.parse(
-        localStorage.getItem(STORAGE_USERS) || "[]"
-    );
-}
-
-function saveUsers(users){
-    localStorage.setItem(
-        STORAGE_USERS,
-        JSON.stringify(users)
-    );
-}
-
-function getProducts(){
-    return JSON.parse(
-        localStorage.getItem(STORAGE_PRODUCTS) || "[]"
-    );
-}
-
-function saveProducts(products){
-    localStorage.setItem(
-        STORAGE_PRODUCTS,
-        JSON.stringify(products)
-    );
-}
-
 function getSession(){
-    return localStorage.getItem(STORAGE_SESSION);
+    return currentUser ? currentUser.email : null;
 }
 
+async function refreshUser(){
+    const { data, error } = await supabaseClient.auth.getUser();
+    if(error){
+        currentUser = null;
+        return null;
+    }
+    currentUser = data.user || null;
+    return currentUser;
+}
+
+/* =========================
+   DATABASE
+========================= */
+
+function rowToPassport(row){
+    return {
+        id: row.id,
+        owner: row.user_id,
+        name: row.name || "",
+        type: row.type || "",
+        brand: row.brand || "",
+        model: row.model || "",
+        serial: row.serial || "",
+        purchaseDate: row.purchase_date || "",
+        warranty: row.warranty || "",
+        passcode: row.passcode || "",
+        notes: row.notes || "",
+        image: row.image || "",
+        verified: row.verified !== false,
+        createdAt: row.created_at || new Date().toISOString(),
+        history: Array.isArray(row.history) ? row.history : []
+    };
+}
+
+function passportToRow(passport){
+    return {
+        id: passport.id,
+        user_id: passport.owner,
+        name: passport.name,
+        type: passport.type,
+        brand: passport.brand,
+        model: passport.model,
+        serial: passport.serial,
+        purchase_date: passport.purchaseDate || null,
+        warranty: passport.warranty || "",
+        passcode: passport.passcode || "",
+        notes: passport.notes || "",
+        image: passport.image || "",
+        verified: passport.verified !== false,
+        history: passport.history || []
+    };
+}
+
+async function getProducts(ownerOnly=false){
+    let query = supabaseClient
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending:false });
+
+    if(ownerOnly){
+        if(!currentUser) return [];
+        query = query.eq("user_id", currentUser.id);
+    }
+
+    const { data, error } = await query;
+
+    if(error){
+        console.error("Supabase products error:", error);
+        throw error;
+    }
+
+    return (data || []).map(rowToPassport);
+}
+
+async function getPassportById(id){
+    const { data, error } = await supabaseClient
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+
+    if(error) throw error;
+    return data ? rowToPassport(data) : null;
+}
 
 /* =========================
    NAVIGATION
 ========================= */
 
 function showHome(){
-
-    document.getElementById("homePage")
-        .classList.remove("hidden");
-
-    document.getElementById("dashboardPage")
-        .classList.add("hidden");
-
-    document.getElementById("passportPage")
-        .classList.add("hidden");
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    document.getElementById("homePage").classList.remove("hidden");
+    document.getElementById("dashboardPage").classList.add("hidden");
+    document.getElementById("passportPage").classList.add("hidden");
+    window.scrollTo({top:0, behavior:"smooth"});
 }
 
-
-function showDashboard(){
+async function showDashboard(){
+    await refreshUser();
 
     if(!getSession()){
         openLogin();
         return;
     }
 
-    document.getElementById("homePage")
-        .classList.add("hidden");
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("passportPage").classList.add("hidden");
+    document.getElementById("dashboardPage").classList.remove("hidden");
 
-    document.getElementById("passportPage")
-        .classList.add("hidden");
-
-    document.getElementById("dashboardPage")
-        .classList.remove("hidden");
-
-    renderDashboard();
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    await renderDashboard();
+    window.scrollTo({top:0, behavior:"smooth"});
 }
-
 
 /* =========================
    MODALS
 ========================= */
 
 function openModal(id){
-    document.getElementById(id)
-        .classList.add("show");
+    document.getElementById(id).classList.add("show");
 }
 
 function closeModal(id){
-    document.getElementById(id)
-        .classList.remove("show");
+    document.getElementById(id).classList.remove("show");
 }
 
 function openLogin(){
@@ -2175,13 +2217,12 @@ function openLogin(){
     openModal("loginModal");
 }
 
-function openCreate(){
-
+async function openCreate(){
+    await refreshUser();
     if(!getSession()){
         openLogin();
         return;
     }
-
     openModal("createModal");
 }
 
@@ -2189,592 +2230,308 @@ function openScan(){
     openModal("scanModal");
 }
 
-
 /* =========================
    AUTH UI
 ========================= */
 
 function toggleAuth(){
-
     signupMode=!signupMode;
-
     updateAuthUI();
 }
 
-
 function updateAuthUI(){
-
     document.getElementById("authTitle").textContent =
-        signupMode
-        ? "Create LIFEPASS Account"
-        : "Login to LIFEPASS";
-
+        signupMode ? "Create LIFEPASS Account" : "Login to LIFEPASS";
     document.getElementById("authSwitchText").textContent =
-        signupMode
-        ? "Already have an account?"
-        : "Don't have an account?";
-
+        signupMode ? "Already have an account?" : "Don't have an account?";
     document.getElementById("authSwitchButton").textContent =
-        signupMode
-        ? "Login"
-        : "Create one";
+        signupMode ? "Login" : "Create one";
 }
 
-
 /* =========================
-   AUTH SUBMIT
+   SUPABASE AUTH SUBMIT
 ========================= */
 
-document.getElementById("authForm")
-.addEventListener("submit",function(e){
-
+document.getElementById("authForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
-    const email =
-        document.getElementById("authEmail")
-        .value
-        .trim()
-        .toLowerCase();
+    const email = document.getElementById("authEmail").value.trim().toLowerCase();
+    const password = document.getElementById("authPassword").value;
 
-    const password =
-        document.getElementById("authPassword")
-        .value;
+    const button = this.querySelector('button[type="submit"]');
+    if(button) button.disabled = true;
 
-    let users=getUsers();
+    try{
+        if(signupMode){
+            const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+                options:{
+                    emailRedirectTo:"https://lifepassdigital.github.io/lifepass/"
+                }
+            });
 
-    if(signupMode){
+            if(error) throw error;
 
-        if(users.some(u=>u.email===email)){
-            alert("An account with this email already exists.");
-            return;
+            closeModal("loginModal");
+            this.reset();
+
+            if(data.session){
+                currentUser = data.user;
+                await showDashboard();
+                alert("LIFEPASS account created successfully.");
+            }else{
+                alert("Account created. Check your email and confirm your address before logging in.");
+            }
+        }else{
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if(error) throw error;
+
+            currentUser = data.user;
+            closeModal("loginModal");
+            this.reset();
+            await showDashboard();
         }
-
-        users.push({
-            email:email,
-            password:password,
-            createdAt:new Date().toISOString()
-        });
-
-        saveUsers(users);
-
-        localStorage.setItem(
-            STORAGE_SESSION,
-            email
-        );
-
-        closeModal("loginModal");
-
-        showDashboard();
-
-        alert("Account created successfully.");
-
-    }else{
-
-        const user=users.find(
-            u=>u.email===email &&
-               u.password===password
-        );
-
-        if(!user){
-            alert("Incorrect email or password.");
-            return;
-        }
-
-        localStorage.setItem(
-            STORAGE_SESSION,
-            email
-        );
-
-        closeModal("loginModal");
-
-        showDashboard();
+    }catch(error){
+        console.error(error);
+        alert(error.message || "Authentication failed. Please try again.");
+    }finally{
+        if(button) button.disabled = false;
     }
-
 });
-
 
 /* =========================
    UNIQUE ID
 ========================= */
 
 function generateId(){
-
     const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
     let result="LP-";
-
     for(let i=0;i<8;i++){
-        result += chars[
-            Math.floor(Math.random()*chars.length)
-        ];
+        result += chars[Math.floor(Math.random()*chars.length)];
     }
-
     return result;
 }
-
 
 /* =========================
    CREATE PASSPORT
 ========================= */
 
-document.getElementById("passportForm")
-.addEventListener("submit",function(e){
-
+document.getElementById("passportForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
-    if(!getSession()){
+    await refreshUser();
+    if(!currentUser){
         alert("Please login first.");
         return;
     }
 
-    const name =
-        document.getElementById("productName").value.trim();
+    const name = document.getElementById("productName").value.trim();
+    const type = document.getElementById("productType").value;
+    const brand = document.getElementById("brand").value.trim();
+    const model = document.getElementById("model").value.trim();
+    const serial = document.getElementById("serial").value.trim();
+    const purchaseDate = document.getElementById("purchaseDate").value;
+    const warranty = document.getElementById("warranty").value.trim();
+    const passcode = document.getElementById("productPasscode").value;
+    const notes = document.getElementById("notes").value.trim();
+    const imageInput = document.getElementById("productImage");
+    const imageFile = imageInput.files[0];
 
-    const type =
-        document.getElementById("productType").value;
+    const submitButton = this.querySelector('button[type="submit"]');
+    if(submitButton) submitButton.disabled = true;
 
-    const brand =
-        document.getElementById("brand").value.trim();
-
-    const model =
-        document.getElementById("model").value.trim();
-
-    const serial =
-        document.getElementById("serial").value.trim();
-
-    const purchaseDate =
-        document.getElementById("purchaseDate").value;
-
-    const warranty =
-        document.getElementById("warranty").value.trim();
-
-    const passcode =
-        document.getElementById("productPasscode").value;
-
-    const notes =
-        document.getElementById("notes").value.trim();
-
-    const imageInput =
-        document.getElementById("productImage");
-
-    const imageFile =
-        imageInput.files[0];
-
-    const createPassport=(image)=>{
-
-        const passport={
-            id:generateId(),
-            owner:getSession(),
-            name:name,
-            type:type,
-            brand:brand,
-            model:model,
-            serial:serial,
-            purchaseDate:purchaseDate,
-            warranty:warranty,
-            passcode:passcode,
-            notes:notes,
+    const insertPassport = async (image)=>{
+        const passport = {
+            id: generateId(),
+            owner: currentUser.id,
+            name,
+            type,
+            brand,
+            model,
+            serial,
+            purchaseDate,
+            warranty,
+            passcode,
+            notes,
             image:image || "",
             verified:true,
-            createdAt:new Date().toISOString(),
-            history:[
-                {
-                    title:"Passport created",
-                    text:"LIFEPASS digital identity created.",
-                    date:new Date().toISOString()
-                }
-            ]
+            history:[{
+                title:"Passport created",
+                text:"LIFEPASS digital identity created.",
+                date:new Date().toISOString()
+            }]
         };
 
-        const products=getProducts();
+        const { error } = await supabaseClient
+            .from("products")
+            .insert(passportToRow(passport));
 
-        products.push(passport);
+        if(error) throw error;
 
-        saveProducts(products);
-
-        document.getElementById("passportForm").reset();
-
+        this.reset();
         closeModal("createModal");
+        await showDashboard();
 
-        showDashboard();
-
-        alert(
-            "Passport created!\n\nLIFEPASS ID: " +
-            passport.id
-        );
+        alert("Passport created!\n\nLIFEPASS ID: " + passport.id);
     };
 
-
-    if(imageFile){
-
-        const reader=new FileReader();
-
-        reader.onload=function(){
-            createPassport(reader.result);
-        };
-
-        reader.readAsDataURL(imageFile);
-
-    }else{
-
-        createPassport("");
+    try{
+        if(imageFile){
+            const reader = new FileReader();
+            reader.onload = async function(){
+                try{
+                    await insertPassport(reader.result);
+                }catch(error){
+                    console.error(error);
+                    alert(error.message || "Could not save passport.");
+                }finally{
+                    if(submitButton) submitButton.disabled = false;
+                }
+            };
+            reader.readAsDataURL(imageFile);
+        }else{
+            await insertPassport("");
+            if(submitButton) submitButton.disabled = false;
+        }
+    }catch(error){
+        console.error(error);
+        alert(error.message || "Could not save passport.");
+        if(submitButton) submitButton.disabled = false;
     }
-
 });
-
 
 /* =========================
    DASHBOARD
 ========================= */
 
-function renderDashboard(){
+async function renderDashboard(){
+    const session = currentUser?.id;
+    if(!session) return;
 
-    const session=getSession();
-
-    const products=getProducts()
-        .filter(p=>p.owner===session);
-
-    document.getElementById("statProducts")
-        .textContent=products.length;
-
-    document.getElementById("statVerified")
-        .textContent=products.filter(
-            p=>p.verified
-        ).length;
-
-    const grid=
-        document.getElementById("passportGrid");
-
-    if(products.length===0){
-
-        grid.innerHTML=`
-
-            <div style="
-                grid-column:1/-1;
-                background:white;
-                border:1px solid var(--border);
-                border-radius:20px;
-                padding:60px 20px;
-                text-align:center;
-            ">
-
-                <div style="font-size:55px">🪪</div>
-
-                <h2 style="margin-top:15px;color:var(--navy)">
-                    No passports yet
-                </h2>
-
-                <p style="
-                    color:var(--muted);
-                    margin:10px auto 20px;
-                    max-width:450px;
-                ">
-                    Create your first digital product passport
-                    and give your product a permanent identity.
-                </p>
-
-                <button
-                    class="btn btn-blue"
-                    onclick="openCreate()">
-
-                    Create First Passport
-
-                </button>
-
-            </div>
-        `;
-
+    let products=[];
+    try{
+        products=await getProducts(true);
+    }catch(error){
+        alert("Could not load your passports from Supabase. Check your database policies.");
         return;
     }
 
+    document.getElementById("statProducts").textContent=products.length;
+    document.getElementById("statVerified").textContent=products.filter(p=>p.verified).length;
+
+    const grid=document.getElementById("passportGrid");
+
+    if(products.length===0){
+        grid.innerHTML=`
+            <div style="grid-column:1/-1;background:white;border:1px solid var(--border);border-radius:20px;padding:60px 20px;text-align:center;">
+                <div style="font-size:55px">🪪</div>
+                <h2 style="margin-top:15px;color:var(--navy)">No passports yet</h2>
+                <p style="color:var(--muted);margin:10px auto 20px;max-width:450px;">Create your first digital product passport and give your product a permanent identity.</p>
+                <button class="btn btn-blue" onclick="openCreate()">Create First Passport</button>
+            </div>`;
+        return;
+    }
 
     grid.innerHTML=products.map(p=>{
-
-        const emoji =
-            p.type.split(" ")[0] || "📦";
-
+        const emoji=p.type.split(" ")[0] || "📦";
         return `
-
             <div class="passport-card">
-
                 <div class="passport-image">
-
-                    ${
-                        p.image
-                        ? `<img src="${p.image}" alt="">`
-                        : `<span>${emoji}</span>`
-                    }
-
+                    ${p.image ? `<img src="${p.image}" alt="">` : `<span>${emoji}</span>`}
                 </div>
-
                 <div class="passport-body">
-
                     <h3>${escapeHtml(p.name)}</h3>
-
-                    <div class="passport-id">
-                        ${p.id}
-                    </div>
-
-                    <p>
-                        ${escapeHtml(p.brand || "Brand not added")}
-                        ${p.model ? " • "+escapeHtml(p.model) : ""}
-                    </p>
-
+                    <div class="passport-id">${p.id}</div>
+                    <p>${escapeHtml(p.brand || "Brand not added")}${p.model ? " • "+escapeHtml(p.model) : ""}</p>
                     <div class="card-actions">
-
-                        <button
-                            class="btn btn-primary"
-                            onclick="viewPassport('${p.id}')">
-
-                            View
-
-                        </button>
-
-                        <button
-                            class="btn btn-outline"
-                            onclick="openEdit('${p.id}')">
-
-                            Update
-
-                        </button>
-
+                        <button class="btn btn-primary" onclick="viewPassport('${p.id}')">View</button>
+                        <button class="btn btn-outline" onclick="openEdit('${p.id}')">Update</button>
                     </div>
-
                 </div>
-
-            </div>
-        `;
-
+            </div>`;
     }).join("");
 }
-
 
 /* =========================
    VIEW PASSPORT
 ========================= */
 
-function viewPassport(id){
-
-    const passport=
-        getProducts().find(p=>p.id===id);
+async function viewPassport(id){
+    let passport;
+    try{
+        passport=await getPassportById(id);
+    }catch(error){
+        console.error(error);
+        alert("Could not load this passport. Your Supabase read policy may need to allow public passport lookup.");
+        return;
+    }
 
     if(!passport){
         alert("Passport not found.");
         return;
     }
 
-    document.getElementById("homePage")
-        .classList.add("hidden");
-
-    document.getElementById("dashboardPage")
-        .classList.add("hidden");
-
-    document.getElementById("passportPage")
-        .classList.remove("hidden");
-
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("dashboardPage").classList.add("hidden");
+    document.getElementById("passportPage").classList.remove("hidden");
 
     const imageHTML=passport.image
-        ? `<img src="${passport.image}"
-               style="
-                    width:130px;
-                    height:130px;
-                    object-fit:cover;
-                    border-radius:18px;
-                    margin-top:18px;
-               ">`
-        : `<div style="
-                font-size:70px;
-                margin-top:18px;
-            ">
-                ${passport.type.split(" ")[0]}
-            </div>`;
+        ? `<img src="${passport.image}" style="width:130px;height:130px;object-fit:cover;border-radius:18px;margin-top:18px;">`
+        : `<div style="font-size:70px;margin-top:18px;">${passport.type.split(" ")[0]}</div>`;
 
-
-    document.getElementById("passportViewContent")
-    .innerHTML=`
-
+    document.getElementById("passportViewContent").innerHTML=`
         <div class="passport-view-card">
-
             <div class="passport-banner">
-
-                <small>
-                    LIFEPASS DIGITAL PRODUCT PASSPORT
-                </small>
-
-                <h1>
-                    ${escapeHtml(passport.name)}
-                </h1>
-
-                <p style="margin-top:8px;opacity:.8">
-                    ${passport.id}
-                </p>
-
+                <small>LIFEPASS DIGITAL PRODUCT PASSPORT</small>
+                <h1>${escapeHtml(passport.name)}</h1>
+                <p style="margin-top:8px;opacity:.8">${passport.id}</p>
                 ${imageHTML}
-
             </div>
-
-
             <div class="passport-content">
-
                 <div class="passport-info">
-
-                    <div class="info-box">
-                        <small>Product type</small>
-                        <strong>
-                            ${escapeHtml(passport.type)}
-                        </strong>
-                    </div>
-
-                    <div class="info-box">
-                        <small>Brand</small>
-                        <strong>
-                            ${escapeHtml(passport.brand || "Not added")}
-                        </strong>
-                    </div>
-
-                    <div class="info-box">
-                        <small>Model</small>
-                        <strong>
-                            ${escapeHtml(passport.model || "Not added")}
-                        </strong>
-                    </div>
-
-                    <div class="info-box">
-                        <small>Serial number</small>
-                        <strong>
-                            ${escapeHtml(passport.serial || "Not added")}
-                        </strong>
-                    </div>
-
-                    <div class="info-box">
-                        <small>Purchase date</small>
-                        <strong>
-                            ${escapeHtml(passport.purchaseDate || "Not added")}
-                        </strong>
-                    </div>
-
-                    <div class="info-box">
-                        <small>Warranty</small>
-                        <strong>
-                            ${escapeHtml(passport.warranty || "Not added")}
-                        </strong>
-                    </div>
-
+                    <div class="info-box"><small>Product type</small><strong>${escapeHtml(passport.type)}</strong></div>
+                    <div class="info-box"><small>Brand</small><strong>${escapeHtml(passport.brand || "Not added")}</strong></div>
+                    <div class="info-box"><small>Model</small><strong>${escapeHtml(passport.model || "Not added")}</strong></div>
+                    <div class="info-box"><small>Serial number</small><strong>${escapeHtml(passport.serial || "Not added")}</strong></div>
+                    <div class="info-box"><small>Purchase date</small><strong>${escapeHtml(passport.purchaseDate || "Not added")}</strong></div>
+                    <div class="info-box"><small>Warranty</small><strong>${escapeHtml(passport.warranty || "Not added")}</strong></div>
                 </div>
-
-
                 <div class="qr-box">
-
                     <div id="qrCanvas" style="width:200px;height:200px;margin:auto;background:#fff;display:flex;align-items:center;justify-content:center;"></div>
-
-                    <p style="
-                        color:var(--muted);
-                        font-size:12px;
-                        margin-top:10px;
-                    ">
-                        Scan to identify this passport
-                    </p>
-
+                    <p style="color:var(--muted);font-size:12px;margin-top:10px;">Scan to identify this passport</p>
                 </div>
-
-
-                <h3 style="
-                    color:var(--navy);
-                    margin-top:25px;
-                ">
-                    Product history
-                </h3>
-
-
+                <h3 style="color:var(--navy);margin-top:25px;">Product history</h3>
                 <div class="timeline">
-
-                    ${
-                        passport.history
-                        .map(h=>`
-
-                            <div class="timeline-item">
-
-                                <h4>
-                                    ${escapeHtml(h.title)}
-                                </h4>
-
-                                <p>
-                                    ${escapeHtml(h.text)}
-                                </p>
-
-                                <small style="
-                                    color:#8a9bad;
-                                    display:block;
-                                    margin-top:5px;
-                                ">
-                                    ${formatDate(h.date)}
-                                </small>
-
-                            </div>
-
-                        `).join("")
-                    }
-
+                    ${(passport.history || []).map(h=>`
+                        <div class="timeline-item">
+                            <h4>${escapeHtml(h.title)}</h4>
+                            <p>${escapeHtml(h.text)}</p>
+                            <small style="color:#8a9bad;display:block;margin-top:5px;">${formatDate(h.date)}</small>
+                        </div>`).join("")}
                 </div>
-
-
-                ${
-                    passport.notes
-                    ? `
-                    <div style="
-                        margin-top:20px;
-                        background:#f4f8fc;
-                        padding:18px;
-                        border-radius:15px;
-                    ">
-
-                        <strong>Notes</strong>
-
-                        <p style="
-                            color:var(--muted);
-                            margin-top:6px;
-                            line-height:1.6;
-                        ">
-                            ${escapeHtml(passport.notes)}
-                        </p>
-
-                    </div>
-                    `
-                    :""
-                }
-
+                ${passport.notes ? `<div style="margin-top:20px;background:#f4f8fc;padding:18px;border-radius:15px;"><strong>Notes</strong><p style="color:var(--muted);margin-top:6px;line-height:1.6;">${escapeHtml(passport.notes)}</p></div>` : ""}
             </div>
+        </div>`;
 
-        </div>
-    `;
-
-
-    generateQR(
-        "https://lifepassdigital.github.io/lifepass/?passport="+
-        encodeURIComponent(passport.id)
-    );
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    generateQR("https://lifepassdigital.github.io/lifepass/?passport=" + encodeURIComponent(passport.id));
+    window.scrollTo({top:0,behavior:"smooth"});
 }
-
 
 /* =========================
    QR GENERATOR
 ========================= */
 
 function generateQR(text){
-
     const canvas=document.getElementById("qrCanvas");
-
-    if(!canvas) return;
-
+    if(!canvas || !window.QRCode) return;
     canvas.innerHTML="";
-
     new QRCode(canvas,{
-        text:text,
+        text,
         width:180,
         height:180,
         colorDark:"#071a33",
@@ -2783,151 +2540,127 @@ function generateQR(text){
     });
 }
 
-
 /* =========================
    OPEN PASSPORT FROM QR
 ========================= */
 
-function openPassportFromQR(){
-
+async function openPassportFromQR(){
     const params=new URLSearchParams(window.location.search);
     const passportId=params.get("passport");
 
     if(!passportId){
+        await refreshUser();
         showHome();
         return;
     }
 
     const id=decodeURIComponent(passportId).trim().toUpperCase();
 
-    const passport=getProducts().find(p=>p.id.toUpperCase()===id);
-
-    if(!passport){
+    try{
+        const passport=await getPassportById(id);
+        if(!passport){
+            showHome();
+            setTimeout(()=>alert("Passport not found.\n\nLIFEPASS ID: "+id),300);
+            return;
+        }
+        await viewPassport(id);
+    }catch(error){
+        console.error(error);
         showHome();
-        setTimeout(()=>{
-            alert(
-                "Passport not found on this browser.\n\n"+
-                "LIFEPASS ID: "+id+"\n\n"+
-                "For QR access from another phone or computer, the passport data must be stored in Supabase."
-            );
-        },300);
-        return;
+        setTimeout(()=>alert("LIFEPASS found the QR code, but Supabase is not allowing public passport lookup yet. We need to update the database policy."),300);
     }
-
-    viewPassport(id);
 }
-
-
 
 /* =========================
    SEARCH
 ========================= */
 
-function searchPassport(){
-
-    const id=
-        document.getElementById("searchId")
-        .value
-        .trim()
-        .toUpperCase();
-
-    const passport=
-        getProducts().find(
-            p=>p.id===id
-        );
-
-    if(!passport){
-
-        alert(
-            "Passport not found.\n\n" +
-            "Check the LIFEPASS ID."
-        );
-
-        return;
+async function searchPassport(){
+    const id=document.getElementById("searchId").value.trim().toUpperCase();
+    try{
+        const passport=await getPassportById(id);
+        if(!passport){
+            alert("Passport not found.\n\nCheck the LIFEPASS ID.");
+            return;
+        }
+        closeModal("scanModal");
+        await viewPassport(id);
+    }catch(error){
+        console.error(error);
+        alert("Could not search passports. Check your Supabase database policies.");
     }
-
-    closeModal("scanModal");
-
-    viewPassport(id);
 }
-
 
 /* =========================
    EDIT
 ========================= */
 
 function openEdit(id){
-
-    document.getElementById("editId")
-        .value=id;
-
-    document.getElementById("editPasscode")
-        .value="";
-
-    document.getElementById("historyText")
-        .value="";
-
+    document.getElementById("editId").value=id;
+    document.getElementById("editPasscode").value="";
+    document.getElementById("historyText").value="";
     openModal("editModal");
 }
 
+async function saveEdit(){
+    await refreshUser();
 
-function saveEdit(){
+    const id=document.getElementById("editId").value;
+    const passcode=document.getElementById("editPasscode").value;
+    const history=document.getElementById("historyText").value.trim();
 
-    const id=
-        document.getElementById("editId")
-        .value;
-
-    const passcode=
-        document.getElementById("editPasscode")
-        .value;
-
-    const history=
-        document.getElementById("historyText")
-        .value.trim();
-
-    const products=getProducts();
-
-    const passport=
-        products.find(p=>p.id===id);
-
-    if(!passport){
-
-        alert("Passport not found.");
-
+    if(!currentUser){
+        alert("Please login first.");
         return;
     }
 
+    const { data, error } = await supabaseClient
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", currentUser.id)
+        .maybeSingle();
+
+    if(error){
+        alert(error.message || "Could not load passport.");
+        return;
+    }
+
+    if(!data){
+        alert("Passport not found or you do not own it.");
+        return;
+    }
+
+    const passport=rowToPassport(data);
+
     if(passport.passcode!==passcode){
-
         alert("Incorrect passport passcode.");
-
         return;
     }
 
     if(history){
-
         passport.history.push({
-
             title:"Product history updated",
-
             text:history,
-
             date:new Date().toISOString()
-
         });
-
     }
 
-    saveProducts(products);
+    const { error:updateError } = await supabaseClient
+        .from("products")
+        .update({history:passport.history})
+        .eq("id",id)
+        .eq("user_id",currentUser.id);
+
+    if(updateError){
+        alert(updateError.message || "Could not update passport.");
+        return;
+    }
 
     closeModal("editModal");
-
-    renderDashboard();
-
+    await renderDashboard();
     alert("Passport updated successfully.");
-
 }
-
 
 /* =========================
    INQUIRY EMAIL
@@ -2935,102 +2668,57 @@ function saveEdit(){
 
 function sendInquiry(event){
     event.preventDefault();
-
-    const name = document.getElementById("inquiryName").value.trim();
-    const email = document.getElementById("inquiryEmail").value.trim();
-    const subject = document.getElementById("inquirySubject").value.trim();
-    const message = document.getElementById("inquiryMessage").value.trim();
-
-    const body =
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n\n" +
-        message;
-
-    window.location.href =
-        "mailto:lifepass.tech@gmail.com" +
-        "?subject=" + encodeURIComponent("LIFEPASS Enquiry: " + subject) +
-        "&body=" + encodeURIComponent(body);
+    const name=document.getElementById("inquiryName").value.trim();
+    const email=document.getElementById("inquiryEmail").value.trim();
+    const subject=document.getElementById("inquirySubject").value.trim();
+    const message=document.getElementById("inquiryMessage").value.trim();
+    const body="Name: "+name+"\nEmail: "+email+"\n\n"+message;
+    window.location.href="mailto:lifepass.tech@gmail.com?subject="+
+        encodeURIComponent("LIFEPASS Enquiry: "+subject)+
+        "&body="+encodeURIComponent(body);
 }
-
 
 /* =========================
    AGENT
 ========================= */
 
 function toggleAgent(){
-
-    document.getElementById("agentPanel")
-        .classList.toggle("show");
+    document.getElementById("agentPanel").classList.toggle("show");
 }
-
 
 function agentMessage(type){
-
     let message="";
-
-    if(type==="create"){
-
-        message=
-        "Login first, then choose Create Passport and enter your product information.";
-
-    }
-
-    if(type==="qr"){
-
-        message=
-        "Each passport receives a unique LIFEPASS ID and a visual QR code for identification.";
-
-    }
-
-    if(type==="transfer"){
-
-        message=
-        "In the future version, ownership transfers will be stored in the secure LIFEPASS database.";
-
-    }
-
+    if(type==="create") message="Login first, then choose Create Passport and enter your product information.";
+    if(type==="qr") message="Each passport receives a unique LIFEPASS ID and a real scannable QR code.";
+    if(type==="transfer") message="Ownership transfer will be added after the core passport database is fully connected.";
     alert(message);
 }
-
 
 /* =========================
    LOGOUT
 ========================= */
 
-function logout(){
-
-    localStorage.removeItem(
-        STORAGE_SESSION
-    );
-
+async function logout(){
+    const { error } = await supabaseClient.auth.signOut();
+    if(error){
+        alert(error.message || "Could not log out.");
+        return;
+    }
+    currentUser=null;
     showHome();
-
     alert("You have been logged out.");
 }
-
 
 /* =========================
    UTILITIES
 ========================= */
 
 function formatDate(date){
-
     if(!date) return "Unknown";
-
-    return new Date(date)
-        .toLocaleDateString(
-            undefined,
-            {
-                day:"numeric",
-                month:"short",
-                year:"numeric"
-            }
-        );
+    return new Date(date).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
 }
 
-
 function escapeHtml(value){
-
     return String(value || "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
@@ -3039,52 +2727,33 @@ function escapeHtml(value){
         .replace(/'/g,"&#039;");
 }
 
-
 /* =========================
-   CLOSE MODAL ON BACKDROP
+   MODAL / KEYBOARD
 ========================= */
 
-document.querySelectorAll(".modal")
-.forEach(modal=>{
-
+document.querySelectorAll(".modal").forEach(modal=>{
     modal.addEventListener("click",function(e){
-
-        if(e.target===modal){
-
-            modal.classList.remove("show");
-
-        }
-
+        if(e.target===modal) modal.classList.remove("show");
     });
-
 });
 
-
-/* =========================
-   ESC KEY
-========================= */
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(e.key==="Escape"){
-
-            document.querySelectorAll(".modal")
-            .forEach(m=>m.classList.remove("show"));
-
-        }
-
+document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){
+        document.querySelectorAll(".modal").forEach(m=>m.classList.remove("show"));
     }
-);
-
+});
 
 /* =========================
-   STARTUP
+   SUPABASE AUTH STATE + STARTUP
 ========================= */
 
-window.addEventListener("load",function(){
-    openPassportFromQR();
+supabaseClient.auth.onAuthStateChange((_event, session)=>{
+    currentUser=session?.user || null;
+});
+
+window.addEventListener("load", async function(){
+    await refreshUser();
+    await openPassportFromQR();
 });
 
 </script>
