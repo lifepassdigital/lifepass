@@ -2,3228 +2,417 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LIFEPASS — Digital Product Passport</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --navy:#07152d;
-    --navy2:#0d2345;
-    --blue:#2563eb;
-    --blue2:#3b82f6;
-    --light:#f5f8fc;
-    --white:#ffffff;
-    --text:#162033;
-    --muted:#64748b;
-    --border:#e2e8f0;
-    --green:#16a34a;
-    --orange:#f59e0b;
-    --red:#dc2626;
-    --shadow:0 10px 35px rgba(7,21,45,.08);
-}
-
-body{
-    font-family:Inter,Segoe UI,Arial,sans-serif;
-    background:var(--light);
-    color:var(--text);
-}
-
-button,input,select,textarea{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* AUTH */
-
-#authScreen{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-      radial-gradient(circle at top right,#1d4ed8 0,transparent 35%),
-      linear-gradient(135deg,#06142c,#102b54);
-    padding:20px;
-}
-
-.auth-card{
-    width:100%;
-    max-width:440px;
-    background:white;
-    border-radius:24px;
-    padding:35px;
-    box-shadow:0 25px 70px rgba(0,0,0,.25);
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    font-weight:800;
-    font-size:25px;
-    color:var(--navy);
-}
-
-.logo-icon{
-    width:45px;
-    height:45px;
-    background:linear-gradient(135deg,#2563eb,#0d47a1);
-    color:white;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-}
-
-.auth-title{
-    margin-top:30px;
-    font-size:30px;
-}
-
-.auth-sub{
-    margin-top:8px;
-    color:var(--muted);
-    line-height:1.6;
-}
-
-.form-group{
-    margin-top:17px;
-}
-
-label{
-    display:block;
-    margin-bottom:7px;
-    font-size:13px;
-    font-weight:700;
-}
-
-input,select,textarea{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    outline:none;
-    background:white;
-    color:var(--text);
-}
-
-input:focus,select:focus,textarea:focus{
-    border-color:var(--blue);
-    box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
-
-textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-.primary-btn{
-    border:0;
-    color:white;
-    background:linear-gradient(135deg,var(--blue),#1745b5);
-    padding:13px 18px;
-    border-radius:11px;
-    font-weight:700;
-    transition:.2s;
-}
-
-.primary-btn:hover{
-    transform:translateY(-1px);
-    box-shadow:0 8px 20px rgba(37,99,235,.25);
-}
-
-.secondary-btn{
-    border:1px solid var(--border);
-    background:white;
-    padding:12px 17px;
-    border-radius:11px;
-    font-weight:700;
-}
-
-.danger-btn{
-    border:0;
-    background:#fee2e2;
-    color:#b91c1c;
-    padding:11px 15px;
-    border-radius:10px;
-    font-weight:700;
-}
-
-/* APP */
-
-#app{
-    display:none;
-    min-height:100vh;
-}
-
-.sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    width:255px;
-    background:var(--navy);
-    color:white;
-    padding:25px 16px;
-    z-index:20;
-}
-
-.sidebar .logo{
-    color:white;
-    margin:0 10px 35px;
-}
-
-.sidebar .logo-icon{
-    background:#2563eb;
-}
-
-.nav-item{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:13px 15px;
-    border-radius:11px;
-    color:#cbd5e1;
-    margin:5px 0;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.nav-item:hover,
-.nav-item.active{
-    background:#17345f;
-    color:white;
-}
-
-.nav-section{
-    margin:22px 10px 8px;
-    font-size:10px;
-    color:#7890b3;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-.sidebar-bottom{
-    position:absolute;
-    bottom:20px;
-    left:16px;
-    right:16px;
-}
-
-.main{
-    margin-left:255px;
-    min-height:100vh;
-}
-
-.topbar{
-    height:76px;
-    background:white;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 32px;
-    position:sticky;
-    top:0;
-    z-index:10;
-}
-
-.user-mini{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#dbeafe;
-    color:#1d4ed8;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-}
-
-.content{
-    padding:32px;
-    max-width:1500px;
-    margin:auto;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.page-title{
-    font-size:30px;
-    font-weight:800;
-}
-
-.page-sub{
-    color:var(--muted);
-    margin-top:6px;
-}
-
-.hero{
-    margin-top:25px;
-    background:linear-gradient(135deg,#09204a,#1557c8);
-    color:white;
-    padding:30px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:25px;
-}
-
-.hero h2{
-    font-size:28px;
-}
-
-.hero p{
-    color:#dbeafe;
-    margin-top:8px;
-    line-height:1.6;
-}
-
-.hero-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.white-btn{
-    border:0;
-    background:white;
-    color:#12315d;
-    padding:13px 18px;
-    border-radius:11px;
-    font-weight:800;
-}
-
-.outline-white{
-    background:transparent;
-    color:white;
-    border:1px solid rgba(255,255,255,.4);
-    padding:12px 17px;
-    border-radius:11px;
-    font-weight:700;
-}
-
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-top:22px;
-}
-
-.stat{
-    background:white;
-    padding:21px;
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--border);
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:13px;
-    font-weight:700;
-}
-
-.stat-value{
-    font-size:28px;
-    font-weight:800;
-    margin-top:8px;
-}
-
-/* CARDS */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-    margin-top:22px;
-}
-
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    padding:22px;
-    box-shadow:var(--shadow);
-}
-
-.card h3{
-    font-size:18px;
-}
-
-.card p{
-    color:var(--muted);
-    line-height:1.6;
-    margin-top:7px;
-}
-
-.feature-icon{
-    width:45px;
-    height:45px;
-    border-radius:12px;
-    background:#eff6ff;
-    color:#2563eb;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:21px;
-    margin-bottom:15px;
-}
-
-/* PRODUCT */
-
-.product-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-    margin-top:25px;
-}
-
-.product-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-}
-
-.product-img{
-    height:150px;
-    background:#eaf2ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:55px;
-}
-
-.product-body{
-    padding:19px;
-}
-
-.product-id{
-    font-size:11px;
-    color:var(--blue);
-    font-weight:800;
-    margin-top:7px;
-}
-
-.product-meta{
-    display:flex;
-    justify-content:space-between;
-    margin-top:15px;
-    color:var(--muted);
-    font-size:13px;
-}
-
-.status{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:800;
-}
-
-.status-green{
-    background:#dcfce7;
-    color:#15803d;
-}
-
-.status-yellow{
-    background:#fef3c7;
-    color:#a16207;
-}
-
-.status-red{
-    background:#fee2e2;
-    color:#b91c1c;
-}
-
-/* FORMS */
-
-.form-card{
-    max-width:1000px;
-    margin-top:24px;
-}
-
-.form-section{
-    margin-top:25px;
-    border-top:1px solid var(--border);
-    padding-top:22px;
-}
-
-.form-section h3{
-    margin-bottom:16px;
-}
-
-.two-col{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-}
-
-.three-col{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-}
-
-.form-actions{
-    margin-top:25px;
-    display:flex;
-    gap:10px;
-    justify-content:flex-end;
-}
-
-/* SEARCH */
-
-.search-box{
-    display:flex;
-    gap:10px;
-    max-width:700px;
-    margin-top:22px;
-}
-
-.search-box input{
-    flex:1;
-}
-
-/* DETAILS */
-
-.detail-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
-    margin-top:22px;
-}
-
-.detail-list{
-    margin-top:15px;
-}
-
-.detail-row{
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    border-bottom:1px solid var(--border);
-    padding:12px 0;
-}
-
-.detail-row span:first-child{
-    color:var(--muted);
-}
-
-.timeline{
-    margin-top:15px;
-}
-
-.timeline-item{
-    border-left:3px solid var(--blue);
-    padding:3px 0 18px 18px;
-    margin-left:6px;
-}
-
-.timeline-item strong{
-    display:block;
-}
-
-.timeline-item small{
-    color:var(--muted);
-}
-
-/* QR */
-
-.qr-area{
-    text-align:center;
-    padding:20px;
-}
-
-#qrcode{
-    display:flex;
-    justify-content:center;
-    margin:20px 0;
-}
-
-/* AI */
-
-.ai-layout{
-    display:grid;
-    grid-template-columns:260px 1fr;
-    gap:18px;
-    margin-top:22px;
-}
-
-.ai-side{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    padding:18px;
-}
-
-.ai-chat{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    min-height:550px;
-    display:flex;
-    flex-direction:column;
-}
-
-.messages{
-    flex:1;
-    padding:20px;
-    overflow:auto;
-    max-height:500px;
-}
-
-.message{
-    max-width:80%;
-    padding:13px 16px;
-    border-radius:15px;
-    margin-bottom:12px;
-    line-height:1.6;
-}
-
-.message.ai{
-    background:#f1f5f9;
-}
-
-.message.user{
-    background:#2563eb;
-    color:white;
-    margin-left:auto;
-}
-
-.ai-input{
-    border-top:1px solid var(--border);
-    padding:14px;
-    display:flex;
-    gap:10px;
-}
-
-/* PROFILE */
-
-.profile-header{
-    background:linear-gradient(135deg,#09204a,#1d4ed8);
-    color:white;
-    padding:30px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.profile-avatar{
-    width:85px;
-    height:85px;
-    border-radius:50%;
-    background:white;
-    color:#2563eb;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    font-weight:900;
-}
-
-.profile-name{
-    font-size:28px;
-    font-weight:800;
-}
-
-.profile-email{
-    color:#dbeafe;
-    margin-top:5px;
-}
-
-/* TOAST */
-
-#toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    background:#07152d;
-    color:white;
-    padding:14px 18px;
-    border-radius:11px;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-    transform:translateY(100px);
-    opacity:0;
-    transition:.3s;
-    z-index:100;
-}
-
-#toast.show{
-    transform:translateY(0);
-    opacity:1;
-}
-
-/* MOBILE */
-
-.mobile-menu{
-    display:none;
-}
-
-@media(max-width:1000px){
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .grid,
-    .product-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .detail-grid{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:750px){
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-    }
-
-    .mobile-menu{
-        display:block;
-        border:0;
-        background:transparent;
-        font-size:24px;
-    }
-
-    .content{
-        padding:18px;
-    }
-
-    .topbar{
-        padding:0 18px;
-    }
-
-    .hero{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .stats,
-    .grid,
-    .product-grid,
-    .two-col,
-    .three-col,
-    .ai-layout{
-        grid-template-columns:1fr;
-    }
-
-    .search-box{
-        flex-direction:column;
-    }
-
-    .profile-header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#07111f;color:#fff}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.nav{height:72px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;background:#0b1728;border-bottom:1px solid #1c3048;position:sticky;top:0;z-index:20}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px;color:#55b7ff}
+.logo span{color:#fff}
+.nav-actions{display:flex;gap:10px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;background:#147bd1;color:#fff}
+.btn.secondary{background:#172940}
+.btn.danger{background:#b93645}
+.btn.green{background:#159b72}
+.container{max-width:1200px;margin:auto;padding:35px 20px}
+.hero{text-align:center;padding:55px 20px}
+.hero h1{font-size:55px;margin:0 0 15px}
+.hero h1 span{color:#55b7ff}
+.hero p{color:#a9bdd3;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#0d1b2d;border:1px solid #203750;border-radius:18px;padding:22px;box-shadow:0 10px 30px #0003}
+.card h3{margin:12px 0 8px}
+.card p{color:#9db1c7;line-height:1.5}
+.icon{width:30px;height:30px;color:#55b7ff}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal-box{width:min(700px,100%);max-height:90vh;overflow:auto;background:#0c192a;border:1px solid #29425f;border-radius:20px;padding:25px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;color:#9db1c7}
+.field input,.field select,.field textarea{background:#081321;border:1px solid #29425f;color:#fff;border-radius:10px;padding:12px;outline:none}
+.field textarea{min-height:90px;resize:vertical}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.products{margin-top:35px}
+.product{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#123d61;color:#75c7ff;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:25px 0}
+.stat strong{font-size:30px;color:#55b7ff}
+#qrcode{background:#fff;padding:10px;width:max-content;margin:15px auto}
+#aiMessages{height:300px;overflow:auto;background:#081321;border-radius:12px;padding:15px}
+.msg{padding:10px;margin:8px 0;border-radius:10px;max-width:85%}
+.msg.user{margin-left:auto;background:#145d98}
+.msg.ai{background:#172940}
+@media(max-width:700px){
+.nav{padding:0 15px}.hero h1{font-size:38px}.form-grid,.stats{grid-template-columns:1fr}.product{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= AUTH ================= -->
+<nav class="nav">
+<div class="logo">LIFE<span>PASS</span></div>
+<div class="nav-actions">
+<button class="btn secondary" onclick="showSection('home')">Home</button>
+<button class="btn" id="loginBtn" onclick="openAuth()">Login</button>
+<button class="btn danger hidden" id="logoutBtn" onclick="logout()">Logout</button>
+</div>
+</nav>
 
-<div id="authScreen">
-
-    <div class="auth-card">
-
-        <div class="logo">
-            <div class="logo-icon">LP</div>
-            LIFEPASS
-        </div>
-
-        <h1 class="auth-title" id="authTitle">Welcome back</h1>
-
-        <p class="auth-sub" id="authSub">
-            Your digital passport for every product.
-        </p>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input id="authEmail" type="email" placeholder="you@example.com">
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input id="authPassword" type="password" placeholder="••••••••">
-        </div>
-
-        <button class="primary-btn" style="width:100%;margin-top:20px" onclick="handleAuth()">
-            <span id="authButtonText">Sign In</span>
-        </button>
-
-        <button
-            class="secondary-btn"
-            style="width:100%;margin-top:10px"
-            onclick="toggleAuthMode()"
-            id="toggleAuthButton">
-            Create an account
-        </button>
-
-        <p style="text-align:center;color:#64748b;font-size:12px;margin-top:20px">
-            LIFEPASS • Digital Product Identity
-        </p>
-
-    </div>
-
+<section id="home">
+<div class="hero">
+<h1>Every Product Has a <span>Story.</span></h1>
+<p>Keep it forever with LIFEPASS — the digital passport that follows the product, not the owner.</p>
+<div class="actions" style="justify-content:center">
+<button class="btn" onclick="openProduct()">Create Product Passport</button>
+<button class="btn secondary" onclick="openVerify()">Verify Passport</button>
+<button class="btn green" onclick="openAI()">AI Assistance</button>
+</div>
 </div>
 
-
-<!-- ================= APP ================= -->
-
-<div id="app">
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar" id="sidebar">
-
-        <div class="logo">
-            <div class="logo-icon">LP</div>
-            LIFEPASS
-        </div>
-
-        <div class="nav-item active" onclick="showPage('dashboard',this)">
-            🏠 Dashboard
-        </div>
-
-        <div class="nav-section">PRODUCTS</div>
-
-        <div class="nav-item" onclick="showPage('create',this)">
-            ➕ Create Passport
-        </div>
-
-        <div class="nav-item" onclick="showPage('products',this)">
-            📦 My Products
-        </div>
-
-        <div class="nav-item" onclick="showPage('verify',this)">
-            ✓ Verify Passport
-        </div>
-
-        <div class="nav-item" onclick="showPage('search',this)">
-            🔎 Search Passport
-        </div>
-
-        <div class="nav-section">TOOLS</div>
-
-        <div class="nav-item" onclick="showPage('ai',this)">
-            ✨ AI Assistant
-        </div>
-
-        <div class="nav-item" onclick="showPage('qr',this)">
-            ▣ QR Generator
-        </div>
-
-        <div class="nav-item" onclick="showPage('profile',this)">
-            👤 My Profile
-        </div>
-
-        <div class="sidebar-bottom">
-
-            <div class="nav-item" onclick="logout()">
-                ↪ Logout
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <header class="topbar">
-
-            <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-
-            <div>
-                <strong id="topTitle">Dashboard</strong>
-            </div>
-
-            <div class="user-mini">
-
-                <div class="avatar" id="topAvatar">U</div>
-
-                <div>
-                    <strong id="topUserName">User</strong>
-                    <div style="font-size:11px;color:#64748b" id="topUserEmail"></div>
-                </div>
-
-            </div>
-
-        </header>
-
-
-        <div class="content">
-
-            <!-- ================= DASHBOARD ================= -->
-
-            <section id="dashboard" class="page active">
-
-                <h1 class="page-title">Good to see you.</h1>
-
-                <p class="page-sub">
-                    Manage the complete digital history of your products.
-                </p>
-
-                <div class="hero">
-
-                    <div>
-                        <h2>Every product has a story.</h2>
-                        <p>
-                            Keep it forever with LIFEPASS — a digital passport
-                            that follows the product, not the owner.
-                        </p>
-                    </div>
-
-                    <div class="hero-actions">
-
-                        <button class="white-btn"
-                            onclick="showPage('create')">
-                            + Create Passport
-                        </button>
-
-                        <button class="outline-white"
-                            onclick="showPage('verify')">
-                            Verify Product
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="stats">
-
-                    <div class="stat">
-                        <div class="stat-label">TOTAL PRODUCTS</div>
-                        <div class="stat-value" id="statProducts">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-label">VERIFIED</div>
-                        <div class="stat-value" id="statVerified">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-label">WARRANTY ACTIVE</div>
-                        <div class="stat-value" id="statWarranty">0</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-label">SERVICES</div>
-                        <div class="stat-value" id="statServices">0</div>
-                    </div>
-
-                </div>
-
-
-                <div class="grid">
-
-                    <div class="card">
-                        <div class="feature-icon">📦</div>
-                        <h3>Digital Product Passport</h3>
-                        <p>
-                            Store identity, purchase details, warranty,
-                            documents and product information.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="feature-icon">🔐</div>
-                        <h3>Product Verification</h3>
-                        <p>
-                            Verify a LIFEPASS ID and inspect the available
-                            verified product information.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="feature-icon">🔧</div>
-                        <h3>Service History</h3>
-                        <p>
-                            Keep repair and maintenance records connected
-                            to the product.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="feature-icon">👥</div>
-                        <h3>Ownership History</h3>
-                        <p>
-                            Track the product's ownership journey over time.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="feature-icon">📄</div>
-                        <h3>Documents</h3>
-                        <p>
-                            Keep invoices, receipts and proof documents
-                            associated with the product.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="feature-icon">✨</div>
-                        <h3>AI Assistant</h3>
-                        <p>
-                            Ask LIFEPASS AI questions about products,
-                            warranties, maintenance and verification.
-                        </p>
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= CREATE ================= -->
-
-            <section id="create" class="page">
-
-                <h1 class="page-title">Create Product Passport</h1>
-
-                <p class="page-sub">
-                    Give your product a permanent digital identity.
-                </p>
-
-                <div class="card form-card">
-
-                    <div class="form-section" style="border:0;padding-top:0">
-
-                        <h3>Basic Information</h3>
-
-                        <div class="two-col">
-
-                            <div class="form-group">
-                                <label>Product Name *</label>
-                                <input id="pName" placeholder="e.g. iPhone 15">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Product Type</label>
-                                <select id="pType">
-                                    <option>Smartphone</option>
-                                    <option>Laptop</option>
-                                    <option>Bicycle</option>
-                                    <option>Camera</option>
-                                    <option>Gaming Console</option>
-                                    <option>Robot</option>
-                                    <option>Television</option>
-                                    <option>Appliance</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div class="three-col">
-
-                            <div class="form-group">
-                                <label>Brand</label>
-                                <input id="pBrand" placeholder="Apple">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Model</label>
-                                <input id="pModel" placeholder="iPhone 15">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Variant</label>
-                                <input id="pVariant" placeholder="128GB">
-                            </div>
-
-                        </div>
-
-                        <div class="three-col">
-
-                            <div class="form-group">
-                                <label>Color</label>
-                                <input id="pColor">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Serial Number</label>
-                                <input id="pSerial">
-                            </div>
-
-                            <div class="form-group">
-                                <label>IMEI / Product Code</label>
-                                <input id="pImei">
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-section">
-
-                        <h3>Purchase Information</h3>
-
-                        <div class="three-col">
-
-                            <div class="form-group">
-                                <label>Purchase Date</label>
-                                <input id="pDate" type="date">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Purchase Price</label>
-                                <input id="pPrice" type="number">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Currency</label>
-                                <select id="pCurrency">
-                                    <option>INR</option>
-                                    <option>USD</option>
-                                    <option>EUR</option>
-                                    <option>GBP</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Seller / Store</label>
-                            <input id="pSeller">
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-section">
-
-                        <h3>Warranty</h3>
-
-                        <div class="three-col">
-
-                            <div class="form-group">
-                                <label>Warranty</label>
-                                <input id="pWarranty" placeholder="1 Year">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Warranty Start</label>
-                                <input id="pWarrantyStart" type="date">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Warranty End</label>
-                                <input id="pWarrantyEnd" type="date">
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-section">
-
-                        <h3>Owner Information</h3>
-
-                        <div class="two-col">
-
-                            <div class="form-group">
-                                <label>Owner Name</label>
-                                <input id="pOwner">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Owner Phone</label>
-                                <input id="pOwnerPhone">
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-section">
-
-                        <h3>Description</h3>
-
-                        <textarea id="pDescription"
-                            placeholder="Add useful information about this product..."></textarea>
-
-                    </div>
-
-
-                    <div class="form-actions">
-
-                        <button class="secondary-btn"
-                            onclick="clearCreateForm()">
-                            Clear
-                        </button>
-
-                        <button class="primary-btn"
-                            onclick="createPassport()">
-                            Create LIFEPASS
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= PRODUCTS ================= -->
-
-            <section id="products" class="page">
-
-                <h1 class="page-title">My Products</h1>
-
-                <p class="page-sub">
-                    All product passports connected to your account.
-                </p>
-
-                <div id="productsGrid" class="product-grid"></div>
-
-            </section>
-
-
-            <!-- ================= VERIFY ================= -->
-
-            <section id="verify" class="page">
-
-                <h1 class="page-title">Verify a Passport</h1>
-
-                <p class="page-sub">
-                    Check a LIFEPASS ID and view available product information.
-                </p>
-
-                <div class="card" style="margin-top:22px;max-width:800px">
-
-                    <div class="form-group">
-                        <label>LIFEPASS ID</label>
-                        <input id="verifyId"
-                            placeholder="LP-XXXXXXXX">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Passcode</label>
-                        <input id="verifyPasscode"
-                            placeholder="Optional passcode">
-                    </div>
-
-                    <button class="primary-btn"
-                        style="margin-top:15px"
-                        onclick="verifyPassport()">
-                        Verify Passport
-                    </button>
-
-                    <div id="verifyResult" style="margin-top:20px"></div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= SEARCH ================= -->
-
-            <section id="search" class="page">
-
-                <h1 class="page-title">Search Passport</h1>
-
-                <p class="page-sub">
-                    Find a product using its LIFEPASS ID or serial number.
-                </p>
-
-                <div class="search-box">
-
-                    <input id="searchInput"
-                        placeholder="LP-XXXXXXXX or serial number">
-
-                    <button class="primary-btn"
-                        onclick="searchPassport()">
-                        Search
-                    </button>
-
-                </div>
-
-                <div id="searchResult" style="margin-top:20px"></div>
-
-            </section>
-
-
-            <!-- ================= PRODUCT DETAIL ================= -->
-
-            <section id="details" class="page">
-
-                <button class="secondary-btn"
-                    onclick="showPage('products')">
-                    ← Back to Products
-                </button>
-
-                <div id="productDetails"></div>
-
-            </section>
-
-
-            <!-- ================= QR ================= -->
-
-            <section id="qr" class="page">
-
-                <h1 class="page-title">QR Passport</h1>
-
-                <p class="page-sub">
-                    Generate a QR code that opens the product verification page.
-                </p>
-
-                <div class="card" style="max-width:600px;margin-top:22px">
-
-                    <div class="form-group">
-
-                        <label>LIFEPASS ID</label>
-
-                        <input id="qrInput"
-                            placeholder="LP-XXXXXXXX">
-
-                    </div>
-
-                    <button class="primary-btn"
-                        style="margin-top:15px"
-                        onclick="generateQR()">
-                        Generate QR
-                    </button>
-
-                    <div class="qr-area">
-
-                        <div id="qrcode"></div>
-
-                        <button class="secondary-btn hidden"
-                            id="downloadQRBtn"
-                            onclick="downloadQR()">
-                            Download QR
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= AI ================= -->
-
-            <section id="ai" class="page">
-
-                <h1 class="page-title">LIFEPASS AI</h1>
-
-                <p class="page-sub">
-                    Your product knowledge assistant.
-                </p>
-
-                <div class="ai-layout">
-
-                    <div class="ai-side">
-
-                        <h3>Ask AI about</h3>
-
-                        <div style="margin-top:15px">
-
-                            <button class="secondary-btn"
-                                style="width:100%;margin-bottom:8px"
-                                onclick="quickAI('How can I maintain my product?')">
-                                🔧 Maintenance
-                            </button>
-
-                            <button class="secondary-btn"
-                                style="width:100%;margin-bottom:8px"
-                                onclick="quickAI('How does a product warranty work?')">
-                                🛡 Warranty
-                            </button>
-
-                            <button class="secondary-btn"
-                                style="width:100%;margin-bottom:8px"
-                                onclick="quickAI('What should I check before buying a used product?')">
-                                🛒 Used Product
-                            </button>
-
-                            <button class="secondary-btn"
-                                style="width:100%;margin-bottom:8px"
-                                onclick="quickAI('What documents should I keep for my product?')">
-                                📄 Documents
-                            </button>
-
-                            <button class="secondary-btn"
-                                style="width:100%"
-                                onclick="quickAI('Explain LIFEPASS verification.')">
-                                🔐 Verification
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="ai-chat">
-
-                        <div class="messages" id="aiMessages">
-
-                            <div class="message ai">
-                                Hello! I'm LIFEPASS AI. Ask me anything about
-                                product passports, maintenance, warranties,
-                                verification or ownership history.
-                            </div>
-
-                        </div>
-
-                        <div class="ai-input">
-
-                            <input id="aiInput"
-                                placeholder="Ask LIFEPASS AI..."
-                                onkeydown="if(event.key==='Enter') sendAI()">
-
-                            <button class="primary-btn"
-                                onclick="sendAI()">
-                                Send
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= PROFILE ================= -->
-
-            <section id="profile" class="page">
-
-                <h1 class="page-title">My Profile</h1>
-
-                <p class="page-sub">
-                    Manage your LIFEPASS account information.
-                </p>
-
-                <div class="profile-header" style="margin-top:22px">
-
-                    <div class="profile-avatar" id="profileAvatar">
-                        U
-                    </div>
-
-                    <div>
-
-                        <div class="profile-name" id="profileName">
-                            User
-                        </div>
-
-                        <div class="profile-email" id="profileEmail">
-                            user@example.com
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card" style="margin-top:20px">
-
-                    <h3>Personal Details</h3>
-
-                    <div class="two-col">
-
-                        <div class="form-group">
-
-                            <label>Full Name</label>
-
-                            <input id="profileFullName">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label>Email</label>
-
-                            <input id="profileEmailInput"
-                                disabled>
-
-                        </div>
-
-                    </div>
-
-                    <div class="two-col">
-
-                        <div class="form-group">
-
-                            <label>Phone</label>
-
-                            <input id="profilePhone">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label>Country</label>
-
-                            <input id="profileCountry"
-                                value="India">
-
-                        </div>
-
-                    </div>
-
-                    <button class="primary-btn"
-                        style="margin-top:15px"
-                        onclick="saveProfile()">
-                        Save Profile
-                    </button>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
-
+<div class="container">
+<div class="grid">
+<div class="card"><i data-lucide="shield-check" class="icon"></i><h3>Secure Passport</h3><p>Store important product information in one digital passport.</p></div>
+<div class="card"><i data-lucide="history" class="icon"></i><h3>Product History</h3><p>Track ownership, repairs, servicing and important events.</p></div>
+<div class="card"><i data-lucide="badge-check" class="icon"></i><h3>Verification</h3><p>Verify a product using its unique LIFEPASS ID.</p></div>
+<div class="card"><i data-lucide="bot" class="icon"></i><h3>AI Assistance</h3><p>Ask the LIFEPASS AI assistant questions about your passport.</p></div>
+<div class="card"><i data-lucide="wrench" class="icon"></i><h3>Service & Repairs</h3><p>Keep service and repair records attached to the product.</p></div>
+<div class="card"><i data-lucide="repeat-2" class="icon"></i><h3>Ownership Transfer</h3><p>Maintain a digital ownership history when the product changes hands.</p></div>
+<div class="card"><i data-lucide="file-text" class="icon"></i><h3>Documents</h3><p>Keep invoice, warranty and supporting document references.</p></div>
+<div class="card"><i data-lucide="qr-code" class="icon"></i><h3>QR Passport</h3><p>Generate a QR code for quick product verification.</p></div>
+</div>
+</div>
+</section>
+
+<section id="dashboard" class="container hidden">
+<h1>Your LIFEPASS Dashboard</h1>
+<div class="stats">
+<div class="card"><strong id="totalCount">0</strong><p>Total Passports</p></div>
+<div class="card"><strong id="verifiedCount">0</strong><p>Verified</p></div>
+<div class="card"><strong id="warrantyCount">0</strong><p>Warranty</p></div>
+<div class="card"><strong id="serviceCount">0</strong><p>Services</p></div>
+</div>
+<div class="actions">
+<button class="btn" onclick="openProduct()">+ Create Passport</button>
+<button class="btn green" onclick="openAI()">AI Assistant</button>
+</div>
+<div id="productList" class="products grid"></div>
+</section>
+
+<div id="authModal" class="modal hidden">
+<div class="modal-box">
+<h2>Welcome to LIFEPASS</h2>
+<div class="field"><label>Email</label><input id="email"></div>
+<div class="field" style="margin-top:12px"><label>Password</label><input id="password" type="password"></div>
+<div class="actions">
+<button class="btn" onclick="login()">Login</button>
+<button class="btn secondary" onclick="signup()">Create Account</button>
+<button class="btn danger" onclick="closeModals()">Close</button>
+</div>
+<p id="authMessage"></p>
+</div>
 </div>
 
+<div id="productModal" class="modal hidden">
+<div class="modal-box">
+<h2>Create Product Passport</h2>
+<div class="form-grid">
+<div class="field"><label>Product Name *</label><input id="p_name"></div>
+<div class="field"><label>Product Type</label><input id="p_type"></div>
+<div class="field"><label>Category</label><input id="p_category"></div>
+<div class="field"><label>Brand</label><input id="p_brand"></div>
+<div class="field"><label>Model</label><input id="p_model"></div>
+<div class="field"><label>Variant</label><input id="p_variant"></div>
+<div class="field"><label>Color</label><input id="p_color"></div>
+<div class="field"><label>Serial Number</label><input id="p_serial"></div>
+<div class="field"><label>IMEI</label><input id="p_imei"></div>
+<div class="field"><label>Product Code</label><input id="p_code"></div>
+<div class="field"><label>Purchase Date</label><input id="p_date" type="date"></div>
+<div class="field"><label>Purchase Price</label><input id="p_price" type="number"></div>
+<div class="field"><label>Seller</label><input id="p_seller"></div>
+<div class="field"><label>Warranty</label><input id="p_warranty"></div>
+<div class="field"><label>Owner Name</label><input id="p_owner"></div>
+<div class="field"><label>Owner Phone</label><input id="p_phone"></div>
+<div class="field full"><label>Description</label><textarea id="p_description"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn" onclick="createPassport()">Create Passport</button>
+<button class="btn danger" onclick="closeModals()">Cancel</button>
+</div>
+<p id="productMessage"></p>
+</div>
+</div>
 
-<div id="toast"></div>
+<div id="verifyModal" class="modal hidden">
+<div class="modal-box">
+<h2>Verify LIFEPASS</h2>
+<div class="field"><label>LIFEPASS ID</label><input id="verifyId" placeholder="LP-XXXXXXXX"></div>
+<div class="actions">
+<button class="btn" onclick="verifyPassport()">Verify</button>
+<button class="btn danger" onclick="closeModals()">Close</button>
+</div>
+<div id="verifyResult"></div>
+</div>
+</div>
 
+<div id="passportModal" class="modal hidden">
+<div class="modal-box">
+<h2 id="passportTitle">Digital Passport</h2>
+<div id="passportDetails"></div>
+<div id="qrcode"></div>
+<div class="actions">
+<button class="btn" onclick="downloadQR()">Download QR</button>
+<button class="btn secondary" onclick="window.print()">Print Passport</button>
+<button class="btn danger" onclick="closeModals()">Close</button>
+</div>
+</div>
+</div>
+
+<div id="aiModal" class="modal hidden">
+<div class="modal-box">
+<h2><i data-lucide="bot"></i> LIFEPASS AI</h2>
+<div id="aiMessages"></div>
+<div class="actions">
+<input id="aiInput" style="flex:1;background:#081321;border:1px solid #29425f;color:#fff;border-radius:10px;padding:12px" placeholder="Ask LIFEPASS AI...">
+<button class="btn" onclick="askAI()">Send</button>
+<button class="btn danger" onclick="closeModals()">Close</button>
+</div>
+</div>
+</div>
 
 <script>
+const SUPABASE_URL="https://dwidvbltikjmvfaxfrul.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_Au1Agb96Uh5JCdtIQGW0tA_Was0dyLm";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-/* ============================================================
-   LIFEPASS CONFIGURATION
-   ============================================================ */
+let currentUser=null;
+let currentPassport=null;
 
-const SUPABASE_URL =
-    "https://dwidvbltikjmvfaxfrul.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Au1Agb96Uh5JCdtIQGW0tA_Was0dyLm";
-
-
-const { createClient } =
-    supabase;
-
-const db =
-    createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
-
-
-/* ============================================================
-   GLOBAL VARIABLES
-   ============================================================ */
-
-let currentUser = null;
-let products = [];
-let authMode = "login";
-let selectedProduct = null;
-
-
-/* ============================================================
-   INITIALIZATION
-   ============================================================ */
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-    const {
-        data:{
-            session
-        }
-    } = await db.auth.getSession();
-
-    if(session){
-
-        currentUser =
-            session.user;
-
-        await startApp();
-
-    }else{
-
-        showAuth();
-
-    }
-
+document.addEventListener("DOMContentLoaded",async()=>{
+lucide.createIcons();
+const {data}=await supabaseClient.auth.getSession();
+if(data.session){currentUser=data.session.user;setLoggedIn(true);showDashboard();loadProducts();}
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+currentUser=session?.user||null;
+setLoggedIn(!!currentUser);
+if(currentUser){showDashboard();loadProducts()}
+});
 });
 
+function setLoggedIn(v){
+document.getElementById("loginBtn").classList.toggle("hidden",v);
+document.getElementById("logoutBtn").classList.toggle("hidden",!v);
+}
+function showSection(id){
+document.getElementById("home").classList.toggle("hidden",id!=="home");
+document.getElementById("dashboard").classList.toggle("hidden",id!=="dashboard");
+}
+function showDashboard(){
+showSection("dashboard");
+}
+function openAuth(){document.getElementById("authModal").classList.remove("hidden")}
+function openProduct(){
+if(!currentUser){openAuth();return}
+document.getElementById("productModal").classList.remove("hidden");
+}
+function openVerify(){document.getElementById("verifyModal").classList.remove("hidden")}
+function openAI(){document.getElementById("aiModal").classList.remove("hidden")}
+function closeModals(){document.querySelectorAll(".modal").forEach(x=>x.classList.add("hidden"))}
 
-db.auth.onAuthStateChange(
-    async(event,session)=>{
-
-        if(session){
-
-            currentUser =
-                session.user;
-
-            await startApp();
-
-        }else{
-
-            currentUser =
-                null;
-
-            showAuth();
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   AUTH
-   ============================================================ */
-
-function showAuth(){
-
-    document.getElementById("authScreen")
-        .style.display="flex";
-
-    document.getElementById("app")
-        .style.display="none";
-
+async function login(){
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+document.getElementById("authMessage").textContent=error?error.message:"Login successful!";
+}
+async function signup(){
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+const {error}=await supabaseClient.auth.signUp({email,password});
+document.getElementById("authMessage").textContent=error?error.message:"Account created. Check your email if confirmation is enabled.";
+}
+async function logout(){
+await supabaseClient.auth.signOut();
+currentUser=null;
+showSection("home");
 }
 
-
-function toggleAuthMode(){
-
-    authMode =
-        authMode==="login"
-        ? "signup"
-        : "login";
-
-    if(authMode==="signup"){
-
-        document.getElementById("authTitle")
-            .textContent="Create your account";
-
-        document.getElementById("authSub")
-            .textContent=
-            "Create your LIFEPASS account.";
-
-        document.getElementById("authButtonText")
-            .textContent="Create Account";
-
-        document.getElementById("toggleAuthButton")
-            .textContent="Already have an account? Sign in";
-
-    }else{
-
-        document.getElementById("authTitle")
-            .textContent="Welcome back";
-
-        document.getElementById("authSub")
-            .textContent=
-            "Your digital passport for every product.";
-
-        document.getElementById("authButtonText")
-            .textContent="Sign In";
-
-        document.getElementById("toggleAuthButton")
-            .textContent="Create an account";
-
-    }
-
+function makeId(){
+return "LP-"+Math.random().toString(36).substring(2,10).toUpperCase();
 }
-
-
-async function handleAuth(){
-
-    const email =
-        document.getElementById("authEmail")
-        .value.trim();
-
-    const password =
-        document.getElementById("authPassword")
-        .value;
-
-    if(!email || !password){
-
-        toast("Enter email and password.");
-
-        return;
-
-    }
-
-
-    let result;
-
-    if(authMode==="login"){
-
-        result =
-            await db.auth.signInWithPassword({
-                email,
-                password
-            });
-
-    }else{
-
-        result =
-            await db.auth.signUp({
-                email,
-                password
-            });
-
-    }
-
-
-    if(result.error){
-
-        toast(result.error.message);
-
-        return;
-
-    }
-
-
-    if(authMode==="signup"){
-
-        toast(
-            "Account created. Check your email if confirmation is required."
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   APP START
-   ============================================================ */
-
-async function startApp(){
-
-    document.getElementById("authScreen")
-        .style.display="none";
-
-    document.getElementById("app")
-        .style.display="block";
-
-    updateUserUI();
-
-    await loadProducts();
-
-}
-
-
-/* ============================================================
-   USER UI
-   ============================================================ */
-
-function updateUserUI(){
-
-    if(!currentUser)
-        return;
-
-    const email =
-        currentUser.email || "";
-
-    const metadata =
-        currentUser.user_metadata || {};
-
-    const name =
-        metadata.full_name ||
-        metadata.name ||
-        email.split("@")[0] ||
-        "User";
-
-    const initial =
-        name.charAt(0).toUpperCase();
-
-
-    document.getElementById("topUserName")
-        .textContent=name;
-
-    document.getElementById("topUserEmail")
-        .textContent=email;
-
-    document.getElementById("topAvatar")
-        .textContent=initial;
-
-    document.getElementById("profileAvatar")
-        .textContent=initial;
-
-    document.getElementById("profileName")
-        .textContent=name;
-
-    document.getElementById("profileEmail")
-        .textContent=email;
-
-    document.getElementById("profileFullName")
-        .value=name;
-
-    document.getElementById("profileEmailInput")
-        .value=email;
-
-}
-
-
-async function saveProfile(){
-
-    const name =
-        document.getElementById("profileFullName")
-        .value.trim();
-
-    const phone =
-        document.getElementById("profilePhone")
-        .value.trim();
-
-    const country =
-        document.getElementById("profileCountry")
-        .value.trim();
-
-
-    const {error} =
-        await db.auth.updateUser({
-
-            data:{
-                full_name:name,
-                phone,
-                country
-            }
-
-        });
-
-
-    if(error){
-
-        toast(error.message);
-
-        return;
-
-    }
-
-
-    updateUserUI();
-
-    toast("Profile updated successfully.");
-
-}
-
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-
-function showPage(page,element){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(p =>
-            p.classList.remove("active")
-        );
-
-    const target =
-        document.getElementById(page);
-
-    if(target)
-        target.classList.add("active");
-
-
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(n =>
-            n.classList.remove("active")
-        );
-
-    if(element)
-        element.classList.add("active");
-
-
-    const titles = {
-
-        dashboard:"Dashboard",
-        create:"Create Passport",
-        products:"My Products",
-        verify:"Verify Passport",
-        search:"Search Passport",
-        details:"Product Details",
-        qr:"QR Generator",
-        ai:"AI Assistant",
-        profile:"My Profile"
-
-    };
-
-    document.getElementById("topTitle")
-        .textContent=titles[page] || "LIFEPASS";
-
-
-    document.getElementById("sidebar")
-        .classList.remove("open");
-
-}
-
-
-function toggleSidebar(){
-
-    document.getElementById("sidebar")
-        .classList.toggle("open");
-
-}
-
-
-/* ============================================================
-   PRODUCTS
-   ============================================================ */
-
-async function loadProducts(){
-
-    const {data,error} =
-        await db
-        .from("products")
-        .select("*")
-        .order("created_at",{ascending:false});
-
-
-    if(error){
-
-        console.error(error);
-
-        toast("Could not load products.");
-
-        return;
-
-    }
-
-
-    products =
-        data || [];
-
-    renderProducts();
-
-    updateStats();
-
-}
-
-
-function updateStats(){
-
-    document.getElementById("statProducts")
-        .textContent=products.length;
-
-    document.getElementById("statVerified")
-        .textContent=
-        products.filter(
-            p =>
-            p.verified===true ||
-            p.verification_status==="approved"
-        ).length;
-
-
-    document.getElementById("statWarranty")
-        .textContent=
-        products.filter(
-            p => {
-
-                if(!p.warranty_end_date)
-                    return false;
-
-                return new Date(p.warranty_end_date)
-                    >= new Date();
-
-            }
-        ).length;
-
-
-    document.getElementById("statServices")
-        .textContent=
-        products.reduce(
-            (total,p)=>
-                total+
-                (
-                    Array.isArray(p.service_history)
-                    ? p.service_history.length
-                    : 0
-                ),
-            0
-        );
-
-}
-
-
-function renderProducts(){
-
-    const grid =
-        document.getElementById("productsGrid");
-
-    if(!products.length){
-
-        grid.innerHTML=`
-
-            <div class="card" style="grid-column:1/-1;text-align:center">
-
-                <div style="font-size:50px">📦</div>
-
-                <h3>No products yet</h3>
-
-                <p>Create your first LIFEPASS passport.</p>
-
-                <button
-                    class="primary-btn"
-                    style="margin-top:15px"
-                    onclick="showPage('create')">
-                    Create Passport
-                </button>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    grid.innerHTML =
-        products.map(p=>{
-
-            const verified =
-                p.verified===true ||
-                p.verification_status==="approved";
-
-            return `
-
-                <div class="product-card">
-
-                    <div class="product-img">
-                        ${productIcon(p.type)}
-                    </div>
-
-                    <div class="product-body">
-
-                        <h3>
-                            ${escapeHTML(p.name || "Unnamed Product")}
-                        </h3>
-
-                        <div class="product-id">
-                            ${escapeHTML(p.lifepass_id || "")}
-                        </div>
-
-                        <div class="product-meta">
-
-                            <span>
-                                ${escapeHTML(p.brand || "No brand")}
-                            </span>
-
-                            <span class="status ${
-                                verified
-                                ? "status-green"
-                                : "status-yellow"
-                            }">
-                                ${
-                                    verified
-                                    ? "Verified"
-                                    : "Pending"
-                                }
-                            </span>
-
-                        </div>
-
-                        <button
-                            class="secondary-btn"
-                            style="width:100%;margin-top:16px"
-                            onclick="openProduct('${p.id}')">
-                            View Passport
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-}
-
-
-function productIcon(type){
-
-    const icons={
-
-        Smartphone:"📱",
-        Laptop:"💻",
-        Bicycle:"🚲",
-        Camera:"📷",
-        "Gaming Console":"🎮",
-        Robot:"🤖",
-        Television:"📺",
-        Appliance:"🏠",
-        Other:"📦"
-
-    };
-
-    return icons[type] || "📦";
-
-}
-
-
-/* ============================================================
-   CREATE PASSPORT
-   ============================================================ */
 
 async function createPassport(){
-
-    if(!currentUser){
-
-        toast("Please sign in.");
-
-        return;
-
-    }
-
-
-    const name =
-        value("pName");
-
-    if(!name){
-
-        toast("Product name is required.");
-
-        return;
-
-    }
-
-
-    const lifepassId =
-        generateLifePassID();
-
-    const passcode =
-        generatePasscode();
-
-
-    const history = [
-
-        {
-
-            event:"Passport created",
-            date:new Date().toISOString(),
-            description:"LIFEPASS passport created."
-
-        }
-
-    ];
-
-
-    const payload={
-
-        user_id:currentUser.id,
-
-        lifepass_id:lifepassId,
-
-        passcode,
-
-        name:name,
-
-        type:value("pType"),
-
-        category:value("pType"),
-
-        brand:value("pBrand"),
-
-        model:value("pModel"),
-
-        variant:value("pVariant"),
-
-        color:value("pColor"),
-
-        serial:value("pSerial"),
-
-        imei:value("pImei"),
-
-        description:value("pDescription"),
-
-        purchase_date:
-            emptyToNull(value("pDate")),
-
-        purchase_price:
-            numberOrNull(value("pPrice")),
-
-        currency:value("pCurrency"),
-
-        seller:value("pSeller"),
-
-        warranty:value("pWarranty"),
-
-        warranty_start_date:
-            emptyToNull(value("pWarrantyStart")),
-
-        warranty_end_date:
-            emptyToNull(value("pWarrantyEnd")),
-
-        owner_name:
-            value("pOwner") ||
-            currentUser.user_metadata?.full_name ||
-            currentUser.email,
-
-        owner_email:
-            currentUser.email,
-
-        owner_phone:
-            value("pOwnerPhone"),
-
-        verified:false,
-
-        verification_status:"pending",
-
-        history:history,
-
-        ownership_history:[],
-
-        service_history:[],
-
-        documents:[],
-
-        metadata:{},
-
-        status:"active"
-
-    };
-
-
-    const {data,error} =
-        await db
-        .from("products")
-        .insert(payload)
-        .select()
-        .single();
-
-
-    if(error){
-
-        console.error(error);
-
-        toast(error.message);
-
-        return;
-
-    }
-
-
-    toast(
-        `Passport created: ${lifepassId}`
-    );
-
-
-    clearCreateForm();
-
-    await loadProducts();
-
-    openProduct(data.id);
-
+if(!currentUser){openAuth();return}
+const name=document.getElementById("p_name").value.trim();
+if(!name){
+document.getElementById("productMessage").textContent="Product name is required.";
+return;
+}
+const lifepass_id=makeId();
+const row={
+user_id:currentUser.id,
+lifepass_id,
+passcode:Math.random().toString(36).substring(2,8).toUpperCase(),
+name,
+type:document.getElementById("p_type").value,
+category:document.getElementById("p_category").value,
+brand:document.getElementById("p_brand").value,
+model:document.getElementById("p_model").value,
+variant:document.getElementById("p_variant").value,
+color:document.getElementById("p_color").value,
+serial:document.getElementById("p_serial").value,
+imei:document.getElementById("p_imei").value,
+product_code:document.getElementById("p_code").value,
+description:document.getElementById("p_description").value,
+purchase_date:document.getElementById("p_date").value||null,
+purchase_price:Number(document.getElementById("p_price").value)||null,
+seller:document.getElementById("p_seller").value,
+warranty:document.getElementById("p_warranty").value,
+owner_name:document.getElementById("p_owner").value,
+owner_phone:document.getElementById("p_phone").value,
+verified:false,
+verification_status:"pending",
+history:[],
+ownership_history:[],
+service_history:[],
+documents:[],
+metadata:{},
+status:"active"
+};
+const {data,error}=await supabaseClient.from("products").insert(row).select().single();
+if(error){
+document.getElementById("productMessage").textContent=error.message;
+return;
+}
+document.getElementById("productMessage").textContent="Passport created: "+data.lifepass_id;
+currentPassport=data;
+loadProducts();
+setTimeout(()=>showPassport(data),500);
 }
 
+async function loadProducts(){
+if(!currentUser)return;
+const {data,error}=await supabaseClient.from("products").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+if(error)return;
+const list=document.getElementById("productList");
+list.innerHTML="";
+document.getElementById("totalCount").textContent=data.length;
+document.getElementById("verifiedCount").textContent=data.filter(x=>x.verified||x.verification_status==="approved").length;
+document.getElementById("warrantyCount").textContent=data.filter(x=>x.warranty).length;
+document.getElementById("serviceCount").textContent=data.reduce((n,x)=>n+(Array.isArray(x.service_history)?x.service_history.length:0),0);
 
-function generateLifePassID(){
-
-    const chars =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-    let code="";
-
-    for(let i=0;i<8;i++){
-
-        code +=
-            chars[
-                Math.floor(
-                    Math.random()*chars.length
-                )
-            ];
-
-    }
-
-    return "LP-"+code;
-
+data.forEach(p=>{
+const div=document.createElement("div");
+div.className="card";
+div.innerHTML=`
+<i data-lucide="package" class="icon"></i>
+<h3>${escapeHTML(p.name||"Unnamed Product")}</h3>
+<span class="badge">${escapeHTML(p.lifepass_id)}</span>
+<p>${escapeHTML(p.brand||"")} ${escapeHTML(p.model||"")}</p>
+<p>Status: ${p.verified?"Verified":"Pending"}</p>
+<div class="actions">
+<button class="btn" onclick='showPassport(${JSON.stringify(p)})'>View Passport</button>
+<button class="btn secondary" onclick='deletePassport("${p.id}")'>Delete</button>
+</div>`;
+list.appendChild(div);
+});
+lucide.createIcons();
 }
 
-
-function generatePasscode(){
-
-    return Math
-        .random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
-
+function escapeHTML(v){
+return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
 
-
-function clearCreateForm(){
-
-    document
-        .querySelectorAll("#create input,#create textarea")
-        .forEach(el=>el.value="");
-
+function showPassport(p){
+currentPassport=p;
+document.getElementById("passportTitle").textContent=p.name+" — LIFEPASS";
+document.getElementById("passportDetails").innerHTML=`
+<div class="grid">
+<div class="card"><b>LIFEPASS ID</b><p>${escapeHTML(p.lifepass_id)}</p></div>
+<div class="card"><b>Brand</b><p>${escapeHTML(p.brand)}</p></div>
+<div class="card"><b>Model</b><p>${escapeHTML(p.model)}</p></div>
+<div class="card"><b>Serial</b><p>${escapeHTML(p.serial)}</p></div>
+<div class="card"><b>Category</b><p>${escapeHTML(p.category)}</p></div>
+<div class="card"><b>Owner</b><p>${escapeHTML(p.owner_name)}</p></div>
+<div class="card"><b>Warranty</b><p>${escapeHTML(p.warranty)}</p></div>
+<div class="card"><b>Status</b><p>${p.verified?"Verified":"Pending Verification"}</p></div>
+</div>
+`;
+const q=document.getElementById("qrcode");
+q.innerHTML="";
+new QRCode(q,{text:SUPABASE_URL+"/?verify="+encodeURIComponent(p.lifepass_id),width:180,height:180});
+document.getElementById("passportModal").classList.remove("hidden");
 }
-
-
-/* ============================================================
-   PRODUCT DETAILS
-   ============================================================ */
-
-function openProduct(id){
-
-    selectedProduct =
-        products.find(p=>p.id===id);
-
-    if(!selectedProduct)
-        return;
-
-    renderProductDetails();
-
-    showPage("details");
-
-}
-
-
-function renderProductDetails(){
-
-    const p =
-        selectedProduct;
-
-    const verified =
-        p.verified===true ||
-        p.verification_status==="approved";
-
-
-    const services =
-        Array.isArray(p.service_history)
-        ? p.service_history
-        : [];
-
-
-    const ownership =
-        Array.isArray(p.ownership_history)
-        ? p.ownership_history
-        : [];
-
-
-    const documents =
-        Array.isArray(p.documents)
-        ? p.documents
-        : [];
-
-
-    document.getElementById("productDetails")
-        .innerHTML=`
-
-        <div style="margin-top:20px">
-
-            <div class="profile-header">
-
-                <div class="profile-avatar">
-                    ${productIcon(p.type)}
-                </div>
-
-                <div>
-
-                    <div class="profile-name">
-                        ${escapeHTML(p.name || "Product")}
-                    </div>
-
-                    <div class="profile-email">
-                        ${escapeHTML(p.lifepass_id || "")}
-                    </div>
-
-                    <div style="margin-top:10px">
-                        <span class="status ${
-                            verified
-                            ? "status-green"
-                            : "status-yellow"
-                        }">
-                            ${
-                                verified
-                                ? "✓ Verified"
-                                : "Pending Verification"
-                            }
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="detail-grid">
-
-                <div>
-
-                    <div class="card">
-
-                        <h3>Product Information</h3>
-
-                        <div class="detail-list">
-
-                            ${detail("Type",p.type)}
-
-                            ${detail("Brand",p.brand)}
-
-                            ${detail("Model",p.model)}
-
-                            ${detail("Variant",p.variant)}
-
-                            ${detail("Color",p.color)}
-
-                            ${detail("Serial",p.serial)}
-
-                            ${detail("IMEI / Code",p.imei || p.product_code)}
-
-                            ${detail("Purchase Date",p.purchase_date)}
-
-                            ${detail(
-                                "Purchase Price",
-                                p.purchase_price
-                                ? `${p.currency || "INR"} ${p.purchase_price}`
-                                : ""
-                            )}
-
-                            ${detail("Seller",p.seller)}
-
-                            ${detail("Warranty",p.warranty)}
-
-                            ${detail(
-                                "Warranty End",
-                                p.warranty_end_date
-                            )}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="card" style="margin-top:20px">
-
-                        <h3>Service History</h3>
-
-                        ${
-                            services.length
-                            ? `<div class="timeline">
-
-                                ${
-                                    services.map(s=>`
-
-                                        <div class="timeline-item">
-
-                                            <strong>
-                                                ${escapeHTML(
-                                                    s.title ||
-                                                    s.service ||
-                                                    "Service"
-                                                )}
-                                            </strong>
-
-                                            <small>
-                                                ${escapeHTML(
-                                                    s.date || ""
-                                                )}
-                                            </small>
-
-                                            <div>
-                                                ${escapeHTML(
-                                                    s.description || ""
-                                                )}
-                                            </div>
-
-                                        </div>
-
-                                    `).join("")
-                                }
-
-                            </div>`
-                            : `<p>No service records yet.</p>`
-                        }
-
-                    </div>
-
-
-                    <div class="card" style="margin-top:20px">
-
-                        <h3>Ownership History</h3>
-
-                        ${
-                            ownership.length
-                            ? `<div class="timeline">
-
-                                ${
-                                    ownership.map(o=>`
-
-                                        <div class="timeline-item">
-
-                                            <strong>
-                                                ${escapeHTML(
-                                                    o.owner ||
-                                                    "Owner"
-                                                )}
-                                            </strong>
-
-                                            <small>
-                                                ${escapeHTML(
-                                                    o.date || ""
-                                                )}
-                                            </small>
-
-                                        </div>
-
-                                    `).join("")
-                                }
-
-                            </div>`
-                            : `<p>No ownership transfers recorded.</p>`
-                        }
-
-                    </div>
-
-
-                    <div class="card" style="margin-top:20px">
-
-                        <h3>Documents</h3>
-
-                        ${
-                            documents.length
-                            ? documents.map(d=>`
-
-                                <div style="
-                                    padding:12px 0;
-                                    border-bottom:1px solid var(--border)
-                                ">
-
-                                    📄
-                                    ${escapeHTML(
-                                        d.name ||
-                                        d.title ||
-                                        "Document"
-                                    )}
-
-                                </div>
-
-                            `).join("")
-                            : `<p>No documents uploaded.</p>`
-                        }
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <div class="card">
-
-                        <div class="qr-area">
-
-                            <h3>Product QR</h3>
-
-                            <div id="detailQR"></div>
-
-                            <button
-                                class="secondary-btn"
-                                onclick="generateDetailQR()">
-                                Generate QR
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="card" style="margin-top:20px">
-
-                        <h3>Passport Security</h3>
-
-                        ${detail(
-                            "LIFEPASS ID",
-                            p.lifepass_id
-                        )}
-
-                        ${detail(
-                            "Passcode",
-                            p.passcode || "Protected"
-                        )}
-
-                        ${detail(
-                            "Status",
-                            p.status
-                        )}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* ============================================================
-   VERIFY
-   ============================================================ */
-
-async function verifyPassport(){
-
-    const id =
-        value("verifyId").toUpperCase().trim();
-
-    const passcode =
-        value("verifyPasscode").trim();
-
-
-    if(!id){
-
-        toast("Enter a LIFEPASS ID.");
-
-        return;
-
-    }
-
-
-    let query =
-        db
-        .from("products")
-        .select("*")
-        .eq("lifepass_id",id)
-        .limit(1);
-
-
-    const {data,error} =
-        await query;
-
-
-    const result =
-        document.getElementById("verifyResult");
-
-
-    if(error){
-
-        result.innerHTML=
-            `<div class="card">
-                <p>${escapeHTML(error.message)}</p>
-            </div>`;
-
-        return;
-
-    }
-
-
-    if(!data || !data.length){
-
-        result.innerHTML=`
-
-            <div class="card">
-
-                <h3>❌ Passport not found</h3>
-
-                <p>
-                    No product was found with this LIFEPASS ID.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const p=data[0];
-
-
-    if(passcode && p.passcode !== passcode){
-
-        result.innerHTML=`
-
-            <div class="card">
-
-                <h3>⚠ Incorrect passcode</h3>
-
-                <p>
-                    The passport exists but the supplied
-                    passcode does not match.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const verified =
-        p.verified===true ||
-        p.verification_status==="approved";
-
-
-    result.innerHTML=`
-
-        <div class="card">
-
-            <h2>
-                ${
-                    verified
-                    ? "✓ Passport Verified"
-                    : "Passport Found"
-                }
-            </h2>
-
-            <p style="margin-top:8px">
-                ${escapeHTML(p.name || "Product")}
-            </p>
-
-            <div class="detail-list">
-
-                ${detail("LIFEPASS ID",p.lifepass_id)}
-
-                ${detail("Type",p.type)}
-
-                ${detail("Brand",p.brand)}
-
-                ${detail("Model",p.model)}
-
-                ${detail("Serial",p.serial)}
-
-                ${detail("Warranty",p.warranty)}
-
-                ${detail(
-                    "Verification",
-                    p.verification_status
-                )}
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* ============================================================
-   SEARCH
-   ============================================================ */
-
-async function searchPassport(){
-
-    const q =
-        value("searchInput").trim();
-
-    if(!q){
-
-        toast("Enter an ID or serial number.");
-
-        return;
-
-    }
-
-
-    const {data,error} =
-        await db
-        .from("products")
-        .select("*")
-        .or(
-            `lifepass_id.eq.${q},serial.eq.${q}`
-        )
-        .limit(10);
-
-
-    const result =
-        document.getElementById("searchResult");
-
-
-    if(error){
-
-        result.innerHTML=
-            `<div class="card">
-                ${escapeHTML(error.message)}
-            </div>`;
-
-        return;
-
-    }
-
-
-    if(!data || !data.length){
-
-        result.innerHTML=
-            `<div class="card">
-                <h3>No results</h3>
-                <p>No matching passport was found.</p>
-            </div>`;
-
-        return;
-
-    }
-
-
-    result.innerHTML =
-        data.map(p=>`
-
-            <div class="card"
-                style="margin-bottom:12px">
-
-                <h3>
-                    ${escapeHTML(p.name || "Product")}
-                </h3>
-
-                <p>
-                    ${escapeHTML(p.lifepass_id || "")}
-                </p>
-
-                <button
-                    class="secondary-btn"
-                    style="margin-top:12px"
-                    onclick="openProduct('${p.id}')">
-                    View Passport
-                </button>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* ============================================================
-   QR
-   ============================================================ */
-
-function generateQR(){
-
-    const id =
-        value("qrInput")
-        .trim()
-        .toUpperCase();
-
-
-    if(!id){
-
-        toast("Enter a LIFEPASS ID.");
-
-        return;
-
-    }
-
-
-    const box =
-        document.getElementById("qrcode");
-
-    box.innerHTML="";
-
-
-    const url =
-        window.location.origin +
-        window.location.pathname +
-        "?lifepass=" +
-        encodeURIComponent(id);
-
-
-    new QRCode(box,{
-
-        text:url,
-
-        width:200,
-
-        height:200,
-
-        correctLevel:
-            QRCode.CorrectLevel.H
-
-    });
-
-
-    document
-        .getElementById("downloadQRBtn")
-        .classList.remove("hidden");
-
-}
-
-
-function generateDetailQR(){
-
-    if(!selectedProduct)
-        return;
-
-    const box =
-        document.getElementById("detailQR");
-
-    box.innerHTML="";
-
-
-    const url =
-        window.location.origin +
-        window.location.pathname +
-        "?lifepass=" +
-        encodeURIComponent(
-            selectedProduct.lifepass_id
-        );
-
-
-    new QRCode(box,{
-
-        text:url,
-
-        width:180,
-
-        height:180,
-
-        correctLevel:
-            QRCode.CorrectLevel.H
-
-    });
-
-}
-
 
 function downloadQR(){
-
-    const img =
-        document.querySelector(
-            "#qrcode img"
-        );
-
-    if(!img){
-
-        toast("Generate the QR first.");
-
-        return;
-
-    }
-
-
-    const link =
-        document.createElement("a");
-
-    link.href=img.src;
-
-    link.download=
-        "LIFEPASS-QR.png";
-
-    link.click();
-
+const img=document.querySelector("#qrcode img");
+if(!img)return;
+const a=document.createElement("a");
+a.href=img.src;
+a.download=(currentPassport?.lifepass_id||"lifepass")+".png";
+a.click();
 }
 
-
-/* ============================================================
-   AI ASSISTANT
-   ============================================================ */
-
-function quickAI(text){
-
-    document.getElementById("aiInput")
-        .value=text;
-
-    sendAI();
-
+async function verifyPassport(){
+const id=document.getElementById("verifyId").value.trim();
+if(!id)return;
+const {data,error}=await supabaseClient.from("products").select("*").eq("lifepass_id",id).maybeSingle();
+const box=document.getElementById("verifyResult");
+if(error){box.innerHTML="<p>"+escapeHTML(error.message)+"</p>";return}
+if(!data){box.innerHTML="<div class='card'><h3>Passport Not Found</h3></div>";return}
+const ok=data.verified||data.verification_status==="approved";
+box.innerHTML=`
+<div class="card">
+<h3>${ok?"✓ Verified Product":"⚠ Verification Pending"}</h3>
+<p><b>Product:</b> ${escapeHTML(data.name)}</p>
+<p><b>Brand:</b> ${escapeHTML(data.brand)}</p>
+<p><b>Model:</b> ${escapeHTML(data.model)}</p>
+<p><b>LIFEPASS ID:</b> ${escapeHTML(data.lifepass_id)}</p>
+</div>`;
 }
 
-
-async function sendAI(){
-
-    const input =
-        document.getElementById("aiInput");
-
-    const text =
-        input.value.trim();
-
-
-    if(!text)
-        return;
-
-
-    addAIMessage(
-        text,
-        "user"
-    );
-
-
-    input.value="";
-
-
-    const loading =
-        addAIMessage(
-            "Thinking...",
-            "ai"
-        );
-
-
-    try{
-
-        const {data,error} =
-            await db.functions.invoke(
-                "lifepass-ai",
-                {
-                    body:{
-                        message:text,
-                        user_id:
-                            currentUser?.id || null
-                    }
-                }
-            );
-
-
-        loading.remove();
-
-
-        if(error){
-
-            addAIMessage(
-                "AI error: " + error.message,
-                "ai"
-            );
-
-            return;
-
-        }
-
-
-        const answer =
-            data?.answer ||
-            data?.response ||
-            data?.message ||
-            data?.output ||
-            "I couldn't generate a response.";
-
-
-        addAIMessage(
-            answer,
-            "ai"
-        );
-
-
-    }catch(err){
-
-        loading.remove();
-
-        addAIMessage(
-            "Unable to connect to LIFEPASS AI.",
-            "ai"
-        );
-
-        console.error(err);
-
-    }
-
+async function deletePassport(id){
+if(!confirm("Delete this passport?"))return;
+await supabaseClient.from("products").delete().eq("id",id).eq("user_id",currentUser.id);
+loadProducts();
 }
 
-
-function addAIMessage(text,type){
-
-    const container =
-        document.getElementById("aiMessages");
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "message " + type;
-
-    div.textContent=text;
-
-    container.appendChild(div);
-
-    container.scrollTop =
-        container.scrollHeight;
-
-    return div;
-
+async function askAI(){
+const input=document.getElementById("aiInput");
+const text=input.value.trim();
+if(!text)return;
+const messages=document.getElementById("aiMessages");
+messages.innerHTML+=`<div class="msg user">${escapeHTML(text)}</div>`;
+input.value="";
+messages.innerHTML+=`<div class="msg ai" id="thinking">Thinking...</div>`;
+messages.scrollTop=messages.scrollHeight;
+try{
+const {data:{session}}=await supabaseClient.auth.getSession();
+const res=await fetch(SUPABASE_URL+"/functions/v1/lifepass-ai",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+(session?.access_token||SUPABASE_PUBLISHABLE_KEY)
+},
+body:JSON.stringify({message:text,product:currentPassport||null})
+});
+const data=await res.json();
+document.getElementById("thinking").remove();
+messages.innerHTML+=`<div class="msg ai">${escapeHTML(data.answer||data.response||data.error||"No response.")}</div>`;
+}catch(e){
+document.getElementById("thinking").textContent="AI error: "+e.message;
 }
-
-
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-
-function value(id){
-
-    return document
-        .getElementById(id)
-        ?.value
-        ?.trim() || "";
-
+messages.scrollTop=messages.scrollHeight;
 }
-
-
-function emptyToNull(v){
-
-    return v ? v : null;
-
-}
-
-
-function numberOrNull(v){
-
-    if(!v)
-        return null;
-
-    const n =
-        Number(v);
-
-    return Number.isFinite(n)
-        ? n
-        : null;
-
-}
-
-
-function detail(label,value){
-
-    if(value===null ||
-       value===undefined ||
-       value==="")
-        return "";
-
-    return `
-
-        <div class="detail-row">
-
-            <span>${escapeHTML(label)}</span>
-
-            <strong>
-                ${escapeHTML(String(value))}
-            </strong>
-
-        </div>
-
-    `;
-
-}
-
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-function toast(message){
-
-    const t =
-        document.getElementById("toast");
-
-    t.textContent=message;
-
-    t.classList.add("show");
-
-    setTimeout(
-        ()=>t.classList.remove("show"),
-        3000
-    );
-
-}
-
-
-/* ============================================================
-   LOGOUT
-   ============================================================ */
-
-async function logout(){
-
-    await db.auth.signOut();
-
-}
-
-
-/* ============================================================
-   QR URL AUTO VERIFY
-   ============================================================ */
-
-window.addEventListener(
-    "load",
-    ()=>{
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-        const id =
-            params.get("lifepass");
-
-        if(id){
-
-            setTimeout(
-                ()=>{
-
-                    document.getElementById("verifyId")
-                        .value=id;
-
-                    showPage("verify");
-
-                    verifyPassport();
-
-                },
-                800
-            );
-
-        }
-
-    }
-);
-
 </script>
-
 </body>
 </html>
