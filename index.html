@@ -969,6 +969,7 @@ footer p{
     }
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -2434,10 +2435,7 @@ function viewPassport(id){
 
                 <div class="qr-box">
 
-                    <canvas id="qrCanvas"
-                            width="200"
-                            height="200">
-                    </canvas>
+                    <div id="qrCanvas" style="width:200px;height:200px;margin:auto;background:#fff;display:flex;align-items:center;justify-content:center;"></div>
 
                     <p style="
                         color:var(--muted);
@@ -2522,7 +2520,7 @@ function viewPassport(id){
 
 
     generateQR(
-        "https://lifepasstech.github.io/lifepass/?passport="+
+        "https://lifepassdigital.github.io/lifepass/?passport="+
         encodeURIComponent(passport.id)
     );
 
@@ -2543,92 +2541,52 @@ function generateQR(text){
 
     if(!canvas) return;
 
-    const ctx=canvas.getContext("2d");
+    canvas.innerHTML="";
 
-    const size=200;
-
-    ctx.fillStyle="#ffffff";
-    ctx.fillRect(0,0,size,size);
-
-    /*
-       Simple visual QR placeholder generator.
-
-       It deliberately does not redirect anywhere.
-       The QR represents the LIFEPASS ID.
-    */
-
-    let seed=0;
-
-    for(let i=0;i<text.length;i++){
-        seed=(seed*31+text.charCodeAt(i))>>>0;
-    }
-
-    const cells=29;
-    const cell=size/cells;
-
-    function random(){
-
-        seed=(seed*1664525+1013904223)>>>0;
-
-        return seed/4294967296;
-    }
-
-    ctx.fillStyle="#071a33";
-
-    for(let y=0;y<cells;y++){
-
-        for(let x=0;x<cells;x++){
-
-            if(random()>.52){
-
-                ctx.fillRect(
-                    Math.floor(x*cell),
-                    Math.floor(y*cell),
-                    Math.ceil(cell),
-                    Math.ceil(cell)
-                );
-
-            }
-
-        }
-
-    }
-
-
-    function finder(x,y){
-
-        ctx.fillStyle="#071a33";
-
-        ctx.fillRect(
-            x*cell,
-            y*cell,
-            7*cell,
-            7*cell
-        );
-
-        ctx.fillStyle="#fff";
-
-        ctx.fillRect(
-            (x+1)*cell,
-            (y+1)*cell,
-            5*cell,
-            5*cell
-        );
-
-        ctx.fillStyle="#071a33";
-
-        ctx.fillRect(
-            (x+2)*cell,
-            (y+2)*cell,
-            3*cell,
-            3*cell
-        );
-    }
-
-    finder(0,0);
-    finder(cells-7,0);
-    finder(0,cells-7);
+    new QRCode(canvas,{
+        text:text,
+        width:180,
+        height:180,
+        colorDark:"#071a33",
+        colorLight:"#ffffff",
+        correctLevel:QRCode.CorrectLevel.H
+    });
 }
+
+
+/* =========================
+   OPEN PASSPORT FROM QR
+========================= */
+
+function openPassportFromQR(){
+
+    const params=new URLSearchParams(window.location.search);
+    const passportId=params.get("passport");
+
+    if(!passportId){
+        showHome();
+        return;
+    }
+
+    const id=decodeURIComponent(passportId).trim().toUpperCase();
+
+    const passport=getProducts().find(p=>p.id.toUpperCase()===id);
+
+    if(!passport){
+        showHome();
+        setTimeout(()=>{
+            alert(
+                "Passport not found on this browser.\n\n"+
+                "LIFEPASS ID: "+id+"\n\n"+
+                "For QR access from another phone or computer, the passport data must be stored in Supabase."
+            );
+        },300);
+        return;
+    }
+
+    viewPassport(id);
+}
+
 
 
 /* =========================
@@ -2872,15 +2830,7 @@ document.addEventListener(
 ========================= */
 
 window.addEventListener("load",function(){
-
-    /*
-       IMPORTANT:
-       There is deliberately NO redirect here.
-       The page stays on the GitHub Pages URL.
-    */
-
-    showHome();
-
+    openPassportFromQR();
 });
 
 </script>
