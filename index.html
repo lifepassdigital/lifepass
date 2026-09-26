@@ -942,6 +942,9 @@ footer{
     align-items:flex-start;
   }
 
+.print-brand-wrap{display:flex;align-items:center;gap:4mm;}
+.print-logo{width:18mm;height:18mm;object-fit:contain;border:1px solid #d7dce0;border-radius:2mm;background:#fff;padding:1mm;}
+.print-product-photo{width:32mm;height:32mm;object-fit:cover;border:1px solid #cfd5d9;border-radius:2mm;background:#fff;margin-bottom:4mm;}
   .print-brand{
     font-size:18pt;
     font-weight:900;
@@ -1021,6 +1024,24 @@ footer{
   }
 }
 
+/* ================= INVENTORS / CREATE FORM ================= */
+.inventor-card{margin-top:30px;background:linear-gradient(145deg,#0b2034,#071522);border:1px solid #1e4059;border-radius:20px;padding:24px;box-shadow:0 20px 55px rgba(0,0,0,.18);}
+.inventor-card-head{display:flex;gap:14px;align-items:center;margin-bottom:20px;}
+.inventor-card-head .feature-icon{margin:0;flex:0 0 46px;}
+.inventor-card-head h3{font-size:20px;margin-bottom:4px;}
+.inventor-card-head p{color:#7892a7;font-size:13px;}
+.inventor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.inventor{display:flex;align-items:center;gap:12px;background:#071522;border:1px solid #1b354a;border-radius:14px;padding:14px;}
+.inventor-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#138de4,#42b8ef);font-weight:900;color:#fff;}
+.inventor strong{display:block;font-size:14px;}
+.inventor span{display:block;color:#7892a7;font-size:11px;margin-top:3px;}
+.product-form-hero{grid-column:1/-1;background:linear-gradient(135deg,rgba(27,147,226,.14),rgba(7,21,34,.9));border:1px solid #28516e;border-radius:17px;padding:18px;display:flex;align-items:center;gap:15px;}
+.product-form-hero .hero-mini-logo{width:52px;height:52px;border-radius:13px;background:#fff;padding:4px;flex:0 0 52px;}
+.product-form-hero .hero-mini-logo img{width:100%;height:100%;object-fit:contain;border-radius:9px;}
+.product-form-hero h3{font-size:18px;margin-bottom:4px;}
+.product-form-hero p{color:#7892a7;font-size:12px;line-height:1.5;}
+.field input[type=file]{padding:10px;background:#071522;}
+
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
@@ -1051,9 +1072,7 @@ footer{
 
 @media(max-width:620px){
 
-  .navbar{height:auto;min-height:68px;padding-top:10px;padding-bottom:10px;gap:10px;}
-    padding:0 4%;
-  }
+  .navbar{height:auto;min-height:68px;padding:10px 4%;gap:10px;}
 
   .hero,
   .section,
@@ -1115,8 +1134,8 @@ footer{
   </a>
 
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#about">About</a>
+    <a href="#features" onclick="goHomeSection('features');return false;">Features</a>
+    <a href="#about" onclick="goHomeSection('about');return false;">About</a>
     <a href="javascript:void(0)" onclick="contactLifepass()">Contact</a>
   </div>
 
@@ -1302,6 +1321,21 @@ footer{
     even when the product changes hands.
   </p>
 
+  <div class="inventor-card">
+    <div class="inventor-card-head">
+      <div class="feature-icon"><i data-lucide="users"></i></div>
+      <div>
+        <h3>About the Inventors</h3>
+        <p>Created by the LIFEPASS team.</p>
+      </div>
+    </div>
+    <div class="inventor-grid">
+      <div class="inventor"><div class="inventor-avatar">V</div><div><strong>Vihaan</strong><span>CEO &amp; Founder</span></div></div>
+      <div class="inventor"><div class="inventor-avatar">A</div><div><strong>Akshaj</strong><span>Co-Founder</span></div></div>
+      <div class="inventor"><div class="inventor-avatar">H</div><div><strong>Harshith</strong><span>Director</span></div></div>
+    </div>
+  </div>
+
 </section>
 
 </main>
@@ -1432,6 +1466,8 @@ footer{
         Contact Us
       </button>
 
+      <button class="link-btn" onclick="goHomeSection('about')" style="margin-left:8px">About the Inventors</button>
+
     </div>
 
   </div>
@@ -1457,7 +1493,7 @@ footer{
           font-size:13px;
           margin-top:5px;
         ">
-          Give your product a permanent digital identity.
+          Give your product a permanent digital identity. Add an image so the passport is recognizable in both view and print.
         </p>
       </div>
 
@@ -1470,6 +1506,11 @@ footer{
     <form id="productForm"
           class="form-grid"
           onsubmit="event.preventDefault(); saveProduct();">
+
+      <div class="product-form-hero">
+        <div class="hero-mini-logo"><img src="logo.png" alt="LIFEPASS"></div>
+        <div><h3>Give your product its permanent identity</h3><p>Add the product details, image, purchase information and owner details. You can edit the passport later with your account password.</p></div>
+      </div>
 
       <div class="form-section">
         <h3>Product Identity</h3>
@@ -1742,6 +1783,7 @@ footer{
     </div>
     <div id="forgotMessage" style="margin-top:15px;color:#6de4ba;font-size:13px"></div>
     <button class="btn" id="forgotButton" style="width:100%;margin-top:18px" onclick="sendOrSavePassword()">Send Verification Email</button>
+    <div style="margin-top:10px;color:#6f879a;font-size:11px;line-height:1.5">After opening the email, this page will automatically show the new-password form.</div>
   </div>
 </div>
 
@@ -1899,6 +1941,7 @@ footer{
       <i data-lucide="mail"></i>
       Contact Us
     </button>
+    <button class="link-btn" onclick="goHomeSection('about')" style="margin-left:10px">About the Inventors</button>
   </div>
 
 </footer>
@@ -1957,15 +2000,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("p_image")?.addEventListener("change", previewProductImage);
 
   supabaseClient.auth.onAuthStateChange(
-    async (_event, session) => {
+    async (event, session) => {
 
-      currentUser =
-        session?.user || null;
-
+      currentUser = session?.user || null;
       updateUI();
 
+      if(event === "PASSWORD_RECOVERY") {
+        setTimeout(() => openResetPasswordModal(), 150);
+      }
     }
   );
+
+  // Supabase recovery links return to this page with a recovery session/hash.
+  // Open the new-password screen automatically.
+  if(new URLSearchParams(window.location.search).get("reset") === "1" || window.location.hash.includes("type=recovery")) {
+    setTimeout(() => openResetPasswordModal(), 500);
+  }
 
 });
 
@@ -2012,6 +2062,14 @@ function goHome(){
 
 }
 
+
+function goHomeSection(id){
+  goHome();
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+  },50);
+}
 
 /* =========================================================
    AUTH
@@ -2141,41 +2199,57 @@ async function logout(){
 ========================================================= */
 function openForgotPassword(){
   closeModal("authModal");
+  closeModal("editPasswordModal");
   forgotMode="send";
   document.getElementById("forgotTitle").textContent="Reset your password";
   document.getElementById("forgotEmailWrap").style.display="flex";
   document.getElementById("resetPasswordWrap").style.display="none";
   document.getElementById("forgotButton").textContent="Send Verification Email";
   document.getElementById("forgotMessage").textContent="";
-  document.getElementById("forgotEmail").value=currentUser?.email||"";
+  document.getElementById("forgotEmail").value=currentUser?.email||document.getElementById("authEmail")?.value||"";
   document.getElementById("forgotModal").classList.add("show");
 }
+
 function openResetPasswordModal(){
+  forgotMode="reset";
   document.getElementById("forgotTitle").textContent="Choose a new password";
   document.getElementById("forgotEmailWrap").style.display="none";
   document.getElementById("resetPasswordWrap").style.display="flex";
   document.getElementById("forgotButton").textContent="Save New Password";
   document.getElementById("forgotMessage").textContent="";
+  document.getElementById("newPassword").value="";
   document.getElementById("forgotModal").classList.add("show");
+  setTimeout(()=>document.getElementById("newPassword")?.focus(),100);
 }
+
 async function sendOrSavePassword(){
   const msg=document.getElementById("forgotMessage");
   try{
-    if(document.getElementById("resetPasswordWrap").style.display!=="none"){
+    if(forgotMode==="reset" || document.getElementById("resetPasswordWrap").style.display!=="none") {
       const password=document.getElementById("newPassword").value;
       if(password.length<6){msg.style.color="#ff7777";msg.textContent="Password must be at least 6 characters.";return;}
       const {error}=await supabaseClient.auth.updateUser({password});
-      if(error)throw error;
-      msg.style.color="#6de4bd";msg.textContent="Password changed successfully.";
-      setTimeout(()=>closeModal("forgotModal"),700);
+      if(error) throw error;
+      msg.style.color="#6de4bd";
+      msg.textContent="Password changed successfully. You can now log in with your new password.";
+      window.history.replaceState({},document.title,window.location.pathname);
+      window.location.hash="";
+      setTimeout(()=>closeModal("forgotModal"),1200);
       return;
     }
+
     const email=document.getElementById("forgotEmail").value.trim();
     if(!email){msg.style.color="#ff7777";msg.textContent="Enter your email.";return;}
-    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});
-    if(error)throw error;
-    msg.style.color="#6de4bd";msg.textContent="Verification link sent. Open your email and follow the link to set a new password.";
-  }catch(e){msg.style.color="#ff7777";msg.textContent=e.message||"Password operation failed.";}
+    const redirectTo=window.location.origin+window.location.pathname+"?reset=1";
+    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});
+    if(error) throw error;
+    msg.style.color="#6de4bd";
+    msg.textContent="Verification email sent. Open it and you will be taken back here to choose your new password.";
+  }catch(e){
+    console.error(e);
+    msg.style.color="#ff7777";
+    msg.textContent=e.message||"Password operation failed.";
+  }
 }
 
 /* =========================================================
@@ -3059,8 +3133,9 @@ function printCurrentPassport(){
 
       <div class="print-head">
 
-        <div>
-
+        <div class="print-brand-wrap">
+          <img class="print-logo" src="logo.png" alt="LIFEPASS logo">
+          <div>
           <div class="print-brand">
             LIFEPASS
           </div>
@@ -3068,7 +3143,7 @@ function printCurrentPassport(){
           <div class="print-sub">
             DIGITAL PRODUCT PASSPORT
           </div>
-
+          </div>
         </div>
 
         <div class="print-verified">
@@ -3179,7 +3254,7 @@ function printCurrentPassport(){
         <div class="print-qr">
 
           <div>
-
+            ${p.metadata?.product_image ? `<img class="print-product-photo" src="${escapeHTML(p.metadata.product_image)}" alt="Product image">` : ""}
             <img
               id="printQRImage"
               alt="LIFEPASS QR Code"
@@ -3486,13 +3561,10 @@ async function sendAI(predefined=null){
       "lifepass-ai",
       {
         body:{
+          message:question,
           question:question,
-
-          user_id:
-            currentUser?.id || null,
-
-          product:
-            currentPassport || null
+          user_id:currentUser?.id || null,
+          product:currentPassport || null
         }
       }
     );
@@ -3505,11 +3577,20 @@ async function sendAI(predefined=null){
     }
 
 
-    const answer =
+    let answer =
+      (typeof data === "string" ? data : null) ||
       data?.answer ||
       data?.message ||
       data?.response ||
+      data?.output_text ||
+      data?.output ||
+      data?.result?.answer ||
+      data?.result?.output_text ||
       "I couldn't generate a response.";
+
+    if(typeof answer !== "string") {
+      try { answer = JSON.stringify(answer, null, 2); } catch { answer = "I couldn't generate a response."; }
+    }
 
 
     loading.textContent=answer;
