@@ -2,534 +2,250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#071a3a">
 <title>LIFEPASS — Digital Product Passport</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+:root{
+  --navy:#071a3a;
+  --blue:#1261ff;
+  --blue2:#0b46c1;
+  --light:#f5f8ff;
+  --white:#fff;
+  --text:#14213d;
+  --muted:#667085;
+  --border:#dfe6f1;
+  --green:#16a34a;
+  --orange:#f59e0b;
+  --red:#dc2626;
+  --shadow:0 18px 50px rgba(7,26,58,.12);
+  --radius:18px;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  font-family:Inter,Arial,sans-serif;
-  background:#06111d;
-  color:#eef7ff;
+  margin:0;
   min-height:100vh;
+  font-family:Inter,Arial,sans-serif;
+  background:#f7f9fc;
+  color:var(--text);
+  overflow-x:hidden;
 }
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+img{max-width:100%}
 
-button,input,select,textarea{
-  font:inherit;
-}
+.hidden{display:none!important}
 
-button{
-  cursor:pointer;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-/* ================= NAVBAR ================= */
-
-.navbar{
-  height:74px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 6%;
-  background:rgba(4,15,27,.94);
-  border-bottom:1px solid #173149;
+.nav{
   position:sticky;
   top:0;
   z-index:1000;
+  width:100%;
+  min-height:72px;
+  padding:12px clamp(14px,4vw,65px);
+  background:rgba(255,255,255,.96);
   backdrop-filter:blur(14px);
-}
-
-.logo{
+  border-bottom:1px solid #e7edf5;
   display:flex;
   align-items:center;
-  gap:11px;
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:1px;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.logo-mark{
-  width:42px;
-  height:42px;
-  border-radius:11px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  min-width:0;
+  color:var(--navy);
+  font-weight:900;
+  font-size:21px;
+}
+
+.brand-mark{
+  width:43px;
+  height:43px;
+  flex:none;
+  border-radius:12px;
+  background:linear-gradient(145deg,#1261ff,#071a3a);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#1189e8,#48b8f4);
-  box-shadow:0 8px 25px rgba(24,150,230,.25);
+  color:#fff;
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:-1px;
+  box-shadow:0 7px 18px rgba(18,97,255,.25);
 }
 
-.logo-mark svg{
-  width:25px;
-  height:25px;
-  stroke-width:2.5;
-}
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:26px;
-}
-
-.nav-links a{
-  color:#a9bdd0;
-  font-size:14px;
-  font-weight:700;
-}
-
-.nav-links a:hover{
-  color:#4bb8f4;
-}
+.brand-mark::before{content:"LP"}
 
 .nav-actions{
   display:flex;
-  gap:10px;
   align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
 }
-
-/* ================= BUTTONS ================= */
 
 .btn{
   border:0;
-  border-radius:10px;
-  padding:11px 17px;
-  background:linear-gradient(135deg,#168ce3,#35acee);
-  color:white;
-  font-weight:800;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+  border-radius:11px;
+  padding:11px 16px;
+  min-height:43px;
+  font-weight:750;
   transition:.2s;
-  box-shadow:0 7px 22px rgba(21,139,225,.13);
 }
 
-.btn:hover{
-  transform:translateY(-1px);
-  filter:brightness(1.08);
-}
-
-.btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-  transform:none;
-}
-
-.btn-secondary{
-  background:#102235;
-  border:1px solid #29445d;
-  box-shadow:none;
-}
-
-.btn-success{
-  background:#087b58;
-}
-
-.btn-warning{
-  background:#a66a08;
-}
-
-.btn-danger{
-  background:#9c2e3c;
-}
-
-.btn-small{
-  padding:8px 11px;
-  font-size:12px;
-}
-
-/* ================= HERO ================= */
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue2)}
+.btn-secondary{background:#eef3ff;color:#1645a0}
+.btn-light{background:#fff;border:1px solid var(--border);color:var(--navy)}
+.btn-danger{background:#fee2e2;color:#991b1b}
+.btn-success{background:#dcfce7;color:#166534}
 
 .hero{
-  padding:95px 7% 75px;
-  min-height:650px;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
+  min-height:680px;
+  padding:clamp(55px,9vw,115px) clamp(16px,6vw,90px);
+  display:flex;
   align-items:center;
-  gap:50px;
   background:
-    radial-gradient(circle at 15% 20%,rgba(26,144,225,.15),transparent 34%),
-    radial-gradient(circle at 85% 60%,rgba(20,104,180,.12),transparent 30%);
+    radial-gradient(circle at 80% 20%,rgba(18,97,255,.12),transparent 30%),
+    linear-gradient(135deg,#fff,#f1f6ff);
+}
+
+.hero-content{
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+}
+
+.badge{
+  display:inline-flex;
+  padding:8px 13px;
+  border-radius:999px;
+  background:#eaf0ff;
+  color:#1551c4;
+  font-weight:800;
+  font-size:13px;
 }
 
 .hero h1{
-  font-size:clamp(42px,6vw,76px);
-  line-height:1;
+  max-width:950px;
+  margin:20px 0 15px;
+  color:var(--navy);
+  font-size:clamp(42px,7vw,82px);
+  line-height:1.02;
   letter-spacing:-3px;
-  margin-bottom:25px;
 }
 
-.hero h1 span{
-  color:#3eb2f1;
-}
-
+.hero h1 span{color:var(--blue)}
 .hero p{
-  color:#a8bbcd;
-  max-width:650px;
-  line-height:1.8;
-  font-size:17px;
+  max-width:760px;
+  color:var(--muted);
+  font-size:clamp(16px,1.6vw,20px);
+  line-height:1.7;
 }
 
 .hero-actions{
   display:flex;
+  gap:12px;
   flex-wrap:wrap;
-  gap:13px;
-  margin-top:30px;
+  margin-top:28px;
 }
 
-.hero-card{
-  background:linear-gradient(145deg,#0c2034,#071522);
-  border:1px solid #1e3c55;
-  border-radius:25px;
-  padding:30px;
-  box-shadow:0 30px 80px rgba(0,0,0,.3);
+.container{
+  width:min(1250px,calc(100% - 28px));
+  margin:auto;
 }
-
-.hero-passport{
-  border:1px solid #28526f;
-  border-radius:18px;
-  padding:25px;
-  background:
-    linear-gradient(145deg,rgba(22,132,210,.15),transparent),
-    #081827;
-}
-
-.passport-logo{
-  width:54px;
-  height:54px;
-  border-radius:14px;
-  background:#118ce6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:22px;
-}
-
-.passport-title{
-  color:#8caec7;
-  font-size:11px;
-  letter-spacing:3px;
-  font-weight:900;
-}
-
-.passport-id{
-  font-size:25px;
-  font-weight:900;
-  margin-top:6px;
-}
-
-.passport-line{
-  height:1px;
-  background:#24425b;
-  margin:20px 0;
-}
-
-.passport-row{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  margin:12px 0;
-}
-
-.passport-row small{
-  color:#7791a7;
-}
-
-.passport-row strong{
-  text-align:right;
-}
-
-/* ================= SECTIONS ================= */
 
 .section{
-  padding:75px 7%;
+  padding:70px 0;
 }
 
 .section-title{
-  font-size:38px;
-  margin-bottom:12px;
-}
-
-.section-subtitle{
-  color:#8ea6ba;
-  max-width:700px;
-  line-height:1.7;
+  text-align:center;
   margin-bottom:35px;
 }
 
-.features{
+.section-title h2{
+  font-size:clamp(28px,4vw,43px);
+  margin:0 0 10px;
+  color:var(--navy);
+}
+
+.section-title p{
+  color:var(--muted);
+}
+
+.cards{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:18px;
 }
 
-.feature-card{
-  background:#091a2a;
-  border:1px solid #19354d;
-  border-radius:18px;
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
   padding:25px;
-  min-height:190px;
+  box-shadow:0 8px 25px rgba(7,26,58,.05);
 }
 
-.feature-icon{
-  width:46px;
-  height:46px;
+.card-icon{
+  width:48px;
+  height:48px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:13px;
-  background:#0e2d47;
-  color:#3bb1f1;
-  margin-bottom:20px;
+  background:#eaf0ff;
+  font-size:23px;
+  margin-bottom:16px;
 }
 
-.feature-card h3{
-  margin-bottom:10px;
-}
+.card h3{margin:0 0 8px}
+.card p{color:var(--muted);line-height:1.6;margin:0}
 
-.feature-card p{
-  color:#829bad;
-  line-height:1.6;
-  font-size:14px;
-}
-
-/* ================= DASHBOARD ================= */
-
-.dashboard{
+.page{
   display:none;
-  padding:45px 6%;
-  min-height:700px;
+  min-height:calc(100vh - 72px);
+  padding:40px 0 70px;
 }
 
-.dashboard-header{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:20px;
-  margin-bottom:30px;
-}
+.page.active{display:block}
 
-.dashboard-header h2{
-  font-size:38px;
-}
-
-.dashboard-header p{
-  color:#8099ad;
-  margin-top:6px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:30px;
-}
-
-.stat{
-  background:#091a2a;
-  border:1px solid #19354d;
-  border-radius:16px;
-  padding:22px;
-}
-
-.stat-label{
-  color:#7891a7;
-  font-size:13px;
-}
-
-.stat-number{
-  font-size:29px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.products-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.product-card{
-  background:#091a2a;
-  border:1px solid #1b3b55;
-  border-radius:18px;
-  padding:22px;
-  overflow:hidden;
-}
-
-.product-top{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  align-items:flex-start;
-}
-
-.product-icon{
-  width:52px;
-  height:52px;
-  border-radius:14px;
-  background:#0d2a43;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#41b3ef;
-}
-
-.product-card h3{
-  margin-top:18px;
-  font-size:20px;
-}
-
-.product-id{
-  color:#6e8ba3;
-  font-family:monospace;
-  font-size:12px;
-  margin-top:5px;
-}
-
-.status{
-  padding:6px 9px;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.status.pending{
-  color:#ffd57b;
-  background:#483408;
-}
-
-.status.approved{
-  color:#6ff0c1;
-  background:#073c2d;
-}
-
-.product-info{
-  margin-top:18px;
-  display:grid;
-  gap:9px;
-}
-
-.product-info div{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  color:#8199ac;
-  font-size:13px;
-}
-
-.product-info strong{
-  color:#dcebf5;
-  text-align:right;
-}
-
-.product-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:20px;
-}
-
-/* ================= MODAL ================= */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  z-index:5000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  overflow:auto;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(900px,100%);
-  max-height:94vh;
-  overflow:auto;
-  background:#091a2a;
-  border:1px solid #23445f;
+.form-card{
+  width:min(850px,100%);
+  margin:auto;
+  background:#fff;
+  border:1px solid var(--border);
   border-radius:22px;
-  padding:30px;
-  box-shadow:0 30px 100px rgba(0,0,0,.6);
+  box-shadow:var(--shadow);
+  padding:clamp(20px,4vw,38px);
 }
 
-.modal-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  margin-bottom:25px;
+.form-card h2{
+  margin-top:0;
+  color:var(--navy);
 }
-
-.modal-header h2{
-  font-size:28px;
-}
-
-.close{
-  border:0;
-  background:#102638;
-  color:#b8cddd;
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ================= FORM ================= */
 
 .form-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-}
-
-.form-section{
-  grid-column:1/-1;
-  padding-top:12px;
-  margin-top:5px;
-  border-top:1px solid #1d3549;
-}
-
-.form-section h3{
-  margin-bottom:4px;
-  color:#44b4f2;
-}
-
-.form-section p{
-  color:#71899e;
-  font-size:12px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
 }
 
 .field{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
+  min-width:0;
 }
 
 .field.full{
@@ -537,28 +253,21 @@ a{
 }
 
 .field label{
-  color:#a8bdcf;
-  font-size:12px;
-  font-weight:800;
+  display:block;
+  font-weight:750;
+  margin-bottom:7px;
 }
 
 .field input,
 .field select,
 .field textarea{
   width:100%;
-  background:#061421;
-  border:1px solid #29455e;
-  color:#edf7ff;
-  border-radius:10px;
-  padding:12px 13px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:13px 14px;
   outline:none;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-  border-color:#35aef0;
-  box-shadow:0 0 0 3px rgba(53,174,240,.1);
+  background:#fff;
+  color:var(--text);
 }
 
 .field textarea{
@@ -566,522 +275,307 @@ a{
   resize:vertical;
 }
 
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(18,97,255,.1);
+}
+
+.required{color:var(--red)}
+
 .form-actions{
-  grid-column:1/-1;
   display:flex;
-  justify-content:flex-end;
   gap:10px;
-  margin-top:10px;
-  padding-top:18px;
-  border-top:1px solid #1b3449;
+  flex-wrap:wrap;
+  margin-top:22px;
 }
 
-.message{
-  grid-column:1/-1;
-  color:#6ee7bd;
-  font-size:13px;
-}
-
-/* ================= PROFILE ================= */
-
-.profile-card{
-  background:
-    radial-gradient(circle at top right,rgba(37,159,231,.13),transparent 35%),
-    #091a2a;
-  border:1px solid #1c3a52;
-  border-radius:22px;
-  padding:30px;
-}
-
-.profile-head{
+.dashboard-header{
   display:flex;
-  gap:20px;
   align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
   margin-bottom:25px;
 }
 
-.avatar{
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#138de4,#3bb4ef);
-  font-size:25px;
-  font-weight:900;
-}
+.dashboard-header h1{margin:0;color:var(--navy)}
 
-.profile-details{
+.passport-list{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:13px;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:18px;
 }
 
-.detail-box{
-  background:#071522;
-  border:1px solid #1b354a;
-  border-radius:12px;
-  padding:15px;
+.passport-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:21px;
+  box-shadow:0 8px 25px rgba(7,26,58,.05);
 }
 
-.detail-box span{
-  display:block;
-  color:#718ba0;
-  font-size:11px;
-  margin-bottom:6px;
-}
-
-.detail-box strong{
-  font-size:14px;
-}
-
-/* ================= PASSPORT VIEW ================= */
-
-.passport-view{
-  background:#f7f4ea;
-  color:#172333;
-  border-radius:8px;
-  padding:34px;
-  position:relative;
-  overflow:hidden;
-  min-height:580px;
-}
-
-.passport-view:before{
-  content:"";
-  position:absolute;
-  inset:15px;
-  border:1px solid #c8bda6;
-  pointer-events:none;
-}
-
-.passport-view-header{
+.passport-card-head{
   display:flex;
   justify-content:space-between;
-  gap:25px;
-  position:relative;
-  z-index:1;
+  gap:12px;
 }
 
-.passport-brand{
-  display:flex;
-  gap:13px;
-  align-items:center;
+.passport-card h3{
+  margin:0 0 6px;
+  overflow-wrap:anywhere;
 }
 
-.passport-brand-mark{
-  width:52px;
-  height:52px;
-  border-radius:10px;
-  background:#0b3c62;
-  color:white;
+.passport-id{
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+}
+
+.status{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.status.pending{background:#fff7df;color:#a16207}
+.status.approved{background:#dcfce7;color:#166534}
+.status.rejected{background:#fee2e2;color:#991b1b}
+
+.passport-card-actions{
   display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:17px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
   align-items:center;
   justify-content:center;
+  padding:16px;
+  background:rgba(7,26,58,.72);
 }
 
-.passport-brand h2{
-  font-size:20px;
-  letter-spacing:2px;
-}
+.modal.show{display:flex}
 
-.passport-brand small{
-  color:#6c7480;
-}
-
-.verified-badge{
-  background:#e4f7ed;
-  color:#08784d;
-  border:1px solid #9ed9bc;
+.modal-box{
+  width:min(700px,100%);
+  max-height:calc(100vh - 32px);
+  overflow:auto;
+  background:#fff;
   border-radius:20px;
-  padding:7px 11px;
-  height:max-content;
-  font-size:11px;
-  font-weight:900;
+  padding:25px;
+  box-shadow:0 30px 90px rgba(0,0,0,.25);
 }
 
-.passport-content{
-  position:relative;
-  z-index:1;
-  margin-top:35px;
-  display:grid;
-  grid-template-columns:1fr 180px;
-  gap:30px;
-}
-
-.passport-data{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px 25px;
-}
-
-.pdata{
-  border-bottom:1px solid #ded7ca;
-  padding-bottom:9px;
-}
-
-.pdata.full{
-  grid-column:1/-1;
-}
-
-.pdata span{
-  display:block;
-  color:#7d817f;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin-bottom:4px;
-}
-
-.pdata strong{
-  font-size:13px;
-}
-
-.qr-area{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:9px;
-}
-
-.qr-box{
-  width:155px;
-  height:155px;
-  background:white;
+.modal-head{
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:8px;
-  border:1px solid #bbb3a3;
-}
-
-.qr-box img{
-  width:100%;
-  height:100%;
-}
-
-.qr-label{
-  font-size:8px;
-  letter-spacing:1px;
-  color:#777;
-  text-align:center;
-}
-
-.passport-footer{
-  position:relative;
-  z-index:1;
-  margin-top:35px;
-  padding-top:16px;
-  border-top:1px solid #cfc6b6;
-  display:flex;
   justify-content:space-between;
-  color:#74756f;
-  font-size:9px;
+  gap:15px;
+  margin-bottom:20px;
 }
 
-/* ================= AI ================= */
+.close{
+  width:40px;
+  height:40px;
+  border:0;
+  border-radius:10px;
+  background:#eef2f7;
+  font-size:20px;
+}
+
+.login-card{
+  width:min(470px,100%);
+  margin:auto;
+}
+
+.password-note{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.qr-wrap{
+  width:180px;
+  min-height:180px;
+  margin:20px auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#fff;
+}
+
+.verify-result{
+  margin-top:18px;
+}
 
 .ai-box{
-  background:#071827;
-  border:1px solid #1e4059;
-  border-radius:16px;
+  width:min(900px,100%);
+  margin:auto;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
   overflow:hidden;
+  box-shadow:var(--shadow);
 }
 
 .ai-messages{
-  min-height:350px;
-  max-height:470px;
+  height:400px;
   overflow:auto;
-  padding:18px;
+  padding:20px;
+  background:#f8faff;
 }
 
 .ai-message{
-  padding:13px 15px;
-  border-radius:13px;
+  max-width:80%;
+  padding:12px 15px;
+  border-radius:14px;
   margin-bottom:12px;
-  max-width:85%;
-  line-height:1.6;
-  font-size:14px;
+  line-height:1.55;
   white-space:pre-wrap;
 }
 
 .ai-message.user{
-  background:#0d4770;
   margin-left:auto;
+  background:var(--blue);
+  color:#fff;
 }
 
 .ai-message.bot{
-  background:#102536;
-  color:#d4e2ec;
+  background:#fff;
+  border:1px solid var(--border);
 }
 
 .ai-input{
   display:flex;
-  gap:9px;
-  padding:13px;
-  border-top:1px solid #1b3549;
+  gap:10px;
+  padding:15px;
+  border-top:1px solid var(--border);
 }
 
 .ai-input input{
   flex:1;
-  background:#06131f;
-  border:1px solid #27445b;
-  color:white;
-  padding:12px;
-  border-radius:10px;
-  outline:none;
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:13px;
 }
 
-/* ================= EMPTY ================= */
+.profile-card{
+  width:min(800px,100%);
+  margin:auto;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
 
-.empty{
-  padding:55px 20px;
+.profile-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+
+.info-box{
+  background:#f8faff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+}
+
+.info-box small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.footer{
+  padding:35px 16px;
   text-align:center;
-  background:#091a2a;
-  border:1px dashed #28465c;
-  border-radius:18px;
-  color:#7990a4;
+  background:var(--navy);
+  color:#fff;
 }
 
-.empty svg{
-  width:45px;
-  height:45px;
-  margin-bottom:15px;
-  color:#328fc5;
+.footer-logo{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  margin-bottom:8px;
 }
 
-/* ================= FOOTER ================= */
-
-footer{
-  padding:45px 7%;
-  border-top:1px solid #173149;
-  color:#6f879a;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(100px);
+  z-index:99999;
+  padding:13px 18px;
+  border-radius:12px;
+  background:var(--navy);
+  color:#fff;
+  box-shadow:var(--shadow);
+  opacity:0;
+  transition:.25s;
+  max-width:calc(100% - 30px);
+  text-align:center;
 }
 
-/* ================= PRINT PASSPORT ================= */
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+
+@media(max-width:700px){
+  .nav{min-height:64px;padding:9px 12px}
+  .brand{font-size:17px}
+  .brand-mark{width:36px;height:36px}
+  .nav-actions .optional{display:none}
+  .nav-actions .btn{padding:9px 10px;font-size:12px}
+  .hero{min-height:calc(100vh - 64px);padding:55px 16px}
+  .hero h1{font-size:clamp(38px,12vw,58px);letter-spacing:-2px}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%}
+  .section{padding:45px 0}
+  .form-grid,.profile-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .passport-card-actions .btn{flex:1 1 120px}
+  .ai-message{max-width:92%}
+  .ai-input{flex-direction:column}
+  .ai-input .btn{width:100%}
+}
+
+@media(min-width:1600px){
+  body{font-size:18px}
+  .nav{min-height:88px}
+  .brand-mark{width:52px;height:52px}
+  .hero{min-height:760px}
+  .btn{min-height:50px}
+  .field input,.field select,.field textarea{font-size:18px}
+}
+
+@media(pointer:coarse){
+  button,input,select{min-height:44px}
+}
 
 @media print{
-
-  @page{
-    size:A4;
-    margin:0;
-  }
-
-  body *{
-    visibility:hidden !important;
-  }
-
-  #printArea,
-  #printArea *{
-    visibility:visible !important;
-  }
-
-  #printArea{
-    display:block !important;
+  body *{visibility:hidden!important}
+  #printPassport,#printPassport *{visibility:visible!important}
+  #printPassport{
     position:absolute;
     left:0;
     top:0;
-    width:210mm;
-    min-height:297mm;
-    padding:20mm;
-    background:white;
-  }
-
-  .print-passport{
-    width:170mm;
-    min-height:115mm;
-    margin:25mm auto;
-    border:2px solid #0b3c62;
-    border-radius:4mm;
-    padding:12mm;
-    color:#172333;
-    background:
-      linear-gradient(
-        135deg,
-        rgba(11,60,98,.04),
-        rgba(255,255,255,.95)
-      );
-    position:relative;
-  }
-
-  .print-passport:before{
-    content:"LIFEPASS • DIGITAL PRODUCT PASSPORT";
-    position:absolute;
-    top:4mm;
-    left:12mm;
-    right:12mm;
-    text-align:center;
-    font-size:7pt;
-    letter-spacing:2px;
-    color:#0b3c62;
-  }
-
-  .print-head{
-    margin-top:7mm;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-  }
-
-  .print-brand{
-    font-size:18pt;
-    font-weight:900;
-    letter-spacing:2px;
-    color:#0b3c62;
-  }
-
-  .print-sub{
-    font-size:7pt;
-    color:#707a83;
-    margin-top:2mm;
-  }
-
-  .print-verified{
-    border:1px solid #159267;
-    color:#08784d;
-    padding:2mm 3mm;
-    border-radius:10mm;
-    font-size:7pt;
-    font-weight:bold;
-  }
-
-  .print-main{
-    display:grid;
-    grid-template-columns:1fr 38mm;
-    gap:8mm;
-    margin-top:9mm;
-  }
-
-  .print-fields{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:4mm 7mm;
-  }
-
-  .print-field{
-    border-bottom:1px solid #d5d9dc;
-    padding-bottom:2mm;
-  }
-
-  .print-field.full{
-    grid-column:1/-1;
-  }
-
-  .print-field span{
-    display:block;
-    font-size:6pt;
-    color:#77828a;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:1mm;
-  }
-
-  .print-field strong{
-    font-size:8pt;
-  }
-
-  .print-qr{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
-
-  .print-qr img{
-    width:32mm;
-    height:32mm;
-  }
-
-  .print-bottom{
-    margin-top:8mm;
-    border-top:1px solid #cfd5d9;
-    padding-top:4mm;
-    display:flex;
-    justify-content:space-between;
-    font-size:6pt;
-    color:#707980;
-  }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:900px){
-
-  .nav-links{
-    display:none;
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-    padding-top:65px;
-  }
-
-  .features{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .products-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:620px){
-
-  .navbar{
-    padding:0 4%;
-  }
-
-  .hero,
-  .section,
-  .dashboard{
-    padding-left:4%;
-    padding-right:4%;
-  }
-
-  .hero h1{
-    font-size:43px;
-  }
-
-  .features,
-  .stats,
-  .products-grid,
-  .form-grid,
-  .profile-details{
-    grid-template-columns:1fr;
-  }
-
-  .field.full{
-    grid-column:auto;
-  }
-
-  .form-actions{
-    grid-column:auto;
-    flex-direction:column;
-  }
-
-  .passport-content{
-    grid-template-columns:1fr;
-  }
-
-  .passport-data{
-    grid-template-columns:1fr;
-  }
-
-  .pdata.full{
-    grid-column:auto;
-  }
-
-  .dashboard-header{
-    align-items:flex-start;
-    flex-direction:column;
+    width:100%;
+    display:block!important;
   }
 }
 </style>
@@ -1089,989 +583,660 @@ footer{
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-
-<nav class="navbar">
-
-  <a href="#" class="logo" onclick="goHome()">
-    <span class="logo-mark">
-      <i data-lucide="passport"></i>
-    </span>
-    LIFEPASS
-  </a>
-
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#about">About</a>
-    <a href="javascript:void(0)" onclick="contactLifepass()">Contact</a>
+<nav class="nav">
+  <div class="brand" onclick="showPage('home')">
+    <div class="brand-mark"></div>
+    <span>LIFEPASS</span>
   </div>
 
-  <div class="nav-actions" id="navActions">
-    <button class="btn btn-secondary" onclick="openAuth()">
-      Login
-    </button>
+  <div class="nav-actions">
+    <button class="btn btn-light optional" onclick="showPage('home')">Home</button>
+    <button class="btn btn-light optional" onclick="showPage('verify')">Verify</button>
+    <button class="btn btn-light optional" onclick="showPage('ai')">AI Assistant</button>
+    <button class="btn btn-primary" id="navLoginBtn" onclick="showPage('login')">Login</button>
+    <button class="btn btn-secondary hidden" id="navDashboardBtn" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="btn btn-light hidden" id="navLogoutBtn" onclick="logout()">Logout</button>
   </div>
-
 </nav>
 
+<section id="home" class="page active" style="padding:0">
+  <div class="hero">
+    <div class="hero-content">
+      <span class="badge">DIGITAL PRODUCT PASSPORT</span>
 
-<!-- ================= HOME ================= -->
+      <h1>
+        Every product has a story.<br>
+        <span>Keep it forever.</span>
+      </h1>
 
-<main id="home">
-
-<section class="hero">
-
-  <div>
-
-    <div style="
-      color:#43b4ef;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:3px;
-      margin-bottom:15px;
-    ">
-      DIGITAL PRODUCT IDENTITY
-    </div>
-
-    <h1>
-      Every product<br>
-      has a <span>story.</span>
-    </h1>
-
-    <p>
-      LIFEPASS creates a permanent digital passport for your products.
-      Track ownership, warranty, service records, documents and
-      verification throughout the entire life of the product.
-    </p>
-
-    <div class="hero-actions">
-
-      <button class="btn" onclick="openCreate()">
-        <i data-lucide="plus"></i>
-        Create Product Passport
-      </button>
-
-      <button class="btn btn-secondary" onclick="openAuth()">
-        <i data-lucide="scan-line"></i>
-        View My Passports
-      </button>
-
-      <button class="btn btn-secondary" onclick="openAI()">
-        <i data-lucide="bot"></i>
-        AI Assistant
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="hero-card">
-
-    <div class="hero-passport">
-
-      <div class="passport-logo">
-        <i data-lucide="passport"></i>
-      </div>
-
-      <div class="passport-title">
-        LIFEPASS PRODUCT PASSPORT
-      </div>
-
-      <div class="passport-id">
-        LP-DEMO-2026
-      </div>
-
-      <div class="passport-line"></div>
-
-      <div class="passport-row">
-        <small>PRODUCT</small>
-        <strong>Premium Laptop</strong>
-      </div>
-
-      <div class="passport-row">
-        <small>OWNER</small>
-        <strong>Digital Owner</strong>
-      </div>
-
-      <div class="passport-row">
-        <small>STATUS</small>
-        <strong style="color:#46d5a5">VERIFIED</strong>
-      </div>
-
-      <div class="passport-line"></div>
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-      ">
-
-        <small style="color:#6e899d">
-          KEEP IT. VERIFY IT. PASS IT ON.
-        </small>
-
-        <i data-lucide="shield-check"
-           style="color:#42b5ee"></i>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section" id="features">
-
-  <h2 class="section-title">
-    Everything your product needs.
-  </h2>
-
-  <p class="section-subtitle">
-    One permanent digital identity from purchase to resale,
-    service and ownership transfer.
-  </p>
-
-  <div class="features">
-
-    <div class="feature-card">
-      <div class="feature-icon">
-        <i data-lucide="id-card"></i>
-      </div>
-      <h3>Digital Passport</h3>
       <p>
-        Create a unique LIFEPASS identity for every product.
+        LIFEPASS gives every product a secure digital identity containing
+        its purchase details, warranty, service records, documents and
+        ownership history.
       </p>
-    </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <i data-lucide="shield-check"></i>
-      </div>
-      <h3>Verification</h3>
-      <p>
-        Verify product ownership and authenticity status.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">
-        <i data-lucide="history"></i>
-      </div>
-      <h3>Product History</h3>
-      <p>
-        Keep ownership, repair and service information together.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">
-        <i data-lucide="bot"></i>
-      </div>
-      <h3>AI Assistant</h3>
-      <p>
-        Ask questions about your products using the LIFEPASS AI assistant.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section" id="about">
-
-  <h2 class="section-title">Built for the whole product life.</h2>
-
-  <p class="section-subtitle">
-    The passport follows the product, not the owner.
-    That means important information can remain connected
-    even when the product changes hands.
-  </p>
-
-</section>
-
-</main>
-
-
-<!-- ================= DASHBOARD ================= -->
-
-<section class="dashboard" id="dashboard">
-
-  <div class="dashboard-header">
-
-    <div>
-      <h2>My LIFEPASS</h2>
-      <p id="dashboardWelcome">
-        Your digital product passports.
-      </p>
-    </div>
-
-    <button class="btn" onclick="openCreate()">
-      <i data-lucide="plus"></i>
-      Create Passport
-    </button>
-
-  </div>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-label">Total Passports</div>
-      <div class="stat-number" id="statTotal">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Verified</div>
-      <div class="stat-number" id="statVerified">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Pending</div>
-      <div class="stat-number" id="statPending">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Account</div>
-      <div class="stat-number">
-        <i data-lucide="user-check"></i>
-      </div>
-    </div>
-
-  </div>
-
-  <div id="productsContainer"></div>
-
-</section>
-
-
-<!-- ================= PROFILE ================= -->
-
-<section class="section" id="profileSection" style="display:none">
-
-  <h2 class="section-title">My Profile</h2>
-
-  <div class="profile-card">
-
-    <div class="profile-head">
-
-      <div class="avatar" id="profileAvatar">
-        U
-      </div>
-
-      <div>
-        <h2 id="profileName">User</h2>
-        <p id="profileEmail" style="color:#8098aa">
-          email@example.com
-        </p>
-      </div>
-
-    </div>
-
-    <div class="profile-details">
-
-      <div class="detail-box">
-        <span>FULL NAME</span>
-        <strong id="profileFullName">—</strong>
-      </div>
-
-      <div class="detail-box">
-        <span>EMAIL</span>
-        <strong id="profileEmail2">—</strong>
-      </div>
-
-      <div class="detail-box">
-        <span>ACCOUNT ID</span>
-        <strong id="profileId">—</strong>
-      </div>
-
-      <div class="detail-box">
-        <span>ACCOUNT STATUS</span>
-        <strong style="color:#4cddb0">
-          Active
-        </strong>
-      </div>
-
-    </div>
-
-    <div style="margin-top:20px">
-
-      <button class="btn btn-secondary" onclick="logout()">
-        <i data-lucide="log-out"></i>
-        Logout
-      </button>
-
-      <button class="btn btn-secondary"
-              onclick="contactLifepass()">
-        <i data-lucide="mail"></i>
-        Contact Us
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= CREATE / EDIT MODAL ================= -->
-
-<div class="modal" id="productModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <div>
-        <h2 id="productModalTitle">
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="requireLogin('create')">
           Create Product Passport
-        </h2>
-
-        <p style="
-          color:#7991a5;
-          font-size:13px;
-          margin-top:5px;
-        ">
-          Give your product a permanent digital identity.
-        </p>
+        </button>
+        <button class="btn btn-light" onclick="showPage('verify')">
+          Verify a Passport
+        </button>
+        <button class="btn btn-secondary" onclick="showPage('ai')">
+          AI Assistant
+        </button>
       </div>
-
-      <button class="close" onclick="closeModal('productModal')">
-        <i data-lucide="x"></i>
-      </button>
-
     </div>
-
-    <form id="productForm"
-          class="form-grid"
-          onsubmit="event.preventDefault(); saveProduct();">
-
-      <div class="form-section">
-        <h3>Product Identity</h3>
-        <p>Basic information about the product.</p>
-      </div>
-
-      <div class="field">
-        <label>Product Name *</label>
-        <input id="p_name" required placeholder="e.g. MacBook Air">
-      </div>
-
-      <div class="field">
-        <label>Product Type</label>
-        <select id="p_type">
-          <option value="">Select type</option>
-          <option>Laptop</option>
-          <option>Smartphone</option>
-          <option>Bicycle</option>
-          <option>Camera</option>
-          <option>Gaming Console</option>
-          <option>Robot</option>
-          <option>Television</option>
-          <option>Appliance</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Category</label>
-        <input id="p_category" placeholder="Electronics">
-      </div>
-
-      <div class="field">
-        <label>Brand</label>
-        <input id="p_brand" placeholder="Apple">
-      </div>
-
-      <div class="field">
-        <label>Model</label>
-        <input id="p_model" placeholder="MacBook Air M4">
-      </div>
-
-      <div class="field">
-        <label>Variant</label>
-        <input id="p_variant" placeholder="16GB / 512GB">
-      </div>
-
-      <div class="field">
-        <label>Colour</label>
-        <input id="p_color" placeholder="Midnight">
-      </div>
-
-      <div class="field">
-        <label>Serial Number</label>
-        <input id="p_serial" placeholder="Serial number">
-      </div>
-
-      <div class="field">
-        <label>IMEI</label>
-        <input id="p_imei" placeholder="For smartphones">
-      </div>
-
-      <div class="field">
-        <label>Product Code</label>
-        <input id="p_code" placeholder="SKU / Product code">
-      </div>
-
-      <div class="field full">
-        <label>Description</label>
-        <textarea id="p_description"
-          placeholder="Add additional product information..."></textarea>
-      </div>
-
-
-      <div class="form-section">
-        <h3>Purchase Information</h3>
-        <p>Record where and when the product was purchased.</p>
-      </div>
-
-      <div class="field">
-        <label>Purchase Date</label>
-        <input id="p_date" type="date">
-      </div>
-
-      <div class="field">
-        <label>Purchase Price</label>
-        <input id="p_price" type="number" step="0.01"
-               placeholder="₹">
-      </div>
-
-      <div class="field">
-        <label>Seller / Store</label>
-        <input id="p_seller" placeholder="Seller name">
-      </div>
-
-      <div class="field">
-        <label>Seller Email</label>
-        <input id="p_seller_email" type="email"
-               placeholder="seller@example.com">
-      </div>
-
-      <div class="field">
-        <label>Seller Phone</label>
-        <input id="p_seller_phone"
-               placeholder="+91">
-      </div>
-
-
-      <div class="form-section">
-        <h3>Warranty</h3>
-        <p>Keep warranty information connected to the product.</p>
-      </div>
-
-      <div class="field">
-        <label>Warranty</label>
-        <input id="p_warranty"
-               placeholder="2 years">
-      </div>
-
-      <div class="field">
-        <label>Warranty Start</label>
-        <input id="p_warranty_start" type="date">
-      </div>
-
-      <div class="field">
-        <label>Warranty End</label>
-        <input id="p_warranty_end" type="date">
-      </div>
-
-
-      <div class="form-section">
-        <h3>Current Owner</h3>
-        <p>Information about the current product owner.</p>
-      </div>
-
-      <div class="field">
-        <label>Owner Name</label>
-        <input id="p_owner" placeholder="Owner name">
-      </div>
-
-      <div class="field">
-        <label>Owner Email</label>
-        <input id="p_owner_email" type="email"
-               placeholder="owner@example.com">
-      </div>
-
-      <div class="field">
-        <label>Owner Phone</label>
-        <input id="p_phone" placeholder="+91">
-      </div>
-
-      <div class="message" id="productMessage"></div>
-
-      <div class="form-actions">
-
-        <button type="button"
-                class="btn btn-secondary"
-                onclick="closeModal('productModal')">
-          Cancel
-        </button>
-
-        <button type="submit" class="btn">
-          <i data-lucide="save"></i>
-          <span id="saveButtonText">
-            Create Passport
-          </span>
-        </button>
-
-      </div>
-
-    </form>
-
   </div>
 
-</div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>One passport. Every detail.</h2>
+        <p>A permanent digital history that follows the product, not the owner.</p>
+      </div>
 
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🪪</div>
+          <h3>Digital Identity</h3>
+          <p>Give every product a unique LIFEPASS ID.</p>
+        </div>
 
-<!-- ================= AUTH MODAL ================= -->
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h3>Warranty</h3>
+          <p>Keep warranty information organized and easy to check.</p>
+        </div>
 
-<div class="modal" id="authModal">
+        <div class="card">
+          <div class="card-icon">🔧</div>
+          <h3>Service History</h3>
+          <p>Maintain a long-term record of repairs and servicing.</p>
+        </div>
 
-  <div class="modal-box" style="max-width:470px">
+        <div class="card">
+          <div class="card-icon">👤</div>
+          <h3>Ownership History</h3>
+          <p>Track the product's ownership journey over time.</p>
+        </div>
 
-    <div class="modal-header">
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>Documents</h3>
+          <p>Keep invoices, receipts and proof connected to the passport.</p>
+        </div>
 
-      <h2 id="authTitle">Welcome to LIFEPASS</h2>
-
-      <button class="close"
-              onclick="closeModal('authModal')">
-        <i data-lucide="x"></i>
-      </button>
-
+        <div class="card">
+          <div class="card-icon">🔳</div>
+          <h3>QR Verification</h3>
+          <p>Scan the QR code to quickly access the passport.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <form onsubmit="event.preventDefault(); submitAuth();">
+  <section class="section" style="background:#eef4ff">
+    <div class="container">
+      <div class="section-title">
+        <h2>Built for every product</h2>
+      </div>
+
+      <div class="cards">
+        <div class="card"><div class="card-icon">💻</div><h3>Laptop</h3><p>Track ownership, warranty and service.</p></div>
+        <div class="card"><div class="card-icon">📱</div><h3>Smartphone</h3><p>Store IMEI and product history.</p></div>
+        <div class="card"><div class="card-icon">🚲</div><h3>Bicycle</h3><p>Keep service and ownership records.</p></div>
+        <div class="card"><div class="card-icon">📷</div><h3>Camera</h3><p>Preserve purchase and service information.</p></div>
+        <div class="card"><div class="card-icon">🎮</div><h3>Gaming Console</h3><p>Maintain a complete product record.</p></div>
+        <div class="card"><div class="card-icon">🤖</div><h3>Robot</h3><p>Give advanced products a permanent identity.</p></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<section id="login" class="page">
+  <div class="container">
+    <div class="form-card login-card">
+      <h2>Welcome to LIFEPASS</h2>
+      <p class="password-note">
+        Sign in to create and manage your product passports.
+      </p>
 
       <div class="field">
         <label>Email</label>
-        <input id="authEmail"
-               type="email"
-               required
-               placeholder="you@example.com">
+        <input id="loginEmail" type="email" placeholder="you@example.com">
       </div>
 
       <div class="field" style="margin-top:15px">
         <label>Password</label>
-        <input id="authPassword"
-               type="password"
-               required
-               minlength="6"
-               placeholder="Minimum 6 characters">
+        <input id="loginPassword" type="password" placeholder="Password">
       </div>
 
-      <div id="authMessage"
-           style="margin-top:15px;
-                  color:#6de4ba;
-                  font-size:13px">
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="login()">Login</button>
+        <button class="btn btn-light" onclick="signup()">Create Account</button>
       </div>
-
-      <div style="
-        display:flex;
-        gap:10px;
-        margin-top:20px;
-      ">
-
-        <button class="btn"
-                type="submit"
-                style="flex:1"
-                id="authButton">
-          Login
-        </button>
-
-      </div>
-
-      <button type="button"
-              class="btn btn-secondary"
-              style="width:100%;margin-top:10px"
-              onclick="toggleAuthMode()"
-              id="authToggle">
-        Create new account
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-<!-- ================= VIEW PASSPORT MODAL ================= -->
-
-<div class="modal" id="passportModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <h2>Product Passport</h2>
-
-      <button class="close"
-              onclick="closeModal('passportModal')">
-        <i data-lucide="x"></i>
-      </button>
-
     </div>
-
-    <div id="passportDisplay"></div>
-
-    <div style="
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:18px;
-    ">
-
-      <button class="btn"
-              onclick="printCurrentPassport()">
-        <i data-lucide="printer"></i>
-        Print Passport
-      </button>
-
-      <button class="btn btn-secondary"
-              onclick="editCurrentPassport()">
-        <i data-lucide="pencil"></i>
-        Edit Passport
-      </button>
-
-      <button class="btn btn-secondary"
-              onclick="downloadQR()">
-        <i data-lucide="qr-code"></i>
-        QR Code
-      </button>
-
-    </div>
-
   </div>
+</section>
 
-</div>
+
+<section id="create" class="page">
+  <div class="container">
+    <div class="form-card">
+      <h2 id="formTitle">Create Product Passport</h2>
+
+      <form id="passportForm">
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Product Name <span class="required">*</span></label>
+            <input id="productName" required placeholder="e.g. Lenovo IdeaPad">
+          </div>
+
+          <div class="field">
+            <label>Product Type</label>
+            <select id="productType">
+              <option value="">Select type</option>
+              <option>Laptop</option>
+              <option>Smartphone</option>
+              <option>Bicycle</option>
+              <option>Camera</option>
+              <option>Gaming Console</option>
+              <option>Robot</option>
+              <option>Television</option>
+              <option>Appliance</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Brand</label>
+            <input id="brand" placeholder="Brand">
+          </div>
+
+          <div class="field">
+            <label>Model</label>
+            <input id="model" placeholder="Model">
+          </div>
+
+          <div class="field">
+            <label>Variant</label>
+            <input id="variant" placeholder="Variant">
+          </div>
+
+          <div class="field">
+            <label>Color</label>
+            <input id="color" placeholder="Color">
+          </div>
+
+          <div class="field">
+            <label>Serial Number</label>
+            <input id="serial" placeholder="Serial number">
+          </div>
+
+          <div class="field">
+            <label>IMEI</label>
+            <input id="imei" placeholder="IMEI if applicable">
+          </div>
+
+          <div class="field">
+            <label>Product Code</label>
+            <input id="productCode" placeholder="Product code">
+          </div>
+
+          <div class="field">
+            <label>Purchase Date</label>
+            <input id="purchaseDate" type="date">
+          </div>
+
+          <div class="field">
+            <label>Purchase Price</label>
+            <input id="purchasePrice" type="number" step="0.01" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Seller</label>
+            <input id="seller" placeholder="Seller / store">
+          </div>
+
+          <div class="field">
+            <label>Warranty</label>
+            <input id="warranty" placeholder="e.g. 2 years">
+          </div>
+
+          <div class="field">
+            <label>Warranty Start</label>
+            <input id="warrantyStart" type="date">
+          </div>
+
+          <div class="field">
+            <label>Warranty End</label>
+            <input id="warrantyEnd" type="date">
+          </div>
+
+          <div class="field">
+            <label>Owner Name</label>
+            <input id="ownerName" placeholder="Owner name">
+          </div>
+
+          <div class="field">
+            <label>Owner Email</label>
+            <input id="ownerEmail" type="email" placeholder="Owner email">
+          </div>
+
+          <div class="field">
+            <label>Owner Phone</label>
+            <input id="ownerPhone" placeholder="Phone">
+          </div>
+
+          <div class="field">
+            <label>Passport Edit Password <span class="required">*</span></label>
+            <input id="passcode" type="password" required placeholder="Password for editing">
+          </div>
+
+          <div class="field full">
+            <label>Description</label>
+            <textarea id="description" placeholder="Describe the product"></textarea>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Create Passport</button>
+          <button type="button" class="btn btn-light" onclick="showPage('dashboard')">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
 
 
-<!-- ================= AI MODAL ================= -->
+<section id="dashboard" class="page">
+  <div class="container">
 
-<div class="modal" id="aiModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
+    <div class="dashboard-header">
       <div>
-        <h2>LIFEPASS AI Assistant</h2>
-        <p style="color:#7991a5;font-size:13px;margin-top:5px">
-          Ask questions about your products and passports.
-        </p>
+        <h1>My Product Passports</h1>
+        <p style="color:var(--muted)">Manage your LIFEPASS records.</p>
       </div>
 
-      <button class="close"
-              onclick="closeModal('aiModal')">
-        <i data-lucide="x"></i>
+      <button class="btn btn-primary" onclick="startCreate()">
+        + Create Passport
       </button>
+    </div>
 
+    <div id="passportList" class="passport-list"></div>
+
+  </div>
+</section>
+
+
+<section id="verify" class="page">
+  <div class="container">
+
+    <div class="form-card">
+      <h2>Verify a LIFEPASS</h2>
+      <p class="password-note">
+        Enter a LIFEPASS ID or scan a product QR code.
+      </p>
+
+      <div class="field">
+        <label>LIFEPASS ID</label>
+        <input id="verifyId" placeholder="LP-XXXXXXXX">
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="verifyPassport()">Verify</button>
+      </div>
+
+      <div id="verifyResult" class="verify-result"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="ai" class="page">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>LIFEPASS AI Assistant</h2>
+      <p>Ask questions about product passports, warranties and product history.</p>
     </div>
 
     <div class="ai-box">
-
-      <div class="ai-messages" id="aiMessages">
-
+      <div id="aiMessages" class="ai-messages">
         <div class="ai-message bot">
-          Hello! I'm the LIFEPASS AI Assistant.
-          Ask me about your product passport, warranty,
-          product history or verification.
+          Hello! I'm the LIFEPASS AI Assistant. How can I help you?
         </div>
-
       </div>
 
       <div class="ai-input">
+        <input id="aiInput" placeholder="Ask LIFEPASS AI something...">
+        <button class="btn btn-primary" onclick="askAI()">Send</button>
+      </div>
+    </div>
 
-        <input id="aiInput"
-               placeholder="Ask LIFEPASS AI..."
-               onkeydown="if(event.key==='Enter') sendAI()">
+  </div>
+</section>
 
-        <button class="btn"
-                onclick="sendAI()">
-          <i data-lucide="send"></i>
-        </button>
 
+<section id="profile" class="page">
+  <div class="container">
+    <div class="profile-card">
+
+      <h2>Profile</h2>
+
+      <div class="profile-grid">
+        <div class="info-box">
+          <small>Email</small>
+          <strong id="profileEmail">—</strong>
+        </div>
+
+        <div class="info-box">
+          <small>User ID</small>
+          <strong id="profileId">—</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-logo">
+    <div class="brand-mark"></div>
+    <span>LIFEPASS</span>
+  </div>
+
+  <div>Every product has a story. Keep it forever.</div>
+</footer>
+
+
+<!-- PASSWORD MODAL -->
+<div id="editPasswordModal" class="modal">
+  <div class="modal-box" style="max-width:430px">
+
+    <div class="modal-head">
+      <h2 style="margin:0">🔐 Edit Passport</h2>
+      <button class="close" onclick="closeEditPassword()">×</button>
+    </div>
+
+    <p class="password-note">
+      Enter the passport edit password to continue.
+    </p>
+
+    <div class="field">
+      <label>Edit Password</label>
+      <input
+        id="passportEditPassword"
+        type="password"
+        placeholder="Enter passport password"
+        autocomplete="current-password">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-light" onclick="closeEditPassword()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmEditPassword()">Continue</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- EDIT PASSPORT MODAL -->
+<div id="editModal" class="modal">
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h2>Edit Product Passport</h2>
+      <button class="close" onclick="closeEditModal()">×</button>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Product Name</label>
+        <input id="editProductName">
+      </div>
+
+      <div class="field">
+        <label>Product Type</label>
+        <input id="editProductType">
+      </div>
+
+      <div class="field">
+        <label>Brand</label>
+        <input id="editBrand">
+      </div>
+
+      <div class="field">
+        <label>Model</label>
+        <input id="editModel">
+      </div>
+
+      <div class="field">
+        <label>Variant</label>
+        <input id="editVariant">
+      </div>
+
+      <div class="field">
+        <label>Color</label>
+        <input id="editColor">
+      </div>
+
+      <div class="field">
+        <label>Serial</label>
+        <input id="editSerial">
+      </div>
+
+      <div class="field">
+        <label>IMEI</label>
+        <input id="editImei">
+      </div>
+
+      <div class="field">
+        <label>Purchase Date</label>
+        <input id="editPurchaseDate" type="date">
+      </div>
+
+      <div class="field">
+        <label>Purchase Price</label>
+        <input id="editPurchasePrice" type="number" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Warranty</label>
+        <input id="editWarranty">
+      </div>
+
+      <div class="field">
+        <label>Warranty End</label>
+        <input id="editWarrantyEnd" type="date">
+      </div>
+
+      <div class="field">
+        <label>Owner Name</label>
+        <input id="editOwnerName">
+      </div>
+
+      <div class="field">
+        <label>Owner Email</label>
+        <input id="editOwnerEmail">
+      </div>
+
+      <div class="field">
+        <label>Owner Phone</label>
+        <input id="editOwnerPhone">
+      </div>
+
+      <div class="field">
+        <label>New Edit Password</label>
+        <input id="editPasscode" type="password" placeholder="Leave blank to keep current">
+      </div>
+
+      <div class="field full">
+        <label>Description</label>
+        <textarea id="editDescription"></textarea>
       </div>
 
     </div>
 
-  </div>
+    <div class="form-actions">
+      <button class="btn btn-light" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditedPassport()">Save Changes</button>
+    </div>
 
+  </div>
 </div>
 
 
-<!-- ================= PRINT AREA ================= -->
+<!-- QR MODAL -->
+<div id="qrModal" class="modal">
+  <div class="modal-box" style="max-width:420px;text-align:center">
 
-<div id="printArea" style="display:none"></div>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  <div>
-    <strong style="color:#dcecf8">
-      LIFEPASS
-    </strong>
-    <div style="margin-top:6px">
-      Every product has a story. Keep it forever.
+    <div class="modal-head">
+      <h2>Passport QR</h2>
+      <button class="close" onclick="closeQR()">×</button>
     </div>
-  </div>
 
-  <div>
-    <button class="btn btn-secondary btn-small"
-            onclick="contactLifepass()">
-      <i data-lucide="mail"></i>
-      Contact Us
-    </button>
-  </div>
+    <div id="qrCode" class="qr-wrap"></div>
 
-</footer>
+    <p id="qrPassportId" class="passport-id"></p>
+
+    <button class="btn btn-primary" onclick="printQR()">Print QR</button>
+
+  </div>
+</div>
+
+
+<!-- PRINT PASSPORT -->
+<div id="printPassport" style="display:none"></div>
+
+
+<div id="toast" class="toast"></div>
 
 
 <script>
+const SUPABASE_URL="https://dwidvbltikjmvfaxfrul.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_Au1Agb96Uh5JCdtIQGW0tA_Was0dyLm";
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+const supabaseClient=supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-const SUPABASE_URL =
-  "https://dwidvbltikjmvfaxfrul.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_Au1Agb96Uh5JCdtIQGW0tA_Was0dyLm";
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+let currentUser=null;
+let editingPassport=null;
+let passwordPassport=null;
+let qrPassport=null;
 
 
-/* =========================================================
-   STATE
-========================================================= */
+/* =========================
+   NAVIGATION
+========================= */
 
-let currentUser = null;
-let currentProducts = [];
-let currentPassport = null;
-let editingProductId = null;
-let authSignupMode = false;
+function showPage(id){
 
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-  lucide.createIcons();
-
-  const {
-    data
-  } =
-  await supabaseClient.auth.getSession();
-
-  currentUser =
-    data.session?.user || null;
-
-  updateUI();
-
-  supabaseClient.auth.onAuthStateChange(
-    async (_event, session) => {
-
-      currentUser =
-        session?.user || null;
-
-      updateUI();
-
-    }
-  );
-
-});
-
-
-/* =========================================================
-   UI
-========================================================= */
-
-function updateUI(){
-
-  const nav =
-    document.getElementById("navActions");
-
-  if(currentUser){
-
-    nav.innerHTML = `
-
-      <button class="btn btn-secondary"
-              onclick="showDashboard()">
-        <i data-lucide="layout-dashboard"></i>
-        Dashboard
-      </button>
-
-      <button class="btn btn-secondary"
-              onclick="showProfile()">
-        <i data-lucide="user"></i>
-        Profile
-      </button>
-
-      <button class="btn"
-              onclick="logout()">
-        Logout
-      </button>
-
-    `;
-
-    document.getElementById("dashboardWelcome").textContent =
-      "Welcome back, " +
-      (
-        currentUser.user_metadata?.full_name ||
-        currentUser.email ||
-        "User"
-      );
-
-    loadProducts();
-
-  }else{
-
-    nav.innerHTML = `
-      <button class="btn btn-secondary"
-              onclick="openAuth()">
-        Login
-      </button>
-    `;
-
-  }
-
-  lucide.createIcons();
-
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function goHome(){
-
-  document.getElementById("home").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("profileSection").style.display = "none";
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.remove("active");
   });
 
-}
+  const page=document.getElementById(id);
 
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-function openAuth(){
-
-  document.getElementById("authModal")
-    .classList.add("show");
-
-  document.getElementById("authMessage")
-    .textContent = "";
-
-}
-
-function toggleAuthMode(){
-
-  authSignupMode =
-    !authSignupMode;
-
-  document.getElementById("authTitle").textContent =
-    authSignupMode
-      ? "Create your LIFEPASS account"
-      : "Welcome to LIFEPASS";
-
-  document.getElementById("authButton").textContent =
-    authSignupMode
-      ? "Create Account"
-      : "Login";
-
-  document.getElementById("authToggle").textContent =
-    authSignupMode
-      ? "Already have an account? Login"
-      : "Create new account";
-
-}
-
-async function submitAuth(){
-
-  const email =
-    document.getElementById("authEmail").value.trim();
-
-  const password =
-    document.getElementById("authPassword").value;
-
-  const message =
-    document.getElementById("authMessage");
-
-  message.textContent =
-    authSignupMode
-      ? "Creating account..."
-      : "Logging in...";
-
-  if(authSignupMode){
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient.auth.signUp({
-      email,
-      password
-    });
-
-    if(error){
-
-      message.style.color="#ff7777";
-      message.textContent=error.message;
-      return;
-
-    }
-
-    message.style.color="#62e0b5";
-    message.textContent =
-      "Account created. Check your email if confirmation is enabled.";
-
-    if(data.session){
-
-      closeModal("authModal");
-
-    }
-
-  }else{
-
-    const {
-      error
-    } =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if(error){
-
-      message.style.color="#ff7777";
-      message.textContent=error.message;
-      return;
-
-    }
-
-    closeModal("authModal");
-
-    showDashboard();
-
+  if(page){
+    page.classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 
+  if(id==="dashboard"){
+    loadPassports();
+  }
+
+  if(id==="profile"){
+    loadProfile();
+  }
+}
+
+function requireLogin(target){
+
+  if(currentUser){
+    if(target==="create") startCreate();
+    else showPage(target);
+  }else{
+    showPage("login");
+    toast("Please login first.");
+  }
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
+async function login(){
+
+  const email=document.getElementById("loginEmail").value.trim();
+  const password=document.getElementById("loginPassword").value;
+
+  if(!email || !password){
+    toast("Enter email and password.");
+    return;
+  }
+
+  const {data,error}=await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+    toast(error.message);
+    return;
+  }
+
+  currentUser=data.user;
+  updateAuthUI();
+  toast("Login successful.");
+  showPage("dashboard");
+}
+
+async function signup(){
+
+  const email=document.getElementById("loginEmail").value.trim();
+  const password=document.getElementById("loginPassword").value;
+
+  if(!email || !password){
+    toast("Enter email and password.");
+    return;
+  }
+
+  if(password.length<6){
+    toast("Password must be at least 6 characters.");
+    return;
+  }
+
+  const {data,error}=await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  if(error){
+    toast(error.message);
+    return;
+  }
+
+  if(data.user){
+    currentUser=data.user;
+    updateAuthUI();
+  }
+
+  toast("Account created. Check your email if confirmation is required.");
+  showPage("dashboard");
 }
 
 async function logout(){
@@ -2080,1609 +1245,1058 @@ async function logout(){
 
   currentUser=null;
 
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("profileSection").style.display="none";
-  document.getElementById("home").style.display="block";
+  updateAuthUI();
 
-  updateUI();
+  showPage("home");
 
+  toast("Logged out.");
+}
+
+function updateAuthUI(){
+
+  const loginBtn=document.getElementById("navLoginBtn");
+  const dashBtn=document.getElementById("navDashboardBtn");
+  const logoutBtn=document.getElementById("navLogoutBtn");
+
+  if(currentUser){
+
+    loginBtn.classList.add("hidden");
+    dashBtn.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+
+  }else{
+
+    loginBtn.classList.remove("hidden");
+    dashBtn.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+  }
 }
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+/* =========================
+   CREATE PASSPORT
+========================= */
 
-function showDashboard(){
+function startCreate(){
 
   if(!currentUser){
-    openAuth();
+    showPage("login");
+    toast("Please login first.");
     return;
   }
 
-  document.getElementById("home").style.display="none";
-  document.getElementById("profileSection").style.display="none";
-  document.getElementById("dashboard").style.display="block";
+  editingPassport=null;
 
-  loadProducts();
+  document.getElementById("passportForm").reset();
+  document.getElementById("formTitle").textContent="Create Product Passport";
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+  showPage("create");
 }
 
 
-/* =========================================================
-   PROFILE
-========================================================= */
+function generateLifePassID(){
 
-function showProfile(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let id="LP-";
+
+  for(let i=0;i<8;i++){
+    id+=chars[Math.floor(Math.random()*chars.length)];
+  }
+
+  return id;
+}
+
+
+document.getElementById("passportForm").addEventListener("submit",async function(event){
+
+  event.preventDefault();
 
   if(!currentUser){
-    openAuth();
+    toast("Please login first.");
     return;
   }
 
-  document.getElementById("home").style.display="none";
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("profileSection").style.display="block";
+  const name=document.getElementById("productName").value.trim();
+  const passcode=document.getElementById("passcode").value;
 
-  const name =
-    currentUser.user_metadata?.full_name ||
-    currentUser.email?.split("@")[0] ||
-    "User";
+  if(!name){
+    toast("Product name is required.");
+    return;
+  }
 
-  document.getElementById("profileName").textContent=name;
-  document.getElementById("profileFullName").textContent=name;
-  document.getElementById("profileEmail").textContent=currentUser.email;
-  document.getElementById("profileEmail2").textContent=currentUser.email;
-  document.getElementById("profileId").textContent=currentUser.id;
+  if(!passcode){
+    toast("Create an edit password.");
+    return;
+  }
 
-  document.getElementById("profileAvatar").textContent =
-    name.charAt(0).toUpperCase();
+  const product={
+    user_id:currentUser.id,
+    lifepass_id:generateLifePassID(),
+    passcode:passcode,
+    name:name,
+    type:document.getElementById("productType").value,
+    brand:document.getElementById("brand").value.trim(),
+    model:document.getElementById("model").value.trim(),
+    variant:document.getElementById("variant").value.trim(),
+    color:document.getElementById("color").value.trim(),
+    serial:document.getElementById("serial").value.trim(),
+    imei:document.getElementById("imei").value.trim(),
+    product_code:document.getElementById("productCode").value.trim(),
+    description:document.getElementById("description").value.trim(),
+    purchase_date:valueOrNull("purchaseDate"),
+    purchase_price:numberOrNull("purchasePrice"),
+    warranty:document.getElementById("warranty").value.trim(),
+    warranty_start_date:valueOrNull("warrantyStart"),
+    warranty_end_date:valueOrNull("warrantyEnd"),
+    owner_name:document.getElementById("ownerName").value.trim(),
+    owner_email:document.getElementById("ownerEmail").value.trim(),
+    owner_phone:document.getElementById("ownerPhone").value.trim(),
+    verified:false,
+    verification_status:"pending",
+    history:[],
+    ownership_history:[],
+    service_history:[],
+    documents:[]
+  };
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  const {data,error}=await supabaseClient
+    .from("products")
+    .insert(product)
+    .select()
+    .single();
 
+  if(error){
+    console.error(error);
+    toast(error.message);
+    return;
+  }
+
+  toast("Passport created successfully.");
+
+  document.getElementById("passportForm").reset();
+
+  showPassport(data);
+});
+
+
+function valueOrNull(id){
+  const value=document.getElementById(id).value;
+  return value||null;
+}
+
+function numberOrNull(id){
+  const value=document.getElementById(id).value;
+  return value===""?null:Number(value);
 }
 
 
-/* =========================================================
-   LOAD PRODUCTS
-========================================================= */
+/* =========================
+   LOAD PASSPORTS
+========================= */
 
-async function loadProducts(){
+async function loadPassports(){
 
-  if(!currentUser) return;
+  if(!currentUser)return;
 
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
+  const list=document.getElementById("passportList");
+
+  list.innerHTML="<div class='card'>Loading passports...</div>";
+
+  const {data,error}=await supabaseClient
     .from("products")
     .select("*")
     .eq("user_id",currentUser.id)
     .order("created_at",{ascending:false});
 
   if(error){
-
-    console.error(error);
-
-    document.getElementById("productsContainer").innerHTML =
-      `
-      <div class="empty">
-        <i data-lucide="triangle-alert"></i>
-        <h3>Could not load passports</h3>
-        <p>${escapeHTML(error.message)}</p>
-      </div>
-      `;
-
-    lucide.createIcons();
+    list.innerHTML="";
+    toast(error.message);
     return;
-
   }
 
-  currentProducts=data || [];
+  if(!data || data.length===0){
 
-  renderProducts();
-
-}
-
-
-/* =========================================================
-   RENDER PRODUCTS
-========================================================= */
-
-function renderProducts(){
-
-  const container =
-    document.getElementById("productsContainer");
-
-  const total=currentProducts.length;
-
-  const verified =
-    currentProducts.filter(
-      p =>
-        p.verified === true ||
-        p.verification_status === "approved"
-    ).length;
-
-  const pending=total-verified;
-
-  document.getElementById("statTotal").textContent=total;
-  document.getElementById("statVerified").textContent=verified;
-  document.getElementById("statPending").textContent=pending;
-
-  if(!total){
-
-    container.innerHTML=`
-
-      <div class="empty">
-
-        <i data-lucide="passport"></i>
-
+    list.innerHTML=`
+      <div class="card">
         <h3>No passports yet</h3>
-
-        <p style="margin:8px 0 18px">
-          Create your first digital product passport.
-        </p>
-
-        <button class="btn"
-                onclick="openCreate()">
-          <i data-lucide="plus"></i>
+        <p>Create your first LIFEPASS digital passport.</p>
+        <br>
+        <button class="btn btn-primary" onclick="startCreate()">
           Create Passport
         </button>
-
       </div>
-
     `;
 
-    lucide.createIcons();
-
     return;
-
   }
 
-  container.innerHTML =
-    `<div class="products-grid">
-      ${currentProducts.map(productCard).join("")}
-    </div>`;
-
-  lucide.createIcons();
-
+  list.innerHTML=data.map(product=>passportCardHTML(product)).join("");
 }
 
 
-function productCard(product){
+function passportCardHTML(product){
 
-  const isVerified =
-    product.verified === true ||
-    product.verification_status === "approved";
+  const status=product.verification_status||"pending";
 
   return `
+    <div class="passport-card">
 
-    <div class="product-card">
-
-      <div class="product-top">
-
-        <div class="product-icon">
-          ${getProductIcon(product.type)}
+      <div class="passport-card-head">
+        <div>
+          <h3>${escapeHTML(product.name||"Unnamed Product")}</h3>
+          <div class="passport-id">${escapeHTML(product.lifepass_id||"")}</div>
         </div>
 
-        <span class="status ${
-          isVerified ? "approved" : "pending"
-        }">
-
-          ${
-            isVerified
-              ? "Verified"
-              : "Pending"
-          }
-
+        <span class="status ${escapeHTML(status)}">
+          ${escapeHTML(status)}
         </span>
-
       </div>
 
-      <h3>
-        ${escapeHTML(product.name || "Unnamed Product")}
-      </h3>
+      <p style="color:var(--muted)">
+        ${escapeHTML(product.brand||"")} 
+        ${escapeHTML(product.model||"")}
+      </p>
 
-      <div class="product-id">
-        ${escapeHTML(product.lifepass_id || "")}
-      </div>
+      <div class="passport-card-actions">
 
-      <div class="product-info">
-
-        <div>
-          <span>Brand</span>
-          <strong>
-            ${escapeHTML(product.brand || "—")}
-          </strong>
-        </div>
-
-        <div>
-          <span>Model</span>
-          <strong>
-            ${escapeHTML(product.model || "—")}
-          </strong>
-        </div>
-
-        <div>
-          <span>Purchase</span>
-          <strong>
-            ${formatDate(product.purchase_date)}
-          </strong>
-        </div>
-
-      </div>
-
-      <div class="product-buttons">
-
-        <button class="btn btn-small"
-                onclick="viewPassport('${product.id}')">
-
-          <i data-lucide="eye"></i>
+        <button class="btn btn-primary"
+          onclick='showPassport(${safeJSON(product)})'>
           View
-
         </button>
 
-        ${
-          isVerified
-
-          ?
-
-          `
-          <button class="btn btn-success btn-small"
-                  disabled>
-
-            <i data-lucide="badge-check"></i>
-            Verified
-
-          </button>
-          `
-
-          :
-
-          `
-          <button class="btn btn-warning btn-small"
-                  onclick="verifyPassport('${product.id}')">
-
-            <i data-lucide="shield-check"></i>
-            Verify
-
-          </button>
-          `
-        }
-
-        <button class="btn btn-secondary btn-small"
-                onclick="startEdit('${product.id}')">
-
-          <i data-lucide="pencil"></i>
+        <button class="btn btn-light"
+          onclick='openEditPassport(${safeJSON(product)})'>
           Edit
-
         </button>
 
-        <button class="btn btn-secondary btn-small"
-                onclick="openAIWithProduct('${product.id}')">
-
-          <i data-lucide="bot"></i>
-          AI
-
+        <button class="btn btn-secondary"
+          onclick='showQR(${safeJSON(product)})'>
+          QR
         </button>
 
-        <button class="btn btn-danger btn-small"
-                onclick="deletePassport('${product.id}')">
-
-          <i data-lucide="trash-2"></i>
-          Delete
-
+        <button class="btn btn-light"
+          onclick='printProduct(${safeJSON(product)})'>
+          Print
         </button>
 
       </div>
 
     </div>
-
   `;
-
 }
 
 
-/* =========================================================
-   CREATE
-========================================================= */
+/* =========================
+   EDIT PASSWORD
+========================= */
 
-function openCreate(){
+function openEditPassport(passport){
 
-  if(!currentUser){
+  passwordPassport=passport;
 
-    openAuth();
-    return;
+  const modal=document.getElementById("editPasswordModal");
+  const input=document.getElementById("passportEditPassword");
 
-  }
+  input.value="";
+  modal.classList.add("show");
 
-  editingProductId=null;
-
-  document.getElementById("productModalTitle")
-    .textContent="Create Product Passport";
-
-  document.getElementById("saveButtonText")
-    .textContent="Create Passport";
-
-  document.getElementById("productForm").reset();
-
-  document.getElementById("p_owner").value =
-    currentUser.user_metadata?.full_name || "";
-
-  document.getElementById("p_owner_email").value =
-    currentUser.email || "";
-
-  document.getElementById("productMessage").textContent="";
-
-  document.getElementById("productModal")
-    .classList.add("show");
-
+  setTimeout(()=>input.focus(),100);
 }
 
 
-/* =========================================================
-   EDIT PASSPORT
-========================================================= */
+function closeEditPassword(){
 
-function startEdit(id){
+  document.getElementById("editPasswordModal").classList.remove("show");
 
-  if(!currentUser) return;
+  document.getElementById("passportEditPassword").value="";
 
-  const product =
-    currentProducts.find(
-      p => p.id === id
-    );
-
-  if(!product) return;
-
-  editingProductId=id;
-
-  document.getElementById("productModalTitle")
-    .textContent="Edit Product Passport";
-
-  document.getElementById("saveButtonText")
-    .textContent="Save Changes";
-
-  setValue("p_name",product.name);
-  setValue("p_type",product.type);
-  setValue("p_category",product.category);
-  setValue("p_brand",product.brand);
-  setValue("p_model",product.model);
-  setValue("p_variant",product.variant);
-  setValue("p_color",product.color);
-  setValue("p_serial",product.serial);
-  setValue("p_imei",product.imei);
-  setValue("p_code",product.product_code);
-  setValue("p_description",product.description);
-  setValue("p_date",product.purchase_date);
-  setValue("p_price",product.purchase_price);
-  setValue("p_seller",product.seller);
-  setValue("p_seller_email",product.seller_email);
-  setValue("p_seller_phone",product.seller_phone);
-  setValue("p_warranty",product.warranty);
-  setValue("p_warranty_start",product.warranty_start_date);
-  setValue("p_warranty_end",product.warranty_end_date);
-  setValue("p_owner",product.owner_name);
-  setValue("p_owner_email",product.owner_email);
-  setValue("p_phone",product.owner_phone);
-
-  document.getElementById("productMessage").textContent="";
-
-  document.getElementById("productModal")
-    .classList.add("show");
-
+  passwordPassport=null;
 }
 
 
-async function saveProduct(){
+function confirmEditPassword(){
 
-  if(!currentUser){
-
-    openAuth();
+  if(!passwordPassport){
+    toast("Passport not found.");
     return;
-
   }
 
-  const name =
-    document.getElementById("p_name").value.trim();
+  const entered=document
+    .getElementById("passportEditPassword")
+    .value;
 
-  if(!name){
-
-    document.getElementById("productMessage").textContent =
-      "Product name is required.";
-
+  if(!entered){
+    toast("Enter the edit password.");
     return;
-
   }
 
-  const button =
-    document.getElementById("saveButtonText");
+  if(String(entered)!==String(passwordPassport.passcode)){
 
-  button.textContent =
-    editingProductId
-      ? "Saving..."
-      : "Creating...";
+    toast("Incorrect edit password.");
+
+    document.getElementById("passportEditPassword").value="";
+
+    document.getElementById("passportEditPassword").focus();
+
+    return;
+  }
+
+  const passport=passwordPassport;
+
+  closeEditPassword();
+
+  openEditModal(passport);
+}
 
 
-  const row={
+function openEditModal(product){
 
-    name:name,
+  editingPassport=product;
 
-    type:getValue("p_type"),
-    category:getValue("p_category"),
-    brand:getValue("p_brand"),
-    model:getValue("p_model"),
-    variant:getValue("p_variant"),
-    color:getValue("p_color"),
+  document.getElementById("editProductName").value=product.name||"";
+  document.getElementById("editProductType").value=product.type||"";
+  document.getElementById("editBrand").value=product.brand||"";
+  document.getElementById("editModel").value=product.model||"";
+  document.getElementById("editVariant").value=product.variant||"";
+  document.getElementById("editColor").value=product.color||"";
+  document.getElementById("editSerial").value=product.serial||"";
+  document.getElementById("editImei").value=product.imei||"";
+  document.getElementById("editPurchaseDate").value=product.purchase_date||"";
+  document.getElementById("editPurchasePrice").value=product.purchase_price??"";
+  document.getElementById("editWarranty").value=product.warranty||"";
+  document.getElementById("editWarrantyEnd").value=product.warranty_end_date||"";
+  document.getElementById("editOwnerName").value=product.owner_name||"";
+  document.getElementById("editOwnerEmail").value=product.owner_email||"";
+  document.getElementById("editOwnerPhone").value=product.owner_phone||"";
+  document.getElementById("editPasscode").value="";
+  document.getElementById("editDescription").value=product.description||"";
 
-    serial:getValue("p_serial"),
-    imei:getValue("p_imei"),
-    product_code:getValue("p_code"),
+  document.getElementById("editModal").classList.add("show");
+}
 
-    description:getValue("p_description"),
 
-    purchase_date:
-      getValue("p_date") || null,
+function closeEditModal(){
 
-    purchase_price:
-      Number(getValue("p_price")) || null,
+  document.getElementById("editModal").classList.remove("show");
 
-    seller:getValue("p_seller"),
-    seller_email:getValue("p_seller_email"),
-    seller_phone:getValue("p_seller_phone"),
+  editingPassport=null;
+}
 
-    warranty:getValue("p_warranty"),
 
-    warranty_start_date:
-      getValue("p_warranty_start") || null,
+async function saveEditedPassport(){
 
-    warranty_end_date:
-      getValue("p_warranty_end") || null,
+  if(!editingPassport || !currentUser){
+    toast("Passport not found.");
+    return;
+  }
 
-    owner_name:getValue("p_owner"),
-    owner_email:getValue("p_owner_email"),
-    owner_phone:getValue("p_phone"),
-
+  const updated={
+    name:document.getElementById("editProductName").value.trim(),
+    type:document.getElementById("editProductType").value.trim(),
+    brand:document.getElementById("editBrand").value.trim(),
+    model:document.getElementById("editModel").value.trim(),
+    variant:document.getElementById("editVariant").value.trim(),
+    color:document.getElementById("editColor").value.trim(),
+    serial:document.getElementById("editSerial").value.trim(),
+    imei:document.getElementById("editImei").value.trim(),
+    purchase_date:valueOrNullEdit("editPurchaseDate"),
+    purchase_price:numberOrNullEdit("editPurchasePrice"),
+    warranty:document.getElementById("editWarranty").value.trim(),
+    warranty_end_date:valueOrNullEdit("editWarrantyEnd"),
+    owner_name:document.getElementById("editOwnerName").value.trim(),
+    owner_email:document.getElementById("editOwnerEmail").value.trim(),
+    owner_phone:document.getElementById("editOwnerPhone").value.trim(),
+    description:document.getElementById("editDescription").value.trim(),
     updated_at:new Date().toISOString()
-
   };
 
+  const newPassword=document.getElementById("editPasscode").value;
 
-  let result;
-
-  if(editingProductId){
-
-    result =
-      await supabaseClient
-        .from("products")
-        .update(row)
-        .eq("id",editingProductId)
-        .eq("user_id",currentUser.id)
-        .select()
-        .single();
-
-  }else{
-
-    const lifepassId =
-      "LP-" +
-      crypto.randomUUID()
-        .replaceAll("-","")
-        .substring(0,10)
-        .toUpperCase();
-
-    row.user_id=currentUser.id;
-    row.lifepass_id=lifepassId;
-
-    row.passcode =
-      Math.random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
-
-    row.verified=false;
-    row.verification_status="pending";
-    row.verification_note="Waiting for verification.";
-
-    row.history=[];
-    row.ownership_history=[];
-    row.service_history=[];
-    row.documents=[];
-    row.metadata={};
-    row.status="active";
-
-    result =
-      await supabaseClient
-        .from("products")
-        .insert(row)
-        .select()
-        .single();
-
+  if(newPassword){
+    updated.passcode=newPassword;
   }
 
-
-  if(result.error){
-
-    console.error(result.error);
-
-    document.getElementById("productMessage").style.color="#ff7777";
-
-    document.getElementById("productMessage").textContent =
-      result.error.message;
-
-    button.textContent =
-      editingProductId
-        ? "Save Changes"
-        : "Create Passport";
-
-    return;
-
-  }
-
-
-  document.getElementById("productMessage").style.color="#62e0b5";
-
-  document.getElementById("productMessage").textContent =
-    editingProductId
-      ? "Passport updated successfully."
-      : "Passport created successfully.";
-
-  button.textContent =
-    editingProductId
-      ? "Save Changes"
-      : "Create Passport";
-
-  await loadProducts();
-
-  setTimeout(() => {
-
-    closeModal("productModal");
-
-    if(result.data){
-
-      viewPassport(result.data.id);
-
-    }
-
-  },500);
-
-}
-
-
-/* =========================================================
-   VERIFY
-========================================================= */
-
-async function verifyPassport(id){
-
-  if(!currentUser) return;
-
-  const product =
-    currentProducts.find(
-      p => p.id === id
-    );
-
-  if(!product) return;
-
-  if(product.verified ||
-     product.verification_status==="approved"){
-
-    return;
-
-  }
-
-  if(!confirm(
-    "Verify this product passport?\n\n" +
-    "This will mark the passport as verified."
-  )){
-
-    return;
-
-  }
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient
+  const {data,error}=await supabaseClient
     .from("products")
-    .update({
-
-      verified:true,
-
-      verification_status:"approved",
-
-      verification_note:
-        "Verified by product owner.",
-
-      verification_date:
-        new Date().toISOString()
-
-    })
-    .eq("id",id)
+    .update(updated)
+    .eq("id",editingPassport.id)
     .eq("user_id",currentUser.id)
     .select()
     .single();
 
-
   if(error){
-
-    alert(
-      "Verification failed:\n\n" +
-      error.message
-    );
-
+    toast(error.message);
     return;
-
   }
 
-  await loadProducts();
+  closeEditModal();
 
-  if(currentPassport &&
-     currentPassport.id===id){
+  toast("Passport updated successfully.");
 
-    currentPassport=data;
-
-    displayPassport(data);
-
-  }
-
-  alert("✓ Passport verified successfully.");
-
+  showPassport(data);
 }
 
 
-/* =========================================================
+function valueOrNullEdit(id){
+  const value=document.getElementById(id).value;
+  return value||null;
+}
+
+function numberOrNullEdit(id){
+  const value=document.getElementById(id).value;
+  return value===""?null:Number(value);
+}
+
+
+/* =========================
    VIEW PASSPORT
-========================================================= */
+========================= */
 
-async function viewPassport(id){
+function showPassport(product){
 
-  const product =
-    currentProducts.find(
-      p => p.id===id
-    );
+  const modal=document.createElement("div");
 
-  if(!product) return;
+  modal.className="modal show";
 
-  currentPassport=product;
+  modal.innerHTML=`
 
-  displayPassport(product);
+    <div class="modal-box">
 
-  document.getElementById("passportModal")
-    .classList.add("show");
+      <div class="modal-head">
+        <h2>LIFEPASS Passport</h2>
+        <button class="close" onclick="this.closest('.modal').remove()">×</button>
+      </div>
 
-}
+      <div style="
+        border:1px solid #dfe6f1;
+        border-radius:18px;
+        padding:25px;
+        background:linear-gradient(135deg,#fff,#f5f8ff);
+      ">
 
-
-function displayPassport(product){
-
-  const verified =
-    product.verified===true ||
-    product.verification_status==="approved";
-
-  const qrURL =
-    `${SUPABASE_URL}/rest/v1/products?lifepass_id=eq.${encodeURIComponent(product.lifepass_id)}`;
-
-  document.getElementById("passportDisplay").innerHTML=`
-
-    <div class="passport-view">
-
-      <div class="passport-view-header">
-
-        <div class="passport-brand">
-
-          <div class="passport-brand-mark">
-            <i data-lucide="passport"></i>
-          </div>
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:15px;
+          align-items:flex-start;
+          flex-wrap:wrap;
+        ">
 
           <div>
-
-            <h2>LIFEPASS</h2>
-
-            <small>
-              DIGITAL PRODUCT PASSPORT
-            </small>
-
-          </div>
-
-        </div>
-
-        <div class="verified-badge">
-
-          ${
-            verified
-              ? "✓ VERIFIED"
-              : "● PENDING"
-          }
-
-        </div>
-
-      </div>
-
-
-      <div class="passport-content">
-
-        <div class="passport-data">
-
-          <div class="pdata">
-            <span>Passport ID</span>
-            <strong>
-              ${escapeHTML(product.lifepass_id || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Status</span>
-            <strong>
-              ${
-                verified
-                  ? "Verified"
-                  : "Pending Verification"
-              }
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Product</span>
-            <strong>
-              ${escapeHTML(product.name || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Type</span>
-            <strong>
-              ${escapeHTML(product.type || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Brand</span>
-            <strong>
-              ${escapeHTML(product.brand || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Model</span>
-            <strong>
-              ${escapeHTML(product.model || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Serial Number</span>
-            <strong>
-              ${escapeHTML(product.serial || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Purchase Date</span>
-            <strong>
-              ${formatDate(product.purchase_date)}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Warranty</span>
-            <strong>
-              ${escapeHTML(product.warranty || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata">
-            <span>Owner</span>
-            <strong>
-              ${escapeHTML(product.owner_name || "—")}
-            </strong>
-          </div>
-
-          <div class="pdata full">
-            <span>Description</span>
-            <strong>
-              ${escapeHTML(product.description || "No description")}
-            </strong>
-          </div>
-
-          <div class="pdata full">
-            <span>Verification</span>
-            <strong>
-              ${
-                verified
-                ? "Verified on " +
-                  formatDateTime(product.verification_date)
-                : "Pending owner verification"
-              }
-            </strong>
-          </div>
-
-        </div>
-
-
-        <div class="qr-area">
-
-          <div class="qr-box"
-               id="passportQR">
-          </div>
-
-          <div class="qr-label">
-            SCAN TO VERIFY
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="passport-footer">
-
-        <span>
-          THE PASSPORT FOLLOWS THE PRODUCT, NOT THE OWNER.
-        </span>
-
-        <span>
-          LIFEPASS
-        </span>
-
-      </div>
-
-    </div>
-
-  `;
-
-  new QRCode(
-    document.getElementById("passportQR"),
-    {
-      text:
-        window.location.origin +
-        window.location.pathname +
-        "?lifepass=" +
-        encodeURIComponent(product.lifepass_id),
-
-      width:135,
-      height:135,
-      correctLevel:QRCode.CorrectLevel.H
-    }
-  );
-
-  lucide.createIcons();
-
-}
-
-
-/* =========================================================
-   EDIT CURRENT PASSPORT
-========================================================= */
-
-function editCurrentPassport(){
-
-  if(!currentPassport) return;
-
-  closeModal("passportModal");
-
-  setTimeout(() => {
-
-    startEdit(currentPassport.id);
-
-  },100);
-
-}
-
-
-/* =========================================================
-   PRINT REAL PASSPORT
-========================================================= */
-
-function printCurrentPassport(){
-
-  if(!currentPassport){
-
-    alert("Open a passport first.");
-    return;
-
-  }
-
-  const p=currentPassport;
-
-  const verified =
-    p.verified===true ||
-    p.verification_status==="approved";
-
-  const qrData =
-    window.location.origin +
-    window.location.pathname +
-    "?lifepass=" +
-    encodeURIComponent(p.lifepass_id);
-
-
-  const printArea =
-    document.getElementById("printArea");
-
-
-  printArea.innerHTML=`
-
-    <div class="print-passport">
-
-      <div class="print-head">
-
-        <div>
-
-          <div class="print-brand">
-            LIFEPASS
-          </div>
-
-          <div class="print-sub">
-            DIGITAL PRODUCT PASSPORT
-          </div>
-
-        </div>
-
-        <div class="print-verified">
-
-          ${
-            verified
-              ? "✓ VERIFIED"
-              : "PENDING VERIFICATION"
-          }
-
-        </div>
-
-      </div>
-
-
-      <div class="print-main">
-
-        <div class="print-fields">
-
-          ${printField(
-            "PASSPORT ID",
-            p.lifepass_id
-          )}
-
-          ${printField(
-            "PRODUCT",
-            p.name
-          )}
-
-          ${printField(
-            "TYPE",
-            p.type
-          )}
-
-          ${printField(
-            "BRAND",
-            p.brand
-          )}
-
-          ${printField(
-            "MODEL",
-            p.model
-          )}
-
-          ${printField(
-            "VARIANT",
-            p.variant
-          )}
-
-          ${printField(
-            "SERIAL NUMBER",
-            p.serial
-          )}
-
-          ${printField(
-            "PRODUCT CODE",
-            p.product_code
-          )}
-
-          ${printField(
-            "PURCHASE DATE",
-            formatDate(p.purchase_date)
-          )}
-
-          ${printField(
-            "PURCHASE PRICE",
-            p.purchase_price
-              ? "₹" + p.purchase_price
-              : "—"
-          )}
-
-          ${printField(
-            "WARRANTY",
-            p.warranty
-          )}
-
-          ${printField(
-            "OWNER",
-            p.owner_name
-          )}
-
-          ${printField(
-            "OWNER EMAIL",
-            p.owner_email
-          )}
-
-          ${printField(
-            "VERIFICATION",
-            verified
-              ? "VERIFIED"
-              : "PENDING"
-          )}
-
-          ${printField(
-            "VERIFICATION DATE",
-            formatDateTime(p.verification_date)
-          )}
-
-          ${printField(
-            "DESCRIPTION",
-            p.description || "—",
-            true
-          )}
-
-        </div>
-
-
-        <div class="print-qr">
-
-          <div>
-
-            <img
-              id="printQRImage"
-              alt="LIFEPASS QR Code"
-            >
-
-            <div style="
-              text-align:center;
-              margin-top:2mm;
-              font-size:6pt;
-              color:#66727a;
-            ">
-              SCAN TO VERIFY
+            <div class="brand">
+              <div class="brand-mark"></div>
+              <span>LIFEPASS</span>
             </div>
 
+            <h2 style="margin-bottom:5px">
+              ${escapeHTML(product.name||"Product")}
+            </h2>
+
+            <div class="passport-id">
+              ${escapeHTML(product.lifepass_id||"")}
+            </div>
           </div>
 
+          <span class="status ${escapeHTML(product.verification_status||"pending")}">
+            ${escapeHTML(product.verification_status||"pending")}
+          </span>
+
+        </div>
+
+        <hr style="border:0;border-top:1px solid #dfe6f1;margin:22px 0">
+
+        <div class="profile-grid">
+
+          ${info("Type",product.type)}
+          ${info("Brand",product.brand)}
+          ${info("Model",product.model)}
+          ${info("Variant",product.variant)}
+          ${info("Color",product.color)}
+          ${info("Serial",product.serial)}
+          ${info("IMEI",product.imei)}
+          ${info("Purchase Date",product.purchase_date)}
+          ${info("Purchase Price",product.purchase_price)}
+          ${info("Warranty",product.warranty)}
+          ${info("Warranty End",product.warranty_end_date)}
+          ${info("Owner",product.owner_name)}
+
+        </div>
+
+        ${
+          product.description
+          ?
+          `<div class="info-box" style="margin-top:15px">
+            <small>Description</small>
+            ${escapeHTML(product.description)}
+          </div>`
+          :""
+        }
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary"
+          onclick='showQR(${safeJSON(product)})'>
+          QR Code
+        </button>
+
+        <button class="btn btn-light"
+          onclick='printProduct(${safeJSON(product)})'>
+          Print Passport
+        </button>
+
+        <button class="btn btn-secondary"
+          onclick='openEditPassport(${safeJSON(product)})'>
+          Edit Passport
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+
+function info(label,value){
+
+  if(value===null || value===undefined || value===""){
+    return "";
+  }
+
+  return `
+    <div class="info-box">
+      <small>${escapeHTML(label)}</small>
+      <strong>${escapeHTML(String(value))}</strong>
+    </div>
+  `;
+}
+
+
+/* =========================
+   QR
+========================= */
+
+function showQR(product){
+
+  qrPassport=product;
+
+  document.getElementById("qrCode").innerHTML="";
+
+  const url=
+    window.location.origin+
+    window.location.pathname+
+    "?passport="+
+    encodeURIComponent(product.lifepass_id);
+
+  new QRCode(document.getElementById("qrCode"),{
+    text:url,
+    width:180,
+    height:180,
+    correctLevel:QRCode.CorrectLevel.H
+  });
+
+  document.getElementById("qrPassportId").textContent=
+    product.lifepass_id||"";
+
+  document.getElementById("qrModal").classList.add("show");
+}
+
+
+function closeQR(){
+  document.getElementById("qrModal").classList.remove("show");
+}
+
+
+function printQR(){
+
+  if(!qrPassport)return;
+
+  const url=
+    window.location.origin+
+    window.location.pathname+
+    "?passport="+
+    encodeURIComponent(qrPassport.lifepass_id);
+
+  const win=window.open("","_blank");
+
+  win.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>LIFEPASS QR</title>
+      <style>
+        body{
+          font-family:Arial;
+          text-align:center;
+          padding:50px;
+        }
+        h1{color:#071a3a}
+      </style>
+    </head>
+    <body>
+      <h1>LIFEPASS</h1>
+      <p>${escapeHTML(qrPassport.lifepass_id)}</p>
+      <div id="qr"></div>
+      <p>Scan to view the LIFEPASS.</p>
+      <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script>
+      <script>
+        new QRCode(document.getElementById("qr"),{
+          text:${JSON.stringify(url)},
+          width:250,
+          height:250
+        });
+        setTimeout(()=>window.print(),700);
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  win.document.close();
+}
+
+
+/* =========================
+   PRINT PASSPORT
+========================= */
+
+function printProduct(product){
+
+  const print=document.getElementById("printPassport");
+
+  print.innerHTML=`
+
+    <div style="
+      width:100%;
+      max-width:850px;
+      margin:auto;
+      padding:35px;
+      border:2px solid #071a3a;
+      border-radius:20px;
+      font-family:Arial,sans-serif;
+      color:#071a3a;
+      background:#fff;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        border-bottom:2px solid #071a3a;
+        padding-bottom:20px;
+      ">
+
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="
+            width:48px;
+            height:48px;
+            border-radius:12px;
+            background:linear-gradient(145deg,#1261ff,#071a3a);
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:900;
+          ">LP</div>
+
+          <div>
+            <strong style="font-size:26px">LIFEPASS</strong>
+            <div style="font-size:12px">
+              DIGITAL PRODUCT PASSPORT
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:right">
+          <strong>${escapeHTML(product.lifepass_id||"")}</strong>
+          <br>
+          <span>
+            ${escapeHTML(product.verification_status||"pending").toUpperCase()}
+          </span>
         </div>
 
       </div>
 
+      <h1>${escapeHTML(product.name||"Product")}</h1>
 
-      <div class="print-bottom">
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+      ">
 
-        <span>
-          Every product has a story. Keep it forever.
-        </span>
-
-        <span>
-          ${escapeHTML(p.lifepass_id || "")}
-        </span>
+        ${printInfo("Type",product.type)}
+        ${printInfo("Brand",product.brand)}
+        ${printInfo("Model",product.model)}
+        ${printInfo("Variant",product.variant)}
+        ${printInfo("Color",product.color)}
+        ${printInfo("Serial",product.serial)}
+        ${printInfo("IMEI",product.imei)}
+        ${printInfo("Purchase Date",product.purchase_date)}
+        ${printInfo("Purchase Price",product.purchase_price)}
+        ${printInfo("Warranty",product.warranty)}
+        ${printInfo("Warranty End",product.warranty_end_date)}
+        ${printInfo("Owner",product.owner_name)}
 
       </div>
 
-    </div>
+      ${
+        product.description
+        ?
+        `<div style="
+          margin-top:18px;
+          padding:15px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        ">
+          <strong>Description</strong>
+          <p>${escapeHTML(product.description)}</p>
+        </div>`
+        :""
+      }
 
+      <div style="
+        margin-top:30px;
+        padding-top:15px;
+        border-top:1px solid #ccc;
+        text-align:center;
+        font-size:12px;
+      ">
+        Every product has a story. Keep it forever.
+      </div>
+
+    </div>
   `;
 
-
-  const temp =
-    document.createElement("div");
-
-  temp.style.position="absolute";
-  temp.style.left="-99999px";
-
-  document.body.appendChild(temp);
-
-  const qr =
-    new QRCode(
-      temp,
-      {
-        text:qrData,
-        width:250,
-        height:250,
-        correctLevel:QRCode.CorrectLevel.H
-      }
-    );
-
-
-  setTimeout(() => {
-
-    const img =
-      temp.querySelector("img");
-
-    const printImg =
-      document.getElementById("printQRImage");
-
-    if(img && printImg){
-
-      printImg.src=img.src;
-
-    }
-
-    document.body.removeChild(temp);
-
-    setTimeout(() => {
-
-      window.print();
-
-    },200);
-
-  },200);
-
+  window.print();
 }
 
 
-function printField(label,value,full=false){
+function printInfo(label,value){
+
+  if(value===null || value===undefined || value===""){
+    return "";
+  }
 
   return `
-
-    <div class="print-field ${
-      full ? "full" : ""
-    }">
-
-      <span>
+    <div style="
+      padding:12px;
+      background:#f6f8fb;
+      border:1px solid #e2e6ed;
+      border-radius:9px;
+    ">
+      <div style="font-size:11px;color:#667085">
         ${escapeHTML(label)}
-      </span>
-
-      <strong>
-        ${escapeHTML(
-          value === null ||
-          value === undefined ||
-          value === ""
-            ? "—"
-            : String(value)
-        )}
-      </strong>
-
+      </div>
+      <strong>${escapeHTML(String(value))}</strong>
     </div>
-
   `;
-
 }
 
 
-/* =========================================================
-   QR DOWNLOAD
-========================================================= */
+/* =========================
+   VERIFY
+========================= */
 
-function downloadQR(){
+async function verifyPassport(){
 
-  if(!currentPassport) return;
+  const id=document.getElementById("verifyId").value.trim();
 
-  const qr =
-    document.querySelector(
-      "#passportQR img"
-    );
-
-  if(!qr){
-
-    alert("QR code is not ready.");
+  if(!id){
+    toast("Enter a LIFEPASS ID.");
     return;
-
   }
 
-  const a =
-    document.createElement("a");
+  const result=document.getElementById("verifyResult");
 
-  a.href=qr.src;
+  result.innerHTML="<div class='card'>Checking passport...</div>";
 
-  a.download=
-    currentPassport.lifepass_id +
-    "-QR.png";
-
-  a.click();
-
-}
-
-
-/* =========================================================
-   DELETE
-========================================================= */
-
-async function deletePassport(id){
-
-  if(!currentUser) return;
-
-  if(!confirm(
-    "Delete this passport permanently?"
-  )) return;
-
-  const {
-    error
-  } =
-  await supabaseClient
+  const {data,error}=await supabaseClient
     .from("products")
-    .delete()
-    .eq("id",id)
-    .eq("user_id",currentUser.id);
+    .select("*")
+    .eq("lifepass_id",id)
+    .maybeSingle();
 
   if(error){
+    result.innerHTML="";
+    toast(error.message);
+    return;
+  }
 
-    alert(
-      "Could not delete passport:\n\n" +
-      error.message
-    );
+  if(!data){
+
+    result.innerHTML=`
+      <div class="card">
+        <h3>❌ Passport not found</h3>
+        <p>This LIFEPASS ID does not exist.</p>
+      </div>
+    `;
 
     return;
-
   }
 
-  if(currentPassport &&
-     currentPassport.id===id){
+  const approved=
+    data.verified===true ||
+    data.verification_status==="approved";
 
-    currentPassport=null;
+  result.innerHTML=`
 
-  }
+    <div class="card">
 
-  await loadProducts();
+      <h2>
+        ${approved?"✅ Verified Passport":"⏳ Passport Pending"}
+      </h2>
 
+      <h3>${escapeHTML(data.name||"Product")}</h3>
+
+      <p class="passport-id">
+        ${escapeHTML(data.lifepass_id)}
+      </p>
+
+      ${info("Brand",data.brand)}
+      ${info("Model",data.model)}
+      ${info("Type",data.type)}
+      ${info("Warranty",data.warranty)}
+      ${info("Owner",data.owner_name)}
+
+    </div>
+  `;
 }
 
 
-/* =========================================================
-   AI
-========================================================= */
+/* =========================
+   AI ASSISTANT
+========================= */
 
-function openAI(){
+async function askAI(){
 
-  document.getElementById("aiModal")
-    .classList.add("show");
+  const input=document.getElementById("aiInput");
 
-  document.getElementById("aiInput")
-    .focus();
+  const question=input.value.trim();
 
-}
+  if(!question)return;
 
-function openAIWithProduct(id){
+  addAIMessage(question,"user");
 
-  const product =
-    currentProducts.find(
-      p=>p.id===id
-    );
+  input.value="";
 
-  if(!product) return;
+  addAIMessage("Thinking...","bot");
 
-  currentPassport=product;
+  const messages=document.getElementById("aiMessages");
 
-  openAI();
-
-  addAIMessage(
-    "user",
-    "Tell me about my product: " +
-    product.name
-  );
-
-  sendAI(
-    "Tell me about my product passport. " +
-    JSON.stringify({
-      name:product.name,
-      brand:product.brand,
-      model:product.model,
-      warranty:product.warranty,
-      purchase_date:product.purchase_date,
-      verified:product.verified,
-      lifepass_id:product.lifepass_id
-    })
-  );
-
-}
-
-
-async function sendAI(predefined=null){
-
-  const input =
-    document.getElementById("aiInput");
-
-  const question =
-    predefined ||
-    input.value.trim();
-
-  if(!question) return;
-
-  if(!predefined){
-
-    addAIMessage(
-      "user",
-      question
-    );
-
-    input.value="";
-
-  }
-
-  addAIMessage(
-    "bot",
-    "Thinking..."
-  );
-
-  const messages =
-    document.querySelectorAll(
-      ".ai-message.bot"
-    );
-
-  const loading =
-    messages[messages.length-1];
-
+  const lastBot=messages.lastElementChild;
 
   try{
 
-    const {
-      data,
-      error
-    } =
-    await supabaseClient.functions.invoke(
+    const {data,error}=await supabaseClient.functions.invoke(
       "lifepass-ai",
       {
         body:{
-          question:question,
-
-          user_id:
-            currentUser?.id || null,
-
-          product:
-            currentPassport || null
+          message:question
         }
       }
     );
 
+    lastBot.remove();
 
     if(error){
-
-      throw error;
-
+      addAIMessage(
+        "AI request failed. Please try again.",
+        "bot"
+      );
+      console.error(error);
+      return;
     }
 
-
-    const answer =
+    const answer=
       data?.answer ||
       data?.message ||
       data?.response ||
-      "I couldn't generate a response.";
+      "I couldn't generate an answer.";
 
-
-    loading.textContent=answer;
-
+    addAIMessage(answer,"bot");
 
   }catch(error){
 
+    lastBot.remove();
+
+    addAIMessage(
+      "AI request failed. Please try again.",
+      "bot"
+    );
+
     console.error(error);
-
-    loading.textContent =
-      "AI Assistant error: " +
-      (
-        error.message ||
-        "Please try again."
-      );
-
   }
-
 }
 
 
-/* =========================================================
-   AI MESSAGE
-========================================================= */
+function addAIMessage(message,type){
 
-function addAIMessage(type,text){
+  const box=document.getElementById("aiMessages");
 
-  const box =
-    document.getElementById("aiMessages");
+  const div=document.createElement("div");
 
-  const div =
-    document.createElement("div");
+  div.className="ai-message "+type;
 
-  div.className=
-    "ai-message " +
-    type;
-
-  div.textContent=text;
+  div.textContent=message;
 
   box.appendChild(div);
 
   box.scrollTop=box.scrollHeight;
-
 }
 
 
-/* =========================================================
-   CONTACT
-========================================================= */
+/* =========================
+   PROFILE
+========================= */
 
-function contactLifepass(){
+function loadProfile(){
 
-  window.location.href=
-    "mailto:YOUR_GMAIL@gmail.com" +
-    "?subject=LIFEPASS Support";
+  if(!currentUser)return;
 
+  document.getElementById("profileEmail").textContent=
+    currentUser.email||"—";
+
+  document.getElementById("profileId").textContent=
+    currentUser.id||"—";
 }
 
 
-/* =========================================================
-   MODALS
-========================================================= */
+/* =========================
+   URL QR PASSPORT
+========================= */
 
-function closeModal(id){
+async function openURLPassport(){
 
-  document
-    .getElementById(id)
-    .classList.remove("show");
+  const params=new URLSearchParams(window.location.search);
 
+  const id=params.get("passport");
+
+  if(!id)return;
+
+  document.getElementById("verifyId").value=id;
+
+  showPage("verify");
+
+  await verifyPassport();
 }
 
-document.querySelectorAll(".modal")
-.forEach(modal => {
 
-  modal.addEventListener("click",e=>{
+/* =========================
+   HELPERS
+========================= */
 
-    if(e.target===modal){
+function escapeHTML(value){
 
-      modal.classList.remove("show");
+  return String(value??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
+
+function safeJSON(object){
+
+  return JSON.stringify(object)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,"&quot;");
+}
+
+
+function toast(message){
+
+  const el=document.getElementById("toast");
+
+  el.textContent=message;
+
+  el.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=setTimeout(()=>{
+    el.classList.remove("show");
+  },3000);
+}
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+async function initialize(){
+
+  const {
+    data:{session}
+  }=await supabaseClient.auth.getSession();
+
+  if(session){
+    currentUser=session.user;
+  }
+
+  updateAuthUI();
+
+  supabaseClient.auth.onAuthStateChange(
+    (_event,session)=>{
+      currentUser=session?.user||null;
+      updateAuthUI();
+    }
+  );
+
+  await openURLPassport();
+}
+
+initialize();
+
+
+/* =========================
+   ENTER KEY FOR AI
+========================= */
+
+document.getElementById("aiInput")
+  .addEventListener("keydown",function(event){
+
+    if(event.key==="Enter"){
+      event.preventDefault();
+      askAI();
     }
 
+  });
+
+
+/* =========================
+   ESCAPE MODALS
+========================= */
+
+document.addEventListener("keydown",function(event){
+
+  if(event.key!=="Escape")return;
+
+  document.querySelectorAll(".modal.show").forEach(modal=>{
+    modal.classList.remove("show");
   });
 
 });
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* =========================
+   CLICK OUTSIDE MODALS
+========================= */
 
-function getValue(id){
+document.querySelectorAll(".modal").forEach(modal=>{
 
-  const element =
-    document.getElementById(id);
+  modal.addEventListener("click",function(event){
 
-  return element
-    ? element.value.trim()
-    : "";
+    if(event.target===modal){
+      modal.classList.remove("show");
+    }
 
-}
+  });
 
-
-function setValue(id,value){
-
-  const element =
-    document.getElementById(id);
-
-  if(element){
-
-    element.value =
-      value ?? "";
-
-  }
-
-}
-
-
-function formatDate(date){
-
-  if(!date) return "—";
-
-  try{
-
-    return new Date(date)
-      .toLocaleDateString(
-        "en-IN",
-        {
-          day:"2-digit",
-          month:"short",
-          year:"numeric"
-        }
-      );
-
-  }catch{
-
-    return date;
-
-  }
-
-}
-
-
-function formatDateTime(date){
-
-  if(!date) return "—";
-
-  try{
-
-    return new Date(date)
-      .toLocaleString(
-        "en-IN",
-        {
-          day:"2-digit",
-          month:"short",
-          year:"numeric",
-          hour:"2-digit",
-          minute:"2-digit"
-        }
-      );
-
-  }catch{
-
-    return date;
-
-  }
-
-}
-
-
-function escapeHTML(value){
-
-  if(value===null ||
-     value===undefined){
-
-    return "";
-
-  }
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-function getProductIcon(type){
-
-  const t=
-    String(type || "")
-      .toLowerCase();
-
-  let icon="package";
-
-  if(t.includes("laptop"))
-    icon="laptop";
-
-  else if(t.includes("phone"))
-    icon="smartphone";
-
-  else if(t.includes("camera"))
-    icon="camera";
-
-  else if(t.includes("bike"))
-    icon="bike";
-
-  else if(t.includes("gaming") ||
-          t.includes("console"))
-    icon="gamepad-2";
-
-  else if(t.includes("robot"))
-    icon="bot";
-
-  else if(t.includes("television") ||
-          t.includes("tv"))
-    icon="tv";
-
-  else if(t.includes("appliance"))
-    icon="refrigerator";
-
-  return `<i data-lucide="${icon}"></i>`;
-
-}
-
-
-/* =========================================================
-   INITIAL ICON REFRESH
-========================================================= */
-
-setTimeout(() => {
-  lucide.createIcons();
-},100);
-
+});
 </script>
 
 </body>
