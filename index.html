@@ -1042,6 +1042,48 @@ footer{
 .product-form-hero p{color:#7892a7;font-size:12px;line-height:1.5;}
 .field input[type=file]{padding:10px;background:#071522;}
 
+/* ================= FLOATING AI ASSISTANT ================= */
+.ai-fab{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:4500;
+  width:62px;
+  height:62px;
+  border:1px solid rgba(92,196,255,.55);
+  border-radius:50%;
+  background:linear-gradient(135deg,#138de4,#35acee);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 12px 35px rgba(19,141,228,.38),0 0 0 5px rgba(19,141,228,.08);
+  transition:.2s;
+}
+.ai-fab:hover{transform:translateY(-3px) scale(1.03);filter:brightness(1.08);}
+.ai-fab i{width:28px;height:28px;}
+.ai-fab-label{
+  position:absolute;
+  right:70px;
+  white-space:nowrap;
+  background:#091a2a;
+  border:1px solid #29445d;
+  color:#dcecf8;
+  padding:8px 11px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(5px);
+  transition:.2s;
+}
+.ai-fab:hover .ai-fab-label{opacity:1;transform:translateX(0);}
+@media(max-width:620px){
+  .ai-fab{right:15px;bottom:15px;width:56px;height:56px;}
+  .ai-fab-label{display:none;}
+}
+
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
@@ -1921,6 +1963,12 @@ footer{
 
 <div id="printArea" style="display:none"></div>
 
+<!-- ================= FLOATING AI BUTTON ================= -->
+<button class="ai-fab" type="button" onclick="openAI()" aria-label="Open LIFEPASS AI Assistant" title="LIFEPASS AI Assistant">
+  <span class="ai-fab-label">LIFEPASS AI Assistant</span>
+  <i data-lucide="bot"></i>
+</button>
+
 
 <!-- ================= FOOTER ================= -->
 
@@ -1977,6 +2025,8 @@ let editingProductId = null;
 let authSignupMode = false;
 let pendingEditId = null;
 let forgotMode = "send";
+let resetEmailCooldownTimer = null;
+const RESET_EMAIL_COOLDOWN_SECONDS = 60;
 const ADMIN_EMAIL = "lifepass.digital@gmail.com";
 
 
@@ -2013,8 +2063,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Supabase recovery links return to this page with a recovery session/hash.
   // Open the new-password screen automatically.
-  if(new URLSearchParams(window.location.search).get("reset") === "1" || window.location.hash.includes("type=recovery")) {
-    setTimeout(() => openResetPasswordModal(), 500);
+  const recoveryHash = window.location.hash || "";
+  const recoverySearch = window.location.search || "";
+  if(new URLSearchParams(recoverySearch).get("reset") === "1" || recoveryHash.includes("type=recovery") || recoveryHash.includes("access_token=") || recoverySearch.includes("code=")) {
+    setTimeout(() => openResetPasswordModal(), 700);
   }
 
 });
@@ -2208,6 +2260,7 @@ function openForgotPassword(){
   document.getElementById("forgotMessage").textContent="";
   document.getElementById("forgotEmail").value=currentUser?.email||document.getElementById("authEmail")?.value||"";
   document.getElementById("forgotModal").classList.add("show");
+  restoreResetEmailCooldown();
 }
 
 function openResetPasswordModal(){
@@ -2224,31 +2277,113 @@ function openResetPasswordModal(){
 
 async function sendOrSavePassword(){
   const msg=document.getElementById("forgotMessage");
+  const button=document.getElementById("forgotButton");
   try{
     if(forgotMode==="reset" || document.getElementById("resetPasswordWrap").style.display!=="none") {
       const password=document.getElementById("newPassword").value;
-      if(password.length<6){msg.style.color="#ff7777";msg.textContent="Password must be at least 6 characters.";return;}
+      if(password.length<6){
+        msg.style.color="#ff7777";
+        msg.textContent="Password must be at least 6 characters.";
+        return;
+      }
       const {error}=await supabaseClient.auth.updateUser({password});
       if(error) throw error;
       msg.style.color="#6de4bd";
       msg.textContent="Password changed successfully. You can now log in with your new password.";
+      localStorage.removeItem("lifepass_reset_email_cooldown_until");
       window.history.replaceState({},document.title,window.location.pathname);
       window.location.hash="";
       setTimeout(()=>closeModal("forgotModal"),1200);
       return;
     }
 
+    if(isResetEmailCooldownActive()){
+      const remaining=getResetCooldownRemaining();
+      msg.style.color="#ffd57b";
+      msg.textContent=`Please wait ${remaining}s before requesting another reset email. If Supabase still says "email rate limit exceeded", wait until the provider limit resets.`;
+      updateResetCooldownButton();
+      return;
+    }
+
     const email=document.getElementById("forgotEmail").value.trim();
-    if(!email){msg.style.color="#ff7777";msg.textContent="Enter your email.";return;}
+    if(!email){
+      msg.style.color="#ff7777";
+      msg.textContent="Enter your email.";
+      return;
+    }
+
+    button.disabled=true;
+    button.textContent="Sending...";
     const redirectTo=window.location.origin+window.location.pathname+"?reset=1";
     const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});
-    if(error) throw error;
+
+    if(error){
+      const text=(error.message||"").toLowerCase();
+      if(text.includes("rate limit") || text.includes("too many") || text.includes("email limit")){
+        startResetEmailCooldown(RESET_EMAIL_COOLDOWN_SECONDS);
+        msg.style.color="#ffd57b";
+        msg.textContent="Supabase has temporarily limited password-reset emails for this project. Wait for the email limit to reset, then try again.";
+      }else{
+        button.disabled=false;
+        button.textContent="Send Verification Email";
+        throw error;
+      }
+      return;
+    }
+
+    startResetEmailCooldown(RESET_EMAIL_COOLDOWN_SECONDS);
     msg.style.color="#6de4bd";
-    msg.textContent="Verification email sent. Open it and you will be taken back here to choose your new password.";
+    msg.textContent="Verification email sent. Open the email link and this page will show the new-password form.";
   }catch(e){
     console.error(e);
     msg.style.color="#ff7777";
     msg.textContent=e.message||"Password operation failed.";
+    button.disabled=false;
+    button.textContent="Send Verification Email";
+  }
+}
+
+function getResetCooldownRemaining(){
+  const until=Number(localStorage.getItem("lifepass_reset_email_cooldown_until")||0);
+  return Math.max(0,Math.ceil((until-Date.now())/1000));
+}
+
+function isResetEmailCooldownActive(){
+  return getResetCooldownRemaining()>0;
+}
+
+function startResetEmailCooldown(seconds){
+  const until=Date.now()+seconds*1000;
+  localStorage.setItem("lifepass_reset_email_cooldown_until",String(until));
+  updateResetCooldownButton();
+  clearInterval(resetEmailCooldownTimer);
+  resetEmailCooldownTimer=setInterval(()=>{
+    updateResetCooldownButton();
+    if(!isResetEmailCooldownActive()){
+      clearInterval(resetEmailCooldownTimer);
+      resetEmailCooldownTimer=null;
+    }
+  },1000);
+}
+
+function restoreResetEmailCooldown(){
+  if(isResetEmailCooldownActive()){
+    startResetEmailCooldown(getResetCooldownRemaining());
+  }else{
+    updateResetCooldownButton();
+  }
+}
+
+function updateResetCooldownButton(){
+  const button=document.getElementById("forgotButton");
+  if(!button || forgotMode!=="send") return;
+  const remaining=getResetCooldownRemaining();
+  if(remaining>0){
+    button.disabled=true;
+    button.textContent=`Wait ${remaining}s`;
+  }else{
+    button.disabled=false;
+    button.textContent="Send Verification Email";
   }
 }
 
@@ -3661,6 +3796,12 @@ function closeModal(id){
     .classList.remove("show");
 
 }
+
+window.addEventListener("hashchange",()=>{
+  if((window.location.hash||"").includes("type=recovery")){
+    setTimeout(()=>openResetPasswordModal(),300);
+  }
+});
 
 document.querySelectorAll(".modal")
 .forEach(modal => {
