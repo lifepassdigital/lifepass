@@ -76,25 +76,11 @@ a{
   box-shadow:0 8px 25px rgba(24,150,230,.25);
 }
 
-.logo-mark svg{width:25px;height:25px;stroke-width:2.5;}
-.logo-image{width:42px;height:42px;border-radius:11px;object-fit:cover;background:#fff;display:block;}
-.auth-links{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;}
-.link-btn{border:0;background:none;color:#54baf2;font-size:12px;font-weight:800;cursor:pointer;padding:4px 0;}
-.link-btn:hover{text-decoration:underline;}
-.avatar-wrap{position:relative;width:86px;height:86px;flex:0 0 86px;}
-.avatar-wrap .avatar{width:86px;height:86px;overflow:hidden;}
-.avatar-wrap .avatar img{width:100%;height:100%;object-fit:cover;}
-.avatar-edit{position:absolute;right:-3px;bottom:-3px;width:30px;height:30px;border-radius:50%;border:2px solid #091a2a;background:#138de4;color:#fff;display:flex;align-items:center;justify-content:center;}
-.profile-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
-.admin-panel{background:#091a2a;border:1px solid #29445d;border-radius:18px;padding:22px;margin-top:25px;}
-.admin-grid{display:grid;gap:12px;}
-.admin-row{display:flex;justify-content:space-between;gap:15px;align-items:center;background:#071522;border:1px solid #1b354a;border-radius:12px;padding:14px;flex-wrap:wrap;}
-.admin-row small{color:#7991a5;display:block;margin-top:3px;}
-.product-image-preview{width:100%;max-height:180px;object-fit:cover;border-radius:12px;border:1px solid #29455e;background:#061421;}
-.passport-product-image{width:150px;height:150px;object-fit:cover;border-radius:10px;border:1px solid #bbb3a3;background:#fff;}
-.print-product-image{width:32mm;height:32mm;object-fit:cover;border:1px solid #cfd5d9;border-radius:2mm;}
-.email-warning{margin-top:15px;padding:12px;border-radius:10px;background:#483408;color:#ffd57b;border:1px solid #7b5a18;font-size:12px;}
-.settings-box{margin-top:20px;padding:18px;background:#071522;border:1px solid #1b354a;border-radius:14px;}
+.logo-mark svg{
+  width:25px;
+  height:25px;
+  stroke-width:2.5;
+}
 
 .nav-links{
   display:flex;
@@ -460,6 +446,29 @@ a{
   flex-wrap:wrap;
   gap:7px;
   margin-top:20px;
+}
+
+/* ================= TRANSFER ================= */
+.transfer-panel{
+  background:linear-gradient(145deg,#0b2033,#081725);
+  border:1px solid #24506c;
+  border-radius:18px;
+  padding:20px;
+  margin-top:18px;
+}
+.transfer-panel h3{color:#45b5f2;margin-bottom:6px}
+.transfer-panel p{color:#7f98ab;font-size:13px;line-height:1.6}
+.transfer-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#3b2d09;
+  color:#ffd978;
+  font-size:11px;
+  font-weight:800;
 }
 
 /* ================= MODAL ================= */
@@ -942,9 +951,6 @@ footer{
     align-items:flex-start;
   }
 
-.print-brand-wrap{display:flex;align-items:center;gap:4mm;}
-.print-logo{width:18mm;height:18mm;object-fit:contain;border:1px solid #d7dce0;border-radius:2mm;background:#fff;padding:1mm;}
-.print-product-photo{width:32mm;height:32mm;object-fit:cover;border:1px solid #cfd5d9;border-radius:2mm;background:#fff;margin-bottom:4mm;}
   .print-brand{
     font-size:18pt;
     font-weight:900;
@@ -1024,72 +1030,10 @@ footer{
   }
 }
 
-/* ================= INVENTORS / CREATE FORM ================= */
-.inventor-card{margin-top:30px;background:linear-gradient(145deg,#0b2034,#071522);border:1px solid #1e4059;border-radius:20px;padding:24px;box-shadow:0 20px 55px rgba(0,0,0,.18);}
-.inventor-card-head{display:flex;gap:14px;align-items:center;margin-bottom:20px;}
-.inventor-card-head .feature-icon{margin:0;flex:0 0 46px;}
-.inventor-card-head h3{font-size:20px;margin-bottom:4px;}
-.inventor-card-head p{color:#7892a7;font-size:13px;}
-.inventor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.inventor{display:flex;align-items:center;gap:12px;background:#071522;border:1px solid #1b354a;border-radius:14px;padding:14px;}
-.inventor-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#138de4,#42b8ef);font-weight:900;color:#fff;}
-.inventor strong{display:block;font-size:14px;}
-.inventor span{display:block;color:#7892a7;font-size:11px;margin-top:3px;}
-.product-form-hero{grid-column:1/-1;background:linear-gradient(135deg,rgba(27,147,226,.14),rgba(7,21,34,.9));border:1px solid #28516e;border-radius:17px;padding:18px;display:flex;align-items:center;gap:15px;}
-.product-form-hero .hero-mini-logo{width:52px;height:52px;border-radius:13px;background:#fff;padding:4px;flex:0 0 52px;}
-.product-form-hero .hero-mini-logo img{width:100%;height:100%;object-fit:contain;border-radius:9px;}
-.product-form-hero h3{font-size:18px;margin-bottom:4px;}
-.product-form-hero p{color:#7892a7;font-size:12px;line-height:1.5;}
-.field input[type=file]{padding:10px;background:#071522;}
-
-/* ================= FLOATING AI ASSISTANT ================= */
-.ai-fab{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:4500;
-  width:62px;
-  height:62px;
-  border:1px solid rgba(92,196,255,.55);
-  border-radius:50%;
-  background:linear-gradient(135deg,#138de4,#35acee);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 12px 35px rgba(19,141,228,.38),0 0 0 5px rgba(19,141,228,.08);
-  transition:.2s;
-}
-.ai-fab:hover{transform:translateY(-3px) scale(1.03);filter:brightness(1.08);}
-.ai-fab i{width:28px;height:28px;}
-.ai-fab-label{
-  position:absolute;
-  right:70px;
-  white-space:nowrap;
-  background:#091a2a;
-  border:1px solid #29445d;
-  color:#dcecf8;
-  padding:8px 11px;
-  border-radius:9px;
-  font-size:12px;
-  font-weight:800;
-  opacity:0;
-  pointer-events:none;
-  transform:translateX(5px);
-  transition:.2s;
-}
-.ai-fab:hover .ai-fab-label{opacity:1;transform:translateX(0);}
-@media(max-width:620px){
-  .ai-fab{right:15px;bottom:15px;width:56px;height:56px;}
-  .ai-fab-label{display:none;}
-}
-
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
 
-  .nav-actions{flex-wrap:wrap;justify-content:flex-end;}
-  .nav-actions .btn{padding:9px 11px;font-size:12px;}
   .nav-links{
     display:none;
   }
@@ -1114,7 +1058,9 @@ footer{
 
 @media(max-width:620px){
 
-  .navbar{height:auto;min-height:68px;padding:10px 4%;gap:10px;}
+  .navbar{
+    padding:0 4%;
+  }
 
   .hero,
   .section,
@@ -1171,13 +1117,15 @@ footer{
 <nav class="navbar">
 
   <a href="#" class="logo" onclick="goHome()">
-    <span class="logo-mark"><img class="logo-image" src="logo.png" alt="LIFEPASS logo"></span>
+    <span class="logo-mark">
+      <i data-lucide="passport"></i>
+    </span>
     LIFEPASS
   </a>
 
   <div class="nav-links">
-    <a href="#features" onclick="goHomeSection('features');return false;">Features</a>
-    <a href="#about" onclick="goHomeSection('about');return false;">About</a>
+    <a href="#features">Features</a>
+    <a href="#about">About</a>
     <a href="javascript:void(0)" onclick="contactLifepass()">Contact</a>
   </div>
 
@@ -1244,7 +1192,9 @@ footer{
 
     <div class="hero-passport">
 
-      <div class="passport-logo" style="background:#fff;overflow:hidden"><img src="logo.png" alt="LIFEPASS logo" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="passport-logo">
+        <i data-lucide="passport"></i>
+      </div>
 
       <div class="passport-title">
         LIFEPASS PRODUCT PASSPORT
@@ -1363,21 +1313,6 @@ footer{
     even when the product changes hands.
   </p>
 
-  <div class="inventor-card">
-    <div class="inventor-card-head">
-      <div class="feature-icon"><i data-lucide="users"></i></div>
-      <div>
-        <h3>About the Inventors</h3>
-        <p>Created by the LIFEPASS team.</p>
-      </div>
-    </div>
-    <div class="inventor-grid">
-      <div class="inventor"><div class="inventor-avatar">V</div><div><strong>Vihaan</strong><span>CEO &amp; Founder</span></div></div>
-      <div class="inventor"><div class="inventor-avatar">A</div><div><strong>Akshaj</strong><span>Co-Founder</span></div></div>
-      <div class="inventor"><div class="inventor-avatar">H</div><div><strong>Harshith</strong><span>Director</span></div></div>
-    </div>
-  </div>
-
 </section>
 
 </main>
@@ -1434,16 +1369,6 @@ footer{
 </section>
 
 
-<!-- ================= ADMIN VERIFICATION ================= -->
-<section class="section" id="adminSection" style="display:none">
-  <h2 class="section-title">Admin Verification</h2>
-  <p class="section-subtitle">Review LIFEPASS passports submitted for verification.</p>
-  <div class="admin-panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:15px"><strong>Pending / Recent Passports</strong><button class="btn btn-secondary btn-small" onclick="loadAdminPassports()"><i data-lucide="refresh-cw"></i>Refresh</button></div>
-    <div id="adminProducts" class="admin-grid"><div class="empty">Loading admin data...</div></div>
-  </div>
-</section>
-
 <!-- ================= PROFILE ================= -->
 
 <section class="section" id="profileSection" style="display:none">
@@ -1454,9 +1379,8 @@ footer{
 
     <div class="profile-head">
 
-      <div class="avatar-wrap">
-        <div class="avatar" id="profileAvatar">U</div>
-        <button class="avatar-edit" onclick="openProfileEdit()" title="Edit profile"><i data-lucide="pencil"></i></button>
+      <div class="avatar" id="profileAvatar">
+        U
       </div>
 
       <div>
@@ -1467,8 +1391,6 @@ footer{
       </div>
 
     </div>
-
-    <div id="emailVerificationBox"></div>
 
     <div class="profile-details">
 
@@ -1503,12 +1425,11 @@ footer{
         Logout
       </button>
 
-      <button class="btn btn-secondary" onclick="contactLifepass()">
+      <button class="btn btn-secondary"
+              onclick="contactLifepass()">
         <i data-lucide="mail"></i>
         Contact Us
       </button>
-
-      <button class="link-btn" onclick="goHomeSection('about')" style="margin-left:8px">About the Inventors</button>
 
     </div>
 
@@ -1535,7 +1456,7 @@ footer{
           font-size:13px;
           margin-top:5px;
         ">
-          Give your product a permanent digital identity. Add an image so the passport is recognizable in both view and print.
+          Give your product a permanent digital identity.
         </p>
       </div>
 
@@ -1548,11 +1469,6 @@ footer{
     <form id="productForm"
           class="form-grid"
           onsubmit="event.preventDefault(); saveProduct();">
-
-      <div class="product-form-hero">
-        <div class="hero-mini-logo"><img src="logo.png" alt="LIFEPASS"></div>
-        <div><h3>Give your product its permanent identity</h3><p>Add the product details, image, purchase information and owner details. You can edit the passport later with your account password.</p></div>
-      </div>
 
       <div class="form-section">
         <h3>Product Identity</h3>
@@ -1622,14 +1538,8 @@ footer{
 
       <div class="field full">
         <label>Description</label>
-        <textarea id="p_description" placeholder="Add additional product information..."></textarea>
-      </div>
-
-      <div class="field full">
-        <label>Product Image</label>
-        <input id="p_image" type="file" accept="image/png,image/jpeg,image/webp">
-        <small style="color:#71899e">Optional. The image is included in passport view and print.</small>
-        <img id="p_image_preview" class="product-image-preview" style="display:none" alt="Product preview">
+        <textarea id="p_description"
+          placeholder="Add additional product information..."></textarea>
       </div>
 
 
@@ -1755,12 +1665,7 @@ footer{
 
     <form onsubmit="event.preventDefault(); submitAuth();">
 
-      <div class="field" id="authNameField" style="display:none">
-        <label>Full Name</label>
-        <input id="authName" placeholder="Your full name">
-      </div>
-
-      <div class="field" style="margin-top:15px">
+      <div class="field">
         <label>Email</label>
         <input id="authEmail"
                type="email"
@@ -1798,10 +1703,13 @@ footer{
 
       </div>
 
-      <div class="auth-links">
-        <button type="button" class="link-btn" onclick="openForgotPassword()">Forgot password?</button>
-        <button type="button" class="link-btn" onclick="toggleAuthMode()" id="authToggle">Create new account</button>
-      </div>
+      <button type="button"
+              class="btn btn-secondary"
+              style="width:100%;margin-top:10px"
+              onclick="toggleAuthMode()"
+              id="authToggle">
+        Create new account
+      </button>
 
     </form>
 
@@ -1809,50 +1717,6 @@ footer{
 
 </div>
 
-
-<!-- ================= FORGOT / RESET PASSWORD ================= -->
-<div class="modal" id="forgotModal">
-  <div class="modal-box" style="max-width:470px">
-    <div class="modal-header">
-      <div><h2 id="forgotTitle">Reset your password</h2><p style="color:#7991a5;font-size:13px;margin-top:5px">We will send a secure verification link to your email.</p></div>
-      <button class="close" onclick="closeModal('forgotModal')"><i data-lucide="x"></i></button>
-    </div>
-    <div class="field" id="forgotEmailWrap">
-      <label>Email</label><input id="forgotEmail" type="email" placeholder="you@example.com">
-    </div>
-    <div class="field" id="resetPasswordWrap" style="display:none;margin-top:15px">
-      <label>New Password</label><input id="newPassword" type="password" minlength="6" placeholder="Minimum 6 characters">
-    </div>
-    <div id="forgotMessage" style="margin-top:15px;color:#6de4ba;font-size:13px"></div>
-    <button class="btn" id="forgotButton" style="width:100%;margin-top:18px" onclick="sendOrSavePassword()">Send Verification Email</button>
-    <div style="margin-top:10px;color:#6f879a;font-size:11px;line-height:1.5">After opening the email, this page will automatically show the new-password form.</div>
-  </div>
-</div>
-
-<!-- ================= EDIT PROFILE MODAL ================= -->
-<div class="modal" id="profileEditModal">
-  <div class="modal-box" style="max-width:520px">
-    <div class="modal-header"><h2>Edit Profile</h2><button class="close" onclick="closeModal('profileEditModal')"><i data-lucide="x"></i></button></div>
-    <form onsubmit="event.preventDefault();saveProfile();" class="form-grid">
-      <div class="field full"><label>Full Name</label><input id="editProfileName" placeholder="Your full name"></div>
-      <div class="field full"><label>Profile Picture</label><input id="profilePicInput" type="file" accept="image/png,image/jpeg,image/webp"></div>
-      <div id="profileMessage" class="message"></div>
-      <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('profileEditModal')">Cancel</button><button class="btn" type="submit"><i data-lucide="save"></i> Save Profile</button></div>
-    </form>
-  </div>
-</div>
-
-<!-- ================= EDIT PASSWORD MODAL ================= -->
-<div class="modal" id="editPasswordModal">
-  <div class="modal-box" style="max-width:470px">
-    <div class="modal-header"><h2>Password required</h2><button class="close" onclick="closeModal('editPasswordModal')"><i data-lucide="x"></i></button></div>
-    <p style="color:#8da4b7;line-height:1.6;font-size:13px">For security, enter your current account password before editing this passport.</p>
-    <div class="field" style="margin-top:18px"><label>Current Password</label><input id="editPassportPassword" type="password" placeholder="Current password"></div>
-    <div id="editPasswordMessage" style="margin-top:14px;color:#6de4ba;font-size:13px"></div>
-    <button class="btn" style="width:100%;margin-top:18px" onclick="confirmPassportEdit()">Continue to Edit</button>
-    <button class="link-btn" style="margin-top:10px" onclick="openForgotPassword()">Forgot password?</button>
-  </div>
-</div>
 
 <!-- ================= VIEW PASSPORT MODAL ================= -->
 
@@ -1898,12 +1762,79 @@ footer{
         QR Code
       </button>
 
+      <button class="btn btn-secondary"
+              onclick="openTransferModal()">
+        <i data-lucide="repeat-2"></i>
+        Transfer Passport
+      </button>
+
     </div>
 
   </div>
 
 </div>
 
+
+<!-- ================= TRANSFER MODAL ================= -->
+
+<div class="modal" id="transferModal">
+
+  <div class="modal-box" style="max-width:560px">
+
+    <div class="modal-header">
+
+      <div>
+        <h2>Transfer Product Passport</h2>
+        <p style="color:#7991a5;font-size:13px;margin-top:5px">
+          The passport follows the product, not the owner.
+        </p>
+      </div>
+
+      <button class="close" onclick="closeModal('transferModal')">
+        <i data-lucide="x"></i>
+      </button>
+
+    </div>
+
+    <div class="transfer-panel">
+      <h3><i data-lucide="shield-check" style="width:18px;vertical-align:-4px"></i> Secure ownership transfer</h3>
+      <p>Enter the new owner's details. This creates a transfer request in the product history. The current owner keeps access until the transfer is accepted.</p>
+
+      <div class="form-grid" style="margin-top:18px">
+
+        <div class="field">
+          <label>New Owner Name *</label>
+          <input id="transferName" placeholder="New owner's full name">
+        </div>
+
+        <div class="field">
+          <label>New Owner Email *</label>
+          <input id="transferEmail" type="email" placeholder="newowner@example.com">
+        </div>
+
+        <div class="field full">
+          <label>Transfer Note</label>
+          <textarea id="transferNote" placeholder="Optional note about this transfer..."></textarea>
+        </div>
+
+        <div class="message" id="transferMessage"></div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('transferModal')">
+            Cancel
+          </button>
+          <button type="button" class="btn" onclick="submitTransfer()">
+            <i data-lucide="send"></i>
+            Request Transfer
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 <!-- ================= AI MODAL ================= -->
 
@@ -1963,12 +1894,6 @@ footer{
 
 <div id="printArea" style="display:none"></div>
 
-<!-- ================= FLOATING AI BUTTON ================= -->
-<button class="ai-fab" type="button" onclick="openAI()" aria-label="Open LIFEPASS AI Assistant" title="LIFEPASS AI Assistant">
-  <span class="ai-fab-label">LIFEPASS AI Assistant</span>
-  <i data-lucide="bot"></i>
-</button>
-
 
 <!-- ================= FOOTER ================= -->
 
@@ -1989,7 +1914,6 @@ footer{
       <i data-lucide="mail"></i>
       Contact Us
     </button>
-    <button class="link-btn" onclick="goHomeSection('about')" style="margin-left:10px">About the Inventors</button>
   </div>
 
 </footer>
@@ -2023,11 +1947,6 @@ let currentProducts = [];
 let currentPassport = null;
 let editingProductId = null;
 let authSignupMode = false;
-let pendingEditId = null;
-let forgotMode = "send";
-let resetEmailCooldownTimer = null;
-const RESET_EMAIL_COOLDOWN_SECONDS = 60;
-const ADMIN_EMAIL = "lifepass.digital@gmail.com";
 
 
 /* =========================================================
@@ -2047,27 +1966,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     data.session?.user || null;
 
   updateUI();
-  document.getElementById("p_image")?.addEventListener("change", previewProductImage);
 
   supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
+    async (_event, session) => {
 
-      currentUser = session?.user || null;
+      currentUser =
+        session?.user || null;
+
       updateUI();
 
-      if(event === "PASSWORD_RECOVERY") {
-        setTimeout(() => openResetPasswordModal(), 150);
-      }
     }
   );
-
-  // Supabase recovery links return to this page with a recovery session/hash.
-  // Open the new-password screen automatically.
-  const recoveryHash = window.location.hash || "";
-  const recoverySearch = window.location.search || "";
-  if(new URLSearchParams(recoverySearch).get("reset") === "1" || recoveryHash.includes("type=recovery") || recoveryHash.includes("access_token=") || recoverySearch.includes("code=")) {
-    setTimeout(() => openResetPasswordModal(), 700);
-  }
 
 });
 
@@ -2077,22 +1986,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 ========================================================= */
 
 function updateUI(){
-  const nav=document.getElementById("navActions");
-  const admin=currentUser && (currentUser.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase();
+
+  const nav =
+    document.getElementById("navActions");
+
   if(currentUser){
-    nav.innerHTML=`
-      <button class="btn btn-secondary" onclick="showDashboard()"><i data-lucide="layout-dashboard"></i>Dashboard</button>
-      <button class="btn btn-secondary" onclick="showProfile()"><i data-lucide="user"></i>Profile</button>
-      ${admin?'<button class="btn btn-secondary" onclick="showAdmin()"><i data-lucide="shield-check"></i>Admin</button>':''}
-      <button class="btn" onclick="logout()"><i data-lucide="log-out"></i>Logout</button>`;
-    document.getElementById("dashboardWelcome").textContent="Welcome back, "+(currentUser.user_metadata?.full_name||currentUser.email||"User");
+
+    nav.innerHTML = `
+
+      <button class="btn btn-secondary"
+              onclick="showDashboard()">
+        <i data-lucide="layout-dashboard"></i>
+        Dashboard
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="showProfile()">
+        <i data-lucide="user"></i>
+        Profile
+      </button>
+
+      <button class="btn"
+              onclick="logout()">
+        Logout
+      </button>
+
+    `;
+
+    document.getElementById("dashboardWelcome").textContent =
+      "Welcome back, " +
+      (
+        currentUser.user_metadata?.full_name ||
+        currentUser.email ||
+        "User"
+      );
+
     loadProducts();
-    if(admin) loadAdminPassports();
+
   }else{
-    nav.innerHTML=`<button class="btn btn-secondary" onclick="openAuth()"><i data-lucide="log-in"></i>Login</button>`;
+
+    nav.innerHTML = `
+      <button class="btn btn-secondary"
+              onclick="openAuth()">
+        Login
+      </button>
+    `;
+
   }
+
   lucide.createIcons();
-  renderCurrentProfileAvatar();
+
 }
 
 
@@ -2105,7 +2048,6 @@ function goHome(){
   document.getElementById("home").style.display = "block";
   document.getElementById("dashboard").style.display = "none";
   document.getElementById("profileSection").style.display = "none";
-  document.getElementById("adminSection").style.display = "none";
 
   window.scrollTo({
     top:0,
@@ -2114,14 +2056,6 @@ function goHome(){
 
 }
 
-
-function goHomeSection(id){
-  goHome();
-  setTimeout(()=>{
-    const el=document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
-  },50);
-}
 
 /* =========================================================
    AUTH
@@ -2142,9 +2076,10 @@ function toggleAuthMode(){
   authSignupMode =
     !authSignupMode;
 
-  document.getElementById("authTitle").textContent = authSignupMode ? "Create your LIFEPASS account" : "Welcome to LIFEPASS";
-  document.getElementById("authNameField").style.display = authSignupMode ? "flex" : "none";
-  document.getElementById("authName").required = authSignupMode;
+  document.getElementById("authTitle").textContent =
+    authSignupMode
+      ? "Create your LIFEPASS account"
+      : "Welcome to LIFEPASS";
 
   document.getElementById("authButton").textContent =
     authSignupMode
@@ -2176,14 +2111,13 @@ async function submitAuth(){
 
   if(authSignupMode){
 
-    const fullName = document.getElementById("authName").value.trim();
-    const { data, error } = await supabaseClient.auth.signUp({
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.auth.signUp({
       email,
-      password,
-      options:{
-        data:{full_name:fullName},
-        emailRedirectTo: window.location.origin + window.location.pathname
-      }
+      password
     });
 
     if(error){
@@ -2238,154 +2172,12 @@ async function logout(){
 
   document.getElementById("dashboard").style.display="none";
   document.getElementById("profileSection").style.display="none";
-  document.getElementById("adminSection").style.display="none";
   document.getElementById("home").style.display="block";
 
   updateUI();
 
 }
 
-
-/* =========================================================
-   PASSWORD / ACCOUNT RECOVERY
-========================================================= */
-function openForgotPassword(){
-  closeModal("authModal");
-  closeModal("editPasswordModal");
-  forgotMode="send";
-  document.getElementById("forgotTitle").textContent="Reset your password";
-  document.getElementById("forgotEmailWrap").style.display="flex";
-  document.getElementById("resetPasswordWrap").style.display="none";
-  document.getElementById("forgotButton").textContent="Send Verification Email";
-  document.getElementById("forgotMessage").textContent="";
-  document.getElementById("forgotEmail").value=currentUser?.email||document.getElementById("authEmail")?.value||"";
-  document.getElementById("forgotModal").classList.add("show");
-  restoreResetEmailCooldown();
-}
-
-function openResetPasswordModal(){
-  forgotMode="reset";
-  document.getElementById("forgotTitle").textContent="Choose a new password";
-  document.getElementById("forgotEmailWrap").style.display="none";
-  document.getElementById("resetPasswordWrap").style.display="flex";
-  document.getElementById("forgotButton").textContent="Save New Password";
-  document.getElementById("forgotMessage").textContent="";
-  document.getElementById("newPassword").value="";
-  document.getElementById("forgotModal").classList.add("show");
-  setTimeout(()=>document.getElementById("newPassword")?.focus(),100);
-}
-
-async function sendOrSavePassword(){
-  const msg=document.getElementById("forgotMessage");
-  const button=document.getElementById("forgotButton");
-  try{
-    if(forgotMode==="reset" || document.getElementById("resetPasswordWrap").style.display!=="none") {
-      const password=document.getElementById("newPassword").value;
-      if(password.length<6){
-        msg.style.color="#ff7777";
-        msg.textContent="Password must be at least 6 characters.";
-        return;
-      }
-      const {error}=await supabaseClient.auth.updateUser({password});
-      if(error) throw error;
-      msg.style.color="#6de4bd";
-      msg.textContent="Password changed successfully. You can now log in with your new password.";
-      localStorage.removeItem("lifepass_reset_email_cooldown_until");
-      window.history.replaceState({},document.title,window.location.pathname);
-      window.location.hash="";
-      setTimeout(()=>closeModal("forgotModal"),1200);
-      return;
-    }
-
-    if(isResetEmailCooldownActive()){
-      const remaining=getResetCooldownRemaining();
-      msg.style.color="#ffd57b";
-      msg.textContent=`Please wait ${remaining}s before requesting another reset email. If Supabase still says "email rate limit exceeded", wait until the provider limit resets.`;
-      updateResetCooldownButton();
-      return;
-    }
-
-    const email=document.getElementById("forgotEmail").value.trim();
-    if(!email){
-      msg.style.color="#ff7777";
-      msg.textContent="Enter your email.";
-      return;
-    }
-
-    button.disabled=true;
-    button.textContent="Sending...";
-    const redirectTo=window.location.origin+window.location.pathname+"?reset=1";
-    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});
-
-    if(error){
-      const text=(error.message||"").toLowerCase();
-      if(text.includes("rate limit") || text.includes("too many") || text.includes("email limit")){
-        startResetEmailCooldown(RESET_EMAIL_COOLDOWN_SECONDS);
-        msg.style.color="#ffd57b";
-        msg.textContent="Supabase has temporarily limited password-reset emails for this project. Wait for the email limit to reset, then try again.";
-      }else{
-        button.disabled=false;
-        button.textContent="Send Verification Email";
-        throw error;
-      }
-      return;
-    }
-
-    startResetEmailCooldown(RESET_EMAIL_COOLDOWN_SECONDS);
-    msg.style.color="#6de4bd";
-    msg.textContent="Verification email sent. Open the email link and this page will show the new-password form.";
-  }catch(e){
-    console.error(e);
-    msg.style.color="#ff7777";
-    msg.textContent=e.message||"Password operation failed.";
-    button.disabled=false;
-    button.textContent="Send Verification Email";
-  }
-}
-
-function getResetCooldownRemaining(){
-  const until=Number(localStorage.getItem("lifepass_reset_email_cooldown_until")||0);
-  return Math.max(0,Math.ceil((until-Date.now())/1000));
-}
-
-function isResetEmailCooldownActive(){
-  return getResetCooldownRemaining()>0;
-}
-
-function startResetEmailCooldown(seconds){
-  const until=Date.now()+seconds*1000;
-  localStorage.setItem("lifepass_reset_email_cooldown_until",String(until));
-  updateResetCooldownButton();
-  clearInterval(resetEmailCooldownTimer);
-  resetEmailCooldownTimer=setInterval(()=>{
-    updateResetCooldownButton();
-    if(!isResetEmailCooldownActive()){
-      clearInterval(resetEmailCooldownTimer);
-      resetEmailCooldownTimer=null;
-    }
-  },1000);
-}
-
-function restoreResetEmailCooldown(){
-  if(isResetEmailCooldownActive()){
-    startResetEmailCooldown(getResetCooldownRemaining());
-  }else{
-    updateResetCooldownButton();
-  }
-}
-
-function updateResetCooldownButton(){
-  const button=document.getElementById("forgotButton");
-  if(!button || forgotMode!=="send") return;
-  const remaining=getResetCooldownRemaining();
-  if(remaining>0){
-    button.disabled=true;
-    button.textContent=`Wait ${remaining}s`;
-  }else{
-    button.disabled=false;
-    button.textContent="Send Verification Email";
-  }
-}
 
 /* =========================================================
    DASHBOARD
@@ -2400,7 +2192,6 @@ function showDashboard(){
 
   document.getElementById("home").style.display="none";
   document.getElementById("profileSection").style.display="none";
-  document.getElementById("adminSection").style.display="none";
   document.getElementById("dashboard").style.display="block";
 
   loadProducts();
@@ -2418,67 +2209,35 @@ function showDashboard(){
 ========================================================= */
 
 function showProfile(){
-  if(!currentUser){openAuth();return;}
+
+  if(!currentUser){
+    openAuth();
+    return;
+  }
+
   document.getElementById("home").style.display="none";
   document.getElementById("dashboard").style.display="none";
-  document.getElementById("adminSection").style.display="none";
   document.getElementById("profileSection").style.display="block";
-  const name=currentUser.user_metadata?.full_name||currentUser.email?.split("@")[0]||"User";
+
+  const name =
+    currentUser.user_metadata?.full_name ||
+    currentUser.email?.split("@")[0] ||
+    "User";
+
   document.getElementById("profileName").textContent=name;
   document.getElementById("profileFullName").textContent=name;
-  document.getElementById("profileEmail").textContent=currentUser.email||"";
-  document.getElementById("profileEmail2").textContent=currentUser.email||"";
+  document.getElementById("profileEmail").textContent=currentUser.email;
+  document.getElementById("profileEmail2").textContent=currentUser.email;
   document.getElementById("profileId").textContent=currentUser.id;
-  const box=document.getElementById("emailVerificationBox");
-  if(currentUser.email_confirmed_at){box.innerHTML='<div style="color:#6ee7bd;font-size:13px;margin-bottom:15px"><i data-lucide="badge-check"></i> Email verified</div>';}
-  else{box.innerHTML='<div class="email-warning">Your email is not verified. <button class="link-btn" onclick="resendVerification()">Resend verification email</button></div>';}
-  renderCurrentProfileAvatar();
-  lucide.createIcons();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
 
-function renderCurrentProfileAvatar(){
-  const el=document.getElementById("profileAvatar"); if(!el||!currentUser)return;
-  const name=currentUser.user_metadata?.full_name||currentUser.email?.split("@")[0]||"U";
-  const url=currentUser.user_metadata?.avatar_url;
-  el.innerHTML=url?`<img src="${escapeHTML(url)}" alt="Profile picture">`:escapeHTML(name.charAt(0).toUpperCase());
-}
+  document.getElementById("profileAvatar").textContent =
+    name.charAt(0).toUpperCase();
 
-function openProfileEdit(){
-  if(!currentUser){openAuth();return;}
-  document.getElementById("editProfileName").value=currentUser.user_metadata?.full_name||"";
-  document.getElementById("profileMessage").textContent="";
-  document.getElementById("profileEditModal").classList.add("show");
-}
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-async function saveProfile(){
-  const name=document.getElementById("editProfileName").value.trim();
-  const file=document.getElementById("profilePicInput").files[0];
-  const msg=document.getElementById("profileMessage");
-  try{
-    let avatar=currentUser.user_metadata?.avatar_url||"";
-    if(file) avatar=await compressImage(file,320,0.78);
-    const {data,error}=await supabaseClient.auth.updateUser({data:{full_name:name||"User",avatar_url:avatar}});
-    if(error)throw error;
-    currentUser=data.user; msg.style.color="#6de4bd"; msg.textContent="Profile updated.";
-    renderCurrentProfileAvatar(); updateUI();
-    setTimeout(()=>closeModal("profileEditModal"),500);
-  }catch(e){msg.style.color="#ff7777";msg.textContent=e.message||"Could not update profile.";}
-}
-
-function compressImage(file,maxSize,quality){
-  return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const c=document.createElement("canvas");const scale=Math.min(1,maxSize/Math.max(img.width,img.height));c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));c.getContext("2d").drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",quality));};img.onerror=reject;img.src=reader.result;};reader.onerror=reject;reader.readAsDataURL(file);});
-}
-
-async function resendVerification(){
-  if(!currentUser?.email)return;
-  const {error}=await supabaseClient.auth.resend({type:"signup",email:currentUser.email,options:{emailRedirectTo:window.location.origin+window.location.pathname}});
-  alert(error?error.message:"Verification email sent. Check your inbox.");
-}
-
-function showAdmin(){
-  if(!currentUser || (currentUser.email||"").toLowerCase()!==ADMIN_EMAIL.toLowerCase()){alert("Admin access required.");return;}
-  document.getElementById("home").style.display="none";document.getElementById("dashboard").style.display="none";document.getElementById("profileSection").style.display="none";document.getElementById("adminSection").style.display="block";loadAdminPassports();window.scrollTo({top:0,behavior:"smooth"});
 }
 
 
@@ -2699,6 +2458,14 @@ function productCard(product){
         </button>
 
         <button class="btn btn-secondary btn-small"
+                onclick="openTransferForProduct('${product.id}')">
+
+          <i data-lucide="repeat-2"></i>
+          Transfer
+
+        </button>
+
+        <button class="btn btn-secondary btn-small"
                 onclick="openAIWithProduct('${product.id}')">
 
           <i data-lucide="bot"></i>
@@ -2745,7 +2512,6 @@ function openCreate(){
     .textContent="Create Passport";
 
   document.getElementById("productForm").reset();
-  document.getElementById("p_image_preview").style.display="none";
 
   document.getElementById("p_owner").value =
     currentUser.user_metadata?.full_name || "";
@@ -2766,33 +2532,52 @@ function openCreate(){
 ========================================================= */
 
 function startEdit(id){
-  if(!currentUser)return;
-  const product=currentProducts.find(p=>p.id===id); if(!product)return;
-  pendingEditId=id;
-  document.getElementById("editPassportPassword").value="";
-  document.getElementById("editPasswordMessage").textContent="";
-  document.getElementById("editPasswordModal").classList.add("show");
-}
 
-async function confirmPassportEdit(){
-  if(!pendingEditId||!currentUser?.email)return;
-  const password=document.getElementById("editPassportPassword").value;
-  const msg=document.getElementById("editPasswordMessage");
-  if(!password){msg.style.color="#ff7777";msg.textContent="Enter your current password.";return;}
-  const {error}=await supabaseClient.auth.signInWithPassword({email:currentUser.email,password});
-  if(error){msg.style.color="#ff7777";msg.textContent="Incorrect password.";return;}
-  const id=pendingEditId; pendingEditId=null; closeModal("editPasswordModal");
-  setTimeout(()=>openEditForm(id),100);
-}
+  if(!currentUser) return;
 
-function openEditForm(id){
-  const product=currentProducts.find(p=>p.id===id); if(!product)return;
+  const product =
+    currentProducts.find(
+      p => p.id === id
+    );
+
+  if(!product) return;
+
   editingProductId=id;
-  document.getElementById("productModalTitle").textContent="Edit Product Passport";
-  document.getElementById("saveButtonText").textContent="Save Changes";
-  setValue("p_name",product.name);setValue("p_type",product.type);setValue("p_category",product.category);setValue("p_brand",product.brand);setValue("p_model",product.model);setValue("p_variant",product.variant);setValue("p_color",product.color);setValue("p_serial",product.serial);setValue("p_imei",product.imei);setValue("p_code",product.product_code);setValue("p_description",product.description);setValue("p_date",product.purchase_date);setValue("p_price",product.purchase_price);setValue("p_seller",product.seller);setValue("p_seller_email",product.seller_email);setValue("p_seller_phone",product.seller_phone);setValue("p_warranty",product.warranty);setValue("p_warranty_start",product.warranty_start_date);setValue("p_warranty_end",product.warranty_end_date);setValue("p_owner",product.owner_name);setValue("p_owner_email",product.owner_email);setValue("p_phone",product.owner_phone);
-  const image=product.metadata?.product_image||""; const prev=document.getElementById("p_image_preview"); if(image){prev.src=image;prev.style.display="block";}else prev.style.display="none";
-  document.getElementById("productMessage").textContent=""; document.getElementById("productModal").classList.add("show");
+
+  document.getElementById("productModalTitle")
+    .textContent="Edit Product Passport";
+
+  document.getElementById("saveButtonText")
+    .textContent="Save Changes";
+
+  setValue("p_name",product.name);
+  setValue("p_type",product.type);
+  setValue("p_category",product.category);
+  setValue("p_brand",product.brand);
+  setValue("p_model",product.model);
+  setValue("p_variant",product.variant);
+  setValue("p_color",product.color);
+  setValue("p_serial",product.serial);
+  setValue("p_imei",product.imei);
+  setValue("p_code",product.product_code);
+  setValue("p_description",product.description);
+  setValue("p_date",product.purchase_date);
+  setValue("p_price",product.purchase_price);
+  setValue("p_seller",product.seller);
+  setValue("p_seller_email",product.seller_email);
+  setValue("p_seller_phone",product.seller_phone);
+  setValue("p_warranty",product.warranty);
+  setValue("p_warranty_start",product.warranty_start_date);
+  setValue("p_warranty_end",product.warranty_end_date);
+  setValue("p_owner",product.owner_name);
+  setValue("p_owner_email",product.owner_email);
+  setValue("p_phone",product.owner_phone);
+
+  document.getElementById("productMessage").textContent="";
+
+  document.getElementById("productModal")
+    .classList.add("show");
+
 }
 
 
@@ -2825,11 +2610,6 @@ async function saveProduct(){
       ? "Saving..."
       : "Creating...";
 
-
-  const existing=currentProducts.find(p=>p.id===editingProductId);
-  let productImage=existing?.metadata?.product_image||"";
-  const imageFile=document.getElementById("p_image")?.files?.[0];
-  if(imageFile) productImage=await compressImage(imageFile,900,0.82);
 
   const row={
 
@@ -2869,7 +2649,6 @@ async function saveProduct(){
     owner_name:getValue("p_owner"),
     owner_email:getValue("p_owner_email"),
     owner_phone:getValue("p_phone"),
-    metadata:{...(existing?.metadata||{}),product_image:productImage},
 
     updated_at:new Date().toISOString()
 
@@ -2915,7 +2694,7 @@ async function saveProduct(){
     row.ownership_history=[];
     row.service_history=[];
     row.documents=[];
-    row.metadata={product_image:productImage};
+    row.metadata={};
     row.status="active";
 
     result =
@@ -2981,15 +2760,82 @@ async function saveProduct(){
 ========================================================= */
 
 async function verifyPassport(id){
-  if(!currentUser)return;
-  const product=currentProducts.find(p=>p.id===id); if(!product)return;
-  if(product.verification_status==="approved"){alert("This passport is already verified.");return;}
-  if(!confirm("Send this passport to LIFEPASS admin for verification?"))return;
-  const {data,error}=await supabaseClient.from("products").update({verification_status:"pending",verified:false,verification_note:"Verification requested by owner.",verification_date:null,updated_at:new Date().toISOString()}).eq("id",id).eq("user_id",currentUser.id).select().single();
-  if(error){alert("Verification request failed:\n\n"+error.message);return;}
-  await loadProducts(); if(currentPassport?.id===id){currentPassport=data;displayPassport(data);} alert("✓ Verification request sent to LIFEPASS admin.");
-}
 
+  if(!currentUser) return;
+
+  const product =
+    currentProducts.find(
+      p => p.id === id
+    );
+
+  if(!product) return;
+
+  if(product.verified ||
+     product.verification_status==="approved"){
+
+    return;
+
+  }
+
+  if(!confirm(
+    "Verify this product passport?\n\n" +
+    "This will mark the passport as verified."
+  )){
+
+    return;
+
+  }
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("products")
+    .update({
+
+      verified:true,
+
+      verification_status:"approved",
+
+      verification_note:
+        "Verified by product owner.",
+
+      verification_date:
+        new Date().toISOString()
+
+    })
+    .eq("id",id)
+    .eq("user_id",currentUser.id)
+    .select()
+    .single();
+
+
+  if(error){
+
+    alert(
+      "Verification failed:\n\n" +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadProducts();
+
+  if(currentPassport &&
+     currentPassport.id===id){
+
+    currentPassport=data;
+
+    displayPassport(data);
+
+  }
+
+  alert("✓ Passport verified successfully.");
+
+}
 
 
 /* =========================================================
@@ -3032,8 +2878,8 @@ function displayPassport(product){
 
         <div class="passport-brand">
 
-          <div class="passport-brand-mark" style="background:#fff;overflow:hidden">
-            <img src="logo.png" alt="LIFEPASS logo" style="width:100%;height:100%;object-fit:cover">
+          <div class="passport-brand-mark">
+            <i data-lucide="passport"></i>
           </div>
 
           <div>
@@ -3162,7 +3008,6 @@ function displayPassport(product){
 
 
         <div class="qr-area">
-          ${product.metadata?.product_image ? `<img class="passport-product-image" src="${escapeHTML(product.metadata.product_image)}" alt="Product image">` : ""}
 
           <div class="qr-box"
                id="passportQR">
@@ -3176,6 +3021,17 @@ function displayPassport(product){
 
       </div>
 
+
+      ${
+        product.metadata?.transfer_request?.status === "pending"
+        ? `
+          <div class="transfer-status">
+            <i data-lucide="repeat-2"></i>
+            Transfer requested to ${escapeHTML(product.metadata.transfer_request.to_owner_name || product.metadata.transfer_request.to_owner_email || "new owner")}
+          </div>
+        `
+        : ""
+      }
 
       <div class="passport-footer">
 
@@ -3268,9 +3124,8 @@ function printCurrentPassport(){
 
       <div class="print-head">
 
-        <div class="print-brand-wrap">
-          <img class="print-logo" src="logo.png" alt="LIFEPASS logo">
-          <div>
+        <div>
+
           <div class="print-brand">
             LIFEPASS
           </div>
@@ -3278,7 +3133,7 @@ function printCurrentPassport(){
           <div class="print-sub">
             DIGITAL PRODUCT PASSPORT
           </div>
-          </div>
+
         </div>
 
         <div class="print-verified">
@@ -3389,7 +3244,7 @@ function printCurrentPassport(){
         <div class="print-qr">
 
           <div>
-            ${p.metadata?.product_image ? `<img class="print-product-photo" src="${escapeHTML(p.metadata.product_image)}" alt="Product image">` : ""}
+
             <img
               id="printQRImage"
               alt="LIFEPASS QR Code"
@@ -3539,6 +3394,122 @@ function downloadQR(){
 
 
 /* =========================================================
+   TRANSFER PASSPORT
+========================================================= */
+
+function openTransferForProduct(id){
+
+  if(!currentUser) return;
+
+  const product=currentProducts.find(p=>p.id===id);
+
+  if(!product) return;
+
+  currentPassport=product;
+
+  document.getElementById("transferName").value="";
+  document.getElementById("transferEmail").value="";
+  document.getElementById("transferNote").value="";
+  document.getElementById("transferMessage").textContent="";
+  document.getElementById("transferMessage").style.color="#6ee7bd";
+
+  document.getElementById("transferModal").classList.add("show");
+  lucide.createIcons();
+}
+
+function openTransferModal(){
+  if(!currentPassport){
+    alert("Open a passport first.");
+    return;
+  }
+  openTransferForProduct(currentPassport.id);
+}
+
+async function submitTransfer(){
+
+  if(!currentUser || !currentPassport) return;
+
+  const name=document.getElementById("transferName").value.trim();
+  const email=document.getElementById("transferEmail").value.trim().toLowerCase();
+  const note=document.getElementById("transferNote").value.trim();
+  const message=document.getElementById("transferMessage");
+
+  if(!name || !email){
+    message.style.color="#ff7777";
+    message.textContent="New owner name and email are required.";
+    return;
+  }
+
+  if(email===String(currentUser.email || "").toLowerCase()){
+    message.style.color="#ff7777";
+    message.textContent="The new owner must use a different email address.";
+    return;
+  }
+
+  message.style.color="#62e0b5";
+  message.textContent="Creating transfer request...";
+
+  const product=currentPassport;
+  const metadata=(product.metadata && typeof product.metadata === "object")
+    ? {...product.metadata}
+    : {};
+
+  metadata.transfer_request={
+    status:"pending",
+    from_user_id:currentUser.id,
+    from_email:currentUser.email || "",
+    from_owner_name:product.owner_name || currentUser.user_metadata?.full_name || "",
+    to_owner_name:name,
+    to_owner_email:email,
+    note:note,
+    requested_at:new Date().toISOString()
+  };
+
+  const history=Array.isArray(product.ownership_history)
+    ? [...product.ownership_history]
+    : [];
+
+  history.push({
+    action:"transfer_requested",
+    from:product.owner_name || currentUser.email || "Current owner",
+    to:name,
+    to_email:email,
+    note:note,
+    date:new Date().toISOString()
+  });
+
+  const {data,error}=await supabaseClient
+    .from("products")
+    .update({
+      metadata,
+      ownership_history:history,
+      updated_at:new Date().toISOString()
+    })
+    .eq("id",product.id)
+    .eq("user_id",currentUser.id)
+    .select()
+    .single();
+
+  if(error){
+    console.error(error);
+    message.style.color="#ff7777";
+    message.textContent="Transfer request failed: " + error.message;
+    return;
+  }
+
+  currentPassport=data;
+  message.style.color="#62e0b5";
+  message.textContent="Transfer request created successfully.";
+
+  await loadProducts();
+
+  setTimeout(()=>{
+    closeModal("transferModal");
+    viewPassport(data.id);
+  },700);
+}
+
+/* =========================================================
    DELETE
 ========================================================= */
 
@@ -3581,25 +3552,6 @@ async function deletePassport(id){
 
 }
 
-
-/* =========================================================
-   ADMIN VERIFICATION
-========================================================= */
-async function adminRequest(body){
-  const {data:{session}}=await supabaseClient.auth.getSession();
-  if(!session?.access_token)throw new Error("Please log in again.");
-  const {data,error}=await supabaseClient.functions.invoke("admin-verify",{body});
-  if(error)throw error;
-  if(data?.error)throw new Error(data.error);
-  return data;
-}
-async function loadAdminPassports(){
-  if(!currentUser || (currentUser.email||"").toLowerCase()!==ADMIN_EMAIL.toLowerCase())return;
-  const box=document.getElementById("adminProducts"); if(!box)return; box.innerHTML='<div class="empty">Loading...</div>';
-  try{const data=await adminRequest({action:"list"}); const rows=data.passports||[]; if(!rows.length){box.innerHTML='<div class="empty"><i data-lucide="inbox"></i><h3>No passports found</h3></div>';lucide.createIcons();return;} box.innerHTML=rows.map(adminRow).join("");lucide.createIcons();}catch(e){box.innerHTML=`<div class="empty"><i data-lucide="triangle-alert"></i><h3>Admin function error</h3><p>${escapeHTML(e.message||String(e))}</p></div>`;lucide.createIcons();}
-}
-function adminRow(p){const verified=p.verification_status==="approved"||p.verified===true;return `<div class="admin-row"><div><strong>${escapeHTML(p.name||"Unnamed")}</strong><small>${escapeHTML(p.lifepass_id||"")} • ${escapeHTML(p.owner_email||"")}</small><small>Status: ${escapeHTML(p.verification_status||"pending")}</small></div><div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn btn-small" onclick="adminSetStatus('${p.id}','approved')" ${verified?"disabled":""}><i data-lucide="badge-check"></i>Approve</button><button class="btn btn-danger btn-small" onclick="adminSetStatus('${p.id}','rejected')" ${verified?"disabled":""}><i data-lucide="x-circle"></i>Reject</button></div></div>`;}
-async function adminSetStatus(id,status){try{const note=status==="approved"?"Verified by LIFEPASS admin.":"Rejected by LIFEPASS admin.";await adminRequest({action:"update",passport_id:id,status,note});alert(status==="approved"?"Passport verified.":"Passport rejected.");loadAdminPassports();if(currentUser)loadProducts();}catch(e){alert("Admin verification failed:\n\n"+(e.message||e));}}
 
 /* =========================================================
    AI
@@ -3696,10 +3648,13 @@ async function sendAI(predefined=null){
       "lifepass-ai",
       {
         body:{
-          message:question,
           question:question,
-          user_id:currentUser?.id || null,
-          product:currentPassport || null
+
+          user_id:
+            currentUser?.id || null,
+
+          product:
+            currentPassport || null
         }
       }
     );
@@ -3712,20 +3667,11 @@ async function sendAI(predefined=null){
     }
 
 
-    let answer =
-      (typeof data === "string" ? data : null) ||
+    const answer =
       data?.answer ||
       data?.message ||
       data?.response ||
-      data?.output_text ||
-      data?.output ||
-      data?.result?.answer ||
-      data?.result?.output_text ||
       "I couldn't generate a response.";
-
-    if(typeof answer !== "string") {
-      try { answer = JSON.stringify(answer, null, 2); } catch { answer = "I couldn't generate a response."; }
-    }
 
 
     loading.textContent=answer;
@@ -3779,7 +3725,7 @@ function addAIMessage(type,text){
 function contactLifepass(){
 
   window.location.href=
-    "mailto:lifepass.digital@gmail.com" +
+    "mailto:YOUR_GMAIL@gmail.com" +
     "?subject=LIFEPASS Support";
 
 }
@@ -3797,12 +3743,6 @@ function closeModal(id){
 
 }
 
-window.addEventListener("hashchange",()=>{
-  if((window.location.hash||"").includes("type=recovery")){
-    setTimeout(()=>openResetPasswordModal(),300);
-  }
-});
-
 document.querySelectorAll(".modal")
 .forEach(modal => {
 
@@ -3818,10 +3758,6 @@ document.querySelectorAll(".modal")
 
 });
 
-
-function previewProductImage(){
-  const file=document.getElementById("p_image")?.files?.[0]; const img=document.getElementById("p_image_preview"); if(!file||!img)return; const reader=new FileReader();reader.onload=()=>{img.src=reader.result;img.style.display="block";};reader.readAsDataURL(file);
-}
 
 /* =========================================================
    HELPERS
