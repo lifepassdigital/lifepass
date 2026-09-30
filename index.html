@@ -208,6 +208,7 @@ footer{background:#0b223a;color:white;padding:30px 0}
 .transfer-box{width:min(560px,100%);margin:auto}
 .transfer-note{background:#eef8f8;border:1px solid #cce9eb;border-radius:12px;padding:12px;margin-bottom:16px;color:#456579;font-size:13px}
 .transfer-history{margin-top:18px;padding-top:15px;border-top:1px solid var(--border)}
+.owner-portal{margin-top:18px}
 .transfer-badge{display:inline-block;padding:5px 10px;border-radius:20px;background:#fff3d2;color:#916700;font-size:11px;font-weight:800}
 .ai-panel{
  position:fixed;right:22px;bottom:95px;width:min(390px,calc(100% - 30px));height:530px;
@@ -292,6 +293,7 @@ footer{background:#0b223a;color:white;padding:30px 0}
 <button onclick="showPage('dashboard')">Dashboard</button>
 <button onclick="showPage('passports')">My Passports</button>
 <button onclick="showPage('verify')">Verify</button>
+<button onclick="showPage('owner-login')">Owner Login</button>
 <button onclick="openCreate()">Create</button>
 </nav>
 
@@ -407,6 +409,7 @@ and preserve their story throughout their lifetime.
 <button class="btn primary" onclick="openCreate()">Create Passport</button>
 <button class="btn secondary" onclick="showPage('passports')">View Passports</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
+<button class="btn secondary" onclick="showPage('profile')">Edit Profile</button>
 <button class="btn outline" onclick="showPage('settings')">Settings</button>
 </div>
 </div>
@@ -621,6 +624,66 @@ Already have an account?
 </div>
 </section>
 
+<!-- OWNER LOGIN / OWNER PORTAL -->
+<section id="page-owner-login" class="page">
+<div class="auth-wrap">
+<div class="auth">
+
+<img src="./logo.png" onerror="this.onerror=null;this.src='../logo.png'" class="auth-logo" alt="LIFEPASS">
+
+<h2>Owner Login</h2>
+<p class="auth-sub">Log in to manage ownership transfers and verification requests.</p>
+
+<div id="ownerLoginForm">
+<div class="auth-group">
+<label>Email</label>
+<input id="ownerLoginEmail" type="email" placeholder="owner@example.com">
+</div>
+
+<div class="auth-group">
+<label>Password</label>
+<input id="ownerLoginPassword" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')ownerLogin()">
+</div>
+
+<button class="btn primary" onclick="ownerLogin()">Owner Log In</button>
+
+<p class="auth-switch">
+Need an account?
+<button class="link" onclick="showPage('signup')">Create Account</button>
+</p>
+</div>
+
+<div id="ownerPortal" class="hidden">
+<div class="card" style="margin-top:18px">
+<h3>Owner Verification</h3>
+<p style="color:var(--muted);margin-top:6px">
+Enter a passport ID that has been transferred to your email.
+</p>
+
+<div class="form-group" style="margin-top:15px">
+<label>LIFEPASS ID</label>
+<input id="ownerPassportId" class="profile-input" placeholder="LP-2026-ABC123">
+</div>
+
+<div class="form-group" style="margin-top:13px">
+<label>Owner Email</label>
+<input id="ownerVerifyEmail" class="profile-input" readonly>
+</div>
+
+<div class="form-actions">
+<button class="btn primary" onclick="acceptOwnerTransfer()">Accept Transfer</button>
+<button class="btn secondary" onclick="requestOwnerVerification()">Request Verification</button>
+<button class="btn danger" onclick="logout()">Log Out</button>
+</div>
+
+<div id="ownerTransferResult" class="result hidden"></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
 <!-- FOOTER -->
 <footer>
 <div class="footer-inner">
@@ -638,6 +701,7 @@ Already have an account?
 <button onclick="showPage('dashboard')">Dashboard</button>
 <button onclick="showPage('verify')">Verify</button>
 <button onclick="showPage('profile')">Profile</button>
+<button onclick="showPage('owner-login')">Owner Login</button>
 <button onclick="showPage('settings')">Settings</button>
 <a href="mailto:lifepass.digital@gmail.com">lifepass.digital@gmail.com</a>
 </div>
@@ -1839,48 +1903,371 @@ function closeTransfer(){
 }
 
 function submitTransfer(){
-  const id=document.getElementById("transferId").value;
-  const name=document.getElementById("transferOwnerName").value.trim();
-  const email=document.getElementById("transferOwnerEmail").value.trim();
-  const note=document.getElementById("transferNote").value.trim();
-  const p=passports.find(x=>x.id===id);
 
-  if(!p){ toast("Passport not found."); return; }
-  if(!name||!email){
-    toast("Enter the new owner's name and email.");
-    return;
-  }
+ const id=document.getElementById("transferId").value;
+ const name=document.getElementById("transferOwnerName").value.trim();
+ const email=document.getElementById("transferOwnerEmail").value.trim();
+ const note=document.getElementById("transferNote").value.trim();
 
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    toast("Enter a valid owner email.");
-    return;
-  }
+ const p=passports.find(x=>x.id===id);
 
-  const oldOwner={name:p.ownerName||"Not provided",email:p.ownerEmail||"Not provided"};
-  p.previousOwner=oldOwner;
-  p.ownerName=name;
-  p.ownerEmail=email;
-  p.transferStatus="Transferred";
-  p.transferDate=new Date().toISOString();
-  p.transferNote=note||"Ownership transferred through LIFEPASS.";
-  p.updatedAt=new Date().toISOString();
-  p.transferHistory=Array.isArray(p.transferHistory)?p.transferHistory:[];
-  p.transferHistory.unshift({
-    fromName:oldOwner.name,
-    fromEmail:oldOwner.email,
-    toName:name,
-    toEmail:email,
-    note:p.transferNote,
-    date:p.transferDate
-  });
+ if(!p){
+   toast("Passport not found.");
+   return;
+ }
 
-  savePassports();
-  closeTransfer();
-  renderPassports();
-  updateDashboard();
-  toast("Passport transferred successfully to "+name+".");
+ if(!name||!email){
+   toast("Enter the new owner's name and email.");
+   return;
+ }
 
-  if(currentViewId===id) viewPassport(id);
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+   toast("Enter a valid owner email.");
+   return;
+ }
+
+ if(currentUser && currentUser.email &&
+    email.toLowerCase()===currentUser.email.toLowerCase()){
+   toast("The new owner email must be different from the current owner.");
+   return;
+ }
+
+ const fromName=p.ownerName||currentUser?.user_metadata?.full_name||"Current Owner";
+ const fromEmail=p.ownerEmail||currentUser?.email||"Not provided";
+
+ p.pendingTransfer={
+   fromName,
+   fromEmail,
+   toName:name,
+   toEmail:email,
+   note:note||"Ownership transfer requested through LIFEPASS.",
+   requestedAt:new Date().toISOString()
+ };
+
+ p.transferStatus="Pending";
+ p.updatedAt=new Date().toISOString();
+
+ savePassports();
+ closeTransfer();
+ renderPassports();
+ updateDashboard();
+
+ const subject=encodeURIComponent(
+   "LIFEPASS Ownership Transfer Request - "+p.id
+ );
+
+ const body=encodeURIComponent(
+`Hello LIFEPASS Team,
+
+A product ownership transfer has been requested.
+
+LIFEPASS ID: ${p.id}
+Product: ${p.productName}
+Brand: ${p.brand||"Not provided"}
+Model: ${p.model||"Not provided"}
+
+Current Owner:
+Name: ${fromName}
+Email: ${fromEmail}
+
+New Owner:
+Name: ${name}
+Email: ${email}
+
+Transfer Note:
+${note||"Not provided"}
+
+Please review and verify this ownership transfer.
+
+Thank you,
+LIFEPASS`
+ );
+
+ window.location.href=
+ "mailto:"+CONTACT_EMAIL+
+ "?subject="+subject+
+ "&body="+body;
+
+ toast("Transfer request sent for LIFEPASS verification.");
+
+ if(currentViewId===id) viewPassport(id);
+}
+
+/* ==========================================================
+   OWNER LOGIN / TRANSFER ACCEPTANCE
+========================================================== */
+
+async function ownerLogin(){
+
+ const email=document.getElementById("ownerLoginEmail").value.trim();
+ const password=document.getElementById("ownerLoginPassword").value;
+
+ if(!email||!password){
+   toast("Enter your owner email and password.");
+   return;
+ }
+
+ const {data,error}=
+ await supabaseClient.auth.signInWithPassword({
+   email,
+   password
+ });
+
+ if(error){
+   toast(error.message);
+   return;
+ }
+
+ currentUser=data.user;
+
+ document.getElementById("ownerVerifyEmail").value=
+ currentUser.email||"";
+
+ document.getElementById("ownerLoginForm")
+ .classList.add("hidden");
+
+ document.getElementById("ownerPortal")
+ .classList.remove("hidden");
+
+ toast("Owner logged in successfully.");
+}
+
+function acceptOwnerTransfer(){
+
+ if(!currentUser){
+   toast("Please log in first.");
+   return;
+ }
+
+ const id=
+ document.getElementById("ownerPassportId").value.trim().toUpperCase();
+
+ const email=
+ currentUser.email||"";
+
+ const result=
+ document.getElementById("ownerTransferResult");
+
+ result.classList.remove("hidden");
+
+ if(!id){
+   result.innerHTML=
+   `<strong style="color:#a42a2a">Enter a LIFEPASS ID.</strong>`;
+   return;
+ }
+
+ let ownerKey=null;
+ let passport=null;
+
+ for(const userKey in localStorage){
+
+   if(!userKey.startsWith(PASSPORT_STORAGE+"_")) continue;
+
+   try{
+
+     const list=
+     JSON.parse(localStorage.getItem(userKey)||"[]");
+
+     const found=
+     list.find(x=>x.id?.toUpperCase()===id);
+
+     if(found&&found.pendingTransfer){
+       passport=found;
+       ownerKey=userKey;
+       break;
+     }
+
+   }catch{}
+ }
+
+ if(!passport?.pendingTransfer){
+
+   result.innerHTML=
+   `<strong style="color:#a42a2a">Transfer request not found.</strong>
+   <p style="margin-top:7px;color:var(--muted)">
+   Make sure the passport ID has a pending transfer request.
+   </p>`;
+
+   return;
+ }
+
+ if(
+   passport.pendingTransfer.toEmail.toLowerCase()!==
+   email.toLowerCase()
+ ){
+
+   result.innerHTML=
+   `<strong style="color:#a42a2a">Owner email does not match.</strong>`;
+
+   return;
+ }
+
+ const pending=passport.pendingTransfer;
+
+ passport.previousOwner={
+   name:passport.ownerName||"Not provided",
+   email:passport.ownerEmail||"Not provided"
+ };
+
+ passport.ownerName=pending.toName;
+ passport.ownerEmail=pending.toEmail;
+ passport.transferStatus="Transferred";
+ passport.transferDate=new Date().toISOString();
+ passport.transferNote=pending.note;
+
+ passport.transferHistory=
+ Array.isArray(passport.transferHistory)
+ ?passport.transferHistory
+ :[];
+
+ passport.transferHistory.unshift({
+   fromName:pending.fromName,
+   fromEmail:pending.fromEmail,
+   toName:pending.toName,
+   toEmail:pending.toEmail,
+   note:pending.note,
+   date:passport.transferDate
+ });
+
+ delete passport.pendingTransfer;
+
+ passport.updatedAt=new Date().toISOString();
+
+ localStorage.setItem(
+   ownerKey,
+   JSON.stringify(
+     JSON.parse(localStorage.getItem(ownerKey)||"[]")
+     .map(x=>x.id===passport.id?passport:x)
+   )
+ );
+
+ /* Also add the transferred passport to the new owner's local account. */
+ const newOwnerKey=PASSPORT_STORAGE+"_"+currentUser.id;
+
+ let newOwnerPassports=[];
+ try{
+   newOwnerPassports=
+   JSON.parse(localStorage.getItem(newOwnerKey)||"[]");
+   if(!Array.isArray(newOwnerPassports)) newOwnerPassports=[];
+ }catch{
+   newOwnerPassports=[];
+ }
+
+ const alreadyThere=
+ newOwnerPassports.some(x=>x.id===passport.id);
+
+ if(!alreadyThere){
+   newOwnerPassports.unshift({
+     ...passport,
+     ownerName:pending.toName,
+     ownerEmail:pending.toEmail
+   });
+ }else{
+   newOwnerPassports=
+   newOwnerPassports.map(x=>
+     x.id===passport.id
+     ?{
+       ...passport,
+       ownerName:pending.toName,
+       ownerEmail:pending.toEmail
+     }
+     :x
+   );
+ }
+
+ localStorage.setItem(
+   newOwnerKey,
+   JSON.stringify(newOwnerPassports)
+ );
+
+ passports=newOwnerPassports;
+
+ result.innerHTML=
+ `<strong style="color:#11713d">✓ Transfer accepted.</strong>
+ <p style="margin-top:8px">
+ ${esc(passport.productName)} is now assigned to
+ ${esc(passport.ownerName)}.
+ </p>`;
+
+ toast("Ownership transfer accepted.");
+
+ renderPassports();
+ updateDashboard();
+}
+
+function requestOwnerVerification(){
+
+ const id=
+ document.getElementById("ownerPassportId").value.trim().toUpperCase();
+
+ if(!id){
+   toast("Enter a LIFEPASS ID first.");
+   return;
+ }
+
+ let found=null;
+
+ for(const userKey in localStorage){
+
+   if(!userKey.startsWith(PASSPORT_STORAGE+"_")) continue;
+
+   try{
+
+     const list=
+     JSON.parse(localStorage.getItem(userKey)||"[]");
+
+     const p=
+     list.find(x=>x.id?.toUpperCase()===id);
+
+     if(p){
+       found=p;
+       break;
+     }
+
+   }catch{}
+ }
+
+ if(!found){
+   toast("Passport not found.");
+   return;
+ }
+
+ const subject=encodeURIComponent(
+   "LIFEPASS Owner Verification Request - "+found.id
+ );
+
+ const body=encodeURIComponent(
+`Hello LIFEPASS Team,
+
+I am the owner of the following product and would like verification.
+
+LIFEPASS ID: ${found.id}
+Product: ${found.productName}
+Owner: ${currentUser?.user_metadata?.full_name||"Not provided"}
+Owner Email: ${currentUser?.email||"Not provided"}
+
+Please review and verify this passport.
+
+Thank you,
+LIFEPASS Owner`
+ );
+
+ window.location.href=
+ "mailto:"+CONTACT_EMAIL+
+ "?subject="+subject+
+ "&body="+body;
+
+ toast("Owner verification email prepared.");
+}
+
+function resetOwnerPortal(){
+
+ document.getElementById("ownerLoginForm")
+ ?.classList.remove("hidden");
+
+ document.getElementById("ownerPortal")
+ ?.classList.add("hidden");
+
 }
 
 /* ==========================================================
