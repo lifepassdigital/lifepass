@@ -926,6 +926,7 @@ window.supabase.createClient(
 ========================================================== */
 
 const CONTACT_EMAIL="lifepass.digital@gmail.com";
+const LIFEPASS_SITE_URL="https://lifepassdigital.github.io/lifepass/";
 const PASSPORT_STORAGE="lifepass_user_passports";
 
 let currentUser=null;
@@ -1027,7 +1028,8 @@ async function signup(){
    options:{
      data:{
        full_name:name
-     }
+     },
+     emailRedirectTo:LIFEPASS_SITE_URL
    }
 
  });
@@ -1140,7 +1142,7 @@ async function resetPassword(){
  await supabaseClient.auth.resetPasswordForEmail(
    email,
    {
-     redirectTo:window.location.origin+window.location.pathname
+     redirectTo:LIFEPASS_SITE_URL+"?reset=1"
    }
  );
 
