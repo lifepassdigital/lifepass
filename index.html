@@ -728,6 +728,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 @media(max-width:850px){.lp-market-hero{grid-template-columns:1fr}.lp-market-grid{grid-template-columns:repeat(2,1fr)}.lp-market-detail{grid-template-columns:1fr}.lp-market-detail img{width:100%;height:220px}.lp-price-result{grid-template-columns:1fr}.lp-price-reasons{grid-template-columns:1fr}}
 @media(max-width:560px){.lp-market-grid{grid-template-columns:1fr}.lp-market-wrap{padding-top:30px}.lp-market-hero{padding:22px}.lp-market-detail-grid{grid-template-columns:1fr}}
 
+
+/* V7 OFFICIAL PASSPORT + UNIVERSAL PRODUCT ANALYSIS */
+.lp-official-profile-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#f4fbfc,#eef5f8);border:1px solid #cfe4e8;border-radius:16px;padding:14px 16px;margin-bottom:20px}.lp-official-seal{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#079eaa;color:#fff;font-weight:900;border:3px solid #d9f3f5;box-shadow:0 0 0 2px #079eaa}.lp-official-profile-card strong{color:#102f50}.lp-official-profile-card p{margin:4px 0 0;color:#5f7487;font-size:12px}.lp-analysis-card{margin-top:18px;border:1px solid #d6e3ea;border-radius:16px;background:#f8fbfc;padding:18px}.lp-analysis-card h3{color:#102f50;margin:0 0 12px}.lp-analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.lp-analysis-item{background:#fff;border:1px solid #e1e9ee;border-radius:11px;padding:10px}.lp-analysis-item small{display:block;color:#718598;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}.lp-analysis-item strong{display:block;color:#173b57;margin-top:4px;font-size:13px;word-break:break-word}.lp-analysis-note{margin-top:12px;padding:11px 12px;border-radius:10px;background:#eef8f8;color:#4d6878;font-size:12px;line-height:1.5}.lp-official-print-card{margin-top:22px;border:2px solid #102f50;border-radius:14px;padding:15px;background:#f8fbfd}.lp-official-print-card strong{color:#102f50}.lp-print-stamp{z-index:2}.print-analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:14px}.print-analysis-grid .print-row{margin:0}.lp-universal-note{font-size:11px;color:#6d8090;margin-top:8px}.lp-market-universal{font-size:11px;color:#6b7e8f;margin-top:8px}
+@media(max-width:700px){.lp-analysis-grid{grid-template-columns:1fr 1fr}.print-analysis-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 
@@ -942,6 +947,14 @@ and preserve their story throughout their lifetime.
 <h2 id="profileName">User</h2>
 <p id="profileEmail" style="color:var(--muted)"></p>
 </div>
+</div>
+
+<div id="officialProfileCard" class="lp-official-profile-card">
+  <div class="lp-official-seal">✓</div>
+  <div>
+    <strong>Official LIFEPASS Member Profile</strong>
+    <p id="officialProfileStatus">Authenticated LIFEPASS account</p>
+  </div>
 </div>
 
 <div class="form-group">
@@ -1194,12 +1207,16 @@ Owners upload product evidence here. Review the photos and passport details befo
 <option value="">Select type</option>
 <option>Laptop</option>
 <option>Smartphone</option>
+<option>Tablet</option>
 <option>Bicycle</option>
 <option>Camera</option>
 <option>Gaming Console</option>
 <option>Robot</option>
 <option>Television</option>
 <option>Appliance</option>
+<option>Vehicle</option>
+<option>Watch</option>
+<option>Furniture</option>
 <option>Other</option>
 </select>
 </div>
@@ -1227,6 +1244,21 @@ Owners upload product evidence here. Review the photos and passport details befo
 <div class="form-group">
 <label>Warranty Until</label>
 <input id="warrantyDate" type="date">
+</div>
+
+<div class="form-group">
+<label>Original Purchase Price (₹)</label>
+<input id="purchasePrice" type="number" min="0" step="1" placeholder="Example: 50000">
+</div>
+
+<div class="form-group">
+<label>Current Condition</label>
+<select id="productCondition">
+<option>Excellent</option>
+<option selected>Good</option>
+<option>Fair</option>
+<option>Needs repair</option>
+</select>
 </div>
 
 <div class="form-group">
@@ -2179,6 +2211,18 @@ async function savePassport(event){
    warrantyDate:
    document.getElementById("warrantyDate").value,
 
+   purchasePrice:
+   Number(document.getElementById("purchasePrice")?.value||0),
+
+   productCondition:
+   document.getElementById("productCondition")?.value||"Good",
+
+   listingPrice:
+   existing?.listingPrice||0,
+
+   marketplaceListedAt:
+   existing?.marketplaceListedAt||null,
+
    ownerName:
    document.getElementById("ownerName").value.trim(),
 
@@ -2315,6 +2359,8 @@ function openEdit(p){
  document.getElementById("serialNumber").value=p.serialNumber||"";
  document.getElementById("purchaseDate").value=p.purchaseDate||"";
  document.getElementById("warrantyDate").value=p.warrantyDate||"";
+ if(document.getElementById("purchasePrice")) document.getElementById("purchasePrice").value=p.purchasePrice||"";
+ if(document.getElementById("productCondition")) document.getElementById("productCondition").value=p.productCondition||"Good";
  document.getElementById("ownerName").value=p.ownerName||"";
  document.getElementById("ownerEmail").value=p.ownerEmail||"";
  document.getElementById("passportPassword").value=p.password||"";
@@ -4260,6 +4306,223 @@ window.addEventListener("load",()=>{
   document.addEventListener('click',e=>{if(e.target.id==='sellListingModal')closeSellListing();if(e.target.id==='marketDetailModal')closeMarketDetail();});
   document.addEventListener('DOMContentLoaded',()=>setTimeout(initMarketplace,350));
   if(document.readyState!=='loading')setTimeout(initMarketplace,350);
+
+/* ==========================================================
+   V7 OFFICIAL PASSPORT + UNIVERSAL VALUE ANALYSIS
+========================================================== */
+(function(){
+  const PRODUCT_TYPES=['Laptop','Smartphone','Tablet','Bicycle','Camera','Gaming Console','Robot','Television','Appliance','Vehicle','Watch','Furniture','Other'];
+
+  function v7Ensure(p){
+    if(!p)return p;
+    p.purchasePrice=Number(p.purchasePrice||p.price||0);
+    p.productCondition=p.productCondition||'Good';
+    p.listingPrice=Number(p.listingPrice||0);
+    p.marketplaceListedAt=p.marketplaceListedAt||null;
+    try{const ml=JSON.parse(localStorage.getItem('lifepass_marketplace_listings')||'[]');const mine=Array.isArray(ml)?ml.find(x=>x.passportId===p.id&&(!currentUser||x.sellerId===currentUser.id)):null;if(mine){p.listingPrice=Number(mine.price||0);p.marketplaceListedAt=mine.createdAt||p.marketplaceListedAt;}}catch(e){}
+    ensurePassportData(p);
+    return p;
+  }
+
+  function v7Estimate(p,condition){
+    if(!p)return null;
+    const original=Number(p.purchasePrice||0);
+    if(!original)return null;
+    const purchase=p.purchaseDate?new Date(p.purchaseDate):null;
+    const ageYears=purchase&&!isNaN(purchase)?Math.max(0,(Date.now()-purchase.getTime())/31557600000):0;
+    const ageFactor=Math.max(.28,1-(Math.min(ageYears,8)*.105));
+    let base=original*ageFactor*(CONDITION_MULT[condition||p.productCondition||'Good']||.82);
+    if(p.status==='Verified')base*=1.06;
+    if(p.warrantyDate&&new Date(p.warrantyDate)>=new Date())base*=1.05;
+    if(Array.isArray(p.documents)&&p.documents.length)base*=1.025;
+    if(Array.isArray(p.serviceHistory)&&p.serviceHistory.length)base*=1.02;
+    const low=Math.max(500,Math.round(base*.92/100)*100);
+    const high=Math.max(low,Math.round(base*1.08/100)*100);
+    return {low,high,base,ageYears};
+  }
+  function v7Analysis(p){
+    v7Ensure(p);
+    const e=v7Estimate(p,p.productCondition);
+    const warranty=p.warrantyDate?daysUntil(p.warrantyDate):null;
+    const warrantyText=warranty===null?'Not provided':warranty>=0?'Active · '+warranty+' day'+(warranty===1?'':'s')+' left':'Expired';
+    const listing=p.listingPrice>0?rupee(p.listingPrice):'Not listed';
+    const value=e?rupee(e.low)+' – '+rupee(e.high):'Add purchase price';
+    const age=e?(e.ageYears<1?'Less than 1 year':e.ageYears.toFixed(1)+' years'):'Not available';
+    return {estimate:e,value,warrantyText,listing,age};
+  }
+  function analysisHTML(p,printMode=false){
+    const a=v7Analysis(p);
+    const docs=(p.documents||[]).length, services=(p.serviceHistory||[]).length;
+    const owner=(p.ownerName||'Not provided');
+    return `<div class="${printMode?'lp-official-print-card':'lp-analysis-card'}">
+      <h3>Official LIFEPASS Product Analysis</h3>
+      <div class="${printMode?'print-analysis-grid':'lp-analysis-grid'}">
+        ${printRowV7('Product Type',p.productType||'Other',printMode)}
+        ${printRowV7('Original Purchase Price',p.purchasePrice?rupee(p.purchasePrice):'Not provided',printMode)}
+        ${printRowV7('Estimated Market Value',a.value,printMode)}
+        ${printRowV7('Current Listed Price',a.listing,printMode)}
+        ${printRowV7('Condition',p.productCondition||'Good',printMode)}
+        ${printRowV7('Product Age',a.age,printMode)}
+        ${printRowV7('Warranty',a.warrantyText,printMode)}
+        ${printRowV7('Verification',p.status||'Pending',printMode)}
+        ${printRowV7('Documents',String(docs),printMode)}
+        ${printRowV7('Service Records',String(services),printMode)}
+        ${printRowV7('Current Owner',owner,printMode)}
+        ${printRowV7('LIFEPASS ID',p.id,printMode)}
+        ${printRowV7('Passport Completeness',a.completeness+'%',printMode)}
+        ${printRowV7('Analysis Status',a.profileState,printMode)}
+      </div>
+      <div class="lp-analysis-note">This analysis uses the product passport information available in LIFEPASS. It is a general product-value analysis designed for all supported product types, not a smartphone-only calculation. Market value is an estimate, not a guaranteed selling price.</div>
+    </div>`;
+  }
+  function printRowV7(label,value,printMode){
+    if(printMode)return `<div class="print-row"><strong>${esc(label)}</strong><span>${esc(value||'Not provided')}</span></div>`;
+    return `<div class="lp-analysis-item"><small>${esc(label)}</small><strong>${esc(value||'Not provided')}</strong></div>`;
+  }
+
+  // Make sure newly created/edited passports retain the price + condition fields.
+  if(typeof window.savePassport==='function'&&!window.__lpV7Save){
+    const baseSave=window.savePassport;
+    window.savePassport=async function(e){
+      const editId=document.getElementById('editingId')?.value||'';
+      const price=Number(document.getElementById('purchasePrice')?.value||0);
+      const condition=document.getElementById('productCondition')?.value||'Good';
+      await baseSave(e);
+      const p=(editId?passports.find(x=>x.id===editId):passports[0]);
+      if(p){p.purchasePrice=price;p.productCondition=condition;v7Ensure(p);p.updatedAt=new Date().toISOString();savePassports();}
+      if(typeof renderPassportsV4==='function')renderPassportsV4();
+      if(typeof renderDashboardV4==='function')renderDashboardV4();
+      if(typeof updateDashboard==='function'&&window.__lpV4Dash)updateDashboard();
+    };
+    window.__lpV7Save=true;
+  }
+
+  // Make marketplace price flow back into the passport.
+  if(typeof window.publishMarketplaceListing==='function'&&!window.__lpV7Market){
+    const basePublish=window.publishMarketplaceListing;
+    window.publishMarketplaceListing=function(){
+      const id=document.getElementById('listingPassportSelect')?.value;
+      const price=Number(document.getElementById('listingPrice')?.value||0);
+      const p=passports.find(x=>x.id===id);
+      basePublish();
+      if(p&&price>0){
+        p.listingPrice=price;
+        p.marketplaceListedAt=new Date().toISOString();
+        v7Ensure(p);savePassports();
+        if(typeof syncLocalActivity==='function')syncLocalActivity();
+        if(typeof renderPassportsV4==='function')renderPassportsV4();
+        if(typeof renderDashboardV4==='function')renderDashboardV4();
+      }
+    };
+    window.__lpV7Market=true;
+  }
+
+  // Put the analysis directly into the digital passport view.
+  if(typeof window.viewPassport==='function'&&!window.__lpV7View){
+    const baseView=window.viewPassport;
+    window.viewPassport=function(id){
+      baseView(id);
+      setTimeout(()=>{
+        const p=passports.find(x=>x.id===id);if(!p)return;v7Ensure(p);
+        const passport=document.querySelector('#viewContent .real-passport');if(!passport)return;
+        let old=document.getElementById('lpV7PassportAnalysis');if(old)old.remove();
+        const div=document.createElement('div');div.id='lpV7PassportAnalysis';div.innerHTML=analysisHTML(p,false);
+        passport.appendChild(div);
+      },90);
+    };
+    window.__lpV7View=true;
+  }
+
+  // Replace the print function so the stamp is present BEFORE window.print().
+  window.printPassport=function(id){
+    const p=passports.find(x=>x.id===id);if(!p)return;v7Ensure(p);
+    const image=p.image||placeholder(p.productType);
+    const verified=p.status==='Verified';
+    document.getElementById('printArea').innerHTML=`
+      <div class="print-passport">
+        <div class="print-head">
+          <img src="./logo.png" onerror="this.onerror=null;this.src='../logo.png'" alt="LIFEPASS">
+          <div><strong style="font-size:30px;letter-spacing:5px">LIFEPASS</strong><br><small>OFFICIAL DIGITAL PRODUCT PASSPORT</small></div>
+          <div class="lp-print-stamp"><span class="lp-stamp">LIFEPASS<br>AUTHENTIC<br>DIGITAL<br>PASSPORT</span></div>
+        </div>
+        <div class="print-body">
+          <img src="${attr(image)}" class="print-image" alt="Product">
+          <h1 style="color:#102f50">${esc(p.productName)}</h1>
+          <p style="color:#079eaa;font-weight:bold;margin-bottom:18px">${esc(p.id)}</p>
+          ${printRow('Official Status',verified?'LIFEPASS VERIFIED':'Verification '+(p.status||'Pending'))}
+          ${printRow('Product Type',p.productType||'Other')}
+          ${printRow('Brand',p.brand)}
+          ${printRow('Model',p.model)}
+          ${printRow('Serial Number',p.serialNumber)}
+          ${printRow('Purchase Date',date(p.purchaseDate))}
+          ${printRow('Warranty Until',date(p.warrantyDate))}
+          ${printRow('Current Owner',p.ownerName)}
+          ${printRow('Owner Email',p.ownerEmail)}
+          ${printRow('Notes',p.notes)}
+          ${analysisHTML(p,true)}
+          <div class="print-footer">
+            <strong>LIFEPASS — OFFICIAL DIGITAL PRODUCT PASSPORT</strong><br>
+            Every product has a story. Keep it forever.<br><br>
+            The passport follows the product, not the owner.<br>
+            Passport ID: ${esc(p.id)}<br>
+            ${verified?'Verification: LIFEPASS VERIFIED<br>':''}
+            Generated: ${esc(datetime(new Date().toISOString()))}
+          </div>
+        </div>
+      </div>`;
+    window.print();
+  };
+
+  // Public QR passport: include safe value/verification information, never private owner email.
+  window.publicUrl=function(p){
+    const payload={id:p.id,productName:p.productName,productType:p.productType,brand:p.brand,model:p.model,serialNumber:p.serialNumber,purchaseDate:p.purchaseDate,warrantyDate:p.warrantyDate,status:p.status,verificationDate:p.verificationReviewedAt||null,verificationNote:p.verificationAdminNote||'',purchasePrice:p.purchasePrice||0,listingPrice:p.listingPrice||0,productCondition:p.productCondition||'Good'};
+    return LIFEPASS_SITE_URL+'#public-passport='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(payload)))));
+  };
+  function patchPublicPage(){
+    const old=window.renderPublicPassport;if(typeof old!=='function'||window.__lpV7Public)return;
+    window.renderPublicPassport=function(encoded){old(encoded);setTimeout(()=>{
+      try{
+        const data=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(encoded)))));
+        const c=document.getElementById('publicPassportContent');if(!c)return;
+        const existing=c.querySelector('.lp-public-body');if(!existing)return;
+        const box=document.createElement('div');box.innerHTML=`<div class="lp-analysis-card" style="margin-top:16px"><h3>Product Value & Passport Analysis</h3><div class="lp-analysis-grid">
+          ${printRowV7('Product Type',data.productType||'Other',false)}
+          ${printRowV7('Condition',data.productCondition||'Good',false)}
+          ${printRowV7('Purchase Price',data.purchasePrice?rupee(data.purchasePrice):'Not provided',false)}
+          ${printRowV7('Listed Price',data.listingPrice?rupee(data.listingPrice):'Not listed',false)}
+          ${printRowV7('Verification',data.status||'Pending',false)}
+        </div><div class="lp-analysis-note">Public analysis contains product information only. Private owner information is intentionally hidden.</div></div>`;
+        existing.appendChild(box.firstElementChild);
+      }catch(e){}
+    },80);window.__lpV7Public=true;};
+  }
+  patchPublicPage();
+
+  function patchProfile(){
+    const status=document.getElementById('officialProfileStatus');
+    if(!status||!currentUser)return;
+    const total=Array.isArray(passports)?passports.length:0;
+    const verified=Array.isArray(passports)?passports.filter(p=>p.status==='Verified').length:0;
+    const listed=Array.isArray(passports)?passports.filter(p=>Number(p.listingPrice||0)>0).length:0;
+    const label=isCompanyAdmin&&isCompanyAdmin()?'Official company/admin LIFEPASS account':'Authenticated LIFEPASS member account';
+    status.innerHTML=esc(label)+`<br><span style="display:inline-block;margin-top:6px">${total} passports · ${verified} verified · ${listed} listed for sale · Member since ${esc(date(currentUser.created_at||new Date().toISOString()))}</span>`;
+  }
+
+  function patchCreateUI(){
+    const types=document.getElementById('productType');
+    if(types){PRODUCT_TYPES.forEach(t=>{if(![...types.options].some(o=>o.value===t)){const o=document.createElement('option');o.textContent=t;types.appendChild(o);}});}
+    if(document.getElementById('pricePassportSelect')&&typeof fillPassportSelects==='function')fillPassportSelects();
+  }
+
+  function refreshV7(){
+    passports.forEach(v7Ensure);
+    patchCreateUI();
+    patchProfile();
+  }
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(refreshV7,500));
+  setTimeout(refreshV7,700);
+})();
+
 })();
 
 })();
