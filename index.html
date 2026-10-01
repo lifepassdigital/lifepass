@@ -1472,7 +1472,7 @@ For example: product photos, serial-number label, purchase proof, warranty proof
   <div class="modal-box" style="width:min(560px,100%)">
     <div class="modal-head"><h2>Secure Password Change</h2><button class="close" onclick="closeSecurePasswordModal()">×</button></div>
     <div class="lp-otp-box">
-      <div class="lp-otp-info">A one-time verification code will be sent to your confirmed LIFEPASS email. <strong>The code is never shown inside LIFEPASS notifications</strong>; enter the code from your email here.</div>
+      <div class="lp-otp-info">A one-time verification code will be sent to your confirmed LIFEPASS email. LIFEPASS will also add a notification confirming that the code was sent. The actual code stays in your email for security.</div>
       <div><label>Email</label><input id="securePasswordEmail" class="profile-input" readonly></div>
       <div id="secureOtpStep">
         <div class="form-actions"><button class="btn primary" id="sendReauthOtpBtn" onclick="sendSecurePasswordOtp()">Send Verification Code</button></div>
@@ -2032,7 +2032,7 @@ window.sendSecurePasswordOtp=async function(){
   if(error){toast(error.message);return;}
   document.getElementById('secureOtpStep')?.classList.add('hidden');
   document.getElementById('securePasswordStep')?.classList.remove('hidden');
-  addNotification('Security code sent','A password-change verification code was sent to your confirmed email. Check your inbox.','security','reauth-otp|'+currentUser.id+'|'+Math.floor(Date.now()/60000));
+  addNotification('🔐 Password reset code sent','Your password-change verification code was sent to your confirmed email. Check your inbox and enter the code here.','security','reauth-otp|'+currentUser.id+'|'+Math.floor(Date.now()/60000));
   toast('Verification code sent to your email.');
 };
 window.completeSecurePasswordChange=async function(){
@@ -2045,7 +2045,7 @@ window.completeSecurePasswordChange=async function(){
   if(pass!==pass2){toast('Passwords do not match.');return;}
   const {data,error}=await supabaseClient.auth.updateUser({password:pass,nonce:otp});
   if(error){toast(error.message);return;}
-  addNotification('Password changed','Your LIFEPASS password was changed successfully.','security','password-changed|'+currentUser.id+'|'+new Date().toISOString().slice(0,13));
+  addNotification('🔐 Password changed','Your LIFEPASS password was changed successfully.','security','password-changed|'+currentUser.id+'|'+new Date().toISOString().slice(0,13));
   closeSecurePasswordModal();
   toast('Password updated successfully.');
 };
