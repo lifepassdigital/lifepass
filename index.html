@@ -554,6 +554,128 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 
+
+/* ==========================================================
+   COMPANY VERIFICATION CENTER
+========================================================== */
+.lp-verification-preview{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:13px;
+  background:#f7fafb;
+  border:1px solid #e1eaee;
+  border-radius:14px;
+}
+.lp-verification-preview img{
+  width:68px;
+  height:68px;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid #dce6eb;
+}
+.lp-verification-preview strong{display:block;font-size:16px}
+.lp-verification-preview small{display:block;color:var(--muted);margin-top:4px}
+.lp-upload-hint{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:6px;
+}
+.lp-evidence-preview{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-top:10px;
+}
+.lp-evidence-preview img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:10px;
+  border:1px solid #dbe6eb;
+}
+.lp-request-card{
+  border:1px solid #e1e9ed;
+  border-radius:15px;
+  padding:16px;
+  margin-top:12px;
+  background:#fff;
+}
+.lp-request-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.lp-request-product{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.lp-request-product img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:11px;
+  border:1px solid #dbe6eb;
+}
+.lp-request-meta{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px 16px;
+  margin-top:14px;
+  font-size:13px;
+}
+.lp-request-meta div{
+  padding:8px 0;
+  border-bottom:1px solid #eef2f4;
+}
+.lp-request-meta strong{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+.lp-request-status{
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+}
+.lp-request-status.pending{background:#fff3d2;color:#916700}
+.lp-request-status.verified{background:#dcf7e6;color:#11713d}
+.lp-request-status.rejected{background:#fde5e5;color:#a42a2a}
+.lp-request-evidence{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-top:13px;
+}
+.lp-request-evidence a{display:block}
+.lp-request-evidence img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:9px;
+  border:1px solid #dbe6eb;
+}
+.lp-request-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.lp-admin-note{
+  margin-top:10px;
+  padding:10px 12px;
+  background:#f7fafb;
+  border-radius:10px;
+  color:#496372;
+  font-size:12px;
+}
+@media(max-width:650px){
+  .lp-evidence-preview,
+  .lp-request-evidence{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lp-request-meta{grid-template-columns:1fr}
+  .lp-request-head{flex-direction:column}
+}
+
 </style>
 </head>
 
@@ -572,7 +694,6 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <button onclick="showPage('dashboard')">Dashboard</button>
 <button onclick="showPage('passports')">My Passports</button>
 <button onclick="showPage('verify')">Verify</button>
-<button onclick="showPage('owner-login')">Owner Login</button>
 <button onclick="openCreate()">Create</button>
 </nav>
 
@@ -582,6 +703,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 
 <div id="loggedNav" class="hidden" style="display:flex;align-items:center;gap:7px">
 <div class="user-avatar" id="navAvatar">U</div>
+<button class="btn outline hidden" id="adminNavButton" onclick="showPage('admin-verification')">Verification Center</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn outline" onclick="logout()">Log Out</button>
 </div>
@@ -903,60 +1025,45 @@ Already have an account?
 </div>
 </section>
 
-<!-- OWNER LOGIN / OWNER PORTAL -->
-<section id="page-owner-login" class="page">
-<div class="auth-wrap">
-<div class="auth">
 
-<img src="./logo.png" onerror="this.onerror=null;this.src='../logo.png'" class="auth-logo" alt="LIFEPASS">
+<!-- COMPANY VERIFICATION CENTER -->
+<section id="page-admin-verification" class="page">
+<div class="section">
 
-<h2>Owner Login</h2>
-<p class="auth-sub">Log in to manage ownership transfers and verification requests.</p>
-
-<div id="ownerLoginForm">
-<div class="auth-group">
-<label>Email</label>
-<input id="ownerLoginEmail" type="email" placeholder="owner@example.com">
+<div class="title">
+<h2>Verification Center</h2>
+<p>Review product verification requests submitted by LIFEPASS owners.</p>
 </div>
 
-<div class="auth-group">
-<label>Password</label>
-<input id="ownerLoginPassword" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')ownerLogin()">
+<div id="adminAccessDenied" class="card hidden" style="text-align:center">
+<h3>Company access only</h3>
+<p style="margin:8px 0 16px;color:var(--muted)">
+Sign in with the LIFEPASS company account to open this dashboard.
+</p>
+<button class="btn primary" onclick="showPage('login')">Go to Login</button>
 </div>
 
-<button class="btn primary" onclick="ownerLogin()">Owner Log In</button>
+<div id="adminVerificationContent" class="hidden">
 
-<p class="auth-switch">
-Need an account?
-<button class="link" onclick="showPage('signup')">Create Account</button>
+<div class="dashboard-grid">
+<div class="stat"><small>Total Requests</small><strong id="adminTotalRequests">0</strong></div>
+<div class="stat"><small>Pending</small><strong id="adminPendingRequests">0</strong></div>
+<div class="stat"><small>Verified</small><strong id="adminVerifiedRequests">0</strong></div>
+<div class="stat"><small>Rejected</small><strong id="adminRejectedRequests">0</strong></div>
+</div>
+
+<div class="card" style="margin-top:22px">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+<div>
+<h3>Verification Requests</h3>
+<p style="color:var(--muted);font-size:13px;margin-top:4px">
+Owners upload product evidence here. Review the photos and passport details before accepting.
 </p>
 </div>
-
-<div id="ownerPortal" class="hidden">
-<div class="card" style="margin-top:18px">
-<h3>Owner Verification</h3>
-<p style="color:var(--muted);margin-top:6px">
-Enter a passport ID that has been transferred to your email.
-</p>
-
-<div class="form-group" style="margin-top:15px">
-<label>LIFEPASS ID</label>
-<input id="ownerPassportId" class="profile-input" placeholder="LP-2026-ABC123">
+<button class="btn outline" onclick="loadVerificationRequests()">Refresh</button>
 </div>
 
-<div class="form-group" style="margin-top:13px">
-<label>Owner Email</label>
-<input id="ownerVerifyEmail" class="profile-input" readonly>
-</div>
-
-<div class="form-actions">
-<button class="btn primary" onclick="acceptOwnerTransfer()">Accept Transfer</button>
-<button class="btn secondary" onclick="requestOwnerVerification()">Request Verification</button>
-<button class="btn danger" onclick="logout()">Log Out</button>
-</div>
-
-<div id="ownerTransferResult" class="result hidden"></div>
-</div>
+<div id="verificationRequestList" style="margin-top:18px"></div>
 </div>
 
 </div>
@@ -980,7 +1087,6 @@ Enter a passport ID that has been transferred to your email.
 <button onclick="showPage('dashboard')">Dashboard</button>
 <button onclick="showPage('verify')">Verify</button>
 <button onclick="showPage('profile')">Profile</button>
-<button onclick="showPage('owner-login')">Owner Login</button>
 <button onclick="showPage('settings')">Settings</button>
 <a href="mailto:lifepass.digital@gmail.com">lifepass.digital@gmail.com</a>
 </div>
@@ -1172,10 +1278,49 @@ Transfer the product passport to a new owner. The passport ID and product histor
 
 <div class="form-actions">
 <button class="btn outline" onclick="closeView()">Close</button>
-<button class="btn secondary" onclick="requestVerification()">Verify by Email</button>
+<button class="btn secondary" onclick="requestVerification()">Request Verification</button>
 <button class="btn outline" onclick="openTransfer(currentViewId)">Transfer</button>
 <button class="btn primary" onclick="printCurrent()">Print</button>
 </div>
+
+</div>
+</div>
+
+
+<!-- VERIFICATION REQUEST MODAL -->
+<div id="verificationModal" class="modal hidden">
+<div class="modal-box" style="width:min(720px,100%)">
+
+<div class="modal-head">
+<h2>Request Product Verification</h2>
+<button class="close" onclick="closeVerificationRequest()">×</button>
+</div>
+
+<div id="verificationPassportPreview" class="lp-verification-preview"></div>
+
+<p style="color:var(--muted);font-size:13px;margin:12px 0 16px">
+Upload clear photos that help the LIFEPASS team confirm the product and ownership.
+For example: product photos, serial-number label, purchase proof, warranty proof, or other relevant evidence.
+</p>
+
+<div class="form-group">
+<label>Evidence Photos *</label>
+<input id="verificationEvidence" type="file" accept="image/*" multiple>
+<div class="lp-upload-hint">Up to 5 images. Use clear, relevant photos only.</div>
+<div id="verificationPreviewGrid" class="lp-evidence-preview"></div>
+</div>
+
+<div class="form-group" style="margin-top:14px">
+<label>Message to LIFEPASS</label>
+<textarea id="verificationMessage" placeholder="Anything our verification team should know?"></textarea>
+</div>
+
+<div class="form-actions">
+<button class="btn outline" onclick="closeVerificationRequest()">Cancel</button>
+<button class="btn primary" onclick="submitVerificationRequest()">Submit for Verification</button>
+</div>
+
+<div id="verificationSubmitResult" class="result hidden"></div>
 
 </div>
 </div>
@@ -1207,6 +1352,7 @@ window.supabase.createClient(
 const CONTACT_EMAIL="lifepass.digital@gmail.com";
 const LIFEPASS_SITE_URL="https://lifepassdigital.github.io/lifepass/";
 const PASSPORT_STORAGE="lifepass_user_passports";
+const VERIFICATION_BUCKET="verification-evidence";
 
 let currentUser=null;
 let passports=[];
@@ -1231,6 +1377,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
 
      if(currentUser){
        loadPassports();
+       await syncVerificationStatuses();
      }else{
        passports=[];
      }
@@ -1255,7 +1402,10 @@ async function checkSession(){
 
  await updateAuthUI();
 
- if(currentUser) loadPassports();
+ if(currentUser){
+   loadPassports();
+   await syncVerificationStatuses();
+ }
 
 }
 
@@ -1465,6 +1615,12 @@ async function updateAuthUI(){
    document.getElementById("navAvatar").textContent=
    initials(name);
 
+   const adminButton=document.getElementById("adminNavButton");
+   const isAdmin=(currentUser.email||"").toLowerCase()===CONTACT_EMAIL.toLowerCase();
+   if(adminButton){
+     adminButton.classList.toggle("hidden",!isAdmin);
+   }
+
    document.getElementById("profileName").textContent=name;
    document.getElementById("profileEmail").textContent=
    currentUser.email||"";
@@ -1498,6 +1654,9 @@ async function updateAuthUI(){
    loginNav.classList.remove("hidden");
    signupNav.classList.remove("hidden");
    loggedNav.classList.add("hidden");
+
+   const adminButton=document.getElementById("adminNavButton");
+   if(adminButton) adminButton.classList.add("hidden");
 
    document.getElementById("dashboardLoggedOut").classList.remove("hidden");
    document.getElementById("dashboardContent").classList.add("hidden");
@@ -1633,6 +1792,15 @@ function showPage(page){
  if(page==="dashboard") updateDashboard();
 
  if(page==="passports") renderPassports();
+
+ if(page==="admin-verification"){
+   if(!isCompanyAdmin()){
+     toast("Company account access required.");
+     showPage("dashboard");
+     return;
+   }
+   loadVerificationRequests();
+ }
 
 }
 
@@ -2104,6 +2272,7 @@ function viewPassport(id){
  ${info("Owner",p.ownerName)}
  ${info("Owner Email",p.ownerEmail)}
  ${info("Verification",p.status)}
+ ${p.verificationAdminNote?info("Verification Note",p.verificationAdminNote,true):""}
  ${info("Created",datetime(p.createdAt))}
  ${p.notes?info("Notes",p.notes,true):""}
 
@@ -2275,331 +2444,375 @@ LIFEPASS`
 }
 
 /* ==========================================================
-   OWNER LOGIN / TRANSFER ACCEPTANCE
-========================================================== */
-
-async function ownerLogin(){
-
- const email=document.getElementById("ownerLoginEmail").value.trim();
- const password=document.getElementById("ownerLoginPassword").value;
-
- if(!email||!password){
-   toast("Enter your owner email and password.");
-   return;
- }
-
- const {data,error}=
- await supabaseClient.auth.signInWithPassword({
-   email,
-   password
- });
-
- if(error){
-   toast(error.message);
-   return;
- }
-
- currentUser=data.user;
-
- document.getElementById("ownerVerifyEmail").value=
- currentUser.email||"";
-
- document.getElementById("ownerLoginForm")
- .classList.add("hidden");
-
- document.getElementById("ownerPortal")
- .classList.remove("hidden");
-
- toast("Owner logged in successfully.");
-}
-
-function acceptOwnerTransfer(){
-
- if(!currentUser){
-   toast("Please log in first.");
-   return;
- }
-
- const id=
- document.getElementById("ownerPassportId").value.trim().toUpperCase();
-
- const email=
- currentUser.email||"";
-
- const result=
- document.getElementById("ownerTransferResult");
-
- result.classList.remove("hidden");
-
- if(!id){
-   result.innerHTML=
-   `<strong style="color:#a42a2a">Enter a LIFEPASS ID.</strong>`;
-   return;
- }
-
- let ownerKey=null;
- let passport=null;
-
- for(const userKey in localStorage){
-
-   if(!userKey.startsWith(PASSPORT_STORAGE+"_")) continue;
-
-   try{
-
-     const list=
-     JSON.parse(localStorage.getItem(userKey)||"[]");
-
-     const found=
-     list.find(x=>x.id?.toUpperCase()===id);
-
-     if(found&&found.pendingTransfer){
-       passport=found;
-       ownerKey=userKey;
-       break;
-     }
-
-   }catch{}
- }
-
- if(!passport?.pendingTransfer){
-
-   result.innerHTML=
-   `<strong style="color:#a42a2a">Transfer request not found.</strong>
-   <p style="margin-top:7px;color:var(--muted)">
-   Make sure the passport ID has a pending transfer request.
-   </p>`;
-
-   return;
- }
-
- if(
-   passport.pendingTransfer.toEmail.toLowerCase()!==
-   email.toLowerCase()
- ){
-
-   result.innerHTML=
-   `<strong style="color:#a42a2a">Owner email does not match.</strong>`;
-
-   return;
- }
-
- const pending=passport.pendingTransfer;
-
- passport.previousOwner={
-   name:passport.ownerName||"Not provided",
-   email:passport.ownerEmail||"Not provided"
- };
-
- passport.ownerName=pending.toName;
- passport.ownerEmail=pending.toEmail;
- passport.transferStatus="Transferred";
- passport.transferDate=new Date().toISOString();
- passport.transferNote=pending.note;
-
- passport.transferHistory=
- Array.isArray(passport.transferHistory)
- ?passport.transferHistory
- :[];
-
- passport.transferHistory.unshift({
-   fromName:pending.fromName,
-   fromEmail:pending.fromEmail,
-   toName:pending.toName,
-   toEmail:pending.toEmail,
-   note:pending.note,
-   date:passport.transferDate
- });
-
- delete passport.pendingTransfer;
-
- passport.updatedAt=new Date().toISOString();
-
- localStorage.setItem(
-   ownerKey,
-   JSON.stringify(
-     JSON.parse(localStorage.getItem(ownerKey)||"[]")
-     .map(x=>x.id===passport.id?passport:x)
-   )
- );
-
- /* Also add the transferred passport to the new owner's local account. */
- const newOwnerKey=PASSPORT_STORAGE+"_"+currentUser.id;
-
- let newOwnerPassports=[];
- try{
-   newOwnerPassports=
-   JSON.parse(localStorage.getItem(newOwnerKey)||"[]");
-   if(!Array.isArray(newOwnerPassports)) newOwnerPassports=[];
- }catch{
-   newOwnerPassports=[];
- }
-
- const alreadyThere=
- newOwnerPassports.some(x=>x.id===passport.id);
-
- if(!alreadyThere){
-   newOwnerPassports.unshift({
-     ...passport,
-     ownerName:pending.toName,
-     ownerEmail:pending.toEmail
-   });
- }else{
-   newOwnerPassports=
-   newOwnerPassports.map(x=>
-     x.id===passport.id
-     ?{
-       ...passport,
-       ownerName:pending.toName,
-       ownerEmail:pending.toEmail
-     }
-     :x
-   );
- }
-
- localStorage.setItem(
-   newOwnerKey,
-   JSON.stringify(newOwnerPassports)
- );
-
- passports=newOwnerPassports;
-
- result.innerHTML=
- `<strong style="color:#11713d">✓ Transfer accepted.</strong>
- <p style="margin-top:8px">
- ${esc(passport.productName)} is now assigned to
- ${esc(passport.ownerName)}.
- </p>`;
-
- toast("Ownership transfer accepted.");
-
- renderPassports();
- updateDashboard();
-}
-
-function requestOwnerVerification(){
-
- const id=
- document.getElementById("ownerPassportId").value.trim().toUpperCase();
-
- if(!id){
-   toast("Enter a LIFEPASS ID first.");
-   return;
- }
-
- let found=null;
-
- for(const userKey in localStorage){
-
-   if(!userKey.startsWith(PASSPORT_STORAGE+"_")) continue;
-
-   try{
-
-     const list=
-     JSON.parse(localStorage.getItem(userKey)||"[]");
-
-     const p=
-     list.find(x=>x.id?.toUpperCase()===id);
-
-     if(p){
-       found=p;
-       break;
-     }
-
-   }catch{}
- }
-
- if(!found){
-   toast("Passport not found.");
-   return;
- }
-
- const subject=encodeURIComponent(
-   "LIFEPASS Owner Verification Request - "+found.id
- );
-
- const body=encodeURIComponent(
-`Hello LIFEPASS Team,
-
-I am the owner of the following product and would like verification.
-
-LIFEPASS ID: ${found.id}
-Product: ${found.productName}
-Owner: ${currentUser?.user_metadata?.full_name||"Not provided"}
-Owner Email: ${currentUser?.email||"Not provided"}
-
-Please review and verify this passport.
-
-Thank you,
-LIFEPASS Owner`
- );
-
- window.location.href=
- "mailto:"+CONTACT_EMAIL+
- "?subject="+subject+
- "&body="+body;
-
- toast("Owner verification email prepared.");
-}
-
-function resetOwnerPortal(){
-
- document.getElementById("ownerLoginForm")
- ?.classList.remove("hidden");
-
- document.getElementById("ownerPortal")
- ?.classList.add("hidden");
-
-}
-
-/* ==========================================================
    VERIFICATION
 ========================================================== */
 
+
+function isCompanyAdmin(){
+  return !!currentUser &&
+    (currentUser.email||"").toLowerCase()===CONTACT_EMAIL.toLowerCase();
+}
+
+function openVerificationRequest(id=currentViewId){
+  if(!currentUser){
+    toast("Please log in first.");
+    showPage("login");
+    return;
+  }
+
+  const p=passports.find(x=>x.id===id);
+  if(!p){
+    toast("Passport not found.");
+    return;
+  }
+
+  if(p.status==="Verified"){
+    toast("This passport is already verified.");
+    return;
+  }
+
+  const modal=document.getElementById("verificationModal");
+  modal.classList.remove("hidden");
+  modal.dataset.passportId=id;
+
+  document.getElementById("verificationSubmitResult").classList.add("hidden");
+  document.getElementById("verificationMessage").value="";
+  document.getElementById("verificationEvidence").value="";
+  document.getElementById("verificationPreviewGrid").innerHTML="";
+
+  document.getElementById("verificationPassportPreview").innerHTML=`
+    <img src="${attr(p.image||placeholder(p.productType))}" alt="Product">
+    <div>
+      <strong>${esc(p.productName||"Product")}</strong>
+      <small>${esc(p.id)} · ${esc(p.brand||"Brand not provided")} ${esc(p.model||"")}</small>
+    </div>
+  `;
+}
+
+function closeVerificationRequest(){
+  document.getElementById("verificationModal")?.classList.add("hidden");
+}
+
+document.addEventListener("change",e=>{
+  if(e.target.id!=="verificationEvidence") return;
+
+  const files=Array.from(e.target.files||[]).slice(0,5);
+  const grid=document.getElementById("verificationPreviewGrid");
+  if(!grid) return;
+
+  grid.innerHTML="";
+
+  files.forEach(file=>{
+    if(!file.type.startsWith("image/")) return;
+
+    const img=document.createElement("img");
+    img.alt="Evidence preview";
+
+    const reader=new FileReader();
+    reader.onload=()=>img.src=reader.result;
+    reader.readAsDataURL(file);
+
+    grid.appendChild(img);
+  });
+
+  if((e.target.files||[]).length>5){
+    toast("Only the first 5 images will be used.");
+  }
+});
+
+async function submitVerificationRequest(){
+  if(!currentUser){
+    toast("Please log in first.");
+    return;
+  }
+
+  const modal=document.getElementById("verificationModal");
+  const id=modal.dataset.passportId;
+  const p=passports.find(x=>x.id===id);
+
+  if(!p){
+    toast("Passport not found.");
+    return;
+  }
+
+  const files=Array.from(
+    document.getElementById("verificationEvidence").files||[]
+  ).slice(0,5);
+
+  if(!files.length){
+    toast("Upload at least one evidence photo.");
+    return;
+  }
+
+  const result=document.getElementById("verificationSubmitResult");
+  result.classList.remove("hidden");
+  result.innerHTML="<strong>Uploading evidence...</strong>";
+
+  try{
+    const {data:existing,error:existingError}=await supabaseClient
+      .from("verification_requests")
+      .select("id,status")
+      .eq("passport_id",p.id)
+      .eq("owner_id",currentUser.id)
+      .in("status",["Pending","Verified"])
+      .maybeSingle();
+
+    if(existingError) throw existingError;
+
+    if(existing?.status==="Verified"){
+      result.innerHTML='<strong style="color:#11713d">This passport is already verified.</strong>';
+      return;
+    }
+
+    if(existing?.status==="Pending"){
+      result.innerHTML='<strong style="color:#916700">A verification request is already pending.</strong>';
+      return;
+    }
+
+    const evidenceUrls=[];
+
+    for(const file of files){
+      if(!file.type.startsWith("image/")){
+        throw new Error("Only image files are allowed.");
+      }
+
+      const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+      const path=currentUser.id+"/"+p.id+"/"+crypto.randomUUID()+"-"+safeName;
+
+      const {error:uploadError}=await supabaseClient
+        .storage
+        .from(VERIFICATION_BUCKET)
+        .upload(path,file,{upsert:false});
+
+      if(uploadError) throw uploadError;
+
+      const {data:urlData}=supabaseClient
+        .storage
+        .from(VERIFICATION_BUCKET)
+        .getPublicUrl(path);
+
+      evidenceUrls.push(urlData.publicUrl);
+    }
+
+    const {error:insertError}=await supabaseClient
+      .from("verification_requests")
+      .insert({
+        passport_id:p.id,
+        owner_id:currentUser.id,
+        owner_email:currentUser.email||"",
+        product_name:p.productName||"",
+        product_type:p.productType||"",
+        brand:p.brand||"",
+        model:p.model||"",
+        serial_number:p.serialNumber||"",
+        owner_name:p.ownerName||currentUser.user_metadata?.full_name||"",
+        passport_snapshot:p,
+        evidence_urls:evidenceUrls,
+        message:document.getElementById("verificationMessage").value.trim(),
+        status:"Pending"
+      });
+
+    if(insertError) throw insertError;
+
+    p.verificationRequested=true;
+    p.verificationRequestedAt=new Date().toISOString();
+    p.status="Pending";
+    savePassports();
+    renderPassports();
+    updateDashboard();
+
+    result.innerHTML='<strong style="color:#11713d">✓ Submitted successfully.</strong><p style="margin-top:6px">Your evidence has been sent to the LIFEPASS verification team.</p>';
+
+    toast("Verification request submitted.");
+    setTimeout(closeVerificationRequest,1200);
+
+  }catch(error){
+    console.error(error);
+    result.innerHTML=
+      '<strong style="color:#a42a2a">Could not submit the request.</strong>'+
+      '<p style="margin-top:6px">'+esc(error.message||String(error))+"</p>";
+  }
+}
+
+async function syncVerificationStatuses(){
+  if(!currentUser) return;
+
+  try{
+    const {data,error}=await supabaseClient
+      .from("verification_requests")
+      .select("passport_id,status,admin_note,reviewed_at")
+      .eq("owner_id",currentUser.id);
+
+    if(error || !Array.isArray(data)) return;
+
+    let changed=false;
+
+    data.forEach(req=>{
+      const p=passports.find(x=>x.id===req.passport_id);
+      if(!p) return;
+
+      if(req.status==="Verified" || req.status==="Rejected"){
+        if(p.status!==req.status){
+          p.status=req.status;
+          changed=true;
+        }
+
+        p.verificationReviewedAt=req.reviewed_at||null;
+        p.verificationAdminNote=req.admin_note||"";
+      }
+    });
+
+    if(changed){
+      savePassports();
+      renderPassports();
+      updateDashboard();
+    }
+  }catch{}
+}
+
+async function openAdminVerification(){
+  if(!isCompanyAdmin()){
+    toast("Company account access required.");
+    showPage("dashboard");
+    return;
+  }
+
+  showPage("admin-verification");
+  await loadVerificationRequests();
+}
+
+async function loadVerificationRequests(){
+  const content=document.getElementById("adminVerificationContent");
+  const denied=document.getElementById("adminAccessDenied");
+
+  if(!isCompanyAdmin()){
+    content?.classList.add("hidden");
+    denied?.classList.remove("hidden");
+    return;
+  }
+
+  content?.classList.remove("hidden");
+  denied?.classList.add("hidden");
+
+  const list=document.getElementById("verificationRequestList");
+  if(list) list.innerHTML='<p style="color:var(--muted)">Loading verification requests...</p>';
+
+  const {data,error}=await supabaseClient
+    .from("verification_requests")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    if(list) list.innerHTML=
+      '<div class="result"><strong style="color:#a42a2a">Could not load requests.</strong><p style="margin-top:6px">'+
+      esc(error.message)+"</p></div>";
+    return;
+  }
+
+  const rows=Array.isArray(data)?data:[];
+
+  document.getElementById("adminTotalRequests").textContent=rows.length;
+  document.getElementById("adminPendingRequests").textContent=rows.filter(x=>x.status==="Pending").length;
+  document.getElementById("adminVerifiedRequests").textContent=rows.filter(x=>x.status==="Verified").length;
+  document.getElementById("adminRejectedRequests").textContent=rows.filter(x=>x.status==="Rejected").length;
+
+  if(!rows.length){
+    list.innerHTML='<div class="lp-empty-mini">No verification requests yet.</div>';
+    return;
+  }
+
+  list.innerHTML=rows.map(renderVerificationRequestCard).join("");
+}
+
+function renderVerificationRequestCard(r){
+  const status=String(r.status||"Pending").toLowerCase();
+  const snap=r.passport_snapshot||{};
+  const image=snap.image||placeholder(r.product_type);
+
+  const evidence=Array.isArray(r.evidence_urls)
+    ?r.evidence_urls
+    :[];
+
+  const evidenceHtml=evidence.length
+    ?`<div class="lp-request-evidence">${
+      evidence.map((url,i)=>
+        `<a href="${attr(url)}" target="_blank" rel="noopener">
+          <img src="${attr(url)}" alt="Evidence ${i+1}">
+        </a>`
+      ).join("")
+    }</div>`
+    :"<p style='color:var(--muted);font-size:12px;margin-top:10px'>No evidence images.</p>";
+
+  const actions=r.status==="Pending"
+    ?`<div class="lp-request-actions">
+        <button class="btn primary" onclick="reviewVerificationRequest('${esc(r.id)}','Verified')">✓ Accept & Verify</button>
+        <button class="btn danger" onclick="reviewVerificationRequest('${esc(r.id)}','Rejected')">Reject</button>
+      </div>`
+    :"";
+
+  return `
+    <div class="lp-request-card">
+      <div class="lp-request-head">
+        <div class="lp-request-product">
+          <img src="${attr(image)}" alt="Product">
+          <div>
+            <strong>${esc(r.product_name||"Product")}</strong>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px">${esc(r.passport_id||"")}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px">${esc(r.owner_email||"")}</div>
+          </div>
+        </div>
+        <span class="lp-request-status ${status}">${esc(r.status||"Pending")}</span>
+      </div>
+
+      <div class="lp-request-meta">
+        <div><strong>Brand</strong>${esc(r.brand||"Not provided")}</div>
+        <div><strong>Model</strong>${esc(r.model||"Not provided")}</div>
+        <div><strong>Serial Number</strong>${esc(r.serial_number||"Not provided")}</div>
+        <div><strong>Owner</strong>${esc(r.owner_name||"Not provided")}</div>
+        <div><strong>Submitted</strong>${esc(datetime(r.created_at))}</div>
+        <div><strong>Message</strong>${esc(r.message||"No message")}</div>
+      </div>
+
+      ${evidenceHtml}
+
+      ${r.admin_note?`<div class="lp-admin-note"><strong>Company note:</strong> ${esc(r.admin_note)}</div>`:""}
+
+      ${actions}
+    </div>
+  `;
+}
+
+async function reviewVerificationRequest(id,status){
+  if(!isCompanyAdmin()){
+    toast("Company account access required.");
+    return;
+  }
+
+  const note=status==="Rejected"
+    ?prompt("Reason for rejection (optional):")||""
+    :prompt("Verification note (optional):")||"";
+
+  const {error}=await supabaseClient
+    .from("verification_requests")
+    .update({
+      status,
+      admin_note:note,
+      reviewed_at:new Date().toISOString(),
+      reviewed_by:currentUser.email||CONTACT_EMAIL
+    })
+    .eq("id",id);
+
+  if(error){
+    toast(error.message);
+    return;
+  }
+
+  toast(status==="Verified"?"Passport verified successfully.":"Verification request rejected.");
+  await loadVerificationRequests();
+}
+
 function requestVerification(id=currentViewId){
-
- if(!id) return;
-
- const p=passports.find(x=>x.id===id);
-
- if(!p) return;
-
- p.verificationRequested=true;
- p.verificationRequestedAt=new Date().toISOString();
-
- savePassports();
-
- renderPassports();
-
- const subject=encodeURIComponent(
-   "LIFEPASS Verification Request - "+p.id
- );
-
- const body=encodeURIComponent(
-`Hello LIFEPASS Team,
-
-I would like to request verification for my product passport.
-
-LIFEPASS ID: ${p.id}
-Product: ${p.productName}
-Brand: ${p.brand||"Not provided"}
-Model: ${p.model||"Not provided"}
-Serial Number: ${p.serialNumber||"Not provided"}
-Owner: ${p.ownerName||"Not provided"}
-Owner Email: ${p.ownerEmail||"Not provided"}
-
-Please verify this passport.
-
-Thank you,
-LIFEPASS User`
- );
-
- window.location.href=
- "mailto:"+CONTACT_EMAIL+
- "?subject="+subject+
- "&body="+body;
-
- toast("Verification email prepared.");
-
+  openVerificationRequest(id);
 }
 
 /* ==========================================================
@@ -3034,6 +3247,7 @@ document.addEventListener("click",e=>{
  if(e.target.id==="passwordModal") closePassword();
 
  if(e.target.id==="viewModal") closeView();
+ if(e.target.id==="verificationModal") closeVerificationRequest();
 
 });
 
@@ -3339,12 +3553,9 @@ window.addEventListener("load",()=>{
     if(e)e.textContent=email;
   }
 
-  function setupOwnerLogin(){
-    const form=$('#ownerLoginForm');
-    if(!form||$('.lp-owner-trust',form)) return;
-    const trust=make('div',{class:'lp-owner-trust'});
-    trust.innerHTML='<b>✓ Protected area</b><span>Use your LIFEPASS account to manage transfer and verification requests.</span>';
-    form.appendChild(trust);
+  function setupAdminVerification(){
+    const btn=$('#adminNavButton');
+    if(btn) btn.onclick=()=>openAdminVerification();
   }
 
   function setupVerify(){
@@ -3471,7 +3682,7 @@ window.addEventListener("load",()=>{
     setupCreateForm();
     setupTransfer();
     setupProfile();
-    setupOwnerLogin();
+    setupAdminVerification();
     setupVerify();
     setupAI();
     setupViewEnhancement();
