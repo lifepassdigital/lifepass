@@ -275,6 +275,285 @@ footer{background:#0b223a;color:white;padding:30px 0}
  .ai-panel{right:10px;bottom:85px}
  .ai-button{right:15px;bottom:15px}
 }
+
+/* ==========================================================
+   LIFEPASS FRONTEND V2 ENHANCEMENTS
+   Internal pages only — homepage styling is intentionally preserved.
+========================================================== */
+
+.page:not(#page-home){
+  background:
+    radial-gradient(circle at 8% 8%,rgba(7,158,170,.055),transparent 24%),
+    radial-gradient(circle at 92% 18%,rgba(16,47,80,.045),transparent 25%),
+    #f7f9fc;
+  min-height:calc(100vh - 72px);
+}
+
+.page:not(#page-home) .section{
+  padding-top:48px;
+}
+
+.page:not(#page-home) .title{
+  text-align:left;
+  margin-bottom:25px;
+}
+
+.page:not(#page-home) .title h2{
+  font-size:clamp(28px,4vw,40px);
+  letter-spacing:-.5px;
+}
+
+.page:not(#page-home) .title p{
+  font-size:14px;
+}
+
+.page.active:not(#page-home){
+  animation:lpPageIn .42s ease both;
+}
+
+@keyframes lpPageIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* polished internal cards */
+.page:not(#page-home) .card,
+.page:not(#page-home) .stat,
+.page:not(#page-home) .profile-box,
+.page:not(#page-home) .settings-box,
+.page:not(#page-home) .verify-box,
+.page:not(#page-home) .auth{
+  box-shadow:0 12px 34px rgba(16,42,72,.055);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+
+.page:not(#page-home) .card:hover,
+.page:not(#page-home) .stat:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 42px rgba(16,42,72,.09);
+  border-color:#cddce7;
+}
+
+/* dashboard */
+.lp-dashboard-hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  padding:24px 25px;
+  margin-bottom:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#102f50,#16466f);
+  color:white;
+  box-shadow:0 18px 45px rgba(16,47,80,.15);
+  overflow:hidden;
+  position:relative;
+}
+.lp-dashboard-hero:after{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  right:-55px;top:-70px;
+  background:rgba(7,158,170,.18);
+}
+.lp-dashboard-hero small{color:#b9d5e8;font-weight:700;letter-spacing:.6px}
+.lp-dashboard-hero h3{font-size:26px;margin:4px 0 5px;position:relative;z-index:1}
+.lp-dashboard-hero p{color:#d5e5ef;font-size:13px;position:relative;z-index:1}
+.lp-dashboard-hero .btn{position:relative;z-index:1;background:white;color:#102f50}
+
+.dashboard-grid .stat{
+  position:relative;
+  overflow:hidden;
+}
+.dashboard-grid .stat:after{
+  content:"";
+  position:absolute;
+  width:58px;height:58px;border-radius:50%;
+  right:-20px;top:-20px;background:#eef8f8;
+}
+
+.lp-stat-row{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:18px;
+  margin-top:18px;
+}
+.lp-recent-list{display:grid;gap:10px;margin-top:15px}
+.lp-recent-item{
+  display:flex;align-items:center;gap:12px;padding:12px;
+  border:1px solid #e4ebf0;border-radius:12px;background:#fbfdfe;
+  transition:.2s ease;
+}
+.lp-recent-item:hover{transform:translateX(3px);border-color:#c8dce4}
+.lp-recent-thumb{width:48px;height:48px;border-radius:10px;object-fit:cover;border:1px solid #dce5ed;background:#eef3f6}
+.lp-recent-main{min-width:0;flex:1}
+.lp-recent-main strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lp-recent-main small{color:#71839a}
+.lp-empty-mini{padding:18px;border:1px dashed #cfdde6;border-radius:12px;text-align:center;color:#71839a;font-size:13px}
+
+.lp-health-card{display:grid;gap:13px}
+.lp-health-line{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.lp-health-track{height:8px;background:#e9eff3;border-radius:99px;overflow:hidden}
+.lp-health-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#102f50,#079eaa);transition:width .7s ease}
+.lp-tip{padding:12px;border-radius:12px;background:#eef8f8;color:#476477;font-size:12px;line-height:1.5}
+
+/* passport list */
+#passportList{gap:12px}
+.passport-card{
+  position:relative;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.passport-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 34px rgba(16,42,72,.08);
+  border-color:#c8dbe5;
+}
+.passport-card .thumb{box-shadow:0 4px 12px rgba(16,42,72,.06)}
+.lp-list-toolbar{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin-bottom:14px;flex-wrap:wrap;
+}
+.lp-count-badge{font-size:12px;color:#60758d;background:#edf4f8;padding:7px 10px;border-radius:99px;font-weight:700}
+
+/* creation form */
+.lp-form-progress{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;
+}
+.lp-form-step{
+  padding:9px 8px;border-radius:10px;background:#f1f5f8;color:#71839a;
+  text-align:center;font-size:11px;font-weight:800;
+}
+.lp-form-step.active{background:#e6f7f8;color:#078a99}
+.lp-form-section{
+  border:1px solid #e3ebf0;border-radius:14px;padding:15px;margin-bottom:14px;
+  background:#fbfdfe;
+}
+.lp-form-section-title{font-size:13px;font-weight:800;color:#183754;margin-bottom:12px}
+.lp-image-preview{
+  margin-top:8px;width:100%;height:125px;border:1px dashed #cbd9e3;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f6f9fb;color:#8293a3;font-size:12px;
+}
+.lp-image-preview img{width:100%;height:100%;object-fit:cover}
+.lp-password-meter{height:6px;border-radius:99px;background:#e8edf1;margin-top:7px;overflow:hidden}
+.lp-password-meter span{display:block;height:100%;width:0;border-radius:99px;transition:.25s ease}
+.lp-field-hint{font-size:10px;color:#8091a1;margin-top:3px}
+
+/* digital passport view */
+#viewContent .real-passport{
+  box-shadow:0 18px 50px rgba(16,42,72,.10);
+}
+.lp-passport-actions{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px;
+}
+.lp-history{
+  grid-column:1/-1;
+  margin-top:3px;padding-top:17px;border-top:1px solid #e7edf1;
+}
+.lp-history h4{margin-bottom:12px;color:#183754}
+.lp-timeline{display:grid;gap:11px}
+.lp-timeline-item{display:grid;grid-template-columns:12px 1fr;gap:10px}
+.lp-dot{width:10px;height:10px;border-radius:50%;background:#079eaa;margin-top:4px;box-shadow:0 0 0 4px #e7f7f8}
+.lp-timeline-item strong{font-size:12px;color:#183754}
+.lp-timeline-item p{font-size:11px;color:#71839a;margin-top:2px}
+
+/* transfer */
+.lp-transfer-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px}
+.lp-transfer-step{padding:8px;text-align:center;border-radius:9px;background:#f1f5f8;color:#71839a;font-size:10px;font-weight:800}
+.lp-transfer-step.active{background:#e7f7f8;color:#078a99}
+.lp-transfer-preview{display:none;gap:11px;align-items:center;background:#f7fafb;border:1px solid #e1e9ee;border-radius:12px;padding:11px;margin-bottom:14px}
+.lp-transfer-preview.show{display:flex}
+.lp-transfer-preview img{width:48px;height:48px;object-fit:cover;border-radius:9px}
+.lp-transfer-preview small{display:block;color:#71839a}
+.lp-transfer-warning{font-size:11px;line-height:1.5;color:#6b5b35;background:#fff8e6;border:1px solid #f1dfac;border-radius:10px;padding:10px;margin-top:12px}
+
+/* profile */
+.lp-profile-top{display:flex;align-items:center;gap:18px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #e6edf2}
+.lp-avatar-wrap{position:relative;flex:0 0 auto}
+.lp-avatar-img,.big-avatar.lp-avatar-img{object-fit:cover;overflow:hidden}
+.lp-avatar-edit{
+  position:absolute;right:-3px;bottom:-3px;width:28px;height:28px;border-radius:50%;
+  border:3px solid white;background:#079eaa;color:white;font-size:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.lp-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lp-profile-info{padding:13px;border-radius:12px;background:#f6f9fb;border:1px solid #e5edf1}
+.lp-profile-info small{display:block;color:#8091a1;font-size:10px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.lp-profile-info strong{color:#183754;font-size:14px;word-break:break-word}
+
+/* owner portal */
+.lp-owner-trust{display:flex;align-items:center;gap:9px;background:#eef8f8;border:1px solid #d1ebed;padding:10px 12px;border-radius:11px;color:#426477;font-size:12px;margin-top:15px}
+.lp-owner-trust b{color:#078a99}
+
+/* verification */
+.lp-verify-hero{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding:13px;background:#f7fafb;border:1px solid #e3ebef;border-radius:13px}
+.lp-verify-icon{width:42px;height:42px;border-radius:12px;background:#e8f7f8;color:#078a99;display:flex;align-items:center;justify-content:center;font-weight:900}
+.lp-verify-status{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:99px;font-size:10px;font-weight:900;margin-top:7px}
+.lp-verify-status.good{background:#dcf7e6;color:#11713d}
+.lp-verify-status.wait{background:#fff3d2;color:#916700}
+.lp-verify-status.bad{background:#ffe1e1;color:#a32626}
+
+/* AI */
+.ai-panel{
+  backdrop-filter:blur(12px);
+  box-shadow:0 25px 80px rgba(0,0,0,.22);
+}
+.ai-head{position:relative}
+.lp-ai-head-left{display:flex;align-items:center;gap:9px}
+.lp-ai-orb{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#079eaa;box-shadow:0 0 0 5px rgba(7,158,170,.14);animation:lpPulse 2.2s infinite}
+@keyframes lpPulse{0%,100%{box-shadow:0 0 0 4px rgba(7,158,170,.13)}50%{box-shadow:0 0 0 8px rgba(7,158,170,.03)}}
+.lp-ai-status{font-size:9px;color:#bfe9eb;display:block;margin-top:2px}
+.lp-ai-tools{display:flex;gap:3px}
+.lp-ai-tools button{border:0;background:rgba(255,255,255,.08);color:white;border-radius:7px;width:28px;height:28px}
+.lp-ai-suggestions{display:flex;gap:6px;overflow:auto;padding:9px 11px;border-bottom:1px solid #e3ebef;background:white}
+.lp-ai-suggestions button{white-space:nowrap;border:1px solid #d9e5eb;background:#f7fafb;color:#3f6075;border-radius:99px;padding:6px 9px;font-size:10px}
+.lp-ai-suggestions button:hover{border-color:#079eaa;color:#078a99;background:#eef8f8}
+.lp-ai-typing{display:flex;gap:4px;align-items:center;padding:10px 12px;background:white;border:1px solid #e1e8ed;border-radius:12px;width:max-content}
+.lp-ai-typing span{width:5px;height:5px;border-radius:50%;background:#7b91a2;animation:lpDot 1s infinite}
+.lp-ai-typing span:nth-child(2){animation-delay:.15s}.lp-ai-typing span:nth-child(3){animation-delay:.3s}
+@keyframes lpDot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-3px);opacity:1}}
+.ai-input{background:white}
+.ai-input input:focus{border-color:#079eaa;box-shadow:0 0 0 3px rgba(7,158,170,.08)}
+.ai-button{animation:lpFloat 3s ease-in-out infinite}
+@keyframes lpFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* navbar + mobile */
+.mobile-menu-btn{display:none;border:1px solid #d5e1e9;background:white;color:#102f50;border-radius:9px;width:42px;height:42px;font-size:20px}
+.nav-mobile-open nav{display:flex!important;position:absolute;left:3%;right:3%;top:68px;background:white;border:1px solid #dce5ed;border-radius:14px;padding:8px;box-shadow:0 18px 40px rgba(16,42,72,.12);flex-direction:column}
+.nav-mobile-open nav button{text-align:left;padding:11px 12px}
+
+/* better focus accessibility */
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{
+  outline:3px solid rgba(7,158,170,.25);outline-offset:2px;
+}
+
+@media(max-width:900px){
+  .lp-stat-row{grid-template-columns:1fr}
+  .lp-profile-grid{grid-template-columns:1fr}
+  .lp-dashboard-hero{align-items:flex-start;flex-direction:column}
+  .mobile-menu-btn{display:block}
+  #mainNav{display:none}
+}
+
+@media(max-width:650px){
+  .page:not(#page-home) .section{padding-top:32px;padding-bottom:42px}
+  .page:not(#page-home) .title{margin-bottom:19px}
+  .lp-dashboard-hero{padding:19px;border-radius:16px}
+  .lp-dashboard-hero h3{font-size:21px}
+  .lp-form-progress,.lp-transfer-steps{grid-template-columns:1fr}
+  .lp-passport-actions{grid-template-columns:1fr 1fr}
+  .lp-profile-top{align-items:flex-start;flex-direction:column}
+  .passport-head{align-items:flex-start;flex-direction:column}
+  .passport-content{padding:18px}
+  .verify-box,.profile-box,.settings-box,.auth{padding:20px}
+  .ai-panel{height:min(600px,calc(100vh - 100px))}
+  .lp-ai-suggestions{padding-left:9px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+
 </style>
 </head>
 
@@ -2796,5 +3075,419 @@ window.addEventListener("load",()=>{
 });
 
 </script>
+
+<script>
+/* ==========================================================
+   LIFEPASS FRONTEND V2 — UI ENHANCEMENT LAYER
+   Does not alter the homepage's existing visual language.
+========================================================== */
+(function(){
+  const $=(sel,root=document)=>root.querySelector(sel);
+  const $$=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
+
+  function make(tag,attrs={},html=""){
+    const el=document.createElement(tag);
+    Object.entries(attrs).forEach(([k,v])=>{
+      if(k==="class") el.className=v;
+      else if(k==="text") el.textContent=v;
+      else el.setAttribute(k,v);
+    });
+    if(html) el.innerHTML=html;
+    return el;
+  }
+
+  function setupMobileNav(){
+    const nav=$('.nav');
+    const mainNav=$('#mainNav');
+    if(!nav||!mainNav||$('.mobile-menu-btn',nav)) return;
+    const btn=make('button',{class:'mobile-menu-btn',type:'button',title:'Open menu',text:'☰'});
+    btn.setAttribute('aria-label','Open menu');
+    btn.onclick=()=>{
+      nav.classList.toggle('nav-mobile-open');
+      const open=nav.classList.contains('nav-mobile-open');
+      btn.textContent=open?'×':'☰';
+      btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    };
+    const userNav=$('.user-nav',nav);
+    nav.insertBefore(btn,userNav);
+    mainNav.addEventListener('click',()=>{
+      nav.classList.remove('nav-mobile-open');
+      btn.textContent='☰';
+    });
+  }
+
+  function setupDashboard(){
+    const content=$('#dashboardContent');
+    const grid=$('.dashboard-grid',content);
+    if(!content||!grid||$('.lp-dashboard-hero',content)) return;
+
+    const hero=make('div',{class:'lp-dashboard-hero'});
+    hero.innerHTML=`
+      <div>
+        <small>LIFEPASS CONTROL CENTER</small>
+        <h3>Your products, organised in one place.</h3>
+        <p>Manage passports, ownership, verification and product history.</p>
+      </div>
+      <button class="btn" onclick="openCreate()">+ New Passport</button>
+    `;
+    content.insertBefore(hero,grid);
+
+    const row=make('div',{class:'lp-stat-row'});
+    row.innerHTML=`
+      <div class="card">
+        <h3>Recent Passports</h3>
+        <p style="color:var(--muted);font-size:12px;margin-top:4px">Your latest product records.</p>
+        <div class="lp-recent-list" id="lpRecentPassports"></div>
+      </div>
+      <div class="card lp-health-card">
+        <div>
+          <h3>Passport Health</h3>
+          <p style="color:var(--muted);font-size:12px;margin-top:4px">How complete your collection is.</p>
+        </div>
+        <div class="lp-health-line"><span>Verified passports</span><strong id="lpHealthPercent">0%</strong></div>
+        <div class="lp-health-track"><div class="lp-health-fill" id="lpHealthFill" style="width:0%"></div></div>
+        <div class="lp-tip">Tip: add purchase, warranty and serial information to make each passport more useful.</div>
+      </div>
+    `;
+    content.appendChild(row);
+  }
+
+  function renderDashboardExtras(){
+    const list=$('#lpRecentPassports');
+    if(!list||typeof passports==='undefined') return;
+    const recent=Array.isArray(passports)?passports.slice(0,4):[];
+    if(!recent.length){
+      list.innerHTML='<div class="lp-empty-mini">No passports yet. Create your first digital passport.</div>';
+    }else{
+      list.innerHTML=recent.map(p=>{
+        const img=p.image||placeholder(p.productType);
+        const status=p.status||'Pending';
+        return `<div class="lp-recent-item" onclick="viewPassport('${esc(p.id)}')" style="cursor:pointer">
+          <img class="lp-recent-thumb" src="${attr(img)}" alt="Product">
+          <div class="lp-recent-main"><strong>${esc(p.productName||'Unnamed product')}</strong><small>${esc(p.id)} · ${esc(status)}</small></div>
+          <span style="color:var(--teal);font-weight:900">›</span>
+        </div>`;
+      }).join('');
+    }
+    const total=passports.length||0;
+    const verified=passports.filter(p=>p.status==='Verified').length;
+    const percent=total?Math.round((verified/total)*100):0;
+    const pct=$('#lpHealthPercent'), fill=$('#lpHealthFill');
+    if(pct) pct.textContent=percent+'%';
+    if(fill) fill.style.width=percent+'%';
+  }
+
+  function setupPassportToolbar(){
+    const input=$('#searchPassport');
+    if(!input||$('.lp-list-toolbar')) return;
+    const parent=input.parentElement;
+    if(!parent) return;
+    parent.className='lp-list-toolbar';
+    const badge=make('span',{class:'lp-count-badge',id:'lpPassportCount',text:'0 passports'});
+    parent.insertBefore(badge,parent.children[1]||null);
+  }
+
+  function updatePassportCount(){
+    const badge=$('#lpPassportCount');
+    if(badge&&typeof passports!=='undefined'){
+      const n=Array.isArray(passports)?passports.length:0;
+      badge.textContent=n+' passport'+(n===1?'':'s');
+    }
+  }
+
+  function setupCreateForm(){
+    const form=$('#createModal form');
+    if(!form||$('.lp-form-progress',form)) return;
+
+    const progress=make('div',{class:'lp-form-progress'});
+    progress.innerHTML=`
+      <div class="lp-form-step active">1 · Product</div>
+      <div class="lp-form-step">2 · Ownership</div>
+      <div class="lp-form-step">3 · Security</div>
+    `;
+    form.insertBefore(progress,form.firstElementChild);
+
+    const imageInput=$('#productImage');
+    if(imageInput){
+      const preview=make('div',{class:'lp-image-preview',id:'lpImagePreview',text:'Product image preview'});
+      imageInput.parentElement.appendChild(preview);
+      imageInput.addEventListener('change',()=>{
+        const file=imageInput.files?.[0];
+        if(!file){preview.textContent='Product image preview';return;}
+        const reader=new FileReader();
+        reader.onload=()=>{preview.innerHTML=`<img src="${reader.result}" alt="Preview">`;};
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const password=$('#passportPassword');
+    if(password){
+      const meter=make('div',{class:'lp-password-meter'},'<span></span>');
+      const hint=make('div',{class:'lp-field-hint',text:'Use at least 4 characters. A longer password is safer.'});
+      password.parentElement.append(meter,hint);
+      password.addEventListener('input',()=>{
+        const value=password.value;
+        let score=0;
+        if(value.length>=4) score++;
+        if(value.length>=8) score++;
+        if(/[A-Z]/.test(value)&&/[a-z]/.test(value)) score++;
+        if(/\d/.test(value)) score++;
+        if(/[^A-Za-z0-9]/.test(value)) score++;
+        const span=$('span',meter);
+        span.style.width=(score*20)+'%';
+        span.style.background=score<=2?'#e6a23c':score<=3?'#079eaa':'#15965a';
+      });
+    }
+  }
+
+  function setupTransfer(){
+    const box=$('#transferModal .modal-box');
+    if(!box||$('.lp-transfer-steps',box)) return;
+    const steps=make('div',{class:'lp-transfer-steps'});
+    steps.innerHTML=`
+      <div class="lp-transfer-step active">1 · New owner</div>
+      <div class="lp-transfer-step">2 · Review</div>
+      <div class="lp-transfer-step">3 · Confirm</div>
+    `;
+    const note=$('.transfer-note',box);
+    box.insertBefore(steps,note||box.firstElementChild);
+
+    const preview=make('div',{class:'lp-transfer-preview',id:'lpTransferPreview'});
+    preview.innerHTML=`<img id="lpTransferImage" alt="Product"><div><strong id="lpTransferProduct">Product</strong><small id="lpTransferIdText"></small></div>`;
+    box.insertBefore(preview,$('#transferId'));
+
+    const warning=make('div',{class:'lp-transfer-warning',text:'Ownership transfer keeps the LIFEPASS ID and product history. Only the current owner and new owner information changes.'});
+    box.appendChild(warning);
+
+    ['transferOwnerName','transferOwnerEmail'].forEach(id=>{
+      const el=$('#'+id);
+      if(el) el.addEventListener('input',()=>updateTransferPreview());
+    });
+  }
+
+  function updateTransferPreview(){
+    const box=$('#transferModal');
+    const preview=$('#lpTransferPreview');
+    if(!box||!preview||typeof passports==='undefined') return;
+    const id=$('#transferId')?.value;
+    const p=passports.find(x=>x.id===id);
+    if(!p){preview.classList.remove('show');return;}
+    preview.classList.add('show');
+    $('#lpTransferProduct').textContent=p.productName||'Product';
+    $('#lpTransferIdText').textContent=p.id;
+    $('#lpTransferImage').src=p.image||placeholder(p.productType);
+  }
+
+  function setupProfile(){
+    const box=$('#profileContent');
+    if(!box||$('.lp-profile-top',box)) return;
+    const header=$('.profile-header',box);
+    if(!header) return;
+    header.className='lp-profile-top';
+    const avatar=$('#profileAvatar');
+    if(avatar){
+      const wrap=make('div',{class:'lp-avatar-wrap'});
+      avatar.classList.add('lp-avatar-img');
+      avatar.parentNode.insertBefore(wrap,avatar);
+      wrap.appendChild(avatar);
+      const edit=make('button',{class:'lp-avatar-edit',type:'button',title:'Change profile picture',text:'✎'});
+      const file=make('input',{type:'file',accept:'image/*',id:'lpProfileImageInput'});
+      file.style.display='none';
+      wrap.append(edit,file);
+      edit.onclick=()=>file.click();
+      file.onchange=()=>{
+        const f=file.files?.[0];
+        if(!f||!currentUser) return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          localStorage.setItem('lifepass_avatar_'+currentUser.id,reader.result);
+          applyProfileAvatar(reader.result);
+          toast('Profile picture updated on this device.');
+        };
+        reader.readAsDataURL(f);
+      };
+    }
+
+    const nameInput=$('#profileNameInput');
+    const emailInput=$('#profileEmailInput');
+    if(nameInput&&emailInput){
+      const grid=make('div',{class:'lp-profile-grid'});
+      const nameCard=make('div',{class:'lp-profile-info'});
+      nameCard.innerHTML='<small>Account name</small><strong id="lpProfileNameValue">—</strong>';
+      const emailCard=make('div',{class:'lp-profile-info'});
+      emailCard.innerHTML='<small>Account email</small><strong id="lpProfileEmailValue">—</strong>';
+      grid.append(nameCard,emailCard);
+      box.insertBefore(grid,box.children[1]||null);
+    }
+  }
+
+  function applyProfileAvatar(src){
+    const a=$('#profileAvatar');
+    const nav=$('#navAvatar');
+    if(a&&src){a.textContent='';a.style.backgroundImage=`url("${src}")`;a.style.backgroundSize='cover';a.style.backgroundPosition='center';}
+    if(nav&&src){nav.textContent='';nav.style.backgroundImage=`url("${src}")`;nav.style.backgroundSize='cover';nav.style.backgroundPosition='center';}
+  }
+
+  function refreshProfileEnhancement(){
+    if(!currentUser) return;
+    const src=localStorage.getItem('lifepass_avatar_'+currentUser.id);
+    if(src) applyProfileAvatar(src);
+    const name=$('#profileNameInput')?.value||currentUser.user_metadata?.full_name||'User';
+    const email=currentUser.email||'';
+    const n=$('#lpProfileNameValue'),e=$('#lpProfileEmailValue');
+    if(n)n.textContent=name;
+    if(e)e.textContent=email;
+  }
+
+  function setupOwnerLogin(){
+    const form=$('#ownerLoginForm');
+    if(!form||$('.lp-owner-trust',form)) return;
+    const trust=make('div',{class:'lp-owner-trust'});
+    trust.innerHTML='<b>✓ Protected area</b><span>Use your LIFEPASS account to manage transfer and verification requests.</span>';
+    form.appendChild(trust);
+  }
+
+  function setupVerify(){
+    const box=$('#page-verify .verify-box');
+    if(!box||$('.lp-verify-hero',box)) return;
+    const hero=make('div',{class:'lp-verify-hero'});
+    hero.innerHTML='<div class="lp-verify-icon">✓</div><div><strong>Check a product identity</strong><p style="font-size:11px;color:var(--muted);margin-top:2px">Enter the LIFEPASS ID printed or shared with the product.</p></div>';
+    box.insertBefore(hero,box.firstElementChild);
+  }
+
+  function setupAI(){
+    const panel=$('#aiPanel');
+    if(!panel||$('.lp-ai-suggestions',panel)) return;
+    const head=$('.ai-head',panel);
+    if(head){
+      head.innerHTML=`
+        <div class="lp-ai-head-left">
+          <div class="lp-ai-orb">✦</div>
+          <div><strong>LIFEPASS AI</strong><span class="lp-ai-status">Online · Product assistant</span></div>
+        </div>
+        <div class="lp-ai-tools">
+          <button type="button" id="lpAIClear" title="Clear chat">↺</button>
+          <button type="button" onclick="toggleAI()" title="Close">×</button>
+        </div>`;
+    }
+    const suggestions=make('div',{class:'lp-ai-suggestions'});
+    ['What is LIFEPASS?','How does verification work?','Explain ownership transfer','How does a QR passport work?'].forEach(q=>{
+      const b=make('button',{type:'button',text:q});
+      b.onclick=()=>{
+        const input=$('#aiInput');
+        if(input){input.value=q;input.focus();}
+      };
+      suggestions.appendChild(b);
+    });
+    panel.insertBefore(suggestions,$('#aiMessages'));
+    $('#lpAIClear').onclick=()=>{
+      const box=$('#aiMessages');
+      if(box) box.innerHTML='<div class="msg ai">Chat cleared. What would you like to know about LIFEPASS?</div>';
+    };
+
+    const originalAdd=window.addAIMessage;
+    if(typeof originalAdd==='function'&&!window.__lpAddWrapped){
+      window.__lpAddWrapped=true;
+      window.addAIMessage=function(text,type){
+        originalAdd(text,type);
+        const box=$('#aiMessages');
+        const last=box?.lastElementChild;
+        if(last&&type==='ai'&&text==='Thinking...'){
+          last.innerHTML='<div class="lp-ai-typing"><span></span><span></span><span></span></div>';
+          last.style.background='transparent';last.style.border='0';last.style.padding='0';
+        }
+      };
+    }
+  }
+
+  function setupViewEnhancement(){
+    const content=$('#viewContent');
+    if(!content||content.dataset.enhanced==='1') return;
+    content.dataset.enhanced='1';
+  }
+
+  function enhanceView(id){
+    const content=$('#viewContent');
+    if(!content||typeof passports==='undefined') return;
+    const p=passports.find(x=>x.id===id);
+    if(!p) return;
+    const passport=content.querySelector('.real-passport');
+    if(!passport) return;
+    const old=content.querySelector('.lp-history');
+    if(old) old.remove();
+
+    const history=Array.isArray(p.transferHistory)?p.transferHistory:[];
+    const wrap=make('div',{class:'lp-history'});
+    let html='<h4>Product Journey</h4><div class="lp-timeline">';
+    html+=`<div class="lp-timeline-item"><div class="lp-dot"></div><div><strong>Passport created</strong><p>${esc(datetime(p.createdAt))} · ${esc(p.ownerName||'Owner not provided')}</p></div></div>`;
+    if(p.verificationRequestedAt) html+=`<div class="lp-timeline-item"><div class="lp-dot"></div><div><strong>Verification requested</strong><p>${esc(datetime(p.verificationRequestedAt))}</p></div></div>`;
+    history.slice().reverse().forEach(h=>{
+      html+=`<div class="lp-timeline-item"><div class="lp-dot"></div><div><strong>Ownership transferred</strong><p>${esc(h.fromName||'Previous owner')} → ${esc(h.toName||'New owner')} · ${esc(datetime(h.date))}</p></div></div>`;
+    });
+    html+='</div>';
+    wrap.innerHTML=html;
+    const grid=passport.querySelector('.passport-content');
+    if(grid) grid.appendChild(wrap);
+  }
+
+  /* Hook into existing functions without replacing their core behavior. */
+  function wrapFunctions(){
+    if(typeof window.updateDashboard==='function'&&!window.__lpDashWrapped){
+      const old=window.updateDashboard;
+      window.updateDashboard=function(){old();renderDashboardExtras();updatePassportCount();refreshProfileEnhancement();};
+      window.__lpDashWrapped=true;
+    }
+    if(typeof window.renderPassports==='function'&&!window.__lpRenderWrapped){
+      const old=window.renderPassports;
+      window.renderPassports=function(){old();updatePassportCount();renderDashboardExtras();};
+      window.__lpRenderWrapped=true;
+    }
+    if(typeof window.viewPassport==='function'&&!window.__lpViewWrapped){
+      const old=window.viewPassport;
+      window.viewPassport=function(id){old(id);setTimeout(()=>enhanceView(id),30);};
+      window.__lpViewWrapped=true;
+    }
+    if(typeof window.openTransfer==='function'&&!window.__lpTransferWrapped){
+      const old=window.openTransfer;
+      window.openTransfer=function(id){old(id);setTimeout(updateTransferPreview,30);};
+      window.__lpTransferWrapped=true;
+    }
+    if(typeof window.updateAuthUI==='function'&&!window.__lpAuthWrapped){
+      const old=window.updateAuthUI;
+      window.updateAuthUI=async function(){await old();refreshProfileEnhancement();};
+      window.__lpAuthWrapped=true;
+    }
+    if(typeof window.showPage==='function'&&!window.__lpShowWrapped){
+      const old=window.showPage;
+      window.showPage=function(page){old(page);const nav=$('.nav');if(nav)nav.classList.remove('nav-mobile-open');const b=$('.mobile-menu-btn');if(b)b.textContent='☰';};
+      window.__lpShowWrapped=true;
+    }
+  }
+
+  function boot(){
+    setupMobileNav();
+    setupDashboard();
+    setupPassportToolbar();
+    setupCreateForm();
+    setupTransfer();
+    setupProfile();
+    setupOwnerLogin();
+    setupVerify();
+    setupAI();
+    setupViewEnhancement();
+    wrapFunctions();
+    setTimeout(()=>{
+      wrapFunctions();
+      renderDashboardExtras();
+      updatePassportCount();
+      refreshProfileEnhancement();
+    },120);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>
