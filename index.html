@@ -1350,7 +1350,10 @@ window.supabase.createClient(
 ========================================================== */
 
 const CONTACT_EMAIL="lifepass.digital@gmail.com";
-const COMPANY_ADMIN_EMAILS=["lifepass.digital@gmail.com","aadepu14vihaan@gmail.com"];
+const COMPANY_EMAILS=[
+  "lifepass.digital@gmail.com",
+  "aadepu14vihaan@gmail.com"
+];
 const LIFEPASS_SITE_URL="https://lifepassdigital.github.io/lifepass/";
 const PASSPORT_STORAGE="lifepass_user_passports";
 const VERIFICATION_BUCKET="verification-evidence";
@@ -1367,6 +1370,7 @@ let currentViewId=null;
 
 document.addEventListener("DOMContentLoaded",async()=>{
 
+ handleAuthRedirectMessages();
  await checkSession();
 
  supabaseClient.auth.onAuthStateChange(
@@ -1379,6 +1383,14 @@ document.addEventListener("DOMContentLoaded",async()=>{
      if(currentUser){
        loadPassports();
        await syncVerificationStatuses();
+
+       if(event==="SIGNED_IN" || event==="INITIAL_SESSION" || event==="USER_UPDATED"){
+         const confirmed=currentUser.email_confirmed_at;
+         if(confirmed && sessionStorage.getItem("lifepass_email_just_confirmed")==="1"){
+           sessionStorage.removeItem("lifepass_email_just_confirmed");
+           toast("Email verified successfully. Welcome to LIFEPASS!");
+         }
+       }
      }else{
        passports=[];
      }
@@ -1397,7 +1409,11 @@ document.addEventListener("DOMContentLoaded",async()=>{
 
 async function checkSession(){
 
- const {data}=await supabaseClient.auth.getSession();
+ const {data,error}=await supabaseClient.auth.getSession();
+
+ if(error){
+   console.error("LIFEPASS session error:",error);
+ }
 
  currentUser=data.session?.user||null;
 
@@ -1408,6 +1424,34 @@ async function checkSession(){
    await syncVerificationStatuses();
  }
 
+}
+
+function handleAuthRedirectMessages(){
+  const hash=window.location.hash||"";
+  if(!hash) return;
+
+  const params=new URLSearchParams(hash.replace(/^#/,""));
+  const errorCode=params.get("error_code");
+  const errorDescription=params.get("error_description");
+  const type=params.get("type");
+
+  if(errorCode || errorDescription){
+    const message=errorDescription
+      ?decodeURIComponent(errorDescription.replace(/\+/g," "))
+      :"Email confirmation could not be completed.";
+    setTimeout(()=>toast(message),400);
+  }else if(type==="signup" || params.get("access_token")){
+    sessionStorage.setItem("lifepass_email_just_confirmed","1");
+  }
+
+  // Supabase processes the auth fragment automatically. Remove it from the visible URL
+  // after the client has had a chance to initialize the session.
+  if(window.history && window.history.replaceState){
+    setTimeout(()=>{
+      const cleanUrl=window.location.origin+window.location.pathname+window.location.search;
+      window.history.replaceState({},document.title,cleanUrl);
+    },1200);
+  }
 }
 
 /* ==========================================================
@@ -1488,6 +1532,36 @@ async function signup(){
 }
 
 /* ==========================================================
+   RESEND CONFIRMATION EMAIL
+========================================================== */
+
+async function resendConfirmationEmail(){
+
+ const email=(document.getElementById("loginEmail")?.value||
+              document.getElementById("signupEmail")?.value||"").trim();
+
+ if(!email){
+   toast("Enter your email first.");
+   return;
+ }
+
+ const {error}=await supabaseClient.auth.resend({
+   type:"signup",
+   email,
+   options:{
+     emailRedirectTo:LIFEPASS_SITE_URL
+   }
+ });
+
+ if(error){
+   toast(error.message);
+   return;
+ }
+
+ toast("Confirmation email sent. Check your inbox.");
+}
+
+/* ==========================================================
    LOGIN
 ========================================================== */
 
@@ -1514,7 +1588,12 @@ async function login(){
 
  if(error){
 
-   toast(error.message);
+   const msg=(error.message||"").toLowerCase();
+   if(msg.includes("email not confirmed") || msg.includes("email_not_confirmed")){
+     toast("Please confirm your email first. Check your inbox, then log in again.");
+   }else{
+     toast(error.message);
+   }
 
    return;
  }
@@ -1617,7 +1696,7 @@ async function updateAuthUI(){
    initials(name);
 
    const adminButton=document.getElementById("adminNavButton");
-   const isAdmin=COMPANY_ADMIN_EMAILS.includes((currentUser.email||"").toLowerCase());
+   const isAdmin=COMPANY_EMAILS.includes((currentUser.email||"").toLowerCase());
    if(adminButton){
      adminButton.classList.toggle("hidden",!isAdmin);
    }
@@ -2451,7 +2530,7 @@ LIFEPASS`
 
 function isCompanyAdmin(){
   return !!currentUser &&
-    COMPANY_ADMIN_EMAILS.includes((currentUser.email||"").toLowerCase());
+    COMPANY_EMAILS.includes((currentUser.email||"").toLowerCase());
 }
 
 function openVerificationRequest(id=currentViewId){
