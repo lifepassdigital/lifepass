@@ -676,6 +676,39 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   .lp-request-head{flex-direction:column}
 }
 
+
+/* ==========================================================
+   LIFEPASS V4 FEATURE STYLES
+========================================================== */
+.lp-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}
+.lp-feature-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px}
+.lp-feature-card h3{margin:0 0 6px;color:var(--navy)}
+.lp-feature-card p{margin:0;color:var(--muted);font-size:13px}
+.lp-feature-list{display:grid;gap:9px;margin-top:14px}
+.lp-feature-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e8eef2}
+.lp-feature-row:last-child{border-bottom:0}
+.lp-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#eef5f8;color:#426176}
+.lp-chip.good{background:#e8f7ee;color:#137441}.lp-chip.warn{background:#fff5df;color:#916700}.lp-chip.bad{background:#fdecec;color:#a42a2a}
+.lp-filter-row{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}
+.lp-filter-row select,.lp-filter-row input{min-width:150px;flex:1}
+.lp-doc-grid,.lp-service-grid,.lp-history-grid{display:grid;gap:10px;margin-top:12px}
+.lp-doc-card{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:12px;background:#fbfdfe}
+.lp-doc-icon{width:40px;height:40px;border-radius:10px;background:#eaf4f7;display:grid;place-items:center;font-weight:900;color:var(--teal);flex:none}
+.lp-doc-main{flex:1;min-width:0}.lp-doc-main strong{display:block}.lp-doc-main small{display:block;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp-service-card{border:1px solid var(--border);border-radius:12px;padding:13px;background:#fff}
+.lp-service-card strong{display:block}.lp-service-meta{font-size:12px;color:var(--muted);margin-top:5px}.lp-service-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.lp-history-item{position:relative;padding:12px 14px 12px 19px;border-left:3px solid var(--teal);background:#f8fbfc;border-radius:0 12px 12px 0}
+.lp-history-item:before{content:"";position:absolute;left:-7px;top:15px;width:11px;height:11px;border-radius:50%;background:var(--teal);border:2px solid white}
+.lp-notification-panel{position:fixed;right:18px;top:76px;width:min(390px,calc(100vw - 36px));max-height:70vh;overflow:auto;background:white;border:1px solid var(--border);border-radius:16px;box-shadow:0 18px 45px rgba(16,42,72,.18);z-index:9999;padding:15px}
+.lp-notification-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.lp-notification-item{padding:12px;border-bottom:1px solid #edf1f4}.lp-notification-item:last-child{border-bottom:0}.lp-notification-item.unread{background:#f2fafb;border-radius:10px}.lp-notification-item strong{display:block}.lp-notification-item small{display:block;color:var(--muted);margin-top:4px}.lp-notification-actions{display:flex;gap:7px;margin-top:10px}
+.lp-badge-large{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:900}.lp-badge-verified{background:#e8f7ee;color:#117441}.lp-badge-pending{background:#fff5df;color:#916700}.lp-badge-rejected{background:#fdecec;color:#a42a2a}
+.lp-evidence-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.lp-evidence-gallery img{width:100%;height:105px;object-fit:cover;border-radius:10px;border:1px solid var(--border);cursor:pointer}
+.lp-doc-upload-note{font-size:12px;color:var(--muted);margin-top:5px}
+.lp-public-passport{max-width:850px;margin:35px auto;padding:22px}.lp-public-card{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 12px 35px rgba(16,42,72,.08)}.lp-public-head{background:#102f50;color:#fff;padding:20px;display:flex;justify-content:space-between;gap:15px;align-items:center}.lp-public-body{padding:24px}.lp-public-product{display:grid;grid-template-columns:180px 1fr;gap:22px}.lp-public-product img{width:180px;height:180px;object-fit:cover;border-radius:14px}.lp-public-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.lp-public-info{padding:12px;background:#f6f9fb;border-radius:10px}.lp-public-info small{display:block;color:var(--muted);font-size:11px}.lp-public-info strong{display:block;margin-top:3px}
+.lp-stamp{display:inline-flex;align-items:center;justify-content:center;width:82px;height:82px;border:3px double #102f50;border-radius:50%;color:#102f50;font-weight:900;font-size:11px;text-align:center;line-height:1.05;transform:rotate(-8deg);letter-spacing:1px}.lp-print-stamp{position:absolute;right:28px;top:28px}.print-head{position:relative}
+.lp-company-tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.lp-company-tools input,.lp-company-tools select{flex:1;min-width:170px}
+@media(max-width:700px){.lp-feature-grid{grid-template-columns:1fr}.lp-evidence-gallery{grid-template-columns:repeat(2,1fr)}.lp-public-product{grid-template-columns:1fr}.lp-public-product img{width:100%;height:220px}.lp-public-grid{grid-template-columns:1fr}.lp-notification-panel{right:10px;top:70px;width:calc(100vw - 20px)}.lp-stamp{width:70px;height:70px;font-size:9px}}
+
 </style>
 </head>
 
@@ -703,6 +736,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 
 <div id="loggedNav" class="hidden" style="display:flex;align-items:center;gap:7px">
 <div class="user-avatar" id="navAvatar">U</div>
+<button class="btn outline" id="lpNotificationButton" onclick="toggleNotifications()" title="Notifications">🔔 <span id="lpNotificationCount">0</span></button>
 <button class="btn outline hidden" id="adminNavButton" onclick="showPage('admin-verification')">Verification Center</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn outline" onclick="logout()">Log Out</button>
@@ -801,7 +835,7 @@ and preserve their story throughout their lifetime.
 <div class="stat"><small>Total Passports</small><strong id="statTotal">0</strong></div>
 <div class="stat"><small>Verified</small><strong id="statVerified">0</strong></div>
 <div class="stat"><small>Pending</small><strong id="statPending">0</strong></div>
-<div class="stat"><small>Products</small><strong id="statProducts">0</strong></div>
+<div class="stat"><small>Transferred</small><strong id="statProducts">0</strong></div>
 </div>
 
 <div style="margin-top:25px" class="card">
@@ -1279,6 +1313,9 @@ Transfer the product passport to a new owner. The passport ID and product histor
 <div class="form-actions">
 <button class="btn outline" onclick="closeView()">Close</button>
 <button class="btn secondary" onclick="requestVerification()">Request Verification</button>
+<button class="btn outline" onclick="openServiceModal(currentViewId)">Service History</button>
+<button class="btn outline" onclick="openDocumentsModal(currentViewId)">Documents</button>
+<button class="btn outline" onclick="openHistoryModal(currentViewId)">Ownership</button>
 <button class="btn outline" onclick="openTransfer(currentViewId)">Transfer</button>
 <button class="btn primary" onclick="printCurrent()">Print</button>
 </div>
@@ -1324,6 +1361,51 @@ For example: product photos, serial-number label, purchase proof, warranty proof
 
 </div>
 </div>
+
+
+<!-- V4 SERVICE HISTORY MODAL -->
+<div id="serviceModal" class="modal hidden">
+<div class="modal-box" style="width:min(650px,100%)">
+<div class="modal-head"><h2>Service History</h2><button class="close" onclick="closeServiceModal()">×</button></div>
+<input id="servicePassportId" type="hidden">
+<div class="form-group"><label>Service Date *</label><input id="serviceDate" type="date"></div>
+<div class="form-group" style="margin-top:13px"><label>Service Type *</label><input id="serviceType" placeholder="Repair, maintenance, battery replacement..."></div>
+<div class="form-group" style="margin-top:13px"><label>Service Center / Technician</label><input id="serviceCenter" placeholder="Service center"></div>
+<div class="form-group" style="margin-top:13px"><label>Cost</label><input id="serviceCost" placeholder="₹0"></div>
+<div class="form-group" style="margin-top:13px"><label>Next Service Due</label><input id="serviceNextDue" type="date"></div>
+<div class="form-group" style="margin-top:13px"><label>Notes</label><textarea id="serviceNotes" placeholder="What was repaired or maintained?"></textarea></div>
+<div class="form-actions"><button class="btn outline" onclick="closeServiceModal()">Cancel</button><button class="btn primary" onclick="saveServiceRecord()">Save Service</button></div>
+</div></div>
+
+<!-- V4 DOCUMENTS MODAL -->
+<div id="documentsModal" class="modal hidden">
+<div class="modal-box" style="width:min(720px,100%)">
+<div class="modal-head"><h2>Product Documents</h2><button class="close" onclick="closeDocumentsModal()">×</button></div>
+<input id="documentsPassportId" type="hidden">
+<div class="form-group"><label>Document Type</label><select id="documentType"><option>Invoice</option><option>Warranty Card</option><option>Service Bill</option><option>Manual</option><option>Other</option></select></div>
+<div class="form-group" style="margin-top:13px"><label>Choose File</label><input id="documentFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.txt,.doc,.docx"><div class="lp-doc-upload-note">For this browser-only version, documents are stored on this device. Keep individual files reasonably small.</div></div>
+<div id="documentList" class="lp-doc-grid"></div>
+<div class="form-actions"><button class="btn outline" onclick="closeDocumentsModal()">Close</button><button class="btn primary" onclick="addDocument()">Upload Document</button></div>
+</div></div>
+
+<!-- V4 OWNERSHIP HISTORY MODAL -->
+<div id="historyModal" class="modal hidden">
+<div class="modal-box" style="width:min(650px,100%)">
+<div class="modal-head"><h2>Ownership History</h2><button class="close" onclick="closeHistoryModal()">×</button></div>
+<div id="historyContent"></div>
+<div class="form-actions"><button class="btn primary" onclick="closeHistoryModal()">Close</button></div>
+</div></div>
+
+<!-- V4 NOTIFICATIONS -->
+<div id="notificationPanel" class="lp-notification-panel hidden">
+<div class="lp-notification-head"><strong>Notifications</strong><div style="display:flex;gap:6px"><button class="btn outline" onclick="markAllNotificationsRead()">Mark all read</button><button class="btn outline" onclick="toggleNotifications()">×</button></div></div>
+<div id="notificationList"></div>
+</div>
+
+<!-- V4 PUBLIC PASSPORT -->
+<section id="page-public-passport" class="page">
+<div class="lp-public-passport" id="publicPassportContent"></div>
+</section>
 
 <div id="printArea"></div>
 <div id="toast" class="toast"></div>
@@ -2379,7 +2461,7 @@ function viewPassport(id){
    if(qr){
 
      new QRCode(qr,{
-       text:window.location.href.split("#")[0]+"#passport="+encodeURIComponent(p.id),
+       text:publicUrl(p),
        width:105,
        height:105
      });
@@ -3777,6 +3859,211 @@ window.addEventListener("load",()=>{
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
   else boot();
+})();
+</script>
+
+
+<script>
+/* ==========================================================
+   LIFEPASS V4 — ALL FEATURE LAYER
+   Adds dashboard, notifications, verification presentation,
+   warranty/service tracking, documents, ownership history,
+   public QR passport, search/filter, AI context and print stamp.
+========================================================== */
+(function(){
+  const NOTIFY_PREFIX='lifepass_notifications_';
+  const todayISO=()=>new Date().toISOString().slice(0,10);
+  const key=(suffix)=>currentUser?('lifepass_'+suffix+'_'+currentUser.id):null;
+  const readJSON=(k,fallback)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??fallback}catch{return fallback}};
+  const writeJSON=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Storage limit reached. Remove some local files/documents.');return false}};
+
+  function ensurePassportData(p){
+    p.serviceHistory=Array.isArray(p.serviceHistory)?p.serviceHistory:[];
+    p.documents=Array.isArray(p.documents)?p.documents:[];
+    p.transferHistory=Array.isArray(p.transferHistory)?p.transferHistory:[];
+    p.status=p.status||'Pending';
+    return p;
+  }
+
+  function addNotification(title,message,type='info',dedupe=''){
+    if(!currentUser)return;
+    const k=NOTIFY_PREFIX+currentUser.id;
+    const arr=readJSON(k,[]);
+    const sig=dedupe||title+'|'+message;
+    if(arr.some(n=>n.signature===sig))return;
+    arr.unshift({id:crypto.randomUUID(),title,message,type,createdAt:new Date().toISOString(),read:false,signature:sig});
+    writeJSON(k,arr.slice(0,60));
+    renderNotifications();
+  }
+
+  function getNotifications(){return currentUser?readJSON(NOTIFY_PREFIX+currentUser.id,[]):[]}
+  window.toggleNotifications=function(){
+    if(!currentUser){showPage('login');return;}
+    const p=document.getElementById('notificationPanel');
+    if(!p)return;
+    p.classList.toggle('hidden');
+    if(!p.classList.contains('hidden'))renderNotifications();
+  };
+  window.markAllNotificationsRead=function(){
+    const arr=getNotifications().map(n=>({...n,read:true}));
+    if(currentUser)writeJSON(NOTIFY_PREFIX+currentUser.id,arr);
+    renderNotifications();
+  };
+  function renderNotifications(){
+    const list=document.getElementById('notificationList'),count=document.getElementById('lpNotificationCount');
+    if(!list)return;
+    const arr=getNotifications();
+    const unread=arr.filter(n=>!n.read).length;
+    if(count)count.textContent=unread>99?'99+':String(unread);
+    if(!arr.length){list.innerHTML='<div class="lp-empty-mini" style="padding:20px">No notifications yet.</div>';return;}
+    list.innerHTML=arr.map(n=>`<div class="lp-notification-item ${n.read?'':'unread'}"><strong>${esc(n.title)}</strong><small>${esc(n.message)}</small><small>${esc(datetime(n.createdAt))}</small></div>`).join('');
+  }
+
+  function checkWarrantyAndService(){
+    if(!currentUser)return;
+    passports.forEach(p=>{
+      ensurePassportData(p);
+      if(p.warrantyDate){
+        const diff=Math.ceil((new Date(p.warrantyDate+'T23:59:59')-new Date())/86400000);
+        if(diff>=0&&diff<=30)addNotification('Warranty reminder',`${p.productName||'Product'} warranty expires in ${diff} day${diff===1?'':'s'}.`,'warranty','warranty|'+p.id+'|'+p.warrantyDate);
+        if(diff<0)addNotification('Warranty expired',`${p.productName||'Product'} warranty expired on ${date(p.warrantyDate)}.`,'warranty','expired|'+p.id+'|'+p.warrantyDate);
+      }
+      (p.serviceHistory||[]).forEach(s=>{
+        if(!s.nextDue)return;
+        const diff=Math.ceil((new Date(s.nextDue+'T23:59:59')-new Date())/86400000);
+        if(diff>=0&&diff<=14)addNotification('Service reminder',`${p.productName||'Product'} service is due in ${diff} day${diff===1?'':'s'}.`,'service','service|'+p.id+'|'+s.nextDue);
+      });
+    });
+  }
+
+  function syncLocalActivity(){
+    if(!currentUser)return;
+    const snapshot=readJSON(key('activity'),[]);
+    passports.forEach(p=>{
+      ensurePassportData(p);
+      const sig=p.id+'|'+(p.updatedAt||p.createdAt);
+      if(!snapshot.some(a=>a.signature===sig)){
+        snapshot.unshift({signature:sig,title:p.createdAt===p.updatedAt?'Passport updated':'Passport created',message:`${p.productName||'Product'} · ${p.id}`,date:p.updatedAt||p.createdAt,type:'passport'});
+      }
+      if(p.transferStatus==='Pending')addNotification('Ownership transfer pending',`${p.productName||'Product'} has a pending ownership transfer request.`,'transfer','transfer-pending|'+p.id+'|'+(p.pendingTransfer?.requestedAt||''));
+      if(p.transferHistory?.length){const h=p.transferHistory[p.transferHistory.length-1];addNotification('Passport transferred',`${p.productName||'Product'} was transferred to ${h.toName||'a new owner'}.`,'transfer','transfer-done|'+p.id+'|'+(h.date||''));}
+      if(p.status==='Verified')addNotification('Verification accepted',`${p.productName||'Product'} is now verified.`,'verification','verified|'+p.id+'|'+(p.verificationReviewedAt||''));
+      if(p.status==='Rejected')addNotification('Verification rejected',`${p.productName||'Product'} verification was rejected.`,'verification','rejected|'+p.id+'|'+(p.verificationReviewedAt||''));
+    });
+    writeJSON(key('activity'),snapshot.slice(0,50));
+    checkWarrantyAndService();
+  }
+
+  function enhanceDashboard(){
+    const content=document.getElementById('dashboardContent');
+    if(!content||content.dataset.v4==='1')return;
+    content.dataset.v4='1';
+    const section=document.createElement('div');section.className='lp-feature-grid';section.id='lpDashboardFeatures';
+    section.innerHTML=`
+      <div class="lp-feature-card"><h3>Recent Activity</h3><p>Your latest passport actions.</p><div id="lpActivityList" class="lp-feature-list"></div></div>
+      <div class="lp-feature-card"><h3>Warranty & Service</h3><p>Upcoming reminders across your products.</p><div id="lpReminderList" class="lp-feature-list"></div></div>`;
+    content.appendChild(section);
+    const tools=document.createElement('div');tools.className='card';tools.style.marginTop='18px';tools.innerHTML=`<h3>Manage Your Product Data</h3><div class="actions" style="margin-top:13px"><button class="btn secondary" onclick="showPage('passports')">Search & Filter</button><button class="btn outline" onclick="showPage('verify')">Public Verification</button><button class="btn outline" onclick="openNotificationsFromDashboard()">Notifications</button></div>`;content.appendChild(tools);
+  }
+  window.openNotificationsFromDashboard=function(){const p=document.getElementById('notificationPanel');p?.classList.remove('hidden');renderNotifications();}
+  function renderDashboardV4(){
+    if(!currentUser)return;
+    enhanceDashboard();
+    const transferred=passports.filter(p=>p.transferHistory?.length||p.transferStatus==='Pending').length;
+    const stat=document.getElementById('statProducts');if(stat)stat.textContent=transferred;
+    const total=passports.length,verified=passports.filter(p=>p.status==='Verified').length,pending=passports.filter(p=>p.status==='Pending').length;
+    const pendingEl=document.getElementById('statPending');if(pendingEl)pendingEl.textContent=pending;
+    const activity=readJSON(key('activity'),[]).slice(0,6);
+    const al=document.getElementById('lpActivityList');
+    if(al)al.innerHTML=activity.length?activity.map(a=>`<div class="lp-feature-row"><div><strong>${esc(a.title)}</strong><div style="font-size:12px;color:var(--muted);margin-top:3px">${esc(a.message)}</div></div><small>${esc(datetime(a.date))}</small></div>`).join(''):'<div class="lp-empty-mini">No activity yet.</div>';
+    const reminders=[];
+    passports.forEach(p=>{ensurePassportData(p);if(p.warrantyDate){const d=Math.ceil((new Date(p.warrantyDate+'T23:59:59')-new Date())/86400000);if(d>=0&&d<=30)reminders.push(`<div class="lp-feature-row"><div><strong>${esc(p.productName)}</strong><div style="font-size:12px;color:var(--muted)">Warranty expires ${esc(date(p.warrantyDate))}</div></div><span class="lp-chip warn">${d}d</span></div>`)}(p.serviceHistory||[]).forEach(s=>{if(s.nextDue){const d=Math.ceil((new Date(s.nextDue+'T23:59:59')-new Date())/86400000);if(d>=0&&d<=30)reminders.push(`<div class="lp-feature-row"><div><strong>${esc(p.productName)}</strong><div style="font-size:12px;color:var(--muted)">Service due ${esc(date(s.nextDue))}</div></div><span class="lp-chip warn">${d}d</span></div>`)}})});
+    const rl=document.getElementById('lpReminderList');if(rl)rl.innerHTML=reminders.length?reminders.slice(0,8).join(''):'<div class="lp-empty-mini">No upcoming reminders.</div>';
+  }
+
+  function setupPassportFilters(){
+    const input=document.getElementById('searchPassport');
+    if(!input||document.getElementById('passportTypeFilter'))return;
+    const row=input.parentElement;
+    const wrap=document.createElement('div');wrap.className='lp-filter-row';
+    wrap.innerHTML=`<input id="searchPassportV4" class="profile-input" placeholder="Search name, ID, brand, serial..." oninput="renderPassportsV4()"><select id="passportTypeFilter" class="profile-input" onchange="renderPassportsV4()"><option value="">All types</option><option>Laptop</option><option>Smartphone</option><option>Bicycle</option><option>Camera</option><option>Gaming Console</option><option>Robot</option><option>Television</option><option>Appliance</option><option>Other</option></select><select id="passportStatusFilter" class="profile-input" onchange="renderPassportsV4()"><option value="">All statuses</option><option>Verified</option><option>Pending</option><option>Rejected</option></select><select id="passportSort" class="profile-input" onchange="renderPassportsV4()"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option></select>`;
+    row.parentElement.insertBefore(wrap,row);
+    row.style.display='none';
+  }
+  window.renderPassportsV4=function(){
+    const list=document.getElementById('passportList');if(!list||!currentUser)return;
+    const q=(document.getElementById('searchPassportV4')?.value||'').toLowerCase();
+    const type=document.getElementById('passportTypeFilter')?.value||'';const status=document.getElementById('passportStatusFilter')?.value||'';const sort=document.getElementById('passportSort')?.value||'newest';
+    let arr=passports.filter(p=>{const hay=[p.productName,p.id,p.brand,p.model,p.serialNumber].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!type||p.productType===type)&&(!status||p.status===status)});
+    arr.sort((a,b)=>sort==='oldest'?new Date(a.createdAt)-new Date(b.createdAt):sort==='name'?String(a.productName).localeCompare(String(b.productName)):new Date(b.createdAt)-new Date(a.createdAt));
+    if(!arr.length){list.innerHTML='<div class="card" style="text-align:center"><h3>No passports found</h3><p style="margin:8px 0 15px;color:var(--muted)">Try another search or create a passport.</p><button class="btn primary" onclick="openCreate()">Create Passport</button></div>';return;}
+    list.innerHTML=arr.map(p=>{ensurePassportData(p);const image=p.image||placeholder(p.productType);const cls=p.status==='Verified'?'verified':p.status==='Rejected'?'rejected':'pending';return `<div class="passport-card"><img class="thumb" src="${attr(image)}" alt="Product"><div><h3>${esc(p.productName)}</h3><div class="passport-id">${esc(p.id)}</div><span class="status ${cls}">${p.status==='Verified'?'✓':p.status==='Rejected'?'✕':'●'} ${esc(p.status)}</span><p style="color:var(--muted);font-size:12px;margin-top:5px">${esc(p.brand||'')} ${p.model?' • '+esc(p.model):''}</p><div style="margin-top:7px;display:flex;gap:5px;flex-wrap:wrap"><span class="lp-chip">${(p.serviceHistory||[]).length} service</span><span class="lp-chip">${(p.documents||[]).length} docs</span></div></div><div class="card-actions"><button class="btn secondary" onclick="viewPassport('${esc(p.id)}')">View</button><button class="btn outline" onclick="requestEdit('${esc(p.id)}')">Edit</button><button class="btn outline" onclick="openDocumentsModal('${esc(p.id)}')">Docs</button><button class="btn outline" onclick="openServiceModal('${esc(p.id)}')">Service</button><button class="btn outline" onclick="printPassport('${esc(p.id)}')">Print</button><button class="btn outline" onclick="openHistoryModal('${esc(p.id)}')">History</button><button class="btn danger" onclick="requestDelete('${esc(p.id)}')">Delete</button></div></div>`}).join('');
+  };
+
+  window.openServiceModal=function(id){
+    if(!currentUser){showPage('login');return;}const p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);
+    document.getElementById('servicePassportId').value=id;document.getElementById('serviceDate').value=todayISO();document.getElementById('serviceType').value='';document.getElementById('serviceCenter').value='';document.getElementById('serviceCost').value='';document.getElementById('serviceNextDue').value='';document.getElementById('serviceNotes').value='';
+    document.getElementById('serviceModal').classList.remove('hidden');renderServiceList(p);
+  };
+  function renderServiceList(p){const modal=document.getElementById('serviceModal');if(!modal)return;let old=modal.querySelector('.lp-existing-services');if(old)old.remove();const box=document.createElement('div');box.className='lp-existing-services';box.innerHTML='<h3 style="margin-top:20px">Saved Service Records</h3><div class="lp-service-grid">'+((p.serviceHistory||[]).slice().reverse().map((s,i)=>`<div class="lp-service-card"><strong>${esc(s.type||'Service')}</strong><div class="lp-service-meta">${esc(date(s.date))} · ${esc(s.center||'Service center not provided')} ${s.cost?'· '+esc(s.cost):''}</div>${s.nextDue?`<div class="lp-service-meta">Next due: ${esc(date(s.nextDue))}</div>`:''}${s.notes?`<div style="margin-top:7px;font-size:13px">${esc(s.notes)}</div>`:''}<div class="lp-service-actions"><button class="btn danger" onclick="deleteServiceRecord('${esc(p.id)}','${esc(s.id)}')">Delete</button></div></div>`).join('')||'<div class="lp-empty-mini">No service records yet.</div>')+'</div>';const actions=modal.querySelector('.form-actions');actions.parentElement.insertBefore(box,actions);}
+  window.closeServiceModal=function(){document.getElementById('serviceModal')?.classList.add('hidden')};
+  window.saveServiceRecord=function(){const id=document.getElementById('servicePassportId').value,p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);const dateValue=document.getElementById('serviceDate').value,type=document.getElementById('serviceType').value.trim();if(!dateValue||!type){toast('Enter service date and service type.');return;}p.serviceHistory.push({id:crypto.randomUUID(),date:dateValue,type,center:document.getElementById('serviceCenter').value.trim(),cost:document.getElementById('serviceCost').value.trim(),nextDue:document.getElementById('serviceNextDue').value,notes:document.getElementById('serviceNotes').value.trim()});p.updatedAt=new Date().toISOString();savePassports();addNotification('Service record added',`${p.productName} service history was updated.`,'service','service-added|'+p.id+'|'+p.updatedAt);closeServiceModal();renderPassportsV4();updateDashboard();toast('Service record saved.');};
+  window.deleteServiceRecord=function(pid,sid){const p=passports.find(x=>x.id===pid);if(!p)return;if(!confirm('Delete this service record?'))return;p.serviceHistory=(p.serviceHistory||[]).filter(s=>s.id!==sid);p.updatedAt=new Date().toISOString();savePassports();openServiceModal(pid);renderPassportsV4();updateDashboard();};
+
+  window.openDocumentsModal=function(id){if(!currentUser){showPage('login');return;}const p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);document.getElementById('documentsPassportId').value=id;document.getElementById('documentFile').value='';document.getElementById('documentsModal').classList.remove('hidden');renderDocuments(p);};
+  function renderDocuments(p){const list=document.getElementById('documentList');if(!list)return;list.innerHTML=(p.documents||[]).slice().reverse().map(d=>`<div class="lp-doc-card"><div class="lp-doc-icon">▤</div><div class="lp-doc-main"><strong>${esc(d.type)}</strong><small>${esc(d.name)} · ${esc(datetime(d.createdAt))}</small></div><div style="display:flex;gap:5px"><button class="btn outline" onclick="openDocument('${esc(p.id)}','${esc(d.id)}')">Open</button><button class="btn danger" onclick="deleteDocument('${esc(p.id)}','${esc(d.id)}')">Delete</button></div></div>`).join('')||'<div class="lp-empty-mini">No documents uploaded yet.</div>';}
+  window.addDocument=async function(){const id=document.getElementById('documentsPassportId').value,p=passports.find(x=>x.id===id),file=document.getElementById('documentFile').files?.[0];if(!p||!file)return toast('Choose a document first.');if(file.size>3*1024*1024)return toast('Keep each document under 3 MB in this browser version.');ensurePassportData(p);const data=await fileToDataURL(file);p.documents.push({id:crypto.randomUUID(),type:document.getElementById('documentType').value,name:file.name,data,createdAt:new Date().toISOString()});p.updatedAt=new Date().toISOString();savePassports();addNotification('Document uploaded',`${file.name} was added to ${p.productName}.`,'document','doc-added|'+p.id+'|'+file.name+'|'+p.updatedAt);document.getElementById('documentFile').value='';renderDocuments(p);renderPassportsV4();updateDashboard();toast('Document uploaded.');};
+  window.openDocument=function(pid,did){const p=passports.find(x=>x.id===pid),d=p?.documents?.find(x=>x.id===did);if(!d)return;const w=window.open();if(!w)return;w.document.write(`<title>${esc(d.name)}</title><body style="margin:20px;font-family:Arial"><h2>${esc(d.name)}</h2><p>${esc(d.type)}</p>${d.data.startsWith('data:image')?`<img src="${d.data}" style="max-width:100%">`:d.data.startsWith('data:application/pdf')?`<iframe src="${d.data}" style="width:100%;height:90vh;border:0"></iframe>`:`<a href="${d.data}" download="${attr(d.name)}">Download ${esc(d.name)}</a>`}</body>`);w.document.close();};
+  window.deleteDocument=function(pid,did){const p=passports.find(x=>x.id===pid);if(!p||!confirm('Delete this document?'))return;p.documents=(p.documents||[]).filter(d=>d.id!==did);p.updatedAt=new Date().toISOString();savePassports();openDocumentsModal(pid);renderPassportsV4();updateDashboard();};
+
+  window.openHistoryModal=function(id){const p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);document.getElementById('historyModal').classList.remove('hidden');const c=document.getElementById('historyContent');let html=`<div class="lp-history-grid"><div class="lp-history-item"><strong>Passport created</strong><div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(datetime(p.createdAt))} · ${esc(p.ownerName||'Owner')}</div></div>`;if(p.verificationRequestedAt)html+=`<div class="lp-history-item"><strong>Verification requested</strong><div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(datetime(p.verificationRequestedAt))}</div></div>`;if(p.verificationReviewedAt)html+=`<div class="lp-history-item"><strong>Verification ${esc(p.status)}</strong><div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(datetime(p.verificationReviewedAt))}${p.verificationAdminNote?' · '+esc(p.verificationAdminNote):''}</div></div>`;(p.transferHistory||[]).slice().reverse().forEach(h=>html+=`<div class="lp-history-item"><strong>Ownership transferred</strong><div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(h.fromName||'Previous owner')} → ${esc(h.toName||'New owner')} · ${esc(datetime(h.date))}</div>${h.note?`<div style="margin-top:6px">${esc(h.note)}</div>`:''}</div>`);html+='</div>';c.innerHTML=html;};
+  window.closeHistoryModal=function(){document.getElementById('historyModal')?.classList.add('hidden')};
+
+  function publicPayload(p){return {id:p.id,productName:p.productName,productType:p.productType,brand:p.brand,model:p.model,serialNumber:p.serialNumber,purchaseDate:p.purchaseDate,warrantyDate:p.warrantyDate,status:p.status,verificationDate:p.verificationReviewedAt||null,verificationNote:p.verificationAdminNote||''};}
+  function publicUrl(p){return LIFEPASS_SITE_URL+'#public-passport='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(publicPayload(p))))));}
+  window.publicUrl=publicUrl;
+  function renderPublicPassport(encoded){try{const data=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(encoded)))));const c=document.getElementById('publicPassportContent');if(!c)return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-public-passport').classList.add('active');const cls=data.status==='Verified'?'lp-badge-verified':data.status==='Rejected'?'lp-badge-rejected':'lp-badge-pending';c.innerHTML=`<div class="lp-public-card"><div class="lp-public-head"><div><strong style="font-size:24px;letter-spacing:3px">LIFEPASS</strong><div style="font-size:11px;margin-top:4px;opacity:.8">PUBLIC PRODUCT PASSPORT</div></div><span class="lp-badge-large ${cls}">${data.status==='Verified'?'✓ Verified':data.status==='Rejected'?'✕ Rejected':'● Pending'}</span></div><div class="lp-public-body"><div class="lp-public-product"><div style="display:grid;place-items:center;background:#f2f6f9;border-radius:14px;font-size:42px;color:#8aa0b0">▣</div><div><h1 style="color:#102f50;margin:0">${esc(data.productName||'Product')}</h1><p style="color:var(--muted);margin-top:7px">LIFEPASS ID: <strong>${esc(data.id)}</strong></p><p style="margin-top:12px">This public page shows product information only. Private owner information is not displayed.</p></div></div><div class="lp-public-grid">${publicInfo('Product Type',data.productType)}${publicInfo('Brand',data.brand)}${publicInfo('Model',data.model)}${publicInfo('Serial Number',data.serialNumber)}${publicInfo('Purchase Date',date(data.purchaseDate))}${publicInfo('Warranty Until',date(data.warrantyDate))}${publicInfo('Verification',data.status)}${data.verificationDate?publicInfo('Verified On',datetime(data.verificationDate)):''}</div>${data.verificationNote?`<div class="lp-feature-card" style="margin-top:15px"><strong>Company Verification Note</strong><p style="margin-top:6px">${esc(data.verificationNote)}</p></div>`:''}<div class="form-actions" style="margin-top:20px"><button class="btn primary" onclick="showPage('verify')">Verify Another Passport</button><button class="btn outline" onclick="showPage('home')">LIFEPASS Home</button></div></div></div>`;}catch{showPage('home');toast('This QR passport link is invalid or incomplete.');}}
+  function publicInfo(l,v){return v?`<div class="lp-public-info"><small>${esc(l)}</small><strong>${esc(v)}</strong></div>`:''}
+
+  function enhanceViewV4(id){const p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);const passport=document.querySelector('#viewContent .real-passport');if(!passport)return;let tools=passport.querySelector('.lp-v4-tools');if(tools)tools.remove();tools=document.createElement('div');tools.className='lp-v4-tools';tools.style='padding:0 27px 20px;display:flex;gap:7px;flex-wrap:wrap';tools.innerHTML=`<span class="lp-badge-large ${p.status==='Verified'?'lp-badge-verified':p.status==='Rejected'?'lp-badge-rejected':'lp-badge-pending'}">${p.status==='Verified'?'✓ Verified':p.status==='Rejected'?'✕ Rejected':'● Pending'}</span><span class="lp-chip">${p.documents.length} documents</span><span class="lp-chip">${p.serviceHistory.length} service records</span><button class="btn outline" onclick="copyPublicPassport('${esc(p.id)}')">Copy Public QR Link</button>`;passport.appendChild(tools);}
+  window.copyPublicPassport=function(id){const p=passports.find(x=>x.id===id);if(!p)return;navigator.clipboard?.writeText(publicUrl(p)).then(()=>toast('Public passport link copied.')).catch(()=>{prompt('Copy this public passport link:',publicUrl(p));});};
+
+  function addPrintStamp(){
+    const area=document.getElementById('printArea');if(!area)return;const head=area.querySelector('.print-head');if(head&&!head.querySelector('.lp-print-stamp')){const d=document.createElement('div');d.className='lp-print-stamp';d.innerHTML='<span class="lp-stamp">LIFEPASS<br>AUTHENTIC<br>DIGITAL<br>PASSPORT</span>';head.appendChild(d);}
+  }
+
+  function companyTools(){
+    const content=document.getElementById('adminVerificationContent');if(!content||content.dataset.v4==='1')return;content.dataset.v4='1';const card=document.getElementById('verificationRequestList')?.parentElement;if(!card)return;const tools=document.createElement('div');tools.className='lp-company-tools';tools.innerHTML='<input id="adminRequestSearch" class="profile-input" placeholder="Search product, ID, owner, email..." oninput="filterAdminRequests()"><select id="adminStatusFilter" class="profile-input" onchange="filterAdminRequests()"><option value="">All statuses</option><option>Pending</option><option>Verified</option><option>Rejected</option></select>';card.insertBefore(tools,document.getElementById('verificationRequestList'));}
+  window.filterAdminRequests=function(){const q=(document.getElementById('adminRequestSearch')?.value||'').toLowerCase(),st=document.getElementById('adminStatusFilter')?.value||'';document.querySelectorAll('.lp-request-card').forEach(card=>{const text=card.textContent.toLowerCase();const status=(card.querySelector('.lp-request-status')?.textContent||'').trim();card.style.display=(!q||text.includes(q))&&(!st||status===st)?'':'none';});};
+
+  // Patch existing savePassport so the new fields are always initialized and activity is recorded.
+  function wrapCore(){
+    if(typeof window.savePassport==='function'&&!window.__lpV4Save){const old=window.savePassport;window.savePassport=async function(e){const before=editingPassportId;await old(e);passports.forEach(ensurePassportData);passports.forEach(p=>{if(!p.transferHistory)p.transferHistory=[]});savePassports();syncLocalActivity();renderPassportsV4();renderDashboardV4();};window.__lpV4Save=true;}
+    if(typeof window.submitTransfer==='function'&&!window.__lpV4Transfer){const old=window.submitTransfer;window.submitTransfer=function(){const id=document.getElementById('transferId')?.value;const p=passports.find(x=>x.id===id);const oldOwner=p?.ownerName||'';const oldEmail=p?.ownerEmail||'';old();if(p&&p.pendingTransfer){p.transferHistory=p.transferHistory||[];p.transferHistory.push({fromName:oldOwner,fromEmail:oldEmail,toName:p.pendingTransfer.toName,toEmail:p.pendingTransfer.toEmail,note:p.pendingTransfer.note,date:new Date().toISOString()});p.ownerName=p.pendingTransfer.toName;p.ownerEmail=p.pendingTransfer.toEmail;p.transferStatus='Transferred';p.pendingTransfer=null;p.updatedAt=new Date().toISOString();savePassports();addNotification('Passport transferred',`${p.productName} ownership was transferred to ${p.ownerName}.`,'transfer','transfer-final|'+p.id+'|'+p.updatedAt);syncLocalActivity();renderPassportsV4();renderDashboardV4();}};window.__lpV4Transfer=true;}
+    if(typeof window.updateDashboard==='function'&&!window.__lpV4Dash){const old=window.updateDashboard;window.updateDashboard=function(){old();renderDashboardV4();};window.__lpV4Dash=true;}
+    if(typeof window.viewPassport==='function'&&!window.__lpV4View){const old=window.viewPassport;window.viewPassport=function(id){old(id);setTimeout(()=>{enhanceViewV4(id);addPrintStamp();},80);};window.__lpV4View=true;}
+    if(typeof window.loadVerificationRequests==='function'&&!window.__lpV4Admin){const old=window.loadVerificationRequests;window.loadVerificationRequests=async function(){await old();companyTools();};window.__lpV4Admin=true;}
+    if(typeof window.syncVerificationStatuses==='function'&&!window.__lpV4Sync){const old=window.syncVerificationStatuses;window.syncVerificationStatuses=async function(){await old();syncLocalActivity();renderDashboardV4();renderNotifications();};window.__lpV4Sync=true;}
+    if(typeof window.reviewVerificationRequest==='function'&&!window.__lpV4Review){const old=window.reviewVerificationRequest;window.reviewVerificationRequest=async function(id,status){await old(id,status);syncLocalActivity();renderNotifications();};window.__lpV4Review=true;}
+    if(typeof window.printPassport==='function'&&!window.__lpV4Print){const old=window.printPassport;window.printPassport=function(id){old(id);setTimeout(addPrintStamp,80);};window.__lpV4Print=true;}
+  }
+
+  // Replace QR destination after the original QR code is generated by rebuilding it with a public payload.
+  function rebuildPublicQR(){if(!currentViewId)return;const p=passports.find(x=>x.id===currentViewId);const qr=document.getElementById('qr-'+currentViewId);if(!p||!qr||typeof QRCode==='undefined')return;qr.innerHTML='';new QRCode(qr,{text:publicUrl(p),width:105,height:105});}
+  const oldWindowLoad=window.onload;window.addEventListener('load',()=>{setTimeout(()=>{const h=window.location.hash||'';if(h.startsWith('#public-passport=')){renderPublicPassport(h.slice('#public-passport='.length));return;}rebuildPublicQR();},300);});
+
+  function boot(){
+    setupPassportFilters();
+    wrapCore();
+    passports.forEach(ensurePassportData);
+    syncLocalActivity();
+    renderNotifications();
+    renderDashboardV4();
+    setTimeout(()=>{wrapCore();setupPassportFilters();renderNotifications();renderDashboardV4();if(currentViewId){rebuildPublicQR();enhanceViewV4(currentViewId);addPrintStamp();}},250);
+    ['serviceModal','documentsModal','historyModal'].forEach(id=>document.addEventListener('click',e=>{if(e.target.id===id)e.target.classList.add('hidden')}));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('notificationPanel')?.classList.add('hidden');document.getElementById('serviceModal')?.classList.add('hidden');document.getElementById('documentsModal')?.classList.add('hidden');document.getElementById('historyModal')?.classList.add('hidden')}});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
 
