@@ -1350,6 +1350,7 @@ window.supabase.createClient(
 ========================================================== */
 
 const CONTACT_EMAIL="lifepass.digital@gmail.com";
+const COMPANY_ADMIN_EMAILS=["lifepass.digital@gmail.com","aadepu14vihaan@gmail.com"];
 const LIFEPASS_SITE_URL="https://lifepassdigital.github.io/lifepass/";
 const PASSPORT_STORAGE="lifepass_user_passports";
 const VERIFICATION_BUCKET="verification-evidence";
@@ -1616,7 +1617,7 @@ async function updateAuthUI(){
    initials(name);
 
    const adminButton=document.getElementById("adminNavButton");
-   const isAdmin=(currentUser.email||"").toLowerCase()===CONTACT_EMAIL.toLowerCase();
+   const isAdmin=COMPANY_ADMIN_EMAILS.includes((currentUser.email||"").toLowerCase());
    if(adminButton){
      adminButton.classList.toggle("hidden",!isAdmin);
    }
@@ -2450,7 +2451,7 @@ LIFEPASS`
 
 function isCompanyAdmin(){
   return !!currentUser &&
-    (currentUser.email||"").toLowerCase()===CONTACT_EMAIL.toLowerCase();
+    COMPANY_ADMIN_EMAILS.includes((currentUser.email||"").toLowerCase());
 }
 
 function openVerificationRequest(id=currentViewId){
