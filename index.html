@@ -41,20 +41,25 @@ header{
  position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.97);
  backdrop-filter:blur(14px);border-bottom:1px solid var(--border)
 }
+/* Clean desktop header: keep every navigation item on one line and give
+   the center navigation enough room so it never wraps into a second row. */
 .nav{
- width:min(1200px,94%);margin:auto;min-height:72px;
- display:flex;align-items:center;justify-content:space-between;gap:15px
+ width:min(1500px,96%);margin:auto;min-height:72px;
+ display:flex;align-items:center;justify-content:space-between;gap:18px
 }
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);flex:0 0 auto}
 .logo{width:48px;height:48px;object-fit:contain;border-radius:10px}
-.brand b{font-size:23px;letter-spacing:4px}
-nav{display:flex;gap:4px;flex-wrap:wrap}
-nav button{
- border:0;background:transparent;padding:9px 12px;border-radius:9px;
- color:#34506a;font-weight:600
+.brand b{font-size:23px;letter-spacing:4px;white-space:nowrap}
+#mainNav{display:flex;align-items:center;justify-content:center;gap:2px;flex:1;min-width:0;flex-wrap:nowrap}
+#mainNav button{
+ border:0;background:transparent;padding:9px 10px;border-radius:9px;
+ color:#34506a;font-weight:600;white-space:nowrap;font-size:15px
 }
-nav button:hover{background:#eef5fb;color:var(--teal)}
-.user-nav{display:flex;align-items:center;gap:7px}
+#mainNav button:hover{background:#eef5fb;color:var(--teal)}
+.user-nav{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+#loggedNav{white-space:nowrap}
+#loggedNav .btn{white-space:nowrap}
+#adminNavButton{min-width:150px}
 .user-avatar{
  width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;
  display:flex;align-items:center;justify-content:center;font-weight:bold
@@ -255,6 +260,16 @@ footer{background:#0b223a;color:white;padding:30px 0}
  .print-row{display:grid;grid-template-columns:180px 1fr;padding:8px 0;border-bottom:1px solid #ddd}
  .print-footer{margin-top:25px;padding-top:15px;border-top:1px solid #aaa;font-size:11px}
  @page{size:A4;margin:12mm}
+}
+
+@media(max-width:1250px) and (min-width:901px){
+ .nav{width:98%;gap:10px}
+ .brand b{font-size:20px;letter-spacing:3px}
+ #mainNav{gap:0}
+ #mainNav button{padding:8px 7px;font-size:14px}
+ #adminNavButton{min-width:132px}
+ .user-nav{gap:4px}
+ .user-nav .btn{padding:9px 11px}
 }
 
 @media(max-width:900px){
