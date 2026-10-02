@@ -1332,11 +1332,38 @@ Enter the password created for this passport.
 
 <input id="passwordInput" type="password" class="profile-input" placeholder="Passport password">
 
+<div style="margin-top:10px;text-align:right">
+<button type="button" class="link" onclick="openForgotPassportPassword()">Forgot passport password?</button>
+</div>
+
 <div class="form-actions">
 <button class="btn outline" onclick="closePassword()">Cancel</button>
 <button class="btn primary" onclick="confirmPassword()">Continue</button>
 </div>
 
+</div>
+</div>
+
+<!-- FORGOT PASSPORT PASSWORD MODAL -->
+<div id="forgotPassportPasswordModal" class="modal hidden">
+<div class="modal-box" style="max-width:520px">
+<div class="modal-head">
+<h2>Forgot Passport Password</h2>
+<button class="close" onclick="closeForgotPassportPassword()">×</button>
+</div>
+<div class="lp-otp-box">
+<div class="lp-otp-info">A one-time verification code will be sent to your confirmed LIFEPASS email. LIFEPASS will add a notification confirming that the code was sent. For security, the actual OTP is not displayed inside notifications.</div>
+<div><label>Email</label><input id="forgotPassportEmail" class="profile-input" readonly></div>
+<div id="forgotPassportSendStep">
+<div class="form-actions"><button class="btn primary" id="sendPassportOtpBtn" onclick="sendPassportPasswordOtp()">Send Verification Code</button></div>
+</div>
+<div id="forgotPassportVerifyStep" class="hidden">
+<div class="form-group"><label>Verification Code</label><input id="forgotPassportOtp" class="profile-input lp-otp-code" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter code from email"></div>
+<div class="form-group"><label>New Passport Password</label><input id="forgotPassportNewPassword" type="password" class="profile-input" minlength="4" placeholder="At least 4 characters"></div>
+<div class="form-group"><label>Confirm New Passport Password</label><input id="forgotPassportNewPassword2" type="password" class="profile-input" minlength="4" placeholder="Re-enter password"></div>
+<div class="form-actions"><button class="btn outline" onclick="sendPassportPasswordOtp()">Send New Code</button><button class="btn primary" onclick="completePassportPasswordReset()">Reset Passport Password</button></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -2393,6 +2420,53 @@ function requestEdit(id){
  .classList.remove("hidden");
 
 }
+
+window.openForgotPassportPassword=function(){
+  if(!currentUser){toast("Please log in again.");return;}
+  const email=document.getElementById("forgotPassportEmail");
+  if(email)email.value=currentUser.email||"";
+  document.getElementById("forgotPassportSendStep")?.classList.remove("hidden");
+  document.getElementById("forgotPassportVerifyStep")?.classList.add("hidden");
+  ["forgotPassportOtp","forgotPassportNewPassword","forgotPassportNewPassword2"].forEach(id=>{const e=document.getElementById(id);if(e)e.value="";});
+  document.getElementById("passwordModal")?.classList.add("hidden");
+  document.getElementById("forgotPassportPasswordModal")?.classList.remove("hidden");
+};
+window.closeForgotPassportPassword=function(){
+  document.getElementById("forgotPassportPasswordModal")?.classList.add("hidden");
+};
+window.sendPassportPasswordOtp=async function(){
+  if(!currentUser){toast("Please log in again.");return;}
+  const btn=document.getElementById("sendPassportOtpBtn");
+  if(btn){btn.disabled=true;btn.textContent="Sending…";}
+  const {error}=await supabaseClient.auth.reauthenticate();
+  if(btn){btn.disabled=false;btn.textContent="Send Verification Code";}
+  if(error){toast(error.message);return;}
+  document.getElementById("forgotPassportSendStep")?.classList.add("hidden");
+  document.getElementById("forgotPassportVerifyStep")?.classList.remove("hidden");
+  addNotification("🔐 Passport password code sent","A passport-password verification code was sent to your confirmed email. Open your email and enter the code here.","security","passport-reauth-otp|"+currentUser.id+"|"+Math.floor(Date.now()/60000));
+  toast("Verification code sent to your email.");
+};
+window.completePassportPasswordReset=async function(){
+  if(!currentUser){toast("Please log in again.");return;}
+  const passport=passports.find(p=>p.id===editingPassportId);
+  if(!passport){toast("Passport not found.");closeForgotPassportPassword();return;}
+  const otp=(document.getElementById("forgotPassportOtp")?.value||"").trim();
+  const pass=document.getElementById("forgotPassportNewPassword")?.value||"";
+  const pass2=document.getElementById("forgotPassportNewPassword2")?.value||"";
+  if(!/^\d{6,8}$/.test(otp)){toast("Enter the verification code from your email.");return;}
+  if(pass.length<4){toast("Passport password must be at least 4 characters.");return;}
+  if(pass!==pass2){toast("Passwords do not match.");return;}
+  const {error}=await supabaseClient.auth.verifyOtp({email:currentUser.email,token:otp,type:"reauthentication"});
+  if(error){toast(error.message);return;}
+  passport.password=pass;
+  passport.updatedAt=new Date().toISOString();
+  const idx=passports.findIndex(p=>p.id===passport.id);
+  if(idx>=0)passports[idx]=passport;
+  savePassports();
+  addNotification("🔐 Passport password changed","The password for "+(passport.productName||"your passport")+" was reset successfully.","security","passport-password-changed|"+passport.id+"|"+new Date().toISOString().slice(0,13));
+  closeForgotPassportPassword();
+  toast("Passport password reset successfully.");
+};
 
 function confirmPassword(){
 
@@ -4322,7 +4396,7 @@ window.addEventListener("load",()=>{
     renderDashboardV4();
     setTimeout(()=>{setupPasswordToggles();wrapCore();setupPassportFilters();renderNotifications();renderDashboardV4();if(currentViewId){rebuildPublicQR();enhanceViewV4(currentViewId);addPrintStamp();}},250);
     ['serviceModal','documentsModal','historyModal'].forEach(id=>document.addEventListener('click',e=>{if(e.target.id===id)e.target.classList.add('hidden')}));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('notificationPanel')?.classList.add('hidden');document.getElementById('serviceModal')?.classList.add('hidden');document.getElementById('documentsModal')?.classList.add('hidden');document.getElementById('historyModal')?.classList.add('hidden')}});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('notificationPanel')?.classList.add('hidden');document.getElementById('serviceModal')?.classList.add('hidden');document.getElementById('documentsModal')?.classList.add('hidden');document.getElementById('historyModal')?.classList.add('hidden');document.getElementById('forgotPassportPasswordModal')?.classList.add('hidden')}});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 
