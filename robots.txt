@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lifepassdigital.github.io/lifepass/sitemap.xml
