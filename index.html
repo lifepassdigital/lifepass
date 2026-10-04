@@ -5091,7 +5091,7 @@ window.addEventListener("load", function() {
     'LIFEPASS10':10,
     'WELCOME10':10
   };
-  const LIFEPASS_FREE_ACCESS_EMAILS=new Set(['aadepu14vihaan@gmail.com','lifepassdigital@gmail.com']);
+  const LIFEPASS_FREE_ACCESS_EMAILS=new Set(['lifepass.digital@gmail.com','aadepu14vihaan@gmail.com']);
   window.isLifepassFreeAccess=function(){
     return !!(currentUser?.email && LIFEPASS_FREE_ACCESS_EMAILS.has(String(currentUser.email).toLowerCase().trim()));
   };
