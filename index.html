@@ -5100,8 +5100,7 @@ window.addEventListener("load", function() {
     if(!currentUser){showPage('login');return;}
     const p=PLANS[planId]; if(!p)return;
     if(planId==='free'){toast('Free membership is available automatically.');return;}
-    if(window.isLifepassFreeAccess()){toast('This account already has LIFEPASS free access.');return;}
-
+    /* Founder/free-access accounts may still open the payment screen for testing or optional upgrades. */
     const upi='9030734041@fam';
     const modal=document.createElement('div');
     modal.id='lpPaymentModal';
