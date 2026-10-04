@@ -61,6 +61,7 @@ header{
  color:#34506a;font-weight:600;white-space:nowrap;font-size:15px
 }
 #mainNav button:hover{background:#eef5fb;color:var(--teal)}
+#membershipNavButton{font-weight:800!important;border-color:#a9dfe3!important}
 .user-nav{display:flex;align-items:center;gap:7px;flex:0 0 auto}
 #loggedNav{white-space:nowrap}
 #loggedNav .btn{white-space:nowrap}
@@ -809,6 +810,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <div class="user-avatar" id="navAvatar">U</div>
 <button class="btn outline" id="lpNotificationButton" onclick="toggleNotifications()" title="Notifications">🔔 <span id="lpNotificationCount">0</span></button>
 <button class="btn outline hidden" id="adminNavButton" onclick="showPage('admin-verification')">Verification Center</button>
+<button class="btn secondary" id="membershipNavButton" onclick="openMembership()">Membership</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn outline" onclick="logout()">Log Out</button>
 </div>
@@ -923,6 +925,7 @@ and preserve their story throughout their lifetime.
 <div class="actions" style="margin-top:15px">
 <button class="btn primary" onclick="openCreate()">Create Passport</button>
 <button class="btn secondary" onclick="showPage('passports')">View Passports</button>
+<button class="btn primary" id="dashboardMembershipButton" onclick="openMembership()">Membership & Plans</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn secondary" onclick="showPage('profile')">Edit Profile</button>
 <button class="btn outline" onclick="showPage('settings')">Settings</button>
@@ -5166,18 +5169,10 @@ window.addEventListener("load", function() {
     };
   }
 
-  function addNav(){
-    const nav=document.getElementById('mainNav');
-    if(nav && !document.getElementById('membershipNavButton')){
-      const b=document.createElement('button');b.id='membershipNavButton';b.type='button';b.textContent='Membership';b.onclick=openMembership;nav.appendChild(b);
-    }
-  }
-
   document.addEventListener('DOMContentLoaded',()=>{
-    addNav();
     if(window.currentUser)loadMembership().then(renderMembership);
   });
-  setTimeout(()=>{addNav();if(window.currentUser)loadMembership().then(renderMembership)},1200);
+  setTimeout(()=>{if(window.currentUser)loadMembership().then(renderMembership)},1200);
 })();
 </script>
 
