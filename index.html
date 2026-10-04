@@ -810,7 +810,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <div class="user-avatar" id="navAvatar">U</div>
 <button class="btn outline" id="lpNotificationButton" onclick="toggleNotifications()" title="Notifications">🔔 <span id="lpNotificationCount">0</span></button>
 <button class="btn outline hidden" id="adminNavButton" onclick="showPage('admin-verification')">Verification Center</button>
-<button class="btn secondary" id="membershipNavButton" onclick="openMembership()">Membership</button>
+<button class="btn primary" id="membershipNavButton" type="button" onclick="window.openMembership();return false;">★ Membership</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn outline" onclick="logout()">Log Out</button>
 </div>
@@ -925,7 +925,7 @@ and preserve their story throughout their lifetime.
 <div class="actions" style="margin-top:15px">
 <button class="btn primary" onclick="openCreate()">Create Passport</button>
 <button class="btn secondary" onclick="showPage('passports')">View Passports</button>
-<button class="btn primary" id="dashboardMembershipButton" onclick="openMembership()">Membership & Plans</button>
+<button class="btn primary" id="dashboardMembershipButton" type="button" onclick="window.openMembership();return false;">★ Membership & Plans</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn secondary" onclick="showPage('profile')">Edit Profile</button>
 <button class="btn outline" onclick="showPage('settings')">Settings</button>
@@ -5024,6 +5024,7 @@ window.addEventListener("load", function() {
   };
   let membershipCache=null;
   window.LIFEPASS_PLANS=PLANS;
+  window.getLifepassMembershipCache=()=>membershipCache;
 
   async function loadMembership(){
     if(!window.currentUser || !window.supabaseClient){membershipCache=null;return null;}
@@ -5071,10 +5072,24 @@ window.addEventListener("load", function() {
       '<div class="lp-membership-stat"><small>Membership expiry</small><strong style="font-size:18px">'+esc(expires)+'</strong></div>';
   }
 
+  window.loadLifepassMembership=loadMembership;
   window.openMembership=function(){
-    if(!currentUser){showPage('login');return;}
-    showPage('membership');
-    loadMembership().then(renderMembership);
+    if(!window.currentUser){
+      showPage('login');
+      return;
+    }
+    const page=document.getElementById('page-membership');
+    if(!page){
+      toast('Membership page is still loading. Please refresh once.');
+      return;
+    }
+    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+    page.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    loadMembership().then(()=>{
+      renderMembership();
+      if(typeof window.refreshLifepassMembershipBadge==='function') window.refreshLifepassMembershipBadge();
+    });
   };
 
   window.LIFEPASS_UPI_ID='9030734041@fam';
@@ -5165,7 +5180,12 @@ window.addEventListener("load", function() {
   if(typeof originalShow==='function'){
     window.showPage=function(page){
       originalShow.apply(this,arguments);
-      if(page==='membership')loadMembership().then(renderMembership);
+      if(page==='membership'){
+        loadMembership().then(()=>{
+          renderMembership();
+          if(typeof window.refreshLifepassMembershipBadge==='function') window.refreshLifepassMembershipBadge();
+        });
+      }
     };
   }
 
@@ -5384,10 +5404,10 @@ window.addEventListener("load", function() {
     try{
       if(window.isLifepassFreeAccess&&window.isLifepassFreeAccess())return tiers.founder;
       if(!window.currentUser)return tiers.free;
-      if(window.loadMembership&&typeof window.loadMembership==='function'){
-        try{await window.loadMembership();}catch(e){}
+      if(window.loadLifepassMembership&&typeof window.loadLifepassMembership==='function'){
+        try{await window.loadLifepassMembership();}catch(e){}
       }
-      const m=window.membershipCache||null;
+      const m=window.getLifepassMembershipCache?window.getLifepassMembershipCache():null;
       if(m&&m.status==='active'&&tiers[m.plan_id]&&(!m.expires_at||new Date(m.expires_at)>=new Date()))return tiers[m.plan_id];
       if(window.supabaseClient){
         const {data}=await window.supabaseClient.from('memberships').select('plan_id,status,expires_at').eq('user_id',window.currentUser.id).maybeSingle();
