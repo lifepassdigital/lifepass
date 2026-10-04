@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- LIFEPASS PWA -->
-<link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#0b2a3f">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="LIFEPASS">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0b2a4a">
 <link rel="icon" type="image/png" href="./logo.png">
-<link rel="apple-touch-icon" href="./logo.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
 <title>LIFEPASS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -4343,14 +4335,7 @@ window.addEventListener("load",()=>{
   window.openDocumentsModal=function(id){if(!currentUser){showPage('login');return;}const p=passports.find(x=>x.id===id);if(!p)return;ensurePassportData(p);document.getElementById('documentsPassportId').value=id;document.getElementById('documentFile').value='';document.getElementById('documentsModal').classList.remove('hidden');renderDocuments(p);};
   function renderDocuments(p){const list=document.getElementById('documentList');if(!list)return;list.innerHTML=(p.documents||[]).slice().reverse().map(d=>`<div class="lp-doc-card"><div class="lp-doc-icon">▤</div><div class="lp-doc-main"><strong>${esc(d.type)}</strong><small>${esc(d.name)} · ${esc(datetime(d.createdAt))}</small></div><div style="display:flex;gap:5px"><button class="btn outline" onclick="openDocument('${esc(p.id)}','${esc(d.id)}')">Open</button><button class="btn danger" onclick="deleteDocument('${esc(p.id)}','${esc(d.id)}')">Delete</button></div></div>`).join('')||'<div class="lp-empty-mini">No documents uploaded yet.</div>';}
   window.addDocument=async function(){const id=document.getElementById('documentsPassportId').value,p=passports.find(x=>x.id===id),file=document.getElementById('documentFile').files?.[0];if(!p||!file)return toast('Choose a document first.');if(file.size>3*1024*1024)return toast('Keep each document under 3 MB in this browser version.');ensurePassportData(p);const data=await fileToDataURL(file);p.documents.push({id:crypto.randomUUID(),type:document.getElementById('documentType').value,name:file.name,data,createdAt:new Date().toISOString()});p.updatedAt=new Date().toISOString();savePassports();addNotification('Document uploaded',`${file.name} was added to ${p.productName}.`,'document','doc-added|'+p.id+'|'+file.name+'|'+p.updatedAt);document.getElementById('documentFile').value='';renderDocuments(p);renderPassportsV4();updateDashboard();toast('Document uploaded.');};
-  window.openDocument=function(pid,did){const p=passports.find(x=>x.id===pid),d=p?.documents?.find(x=>x.id===did);if(!d)return;const w=window.open();if(!w)return;w.document.write(`<title>${esc(d.name)}</title><body style="margin:20px;font-family:Arial"><h2>${esc(d.name)}</h2><p>${esc(d.type)}</p>${d.data.startsWith('data:image')?`<img src="${d.data}" style="max-width:100%">`:d.data.startsWith('data:application/pdf')?`<iframe src="${d.data}" style="width:100%;height:90vh;border:0"></iframe>`:`<a href="${d.data}" download="${attr(d.name)}">Download ${esc(d.name)}</a>`}
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(err => console.warn('LIFEPASS service worker:', err));
-  });
-}
-</script>
+  window.openDocument=function(pid,did){const p=passports.find(x=>x.id===pid),d=p?.documents?.find(x=>x.id===did);if(!d)return;const w=window.open();if(!w)return;w.document.write(`<title>${esc(d.name)}</title><body style="margin:20px;font-family:Arial"><h2>${esc(d.name)}</h2><p>${esc(d.type)}</p>${d.data.startsWith('data:image')?`<img src="${d.data}" style="max-width:100%">`:d.data.startsWith('data:application/pdf')?`<iframe src="${d.data}" style="width:100%;height:90vh;border:0"></iframe>`:`<a href="${d.data}" download="${attr(d.name)}">Download ${esc(d.name)}</a>`}<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));}</script>
 </body>`);w.document.close();};
   window.deleteDocument=function(pid,did){const p=passports.find(x=>x.id===pid);if(!p||!confirm('Delete this document?'))return;p.documents=(p.documents||[]).filter(d=>d.id!==did);p.updatedAt=new Date().toISOString();savePassports();openDocumentsModal(pid);renderPassportsV4();updateDashboard();};
 
@@ -4768,5 +4753,6 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));}</script>
 </body>
 </html>
