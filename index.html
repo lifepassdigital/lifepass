@@ -1277,10 +1277,10 @@ Owners upload product evidence here. Review the photos and passport details befo
 <div class="title" style="text-align:left;margin-bottom:18px"><h2>Simple pricing for founders & small businesses</h2><p>No expensive entry plan. Upgrade only when you need more passports.</p></div>
 <div class="lp-plan-grid">
 <article class="lp-plan"><h3>Free</h3><div class="lp-price">₹0 <small>/ month</small></div><ul><li>10 passports</li><li>Digital product history</li><li>QR & public passport</li><li>Basic verification</li><li>Mobile PWA access</li></ul><button class="btn outline" onclick="selectMembershipPlan('free')">Current / Free</button></article>
-<article class="lp-plan featured"><span class="popular">STARTUP · ₹29</span><h3>Startup</h3><div class="lp-price">₹29 <small>/ month</small></div><ul><li>25 passports</li><li>Everything in Free</li><li>Warranty & expiry tracking</li><li>Service & ownership history</li><li>Marketplace & resale tools</li><li>Shareable QR passport</li><li>CSV / JSON data export</li></ul><button class="btn primary" onclick="selectMembershipPlan('startup')">Choose Startup</button></article>
-<article class="lp-plan"><span class="popular">MOST POPULAR</span><h3>Regular</h3><div class="lp-price">₹79 <small>/ month</small></div><ul><li>100 passports</li><li>Everything in Startup</li><li>Advanced verification</li><li>Product value analysis</li><li>Price insights</li><li>Notifications & security</li><li>Priority feature access</li></ul><button class="btn primary" onclick="selectMembershipPlan('regular')">Choose Regular</button></article>
-<article class="lp-plan"><h3>Pro</h3><div class="lp-price">₹199 <small>/ month</small></div><ul><li>500 passports</li><li>Everything in Regular</li><li>LIFEPASS AI assistance</li><li>Advanced analytics</li><li>Documents & evidence</li><li>Ownership transfer workflows</li><li>Priority support</li></ul><button class="btn primary" onclick="selectMembershipPlan('pro')">Choose Pro</button></article>
-<article class="lp-plan"><h3>Business</h3><div class="lp-price">₹399 <small>/ month</small></div><ul><li>2,000 passports</li><li>Everything in Pro</li><li>Team-ready capacity</li><li>Business product management</li><li>High-volume workflows</li><li>Future API / integrations</li><li>Founder-friendly scale pricing</li></ul><button class="btn primary" onclick="selectMembershipPlan('business')">Choose Business</button></article>
+<article class="lp-plan featured"><span class="popular">STARTUP · ₹29</span><h3>Startup</h3><div class="lp-price">₹29 <small>/ month</small></div><ul><li>25 passports</li><li>Everything in Free</li><li>Warranty & expiry tracking</li><li>Service & ownership history</li><li>Marketplace & resale tools</li><li>Shareable QR passport</li><li>CSV / JSON data export</li></ul><button class="btn primary lp-plan-button" type="button" data-plan="startup">Choose Startup</button></article>
+<article class="lp-plan"><span class="popular">MOST POPULAR</span><h3>Regular</h3><div class="lp-price">₹79 <small>/ month</small></div><ul><li>100 passports</li><li>Everything in Startup</li><li>Advanced verification</li><li>Product value analysis</li><li>Price insights</li><li>Notifications & security</li><li>Priority feature access</li></ul><button class="btn primary lp-plan-button" type="button" data-plan="regular">Choose Regular</button></article>
+<article class="lp-plan"><h3>Pro</h3><div class="lp-price">₹199 <small>/ month</small></div><ul><li>500 passports</li><li>Everything in Regular</li><li>LIFEPASS AI assistance</li><li>Advanced analytics</li><li>Documents & evidence</li><li>Ownership transfer workflows</li><li>Priority support</li></ul><button class="btn primary lp-plan-button" type="button" data-plan="pro">Choose Pro</button></article>
+<article class="lp-plan"><h3>Business</h3><div class="lp-price">₹399 <small>/ month</small></div><ul><li>2,000 passports</li><li>Everything in Pro</li><li>Team-ready capacity</li><li>Business product management</li><li>High-volume workflows</li><li>Future API / integrations</li><li>Founder-friendly scale pricing</li></ul><button class="btn primary lp-plan-button" type="button" data-plan="business">Choose Business</button></article>
 </div>
 <div class="lp-feature-grid" style="margin-top:22px">
 <div class="lp-feature-card"><h3>🚀 Startup mode</h3><p>Low-cost entry, fast onboarding and upgrade only when you grow.</p></div>
@@ -5429,6 +5429,90 @@ window.addEventListener("load", function() {
       return out;
     };
   }
+})();
+</script>
+
+<style id="lpMembershipFinalFix">
+#page-membership .lp-membership-hero{position:relative;overflow:hidden}
+#page-membership .lp-membership-hero>div{position:relative;z-index:2}
+#page-membership .lp-membership-hero h2{display:block!important;color:#fff!important;opacity:1!important;visibility:visible!important}
+#page-membership .lp-membership-hero p{display:block!important;color:#d8edf1!important;opacity:1!important;visibility:visible!important}
+#page-membership .lp-plan-button{position:relative;z-index:5;pointer-events:auto!important;cursor:pointer!important}
+</style>
+<script>
+(function(){
+  function wireMembershipPlanButtons(){
+    document.querySelectorAll('#page-membership .lp-plan-button[data-plan]').forEach(function(btn){
+      if(btn.dataset.lpWired==='1') return;
+      btn.dataset.lpWired='1';
+      btn.addEventListener('click',function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        var plan=this.getAttribute('data-plan');
+        if(typeof window.selectMembershipPlan==='function'){
+          window.selectMembershipPlan(plan);
+          return;
+        }
+        if(!window.currentUser){
+          if(typeof window.showPage==='function') window.showPage('login');
+          return;
+        }
+        window.__lifepassPendingPlan=plan;
+        if(typeof window.openMembershipPaymentFallback==='function'){
+          window.openMembershipPaymentFallback(plan);
+        }else if(typeof window.toast==='function'){
+          window.toast('Payment system is loading. Please refresh once.');
+        }
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded',wireMembershipPlanButtons);
+  setTimeout(wireMembershipPlanButtons,500);
+  setTimeout(wireMembershipPlanButtons,1500);
+
+  window.openMembershipPaymentFallback=function(planId){
+    var plans=window.LIFEPASS_PLANS||{
+      startup:{name:'Startup',price:29,limit:25},
+      regular:{name:'Regular',price:79,limit:100},
+      pro:{name:'Pro',price:199,limit:500},
+      business:{name:'Business',price:399,limit:2000}
+    };
+    var p=plans[planId];
+    if(!p) return;
+    var existing=document.getElementById('lpPaymentModal');
+    if(existing) existing.remove();
+    var upi='9030734041@fam';
+    var modal=document.createElement('div');
+    modal.id='lpPaymentModal';
+    modal.style.cssText='position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:14px';
+    modal.innerHTML='<div style="width:min(520px,100%);max-height:94vh;overflow:auto;background:#fff;color:#102f50;border-radius:24px;padding:22px;box-shadow:0 24px 90px rgba(0,0,0,.45)">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:11px;font-weight:900;letter-spacing:1.2px;color:#079eaa">LIFEPASS SECURE UPI PAYMENT</div><h2 style="margin:4px 0">'+p.name+' Membership</h2></div><button type="button" id="lpFallbackClose" style="border:0;background:#eef2f5;border-radius:10px;padding:7px 12px;font-size:20px">×</button></div>'+
+      '<div style="margin:14px 0;padding:14px;border-radius:14px;background:#f3f8fa"><b>'+p.limit.toLocaleString('en-IN')+'</b> passports · 1 month</div>'+
+      '<label style="font-size:12px;font-weight:800">Coupon code<input id="lpFallbackCoupon" style="display:block;width:100%;box-sizing:border-box;margin-top:5px;padding:11px;border:1px solid #d5e0e8;border-radius:10px" placeholder="LIFEPASS10"></label>'+
+      '<div style="margin:12px 0;padding:15px;border-radius:14px;background:#102f50;color:#fff"><small>Payable amount</small><div id="lpFallbackAmount" style="font-size:30px;font-weight:900">₹'+p.price+'</div></div>'+
+      '<div style="text-align:center"><div style="font-weight:900;margin-bottom:8px">Scan to pay</div><img id="lpFallbackQr" style="width:260px;height:260px;border:1px solid #ddd;border-radius:14px;background:#fff;padding:7px;box-sizing:border-box"></div>'+
+      '<div style="margin-top:12px;padding:11px;background:#eef7ff;border-radius:10px"><b>UPI ID:</b> '+upi+'</div>'+
+      '<a id="lpFallbackOpen" href="#" style="display:block;text-align:center;margin-top:10px;padding:13px;border-radius:11px;background:#079eaa;color:#fff;text-decoration:none;font-weight:900">Open UPI app</a>'+
+      '<label style="display:block;margin-top:14px;font-size:12px;font-weight:800">UTR / Transaction ID<input id="lpFallbackUtr" style="display:block;width:100%;box-sizing:border-box;margin-top:5px;padding:11px;border:1px solid #d5e0e8;border-radius:10px" placeholder="Enter UTR after payment"></label>'+
+      '<a id="lpFallbackSend" href="#" style="display:block;text-align:center;margin-top:10px;padding:13px;border:1px solid #102f50;border-radius:11px;color:#102f50;text-decoration:none;font-weight:900">Send payment details for verification</a>'+
+      '<div style="font-size:11px;color:#7b8b99;text-align:center;margin-top:10px">LIFEPASS never asks for your UPI PIN or OTP.</div>'+
+      '</div>';
+    document.body.appendChild(modal);
+    var coupon=modal.querySelector('#lpFallbackCoupon'), amount=modal.querySelector('#lpFallbackAmount'), qr=modal.querySelector('#lpFallbackQr'), open=modal.querySelector('#lpFallbackOpen'), utr=modal.querySelector('#lpFallbackUtr'), send=modal.querySelector('#lpFallbackSend');
+    function update(){
+      var code=(coupon.value||'').trim().toUpperCase();
+      var pct=(code==='LIFEPASS10'||code==='WELCOME10')?10:0;
+      var payable=Math.max(0,Math.round(p.price*(1-pct/100)));
+      amount.textContent='₹'+payable.toLocaleString('en-IN');
+      var upiUrl='upi://pay?pa='+encodeURIComponent(upi)+'&pn=LIFEPASS&am='+payable.toFixed(2)+'&cu=INR&tn='+encodeURIComponent('LIFEPASS '+p.name+' Membership');
+      qr.src='https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data='+encodeURIComponent(upiUrl);
+      open.href=upiUrl;
+      send.href='mailto:lifepass.digital@gmail.com?subject='+encodeURIComponent('LIFEPASS '+p.name+' payment verification')+'&body='+encodeURIComponent('Plan: '+p.name+'\\nAmount: ₹'+payable+'\\nAccount email: '+(window.currentUser?.email||'')+'\\nUTR: '+(utr.value||'')+'\\n\\nPlease verify and activate my membership.');
+    }
+    coupon.addEventListener('input',update); utr.addEventListener('input',update); update();
+    modal.querySelector('#lpFallbackClose').onclick=function(){modal.remove()};
+    modal.addEventListener('click',function(e){if(e.target===modal)modal.remove()});
+  };
 })();
 </script>
 </body>
