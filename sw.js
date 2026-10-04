@@ -1,25 +1,97 @@
-const CACHE_NAME = 'lifepass-shell-v1';
+const CACHE_NAME = "lifepass-v1";
+
 const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./logo.png",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
+
+// Install service worker
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(APP_SHELL);
+    })
+  );
+
+  self.skipWaiting();
 });
-self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+
+// Activate service worker
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name))
+      );
+    })
+  );
+
+  self.clients.claim();
 });
-self.addEventListener('fetch', event => {
-  const req = event.request;
-  const url = new URL(req.url);
-  if (req.method !== 'GET' || url.origin !== self.location.origin) return;
-  if (url.pathname.includes('/supabase') || url.hostname.includes('supabase.co')) return;
-  event.respondWith(fetch(req).then(res => {
-    const copy = res.clone();
-    caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
-    return res;
-  }).catch(() => caches.match(req).then(r => r || caches.match('./index.html'))));
+
+// Fetch requests
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+
+  // Only handle GET requests
+  if (request.method !== "GET") {
+    return;
+  }
+
+  const url = new URL(request.url);
+
+  // Never cache Supabase/API requests
+  if (
+    url.hostname.includes("supabase.co") ||
+    url.pathname.includes("/functions/") ||
+    url.pathname.includes("/rest/")
+  ) {
+    return;
+  }
+
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        // Save successful same-origin responses
+        if (
+          response &&
+          response.status === 200 &&
+          url.origin === self.location.origin
+        ) {
+          const responseClone = response.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+        }
+
+        return response;
+      })
+      .catch(() => {
+        // Use cached version when offline
+        return caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+
+          // If navigation fails, return cached homepage
+          if (request.mode === "navigate") {
+            return caches.match("./index.html");
+          }
+
+          return new Response("LIFEPASS is currently offline.", {
+            status: 503,
+            headers: {
+              "Content-Type": "text/plain"
+            }
+          });
+        });
+      })
+  );
 });
