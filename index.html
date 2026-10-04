@@ -765,6 +765,22 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .lp-market-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:700px){.lp-market-edit-grid{grid-template-columns:1fr}.lp-security-actions .btn{width:100%}}
 
+
+/* ==========================================================
+   LIFEPASS MEMBERSHIP SYSTEM
+========================================================== */
+.lp-membership-wrap{width:min(1180px,94%);margin:auto;padding:48px 0 70px}
+.lp-membership-hero{background:linear-gradient(135deg,#102f50,#079eaa);color:#fff;border-radius:24px;padding:30px;display:flex;justify-content:space-between;gap:24px;align-items:center;box-shadow:0 18px 45px rgba(16,47,80,.16);margin-bottom:24px}
+.lp-membership-hero h2{font-size:clamp(28px,4vw,42px);margin:5px 0 8px}.lp-membership-hero p{color:#d8edf1;max-width:650px}
+.lp-membership-badge{display:inline-flex;padding:6px 11px;border-radius:99px;background:rgba(255,255,255,.16);font-size:12px;font-weight:800}
+.lp-membership-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.lp-membership-stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 8px 25px rgba(16,42,72,.05)}
+.lp-membership-stat small{color:var(--muted);display:block}.lp-membership-stat strong{display:block;color:var(--navy);font-size:25px;margin-top:4px}
+.lp-membership-progress{height:9px;background:#e9eff3;border-radius:99px;overflow:hidden;margin-top:9px}.lp-membership-progress span{display:block;height:100%;background:linear-gradient(90deg,#102f50,#079eaa);border-radius:99px}
+.lp-plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.lp-plan{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;position:relative;box-shadow:0 10px 30px rgba(16,42,72,.05);display:flex;flex-direction:column}.lp-plan.featured{border:2px solid var(--teal);box-shadow:0 16px 40px rgba(7,158,170,.12);transform:translateY(-3px)}.lp-plan .popular{position:absolute;right:14px;top:14px;background:#e6f7f8;color:#087e91;border-radius:99px;padding:5px 9px;font-size:10px;font-weight:900}.lp-plan h3{color:var(--navy);margin-bottom:6px}.lp-price{font-size:30px;font-weight:900;color:var(--navy);margin:9px 0 3px}.lp-price small{font-size:12px;color:var(--muted);font-weight:600}.lp-plan ul{list-style:none;display:grid;gap:9px;margin:16px 0 20px;color:#536b7f;font-size:13px;flex:1}.lp-plan li:before{content:"✓";color:var(--teal);font-weight:900;margin-right:7px}.lp-plan .btn{width:100%}.lp-membership-note{margin-top:18px;padding:14px;border:1px dashed #cbdde5;border-radius:13px;color:#60758d;font-size:12px;background:#fbfdfe}
+@media(max-width:900px){.lp-plan-grid{grid-template-columns:1fr 1fr}.lp-membership-summary{grid-template-columns:1fr 1fr}.lp-membership-hero{align-items:flex-start;flex-direction:column}}
+@media(max-width:600px){.lp-plan-grid,.lp-membership-summary{grid-template-columns:1fr}.lp-plan.featured{transform:none}}
+
 </style>
 </head>
 
@@ -1238,6 +1254,46 @@ Owners upload product evidence here. Review the photos and passport details befo
 </div>
 
 </div>
+
+
+<!-- MEMBERSHIP PAGE -->
+<section id="page-membership" class="page">
+  <div class="lp-membership-wrap">
+    <div class="lp-membership-hero">
+      <div>
+        <span class="lp-membership-badge" id="membershipStatusBadge">FREE MEMBERSHIP</span>
+        <h2>Choose your LIFEPASS membership</h2>
+        <p>Create more product passports, keep your product history organized, and unlock higher monthly passport limits as your collection grows.</p>
+      </div>
+      <button class="btn" style="background:#fff;color:#102f50" onclick="showPage('dashboard')">Back to Dashboard</button>
+    </div>
+    <div class="lp-membership-summary" id="membershipSummary"></div>
+    <div class="title" style="text-align:left;margin-bottom:18px"><h2>Membership plans</h2><p>Monthly plans. Passport limits are enforced on your account.</p></div>
+    <div class="lp-plan-grid">
+      <article class="lp-plan">
+        <h3>Free</h3><div class="lp-price">₹0 <small>/ month</small></div>
+        <ul><li>10 passports</li><li>Digital product history</li><li>QR/public passport tools</li><li>Basic verification</li></ul>
+        <button class="btn outline" onclick="selectMembershipPlan('free')">Current / Free</button>
+      </article>
+      <article class="lp-plan featured">
+        <span class="popular">POPULAR</span><h3>Regular</h3><div class="lp-price">₹99 <small>/ month</small></div>
+        <ul><li>100 passports</li><li>Everything in Free</li><li>Documents & service history</li><li>Product value analysis</li><li>Priority feature access</li></ul>
+        <button class="btn primary" onclick="selectMembershipPlan('regular')">Choose Regular</button>
+      </article>
+      <article class="lp-plan">
+        <h3>Pro</h3><div class="lp-price">₹249 <small>/ month</small></div>
+        <ul><li>500 passports</li><li>Everything in Regular</li><li>Advanced marketplace tools</li><li>Enhanced analytics</li><li>Priority support</li></ul>
+        <button class="btn primary" onclick="selectMembershipPlan('pro')">Choose Pro</button>
+      </article>
+      <article class="lp-plan">
+        <h3>Business</h3><div class="lp-price">₹499 <small>/ month</small></div>
+        <ul><li>2,000 passports</li><li>Everything in Pro</li><li>Team-ready capacity</li><li>Business product management</li><li>Higher-volume workflows</li></ul>
+        <button class="btn primary" onclick="selectMembershipPlan('business')">Choose Business</button>
+      </article>
+    </div>
+    <div class="lp-membership-note">Payments are not activated yet. Plan selection is prepared in LIFEPASS; a live web payment provider (or Google Play Billing for the Android app) must be connected before real charges or automatic renewals can occur.</div>
+  </div>
+</section>
 
 <!-- CREATE MODAL -->
 <div id="createModal" class="modal hidden">
@@ -4543,6 +4599,125 @@ window.addEventListener("load", function() {
 
   lifepassRegisterServiceWorker();
 });
+</script>
+
+
+<script>
+/* LIFEPASS membership + passport quota */
+(function(){
+  const PLANS={
+    free:{name:'Free',price:0,limit:10},
+    regular:{name:'Regular',price:99,limit:100},
+    pro:{name:'Pro',price:249,limit:500},
+    business:{name:'Business',price:499,limit:2000}
+  };
+  let membershipCache=null;
+  window.LIFEPASS_PLANS=PLANS;
+
+  async function loadMembership(){
+    if(!window.currentUser || !window.supabaseClient){membershipCache=null;return null;}
+    try{
+      let {data,error}=await supabaseClient.from('memberships').select('*').eq('user_id',currentUser.id).maybeSingle();
+      if(error) throw error;
+      if(!data){
+        const {data:created,error:createError}=await supabaseClient.from('memberships').insert({
+          user_id:currentUser.id,plan_id:'free',status:'active',passport_limit:10,
+          started_at:new Date().toISOString(),expires_at:null,provider:'manual'
+        }).select().single();
+        if(createError) throw createError;
+        data=created;
+      }
+      if(data.expires_at && new Date(data.expires_at)<new Date() && data.status==='active'){
+        data.status='expired';
+        membershipCache=data;
+        await supabaseClient.from('memberships').update({status:'expired',updated_at:new Date().toISOString()}).eq('id',data.id);
+      }
+      membershipCache=data;
+      return data;
+    }catch(e){console.warn('Membership unavailable',e);return membershipCache;}
+  }
+
+  function activePlan(){
+    const m=membershipCache;
+    if(!m || m.status!=='active') return PLANS.free;
+    return PLANS[m.plan_id]||{name:m.plan_id,price:0,limit:Number(m.passport_limit||10)};
+  }
+
+  function renderMembership(){
+    const box=document.getElementById('membershipSummary'), badge=document.getElementById('membershipStatusBadge');
+    if(!box)return;
+    const m=membershipCache, plan=activePlan(), used=Array.isArray(window.passports)?passports.length:0;
+    const limit=Number(m?.passport_limit||plan.limit||10), pct=Math.min(100,limit?Math.round(used/limit*100):0);
+    let expires='No expiry';
+    if(m?.expires_at) expires=new Date(m.expires_at).toLocaleDateString();
+    if(m?.status==='expired') expires='Expired';
+    if(badge) badge.textContent=(plan.name+' MEMBERSHIP'+(m?.status==='active'?'':' · '+String(m?.status||'').toUpperCase()));
+    box.innerHTML=
+      '<div class="lp-membership-stat"><small>Current plan</small><strong>'+esc(plan.name)+'</strong></div>'+
+      '<div class="lp-membership-stat"><small>Passports used</small><strong>'+used+' / '+limit+'</strong><div class="lp-membership-progress"><span style="width:'+pct+'%"></span></div></div>'+
+      '<div class="lp-membership-stat"><small>Monthly price</small><strong>₹'+Number(plan.price||0).toLocaleString('en-IN')+'</strong></div>'+
+      '<div class="lp-membership-stat"><small>Membership expiry</small><strong style="font-size:18px">'+esc(expires)+'</strong></div>';
+  }
+
+  window.openMembership=function(){
+    if(!currentUser){showPage('login');return;}
+    showPage('membership');
+    loadMembership().then(renderMembership);
+  };
+
+  window.selectMembershipPlan=async function(planId){
+    if(!currentUser){showPage('login');return;}
+    const p=PLANS[planId]; if(!p)return;
+    if(planId==='free'){toast('Free membership is available automatically.');return;}
+    toast(p.name+' selected. Connect a live payment provider to activate billing.');
+    const subject=encodeURIComponent('LIFEPASS '+p.name+' Membership');
+    const body=encodeURIComponent('Hello LIFEPASS Team,\n\nI want to activate the '+p.name+' monthly membership ('+p.limit+' passports).\n\nAccount email: '+(currentUser.email||'')+'\n');
+    window.location.href='mailto:lifepass.digital@gmail.com?subject='+subject+'&body='+body;
+  };
+
+  window.canCreatePassport=async function(){
+    if(!currentUser)return false;
+    const m=await loadMembership();
+    const limit=Number(m?.passport_limit||10);
+    const used=Array.isArray(window.passports)?passports.length:0;
+    if(used>=limit){
+      toast('Passport limit reached. Upgrade your membership to create more passports.');
+      openMembership();
+      return false;
+    }
+    return true;
+  };
+
+  const originalSave=window.savePassport;
+  if(typeof originalSave==='function'){
+    window.savePassport=async function(event){
+      const editing=document.getElementById('editingId')?.value;
+      if(!editing && !(await window.canCreatePassport())){event?.preventDefault?.();return;}
+      return originalSave.apply(this,arguments);
+    };
+  }
+
+  const originalShow=window.showPage;
+  if(typeof originalShow==='function'){
+    window.showPage=function(page){
+      originalShow.apply(this,arguments);
+      if(page==='membership')loadMembership().then(renderMembership);
+    };
+  }
+
+  function addNav(){
+    const nav=document.getElementById('mainNav');
+    if(nav && !document.getElementById('membershipNavButton')){
+      const b=document.createElement('button');b.id='membershipNavButton';b.type='button';b.textContent='Membership';b.onclick=openMembership;nav.appendChild(b);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    addNav();
+    if(window.currentUser)loadMembership().then(renderMembership);
+  });
+  setTimeout(()=>{addNav();if(window.currentUser)loadMembership().then(renderMembership)},1200);
+})();
 </script>
 
 </body>`);w.document.close();};
