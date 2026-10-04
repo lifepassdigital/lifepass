@@ -168,6 +168,9 @@
       .lp-member-qrbox{width:90px;height:90px;background:#fff;border-radius:12px;display:grid;place-items:center;padding:6px;box-sizing:border-box}
       .lp-member-qrbox img{width:100%;height:100%;object-fit:contain}
       .lp-member-note{font-size:10px;color:#b8d6df;line-height:1.45;margin-top:8px}
+      .lp-membership-hero h2{display:block!important;color:#fff!important;visibility:visible!important;opacity:1!important}
+      .lp-membership-hero p{display:block!important;color:#d8edf1!important;visibility:visible!important;opacity:1!important}
+      .lp-plan-button{pointer-events:auto!important;position:relative!important;z-index:5!important;cursor:pointer!important;visibility:visible!important;opacity:1!important}
       @media(max-width:900px){.lp-member-grid{grid-template-columns:1fr 1fr}.lp-member-bottom{grid-template-columns:1fr}}
       @media(max-width:600px){.lp-member-command-head{padding:22px 18px 16px}.lp-member-grid{padding:0 18px 18px;grid-template-columns:1fr 1fr}.lp-member-bottom{padding:0 18px 18px}.lp-member-stat strong{font-size:18px}}
     `;
@@ -252,10 +255,29 @@
     }
   }
 
+  function wirePlanButtons(){
+    document.querySelectorAll('.lp-plan-button[data-plan]').forEach(function(btn){
+      if(btn.dataset.lpMemberWired==='1') return;
+      btn.dataset.lpMemberWired='1';
+      btn.addEventListener('click',function(event){
+        event.preventDefault();
+        const plan=btn.getAttribute('data-plan');
+        if(typeof window.selectMembershipPlan==='function'){
+          window.selectMembershipPlan(plan);
+        }else if(typeof window.openMembershipPaymentFallback==='function'){
+          window.openMembershipPaymentFallback(plan);
+        }else if(window.toast){
+          window.toast('Payment screen is loading. Please try again.');
+        }
+      });
+    });
+  }
+
   async function refresh(){
     if(!window.currentUser) return;
     const id=await getMemberId();
     render(id);
+    wirePlanButtons();
   }
 
   function boot(){
