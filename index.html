@@ -497,8 +497,7 @@ footer{background:#0b223a;color:white;padding:30px 0}
 .lp-transfer-warning{font-size:11px;line-height:1.5;color:#6b5b35;background:#fff8e6;border:1px solid #f1dfac;border-radius:10px;padding:10px;margin-top:12px}
 
 /* profile */
-.lp-profile-top{display:flex;align-items:center;gap:18px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #e6edf2}
-.lp-avatar-wrap{position:relative;flex:0 0 auto}
+.lp-profile-top{display:flex;align-items:center;gap:18px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #e6edf2}.lp-avatar-wrap{position:relative;flex:0 0 auto}
 .lp-avatar-img,.big-avatar.lp-avatar-img{object-fit:cover;overflow:hidden}
 .lp-avatar-edit{
   position:absolute;right:-3px;bottom:-3px;width:28px;height:28px;border-radius:50%;
@@ -997,7 +996,6 @@ and preserve their story throughout their lifetime.
 </div>
 
 <div id="profileContent" class="profile-box hidden">
-
 <div class="profile-header">
 <div class="big-avatar" id="profileAvatar">U</div>
 <div>
@@ -1497,8 +1495,7 @@ Transfer the product passport to a new owner. The passport ID and product histor
 <button class="btn outline" onclick="closeView()">Close</button>
 <button class="btn secondary" onclick="requestVerification()">Request Verification</button>
 <button class="btn outline" onclick="openServiceModal(currentViewId)">Service History</button>
-<button class="btn outline" onclick="openDocumentsModal(currentViewId)">Documents</button>
-<button class="btn outline" onclick="openHistoryModal(currentViewId)">Ownership</button>
+<button class="btn outline" onclick="openDocumentsModal(currentViewId)">Documents</button><button class="btn outline" onclick="openHistoryModal(currentViewId)">Ownership</button>
 <button class="btn outline" onclick="openTransfer(currentViewId)">Transfer</button>
 <button class="btn primary" onclick="printCurrent()">Print</button>
 </div>
@@ -1998,7 +1995,6 @@ async function logout(){
  showPage("home");
 
 }
-
 /* ==========================================================
    PASSWORD RESET
 ========================================================== */
@@ -2498,7 +2494,6 @@ function requestEdit(id){
  editingPassportId=id;
 
  passwordAction="edit";
-
  document.getElementById("passwordInput").value="";
 
  document.getElementById("passwordModal")
@@ -2999,7 +2994,6 @@ LIFEPASS`
    VERIFICATION
 ========================================================== */
 
-
 function isCompanyAdmin(){
   return !!currentUser &&
     COMPANY_EMAILS.includes((currentUser.email||"").toLowerCase());
@@ -3497,8 +3491,7 @@ function printPassport(id){
  Every product has a story. Keep it forever.<br><br>
  The passport follows the product, not the owner.<br>
  Passport ID: ${esc(p.id)}<br>
- Generated: ${esc(datetime(new Date().toISOString()))}
- </div>
+ Generated: ${esc(datetime(new Date().toISOString()))} </div>
 
  </div>
  </div>`;
@@ -3997,8 +3990,7 @@ window.addEventListener("load",()=>{
         if(value.length>=4) score++;
         if(value.length>=8) score++;
         if(/[A-Z]/.test(value)&&/[a-z]/.test(value)) score++;
-        if(/\d/.test(value)) score++;
-        if(/[^A-Za-z0-9]/.test(value)) score++;
+        if(/\d/.test(value)) score++;        if(/[^A-Za-z0-9]/.test(value)) score++;
         const span=$('span',meter);
         span.style.width=(score*20)+'%';
         span.style.background=score<=2?'#e6a23c':score<=3?'#079eaa':'#15965a';
@@ -4497,7 +4489,6 @@ window.addEventListener("beforeinstallprompt", function(event) {
   lifepassInstallPrompt = event;
   lifepassSetInstallButton("ready");
 });
-
 window.installLifepass = async function() {
   if (lifepassIsStandalone()) {
     lifepassSetInstallButton("installed");
@@ -4997,7 +4988,6 @@ window.addEventListener("load", function() {
     if(types){PRODUCT_TYPES.forEach(t=>{if(![...types.options].some(o=>o.value===t)){const o=document.createElement('option');o.textContent=t;types.appendChild(o);}});}
     if(document.getElementById('pricePassportSelect')&&typeof fillPassportSelects==='function')fillPassportSelects();
   }
-
   function refreshV7(){
     passports.forEach(v7Ensure);
     patchCreateUI();
@@ -5181,6 +5171,187 @@ window.addEventListener("load", function() {
     if(window.currentUser)loadMembership().then(renderMembership);
   });
   setTimeout(()=>{addNav();if(window.currentUser)loadMembership().then(renderMembership)},1200);
+})();
+</script>
+
+<style id="lpPaidLabStyles">
+.lp-paid-lab-card{margin-top:18px;background:linear-gradient(135deg,#ffffff,#f5fbfc);border:1px solid #cfe4e8;border-radius:20px;padding:22px;box-shadow:0 14px 38px rgba(16,42,72,.07)}
+.lp-paid-lab-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.lp-paid-lab-kicker{font-size:11px;font-weight:900;letter-spacing:1.2px;color:#079eaa}
+.lp-paid-lab-title{font-size:24px;color:#102f50;margin:3px 0}
+.lp-paid-lab-sub{color:#71839a;font-size:13px;max-width:720px;line-height:1.55}
+.lp-paid-lab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.lp-paid-tool{border:1px solid #dce8ed;background:#fff;border-radius:14px;padding:14px;text-align:left;cursor:pointer;transition:.2s}
+.lp-paid-tool:hover{transform:translateY(-2px);border-color:#a9d5dc;box-shadow:0 9px 24px rgba(16,42,72,.08)}
+.lp-paid-tool b{display:block;color:#183754;margin-bottom:4px}
+.lp-paid-tool span{font-size:12px;color:#71839a;line-height:1.4}
+.lp-health-score{margin-top:16px;padding:14px;border-radius:15px;background:#102f50;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.lp-health-score strong{font-size:32px}
+.lp-health-score small{color:#c9dce9}
+.lp-lab-modal{position:fixed;inset:0;z-index:99998;background:rgba(5,22,38,.72);display:flex;align-items:center;justify-content:center;padding:14px}
+.lp-lab-box{width:min(900px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:22px;padding:22px;box-shadow:0 30px 100px rgba(0,0,0,.32)}
+.lp-lab-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}
+.lp-lab-tab{border:1px solid #d8e4eb;background:#f7fafc;color:#496276;border-radius:10px;padding:9px 11px;font-weight:800;font-size:12px}
+.lp-lab-tab.active{background:#e7f8f9;color:#087e91;border-color:#b9e2e5}
+.lp-lab-pane{display:none}.lp-lab-pane.active{display:block}
+.lp-lab-checks{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.lp-lab-check{display:flex;align-items:center;gap:9px;padding:11px;border:1px solid #e0e8ed;border-radius:11px;background:#fbfdfe;font-size:13px;color:#304d65}
+.lp-lab-check input{width:17px;height:17px;accent-color:#079eaa}
+.lp-lab-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lp-lab-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.lp-lab-field label{font-size:11px;font-weight:900;color:#496276}
+.lp-lab-field input,.lp-lab-field select,.lp-lab-field textarea{width:100%;padding:11px;border:1px solid #d5e1e8;border-radius:10px;background:#fbfdfe}
+.lp-lab-field textarea{min-height:90px;resize:vertical}
+.lp-lab-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:13px}
+.lp-lab-metric{padding:13px;border:1px solid #dfe8ed;border-radius:12px;background:#fbfdfe}
+.lp-lab-metric small{display:block;color:#71839a;font-size:11px}.lp-lab-metric strong{display:block;color:#102f50;font-size:21px;margin-top:3px}
+.lp-lab-list{display:grid;gap:8px;margin-top:10px}.lp-lab-item{padding:11px;border:1px solid #e1e9ee;border-radius:11px;background:#fbfdfe;font-size:12px;color:#496276}
+.lp-bt-status{padding:13px;border-radius:12px;background:#f3f8fa;border:1px solid #dce8ed;color:#496276;font-size:13px;line-height:1.5}
+.lp-bt-status.good{background:#ecf9f1;border-color:#c6ead3;color:#176b3a}
+.lp-bt-status.warn{background:#fff8e8;border-color:#f0dfad;color:#795b00}
+.lp-lab-note{font-size:11px;color:#8191a0;line-height:1.5;margin-top:10px}
+@media(max-width:800px){.lp-paid-lab-grid{grid-template-columns:1fr 1fr}.lp-lab-checks,.lp-lab-row{grid-template-columns:1fr}.lp-lab-metrics{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.lp-paid-lab-grid{grid-template-columns:1fr}.lp-lab-metrics{grid-template-columns:1fr}}
+</style>
+<script>
+/* LIFEPASS PAID MEMBER — DEVICE & PRODUCT HEALTH LAB */
+(function(){
+  const STORE='lifepass_paid_lab_v1';
+  const checks=[
+    ['body','Body / frame','No major cracks, dents or deformation'],
+    ['display','Display','Touch, pixels, brightness and glass checked'],
+    ['battery','Battery','Battery health/runtime checked'],
+    ['ports','Ports / charging','Charging port, cable and connectors checked'],
+    ['audio','Audio / camera','Speaker, microphone and camera checked'],
+    ['network','Connectivity','Wi-Fi / cellular / Bluetooth checked'],
+    ['performance','Performance','Boot, apps, storage and responsiveness checked'],
+    ['accessories','Accessories','Original charger, box and accessories checked']
+  ];
+  let labState={condition:{},notes:'',services:[],bt:null,updatedAt:null};
+  try{labState=Object.assign(labState,JSON.parse(localStorage.getItem(STORE)||'{}'));}catch(e){}
+  function esc2(v){return typeof esc==='function'?esc(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function save(){labState.updatedAt=new Date().toISOString();try{localStorage.setItem(STORE,JSON.stringify(labState));}catch(e){}}
+  function paid(){
+    if(window.isLifepassFreeAccess&&window.isLifepassFreeAccess())return true;
+    if(!window.currentUser||!window.supabaseClient)return false;
+    return false;
+  }
+  async function paidAsync(){
+    if(paid())return true;
+    if(!window.currentUser||!window.supabaseClient)return false;
+    try{
+      const {data,error}=await supabaseClient.from('memberships').select('plan_id,status,expires_at').eq('user_id',currentUser.id).maybeSingle();
+      if(error)throw error;
+      return !!(data&&data.status==='active'&&data.plan_id&&data.plan_id!=='free'&&(!data.expires_at||new Date(data.expires_at)>=new Date()));
+    }catch(e){return false;}
+  }
+  function conditionScore(){
+    const vals=checks.map(x=>labState.condition[x[0]]);
+    const done=vals.filter(Boolean).length;
+    return Math.round(done/checks.length*100);
+  }
+  function warrantySummary(){
+    const ps=Array.isArray(window.passports)?window.passports:[];
+    const now=new Date();
+    const active=ps.filter(p=>p.warrantyDate&&new Date(p.warrantyDate)>=now).length;
+    const expiring=ps.filter(p=>p.warrantyDate&&new Date(p.warrantyDate)>=now&&new Date(p.warrantyDate)<=new Date(now.getTime()+30*86400000)).length;
+    return {active,expiring,total:ps.length};
+  }
+  function readiness(){
+    const c=conditionScore(), w=warrantySummary();
+    const svc=Array.isArray(labState.services)?labState.services.length:0;
+    return Math.min(100,Math.round(c*.55+(w.total?Math.min(100,w.active/w.total*100):50)*.2+Math.min(100,svc*20)*.1+(labState.bt?.connected?15:0)));
+  }
+  function injectCard(){
+    const page=document.getElementById('page-dashboard');
+    const section=page?.querySelector('.section');
+    if(!section||document.getElementById('lpPaidLabCard'))return;
+    const card=document.createElement('div');card.id='lpPaidLabCard';card.className='lp-paid-lab-card';
+    card.innerHTML='<div class="lp-paid-lab-head"><div><div class="lp-paid-lab-kicker">PAID MEMBER EXCLUSIVE</div><div class="lp-paid-lab-title">Device & Product Health Lab</div><div class="lp-paid-lab-sub">Run a condition checklist, Bluetooth diagnostics, warranty review, service history and resale-readiness analysis from one place.</div></div><button class="btn primary" type="button" id="lpOpenPaidLab">Open Health Lab</button></div><div class="lp-paid-lab-grid"><button class="lp-paid-tool" type="button" data-lp-lab="condition"><b>🧪 Condition Check</b><span>8-point physical and functional inspection with score.</span></button><button class="lp-paid-tool" type="button" data-lp-lab="bluetooth"><b>📶 Bluetooth Diagnostics</b><span>Connect BLE devices and read supported battery/service data.</span></button><button class="lp-paid-tool" type="button" data-lp-lab="lifecycle"><b>🛠 Warranty & Service</b><span>Track warranty dates, maintenance and repair history.</span></button><button class="lp-paid-tool" type="button" data-lp-lab="report"><b>📄 Health Report</b><span>Build and download a product-health report for resale or records.</span></button></div><div class="lp-health-score"><div><small>Current product-health readiness</small><div><strong id="lpLabReadiness">'+readiness()+'</strong><small> / 100</small></div></div><div style="text-align:right"><small>Condition score</small><br><b id="lpLabCondition">'+conditionScore()+'%</b></div></div>';
+    section.appendChild(card);
+    card.querySelector('#lpOpenPaidLab').onclick=()=>openLab();
+    card.querySelectorAll('[data-lp-lab]').forEach(b=>b.onclick=()=>openLab(b.dataset.lpLab));
+  }
+  function refreshCard(){const r=document.getElementById('lpLabReadiness'),c=document.getElementById('lpLabCondition');if(r)r.textContent=readiness();if(c)c.textContent=conditionScore()+'%';}
+  function passportOptions(){
+    const ps=Array.isArray(window.passports)?window.passports:[];
+    return ps.map(p=>'<option value="'+esc2(p.id)+'">'+esc2(p.productName||p.id)+'</option>').join('');
+  }
+  function openLab(tab){
+    paidAsync().then(ok=>{
+      if(!ok){toast('Health Lab is available to paid members. Upgrade your membership to unlock it.');if(typeof openMembership==='function')openMembership();return;}
+      let m=document.getElementById('lpPaidLabModal');
+      if(m)m.remove();
+      m=document.createElement('div');m.id='lpPaidLabModal';m.className='lp-lab-modal';
+      m.innerHTML='<div class="lp-lab-box"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><div class="lp-paid-lab-kicker">LIFEPASS HEALTH LAB</div><h2 style="color:#102f50;margin-top:3px">Advanced Product Diagnostics</h2></div><button id="lpLabClose" class="close" type="button">×</button></div><div class="lp-lab-tabs"><button class="lp-lab-tab" data-tab="condition">Condition</button><button class="lp-lab-tab" data-tab="bluetooth">Bluetooth</button><button class="lp-lab-tab" data-tab="lifecycle">Warranty & Service</button><button class="lp-lab-tab" data-tab="report">Report</button></div><div class="lp-lab-pane" id="lpPaneCondition"><div class="lp-lab-metrics"><div class="lp-lab-metric"><small>Condition score</small><strong id="lpCondScore">'+conditionScore()+'%</strong></div><div class="lp-lab-metric"><small>Resale readiness</small><strong id="lpReadyScore">'+readiness()+'/100</strong></div><div class="lp-lab-metric"><small>Checks complete</small><strong id="lpCheckCount">'+checks.filter(x=>labState.condition[x[0]]).length+'/'+checks.length+'</strong></div></div><div class="lp-lab-checks">'+checks.map(x=>'<label class="lp-lab-check"><input type="checkbox" data-cond="'+x[0]+'" '+(labState.condition[x[0]]?'checked':'')+'><span><b>'+esc2(x[1])+'</b><br><small>'+esc2(x[2])+'</small></span></label>').join('')+'</div><div class="lp-lab-field" style="margin-top:12px"><label>Inspection notes</label><textarea id="lpLabNotes" placeholder="Record scratches, battery behavior, missing accessories, repairs, etc.">'+esc2(labState.notes||'')+'</textarea></div><button class="btn primary" id="lpSaveCondition" type="button">Save inspection</button></div><div class="lp-lab-pane" id="lpPaneBluetooth"><div class="lp-bt-status" id="lpBtStatus">Bluetooth diagnostics can inspect BLE devices only when your browser supports Web Bluetooth and the device exposes readable GATT services.</div><div class="lp-lab-metrics" style="margin-top:12px"><div class="lp-lab-metric"><small>Device</small><strong id="lpBtName">—</strong></div><div class="lp-lab-metric"><small>Battery</small><strong id="lpBtBattery">—</strong></div><div class="lp-lab-metric"><small>Services</small><strong id="lpBtServices">—</strong></div></div><div class="actions"><button class="btn primary" id="lpBtConnect" type="button">Connect Bluetooth device</button><button class="btn outline" id="lpBtDisconnect" type="button">Disconnect</button></div><div class="lp-lab-note">LIFEPASS does not claim a battery-health percentage unless the connected device exposes one. A successful connection proves communication with the selected BLE peripheral, not that every hardware component is healthy.</div></div><div class="lp-lab-pane" id="lpPaneLifecycle"><div class="lp-lab-metrics"><div class="lp-lab-metric"><small>Products</small><strong>'+warrantySummary().total+'</strong></div><div class="lp-lab-metric"><small>Active warranty</small><strong>'+warrantySummary().active+'</strong></div><div class="lp-lab-metric"><small>Expiring ≤30d</small><strong>'+warrantySummary().expiring+'</strong></div></div><div class="lp-lab-row"><div class="lp-lab-field"><label>Product</label><select id="lpServiceProduct"><option value="">Choose passport</option>'+passportOptions()+'</select></div><div class="lp-lab-field"><label>Service date</label><input id="lpServiceDate" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div></div><div class="lp-lab-row"><div class="lp-lab-field"><label>Service type</label><select id="lpServiceType"><option>Routine maintenance</option><option>Repair</option><option>Battery replacement</option><option>Screen/display repair</option><option>Cleaning</option><option>Inspection</option><option>Other</option></select></div><div class="lp-lab-field"><label>Cost (₹)</label><input id="lpServiceCost" type="number" min="0" step="1" placeholder="0"></div></div><div class="lp-lab-field"><label>Service notes</label><textarea id="lpServiceNotes" placeholder="What was checked, repaired or replaced?"></textarea></div><button class="btn primary" id="lpAddService" type="button">Add service record</button><div class="lp-lab-list" id="lpServiceList">'+(labState.services||[]).slice().reverse().map(s=>'<div class="lp-lab-item"><b>'+esc2(s.type)+'</b> · '+esc2(s.date)+' · ₹'+Number(s.cost||0).toLocaleString('en-IN')+'<br>'+esc2(s.product||'Product')+' — '+esc2(s.notes||'No notes')+'</div>').join('')+'</div></div><div class="lp-lab-pane" id="lpPaneReport"><div class="lp-lab-metrics"><div class="lp-lab-metric"><small>Condition</small><strong>'+conditionScore()+'%</strong></div><div class="lp-lab-metric"><small>Readiness</small><strong>'+readiness()+'/100</strong></div><div class="lp-lab-metric"><small>Service records</small><strong>'+((labState.services||[]).length)+'</strong></div></div><div class="lp-lab-item"><b>Report includes</b><br>Inspection checklist · condition score · Bluetooth diagnostic snapshot · warranty summary · service history · notes · generated timestamp.</div><div class="actions" style="margin-top:12px"><button class="btn primary" id="lpDownloadReport" type="button">Download JSON report</button><button class="btn outline" id="lpCopyReport" type="button">Copy report summary</button></div><div class="lp-lab-note">Report data is generated from the LIFEPASS passport and this device's local Health Lab records. Bluetooth values are only included when available.</div></div></div>';
+      document.body.appendChild(m);
+      m.querySelector('#lpLabClose').onclick=()=>m.remove();
+      m.addEventListener('click',e=>{if(e.target===m)m.remove();});
+      m.querySelectorAll('.lp-lab-tab').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+      function setTab(t){
+        m.querySelectorAll('.lp-lab-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+        m.querySelectorAll('.lp-lab-pane').forEach(p=>p.classList.remove('active'));
+        const pane=m.querySelector('#lpPane'+t.charAt(0).toUpperCase()+t.slice(1));if(pane)pane.classList.add('active');
+      }
+      setTab(tab||'condition');
+      m.querySelectorAll('[data-cond]').forEach(i=>i.onchange=()=>{labState.condition[i.dataset.cond]=i.checked;save();updateCondition();});
+      m.querySelector('#lpLabNotes').oninput=e=>{labState.notes=e.target.value;save();};
+      function updateCondition(){
+        const sc=conditionScore();const ready=readiness();
+        const a=m.querySelector('#lpCondScore'),b=m.querySelector('#lpReadyScore'),c=m.querySelector('#lpCheckCount');
+        if(a)a.textContent=sc+'%';if(b)b.textContent=ready+'/100';if(c)c.textContent=checks.filter(x=>labState.condition[x[0]]).length+'/'+checks.length;refreshCard();
+      }
+      m.querySelector('#lpSaveCondition').onclick=()=>{labState.notes=m.querySelector('#lpLabNotes').value;save();updateCondition();toast('Condition inspection saved.');};
+      let btDevice=null;
+      function btStatus(txt,kind){const el=m.querySelector('#lpBtStatus');if(el){el.textContent=txt;el.className='lp-bt-status '+(kind||'');}}
+      async function connectBT(){
+        if(!window.isSecureContext||!navigator.bluetooth){btStatus('Web Bluetooth is not available in this browser/context. Try a supported HTTPS browser such as Chrome on a compatible device.','warn');return;}
+        try{
+          btStatus('Choose a nearby Bluetooth Low Energy device…');
+          btDevice=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:['battery_service','device_information']});
+          btDevice.addEventListener('gattserverdisconnected',()=>{btStatus('Device disconnected.','warn');});
+          const server=await btDevice.gatt.connect();
+          let battery='Not exposed',services='Unknown';
+          try{
+            const bs=await server.getPrimaryService('battery_service');
+            const ch=await bs.getCharacteristic('battery_level');
+            const value=await ch.readValue();battery=(value.getUint8(0))+'%';
+          }catch(e){}
+          try{const sv=await server.getPrimaryServices();services=String(sv.length);}catch(e){}
+          labState.bt={connected:true,name:btDevice.name||'Unnamed BLE device',id:btDevice.id||'',battery,services,checkedAt:new Date().toISOString()};
+          save();
+          m.querySelector('#lpBtName').textContent=btDevice.name||'Unnamed';
+          m.querySelector('#lpBtBattery').textContent=battery;
+          m.querySelector('#lpBtServices').textContent=services;
+          btStatus('Connected successfully. BLE communication is working for the selected device.','good');
+          refreshCard();
+        }catch(e){btStatus('Bluetooth check did not complete: '+(e?.message||'device selection cancelled or unavailable'),'warn');}
+      }
+      m.querySelector('#lpBtConnect').onclick=connectBT;
+      m.querySelector('#lpBtDisconnect').onclick=()=>{try{btDevice?.gatt?.disconnect();}catch(e){}labState.bt=Object.assign({},labState.bt||{},{connected:false,checkedAt:new Date().toISOString()});save();btStatus('Disconnected.','warn');};
+      if(labState.bt){m.querySelector('#lpBtName').textContent=labState.bt.name||'—';m.querySelector('#lpBtBattery').textContent=labState.bt.battery||'—';m.querySelector('#lpBtServices').textContent=labState.bt.services||'—';}
+      m.querySelector('#lpAddService').onclick=()=>{
+        const id=m.querySelector('#lpServiceProduct').value;const p=(Array.isArray(window.passports)?passports:[]).find(x=>x.id===id);
+        const record={product:p?.productName||id||'Unlinked product',passportId:id||'',date:m.querySelector('#lpServiceDate').value,type:m.querySelector('#lpServiceType').value,cost:Number(m.querySelector('#lpServiceCost').value||0),notes:m.querySelector('#lpServiceNotes').value.trim()};
+        if(!record.date){toast('Add a service date.');return;}labState.services=Array.isArray(labState.services)?labState.services:[];labState.services.push(record);save();
+        const list=m.querySelector('#lpServiceList');const item=document.createElement('div');item.className='lp-lab-item';item.innerHTML='<b>'+esc2(record.type)+'</b> · '+esc2(record.date)+' · ₹'+record.cost.toLocaleString('en-IN')+'<br>'+esc2(record.product)+' — '+esc2(record.notes||'No notes');list.prepend(item);
+        m.querySelector('#lpServiceCost').value='';m.querySelector('#lpServiceNotes').value='';toast('Service record added.');refreshCard();
+      };
+      function report(){
+        return {productCount:Array.isArray(window.passports)?passports.length:0,passports:(Array.isArray(window.passports)?passports:[]).map(p=>({id:p.id,productName:p.productName,productType:p.productType,brand:p.brand,model:p.model,serialNumber:p.serialNumber,status:p.status,purchaseDate:p.purchaseDate,warrantyDate:p.warrantyDate,condition:p.productCondition||null,purchasePrice:p.purchasePrice||0,listingPrice:p.listingPrice||0})),conditionChecks:labState.condition,conditionScore:conditionScore(),resaleReadiness:readiness(),bluetooth:labState.bt||null,services:labState.services||[],notes:labState.notes||'',generatedAt:new Date().toISOString()};}
+      m.querySelector('#lpDownloadReport').onclick=()=>{const blob=new Blob([JSON.stringify(report(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lifepass-health-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+      m.querySelector('#lpCopyReport').onclick=async()=>{const r=report();const txt='LIFEPASS HEALTH REPORT\\nCondition: '+r.conditionScore+'%\\nResale readiness: '+r.resaleReadiness+'/100\\nProducts: '+r.productCount+'\\nService records: '+r.services.length+'\\nBluetooth: '+(r.bluetooth?.name||'Not checked')+'\\nGenerated: '+r.generatedAt;try{await navigator.clipboard.writeText(txt);toast('Report summary copied.');}catch(e){toast('Clipboard unavailable.');}};
+    });
+  }
+  function addNav(){
+    const nav=document.getElementById('mainNav');
+    if(nav&&!document.getElementById('lpPaidLabNav')){
+      const b=document.createElement('button');b.id='lpPaidLabNav';b.type='button';b.textContent='Health Lab';b.onclick=()=>openLab();nav.appendChild(b);
+    }
+  }
+  document.addEventListener('DOMContentLoaded',()=>{addNav();setTimeout(injectCard,800);setTimeout(refreshCard,1000);});
+  setTimeout(()=>{addNav();injectCard();refreshCard();},1800);
+  window.openLifepassHealthLab=openLab;
 })();
 </script>
 </body>
