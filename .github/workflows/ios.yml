@@ -27,6 +27,12 @@ jobs:
       - name: Add iOS platform
         run: npx cap add ios --packagemanager SPM
 
+      - name: Generate iOS app assets
+        run: |
+          mkdir -p assets
+          cp logo.png assets/logo.png
+          npx @capacitor/assets generate --ios --iconBackgroundColor '#ffffff' --splashBackgroundColor '#ffffff'
+
       - name: Sync Capacitor
         run: npx cap sync ios
 
