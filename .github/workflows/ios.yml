@@ -38,7 +38,7 @@ jobs:
       - name: Build iOS simulator app
         working-directory: ios
         run: |
-          xcodebuild             -workspace App/App.xcworkspace             -scheme App             -sdk iphonesimulator             -configuration Debug             -derivedDataPath build             CODE_SIGNING_ALLOWED=NO
+          xcodebuild             -project App/App.xcodeproj             -scheme App             -sdk iphonesimulator             -configuration Debug             -derivedDataPath build             CODE_SIGNING_ALLOWED=NO
 
       - name: Package simulator app
         run: |
