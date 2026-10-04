@@ -1,0 +1,22 @@
+{
+  "name": "lifepass",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LIFEPASS Digital Product Passport",
+  "scripts": {
+    "mobile:prepare": "node scripts/prepare-mobile.mjs",
+    "mobile:android": "npm run mobile:prepare && npx cap add android && npx cap sync android",
+    "mobile:ios": "npm run mobile:prepare && npx cap add ios --packagemanager SPM && npx cap sync ios",
+    "mobile:sync": "npm run mobile:prepare && npx cap sync",
+    "mobile:assets": "npx capacitor-assets generate"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "@capacitor/ios": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2",
+    "@capacitor/assets": "3.0.0"
+  }
+}
