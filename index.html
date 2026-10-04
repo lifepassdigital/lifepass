@@ -5076,14 +5076,37 @@ window.addEventListener("load", function() {
     loadMembership().then(renderMembership);
   };
 
+  window.LIFEPASS_UPI_ID='9030734041@fam';
+
   window.selectMembershipPlan=async function(planId){
     if(!currentUser){showPage('login');return;}
     const p=PLANS[planId]; if(!p)return;
     if(planId==='free'){toast('Free membership is available automatically.');return;}
-    toast(p.name+' selected. Connect a live payment provider to activate billing.');
-    const subject=encodeURIComponent('LIFEPASS '+p.name+' Membership');
-    const body=encodeURIComponent('Hello LIFEPASS Team,\n\nI want to activate the '+p.name+' monthly membership ('+p.limit+' passports).\n\nAccount email: '+(currentUser.email||'')+'\n');
-    window.location.href='mailto:lifepass.digital@gmail.com?subject='+subject+'&body='+body;
+
+    const upi='9030734041@fam';
+    const amount=Number(p.price||0).toFixed(2);
+    const note='LIFEPASS '+p.name+' Membership';
+    const upiUrl='upi://pay?pa='+encodeURIComponent(upi)+'&pn='+encodeURIComponent('LIFEPASS')+'&am='+encodeURIComponent(amount)+'&cu=INR&tn='+encodeURIComponent(note);
+    const existing=document.getElementById('lpPaymentModal'); if(existing)existing.remove();
+
+    const modal=document.createElement('div');
+    modal.id='lpPaymentModal';
+    modal.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:18px;';
+    modal.innerHTML=
+      '<div style="width:min(460px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.35);font-family:inherit">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div style="font-size:12px;font-weight:800;letter-spacing:1px;color:#079eaa">LIFEPASS PAYMENT</div><h2 style="margin:4px 0 0">'+esc(p.name)+' Membership</h2></div><button type="button" id="lpPayClose" style="border:0;background:#f1f5f9;border-radius:10px;padding:8px 11px;font-size:18px">×</button></div>'+
+      '<div style="margin:18px 0;padding:16px;border-radius:16px;background:#f5f9fc"><div style="font-size:13px;color:#64748b">Amount</div><div style="font-size:32px;font-weight:900;margin:2px 0">₹'+amount.replace('.00','')+'</div><div style="font-size:13px;color:#64748b">'+p.limit.toLocaleString('en-IN')+' passports · 1 month</div></div>'+
+      '<div style="font-size:13px;color:#475569;margin-bottom:8px">Pay using FamPay/UPI</div>'+
+      '<div style="display:flex;gap:8px;align-items:center;background:#eef7ff;border:1px solid #cfe7ff;border-radius:12px;padding:12px"><code id="lpUpiValue" style="font-size:15px;font-weight:800;word-break:break-all;flex:1">'+esc(upi)+'</code><button type="button" id="lpCopyUpi" style="border:0;border-radius:9px;padding:9px 12px;font-weight:800">Copy</button></div>'+
+      '<a href="'+upiUrl+'" style="display:block;text-align:center;text-decoration:none;margin-top:12px;padding:14px;border-radius:12px;background:#102f50;color:#fff;font-weight:900">Pay ₹'+amount.replace('.00','')+' with UPI</a>'+
+      '<div style="margin-top:18px;padding:14px;border-radius:12px;background:#fff8e8;border:1px solid #f4df9c;font-size:13px;color:#6b4f00;line-height:1.5"><strong>After payment</strong><br>Send your UTR / transaction ID to LIFEPASS support so we can verify the payment and activate your membership. Do not share your UPI PIN or OTP.</div>'+
+      '<a href="mailto:lifepass.digital@gmail.com?subject='+encodeURIComponent('LIFEPASS '+p.name+' payment')+'&body='+encodeURIComponent('Hello LIFEPASS Team,\\n\\nI paid ₹'+amount.replace('.00','')+' for the '+p.name+' membership.\\n\\nAccount email: '+(currentUser.email||'')+'\\nUTR / Transaction ID: ')+'" style="display:block;text-align:center;text-decoration:none;margin-top:12px;padding:12px;border-radius:12px;border:1px solid #cbd5e1;color:#102f50;font-weight:800">Email UTR for verification</a>'+
+      '<div style="font-size:11px;color:#94a3b8;margin-top:14px;text-align:center">Payment is handled by your UPI app. LIFEPASS does not ask for your UPI PIN, OTP, or bank password.</div>'+
+      '</div>';
+    document.body.appendChild(modal);
+    document.getElementById('lpPayClose').onclick=()=>modal.remove();
+    modal.addEventListener('click',e=>{if(e.target===modal)modal.remove();});
+    document.getElementById('lpCopyUpi').onclick=async()=>{try{await navigator.clipboard.writeText(upi);toast('UPI ID copied.');}catch(e){toast('UPI ID: '+upi);}};
   };
 
   window.canCreatePassport=async function(){
