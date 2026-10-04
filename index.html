@@ -810,7 +810,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <div class="user-avatar" id="navAvatar">U</div>
 <button class="btn outline" id="lpNotificationButton" onclick="toggleNotifications()" title="Notifications">🔔 <span id="lpNotificationCount">0</span></button>
 <button class="btn outline hidden" id="adminNavButton" onclick="showPage('admin-verification')">Verification Center</button>
-<button class="btn primary" id="membershipNavButton" type="button" onclick="window.openMembership();return false;">★ Membership</button>
+<button class="btn primary" id="membershipNavButton" type="button" onclick="showPage('membership');return false;">★ Membership</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn outline" onclick="logout()">Log Out</button>
 </div>
@@ -925,7 +925,7 @@ and preserve their story throughout their lifetime.
 <div class="actions" style="margin-top:15px">
 <button class="btn primary" onclick="openCreate()">Create Passport</button>
 <button class="btn secondary" onclick="showPage('passports')">View Passports</button>
-<button class="btn primary" id="dashboardMembershipButton" type="button" onclick="window.openMembership();return false;">★ Membership & Plans</button>
+<button class="btn primary" id="dashboardMembershipButton" type="button" onclick="showPage('membership');return false;">★ Membership & Plans</button>
 <button class="btn outline" onclick="showPage('profile')">Profile</button>
 <button class="btn secondary" onclick="showPage('profile')">Edit Profile</button>
 <button class="btn outline" onclick="showPage('settings')">Settings</button>
@@ -5074,22 +5074,16 @@ window.addEventListener("load", function() {
 
   window.loadLifepassMembership=loadMembership;
   window.openMembership=function(){
-    if(!window.currentUser){
-      showPage('login');
-      return;
-    }
+    if(!window.currentUser){ showPage('login'); return; }
+    showPage('membership');
     const page=document.getElementById('page-membership');
-    if(!page){
-      toast('Membership page is still loading. Please refresh once.');
-      return;
-    }
-    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-    page.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-    loadMembership().then(()=>{
-      renderMembership();
-      if(typeof window.refreshLifepassMembershipBadge==='function') window.refreshLifepassMembershipBadge();
-    });
+    if(!page){ toast('Membership page could not be opened. Please refresh once.'); return; }
+    setTimeout(()=>{
+      if(typeof loadMembership==='function') loadMembership().then(()=>{
+        if(typeof renderMembership==='function') renderMembership();
+        if(typeof window.refreshLifepassMembershipBadge==='function') window.refreshLifepassMembershipBadge();
+      });
+    },0);
   };
 
   window.LIFEPASS_UPI_ID='9030734041@fam';
