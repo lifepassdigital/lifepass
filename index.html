@@ -1011,6 +1011,13 @@ and preserve their story throughout their lifetime.
     <p id="officialProfileStatus">Authenticated LIFEPASS account</p>
   </div>
 </div>
+<div id="lpMembershipBadge" class="lp-membership-badge">
+  <div class="lp-membership-stars" id="lpMembershipStars">★</div>
+  <div>
+    <div class="lp-membership-badge-label" id="lpMembershipPlan">FREE MEMBER</div>
+    <div class="lp-membership-badge-sub" id="lpMembershipTier">1-star LIFEPASS membership</div>
+  </div>
+</div>
 
 <div class="form-group">
 <label>Display Name</label>
@@ -5352,6 +5359,67 @@ window.addEventListener("load", function() {
   document.addEventListener('DOMContentLoaded',()=>{addNav();setTimeout(injectCard,800);setTimeout(refreshCard,1000);});
   setTimeout(()=>{addNav();injectCard();refreshCard();},1800);
   window.openLifepassHealthLab=openLab;
+})();
+</script>
+
+<style id="lpMembershipProfileStyles">
+.lp-membership-badge{margin:12px 0 18px;padding:14px 16px;border-radius:16px;display:flex;align-items:center;gap:13px;border:1px solid #d9e5ec;background:#f8fbfd;box-shadow:0 8px 24px rgba(16,42,72,.06)}
+.lp-membership-stars{font-size:25px;letter-spacing:2px;line-height:1;min-width:132px}
+.lp-membership-badge-label{font-size:12px;font-weight:950;letter-spacing:1px;color:#173754}
+.lp-membership-badge-sub{font-size:11px;color:#71839a;margin-top:3px}
+.lp-membership-badge.free{background:#f7fafc;border-color:#dce5eb}.lp-membership-badge.free .lp-membership-stars{color:#8797a7}
+.lp-membership-badge.startup{background:#fff9ef;border-color:#f0d6a4}.lp-membership-badge.startup .lp-membership-stars{color:#c7872d}
+.lp-membership-badge.regular{background:#eef9ff;border-color:#bcdce9}.lp-membership-badge.regular .lp-membership-stars{color:#1784a2}
+.lp-membership-badge.pro{background:#f3efff;border-color:#d4c5f1}.lp-membership-badge.pro .lp-membership-stars{color:#7653c6}
+.lp-membership-badge.business{background:#fff6e8;border-color:#e8c887}.lp-membership-badge.business .lp-membership-stars{color:#a66a00}
+.lp-membership-badge.founder{background:linear-gradient(135deg,#fff7d8,#fff);border-color:#e5c65b}.lp-membership-badge.founder .lp-membership-stars{color:#c99a00}
+@media(max-width:520px){.lp-membership-stars{min-width:auto;font-size:21px}.lp-membership-badge{padding:12px}}
+</style>
+<script>
+(function(){
+  const tiers={
+    free:{stars:1,label:'FREE MEMBER',sub:'1-star LIFEPASS membership',cls:'free'},
+    startup:{stars:2,label:'STARTUP MEMBER',sub:'2-star LIFEPASS membership · 25 passports',cls:'startup'},
+    regular:{stars:3,label:'REGULAR MEMBER',sub:'3-star LIFEPASS membership · 100 passports',cls:'regular'},
+    pro:{stars:4,label:'PRO MEMBER',sub:'4-star LIFEPASS membership · 500 passports',cls:'pro'},
+    business:{stars:5,label:'BUSINESS MEMBER',sub:'5-star LIFEPASS membership · 2,000 passports',cls:'business'},
+    founder:{stars:5,label:'FOUNDER ACCESS',sub:'★★★★★ Founder access · unlimited passports',cls:'founder'}
+  };
+  async function getTier(){
+    try{
+      if(window.isLifepassFreeAccess&&window.isLifepassFreeAccess())return tiers.founder;
+      if(!window.currentUser)return tiers.free;
+      if(window.loadMembership&&typeof window.loadMembership==='function'){
+        try{await window.loadMembership();}catch(e){}
+      }
+      const m=window.membershipCache||null;
+      if(m&&m.status==='active'&&tiers[m.plan_id]&&(!m.expires_at||new Date(m.expires_at)>=new Date()))return tiers[m.plan_id];
+      if(window.supabaseClient){
+        const {data}=await window.supabaseClient.from('memberships').select('plan_id,status,expires_at').eq('user_id',window.currentUser.id).maybeSingle();
+        if(data&&data.status==='active'&&tiers[data.plan_id]&&(!data.expires_at||new Date(data.expires_at)>=new Date()))return tiers[data.plan_id];
+      }
+    }catch(e){}
+    return tiers.free;
+  }
+  async function render(){
+    const box=document.getElementById('lpMembershipBadge');if(!box)return;
+    const t=await getTier();
+    box.className='lp-membership-badge '+t.cls;
+    document.getElementById('lpMembershipStars').textContent='★'.repeat(t.stars)+'☆'.repeat(5-t.stars);
+    document.getElementById('lpMembershipPlan').textContent=t.label;
+    document.getElementById('lpMembershipTier').textContent=t.sub;
+  }
+  window.refreshLifepassMembershipBadge=render;
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(render,900));
+  setTimeout(render,1600);
+  const oldShow=window.showPage;
+  if(typeof oldShow==='function'){
+    window.showPage=function(page){
+      const out=oldShow.apply(this,arguments);
+      if(page==='profile')setTimeout(render,100);
+      return out;
+    };
+  }
 })();
 </script>
 </body>
