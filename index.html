@@ -4351,84 +4351,188 @@ window.addEventListener("load",()=>{
   window.openDocument=function(pid,did){const p=passports.find(x=>x.id===pid),d=p?.documents?.find(x=>x.id===did);if(!d)return;const w=window.open();if(!w)return;w.document.write(`<title>${esc(d.name)}</title><body style="margin:20px;font-family:Arial"><h2>${esc(d.name)}</h2><p>${esc(d.type)}</p>${d.data.startsWith('data:image')?`<img src="${d.data}" style="max-width:100%">`:d.data.startsWith('data:application/pdf')?`<iframe src="${d.data}" style="width:100%;height:90vh;border:0"></iframe>`:`<a href="${d.data}" download="${attr(d.name)}">Download ${esc(d.name)}</a>`}
 <script>
 /* =========================================================
-   LIFEPASS PWA INSTALL BUTTON
+   LIFEPASS PWA INSTALL + SERVICE WORKER
    ========================================================= */
 
 let lifepassInstallPrompt = null;
+let lifepassServiceWorkerRegistration = null;
 
-window.addEventListener("beforeinstallprompt", function (event) {
+function lifepassIsStandalone() {
+  return window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+}
+
+function lifepassInstallButton() {
+  return document.getElementById("installLifepassBtn");
+}
+
+function lifepassSetInstallButton(state) {
+  const button = lifepassInstallButton();
+  if (!button) return;
+
+  if (state === "installed") {
+    button.textContent = "✓ LIFEPASS Installed";
+    button.disabled = true;
+    button.style.display = "inline-flex";
+    button.style.opacity = "0.75";
+    button.style.cursor = "default";
+    return;
+  }
+
+  button.disabled = false;
+  button.style.opacity = "1";
+  button.style.cursor = "pointer";
+  button.style.display = "inline-flex";
+
+  if (state === "ios") {
+    button.textContent = "📲 Add LIFEPASS to Home Screen";
+  } else {
+    button.textContent = "📲 Install LIFEPASS";
+  }
+}
+
+function lifepassShowInstallHelp(title, steps) {
+  const existing = document.getElementById("lifepassInstallHelp");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "lifepassInstallHelp";
+  overlay.style.cssText =
+    "position:fixed;inset:0;z-index:6000;background:rgba(5,22,38,.68);" +
+    "display:flex;align-items:center;justify-content:center;padding:18px;";
+
+  const box = document.createElement("div");
+  box.style.cssText =
+    "width:min(430px,100%);background:#fff;border-radius:20px;padding:24px;" +
+    "box-shadow:0 25px 70px rgba(0,0,0,.25);color:#10243e;";
+
+  box.innerHTML =
+    "<div style='display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px'>" +
+      "<h3 style='margin:0;color:#102f50'>" + title + "</h3>" +
+      "<button type='button' aria-label='Close' style='border:0;background:#edf2f6;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer'>×</button>" +
+    "</div>" +
+    "<ol style='padding-left:22px;margin:0;color:#526b80;line-height:1.75'>" +
+      steps.map(function(step){ return "<li>" + step + "</li>"; }).join("") +
+    "</ol>" +
+    "<button type='button' class='btn primary' style='width:100%;margin-top:20px'>Done</button>";
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  function close() { overlay.remove(); }
+  box.querySelector("button").addEventListener("click", close);
+  box.querySelectorAll("button")[1].addEventListener("click", close);
+  overlay.addEventListener("click", function(event) {
+    if (event.target === overlay) close();
+  });
+}
+
+function lifepassIsIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function lifepassIsInAppBrowser() {
+  return /FBAN|FBAV|Instagram|Line|; wv\)/i.test(navigator.userAgent);
+}
+
+window.addEventListener("beforeinstallprompt", function(event) {
   event.preventDefault();
   lifepassInstallPrompt = event;
-
-  const button = document.getElementById("installLifepassBtn");
-  if (button) {
-    button.style.display = "inline-flex";
-  }
+  lifepassSetInstallButton("ready");
 });
 
-window.installLifepass = async function () {
-  const button = document.getElementById("installLifepassBtn");
+window.installLifepass = async function() {
+  if (lifepassIsStandalone()) {
+    lifepassSetInstallButton("installed");
+    lifepassShowInstallHelp("LIFEPASS is installed", [
+      "LIFEPASS is already installed on this device.",
+      "Open it from your Home Screen or Apps menu."
+    ]);
+    return;
+  }
 
   if (lifepassInstallPrompt) {
     try {
       lifepassInstallPrompt.prompt();
-
       const result = await lifepassInstallPrompt.userChoice;
-
-      console.log("LIFEPASS installation:", result.outcome);
-
       lifepassInstallPrompt = null;
 
-      if (button && result.outcome === "accepted") {
-        button.style.display = "none";
+      if (result && result.outcome === "accepted") {
+        lifepassSetInstallButton("installed");
       }
     } catch (error) {
       console.error("LIFEPASS installation error:", error);
     }
-
     return;
   }
 
-  const isStandalone =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true;
-
-  if (isStandalone) {
-    alert("LIFEPASS is already installed on this device.");
+  if (lifepassIsIOS()) {
+    lifepassShowInstallHelp("Install LIFEPASS on iPhone/iPad", [
+      "<strong>Open this website in Safari.</strong>",
+      "Tap the <strong>Share</strong> button.",
+      "Choose <strong>Add to Home Screen</strong>.",
+      "Tap <strong>Add</strong> to finish."
+    ]);
     return;
   }
 
-  const isIOS =
-    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-
-  if (isIOS) {
-    alert(
-      "To install LIFEPASS on iPhone/iPad:\n\n" +
-      "1. Open LIFEPASS in Safari.\n" +
-      "2. Tap the Share button.\n" +
-      "3. Select 'Add to Home Screen'.\n" +
-      "4. Tap 'Add'."
-    );
+  if (lifepassIsInAppBrowser()) {
+    lifepassShowInstallHelp("Open LIFEPASS in your browser", [
+      "Open the browser menu in this app.",
+      "Choose <strong>Open in Chrome, Safari, or Edge</strong>.",
+      "Then tap <strong>Install LIFEPASS</strong> on the website."
+    ]);
     return;
   }
 
-  alert(
-    "LIFEPASS can be installed from your browser.\n\n" +
-    "Open the browser menu and select 'Install LIFEPASS' " +
-    "or 'Add to Home screen'."
-  );
+  lifepassShowInstallHelp("Install LIFEPASS", [
+    "Open your browser menu.",
+    "Choose <strong>Install LIFEPASS</strong>, <strong>Add to Home screen</strong>, or the install icon in the address bar.",
+    "Confirm the installation."
+  ]);
 };
 
-window.addEventListener("appinstalled", function () {
+window.addEventListener("appinstalled", function() {
   console.log("LIFEPASS installed successfully.");
-
   lifepassInstallPrompt = null;
+  lifepassSetInstallButton("installed");
+});
 
-  const button = document.getElementById("installLifepassBtn");
-  if (button) {
-    button.style.display = "none";
+async function lifepassRegisterServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+
+  try {
+    lifepassServiceWorkerRegistration =
+      await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+
+    console.log("LIFEPASS service worker registered.");
+
+    lifepassServiceWorkerRegistration.addEventListener("updatefound", function() {
+      const worker = lifepassServiceWorkerRegistration.installing;
+      if (!worker) return;
+
+      worker.addEventListener("statechange", function() {
+        if (worker.state === "installed" && navigator.serviceWorker.controller) {
+          console.log("A new LIFEPASS app version is available.");
+        }
+      });
+    });
+  } catch (error) {
+    console.error("LIFEPASS service worker registration failed:", error);
   }
+}
+
+window.addEventListener("load", function() {
+  if (lifepassIsStandalone()) {
+    lifepassSetInstallButton("installed");
+  } else if (lifepassIsIOS()) {
+    lifepassSetInstallButton("ios");
+  } else {
+    lifepassSetInstallButton("default");
+  }
+
+  lifepassRegisterServiceWorker();
 });
 </script>
 
