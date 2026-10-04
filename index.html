@@ -4602,123 +4602,7 @@ window.addEventListener("load", function() {
 </script>
 
 
-<script>
-/* LIFEPASS membership + passport quota */
-(function(){
-  const PLANS={
-    free:{name:'Free',price:0,limit:10},
-    regular:{name:'Regular',price:99,limit:100},
-    pro:{name:'Pro',price:249,limit:500},
-    business:{name:'Business',price:499,limit:2000}
-  };
-  let membershipCache=null;
-  window.LIFEPASS_PLANS=PLANS;
 
-  async function loadMembership(){
-    if(!window.currentUser || !window.supabaseClient){membershipCache=null;return null;}
-    try{
-      let {data,error}=await supabaseClient.from('memberships').select('*').eq('user_id',currentUser.id).maybeSingle();
-      if(error) throw error;
-      if(!data){
-        const {data:created,error:createError}=await supabaseClient.from('memberships').insert({
-          user_id:currentUser.id,plan_id:'free',status:'active',passport_limit:10,
-          started_at:new Date().toISOString(),expires_at:null,provider:'manual'
-        }).select().single();
-        if(createError) throw createError;
-        data=created;
-      }
-      if(data.expires_at && new Date(data.expires_at)<new Date() && data.status==='active'){
-        data.status='expired';
-        membershipCache=data;
-        await supabaseClient.from('memberships').update({status:'expired',updated_at:new Date().toISOString()}).eq('id',data.id);
-      }
-      membershipCache=data;
-      return data;
-    }catch(e){console.warn('Membership unavailable',e);return membershipCache;}
-  }
-
-  function activePlan(){
-    const m=membershipCache;
-    if(!m || m.status!=='active') return PLANS.free;
-    return PLANS[m.plan_id]||{name:m.plan_id,price:0,limit:Number(m.passport_limit||10)};
-  }
-
-  function renderMembership(){
-    const box=document.getElementById('membershipSummary'), badge=document.getElementById('membershipStatusBadge');
-    if(!box)return;
-    const m=membershipCache, plan=activePlan(), used=Array.isArray(window.passports)?passports.length:0;
-    const limit=Number(m?.passport_limit||plan.limit||10), pct=Math.min(100,limit?Math.round(used/limit*100):0);
-    let expires='No expiry';
-    if(m?.expires_at) expires=new Date(m.expires_at).toLocaleDateString();
-    if(m?.status==='expired') expires='Expired';
-    if(badge) badge.textContent=(plan.name+' MEMBERSHIP'+(m?.status==='active'?'':' · '+String(m?.status||'').toUpperCase()));
-    box.innerHTML=
-      '<div class="lp-membership-stat"><small>Current plan</small><strong>'+esc(plan.name)+'</strong></div>'+
-      '<div class="lp-membership-stat"><small>Passports used</small><strong>'+used+' / '+limit+'</strong><div class="lp-membership-progress"><span style="width:'+pct+'%"></span></div></div>'+
-      '<div class="lp-membership-stat"><small>Monthly price</small><strong>₹'+Number(plan.price||0).toLocaleString('en-IN')+'</strong></div>'+
-      '<div class="lp-membership-stat"><small>Membership expiry</small><strong style="font-size:18px">'+esc(expires)+'</strong></div>';
-  }
-
-  window.openMembership=function(){
-    if(!currentUser){showPage('login');return;}
-    showPage('membership');
-    loadMembership().then(renderMembership);
-  };
-
-  window.selectMembershipPlan=async function(planId){
-    if(!currentUser){showPage('login');return;}
-    const p=PLANS[planId]; if(!p)return;
-    if(planId==='free'){toast('Free membership is available automatically.');return;}
-    toast(p.name+' selected. Connect a live payment provider to activate billing.');
-    const subject=encodeURIComponent('LIFEPASS '+p.name+' Membership');
-    const body=encodeURIComponent('Hello LIFEPASS Team,\n\nI want to activate the '+p.name+' monthly membership ('+p.limit+' passports).\n\nAccount email: '+(currentUser.email||'')+'\n');
-    window.location.href='mailto:lifepass.digital@gmail.com?subject='+subject+'&body='+body;
-  };
-
-  window.canCreatePassport=async function(){
-    if(!currentUser)return false;
-    const m=await loadMembership();
-    const limit=Number(m?.passport_limit||10);
-    const used=Array.isArray(window.passports)?passports.length:0;
-    if(used>=limit){
-      toast('Passport limit reached. Upgrade your membership to create more passports.');
-      openMembership();
-      return false;
-    }
-    return true;
-  };
-
-  const originalSave=window.savePassport;
-  if(typeof originalSave==='function'){
-    window.savePassport=async function(event){
-      const editing=document.getElementById('editingId')?.value;
-      if(!editing && !(await window.canCreatePassport())){event?.preventDefault?.();return;}
-      return originalSave.apply(this,arguments);
-    };
-  }
-
-  const originalShow=window.showPage;
-  if(typeof originalShow==='function'){
-    window.showPage=function(page){
-      originalShow.apply(this,arguments);
-      if(page==='membership')loadMembership().then(renderMembership);
-    };
-  }
-
-  function addNav(){
-    const nav=document.getElementById('mainNav');
-    if(nav && !document.getElementById('membershipNavButton')){
-      const b=document.createElement('button');b.id='membershipNavButton';b.type='button';b.textContent='Membership';b.onclick=openMembership;nav.appendChild(b);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded',()=>{
-    addNav();
-    if(window.currentUser)loadMembership().then(renderMembership);
-  });
-  setTimeout(()=>{addNav();if(window.currentUser)loadMembership().then(renderMembership)},1200);
-})();
-</script>
 
 </body>`);w.document.close();};
   window.deleteDocument=function(pid,did){const p=passports.find(x=>x.id===pid);if(!p||!confirm('Delete this document?'))return;p.documents=(p.documents||[]).filter(d=>d.id!==did);p.updatedAt=new Date().toISOString();savePassports();openDocumentsModal(pid);renderPassportsV4();updateDashboard();};
@@ -5137,5 +5021,122 @@ window.addEventListener("load", function() {
 })();
 </script>
 
+<script>
+/* LIFEPASS membership + passport quota */
+(function(){
+  const PLANS={
+    free:{name:'Free',price:0,limit:10},
+    regular:{name:'Regular',price:99,limit:100},
+    pro:{name:'Pro',price:249,limit:500},
+    business:{name:'Business',price:499,limit:2000}
+  };
+  let membershipCache=null;
+  window.LIFEPASS_PLANS=PLANS;
+
+  async function loadMembership(){
+    if(!window.currentUser || !window.supabaseClient){membershipCache=null;return null;}
+    try{
+      let {data,error}=await supabaseClient.from('memberships').select('*').eq('user_id',currentUser.id).maybeSingle();
+      if(error) throw error;
+      if(!data){
+        const {data:created,error:createError}=await supabaseClient.from('memberships').insert({
+          user_id:currentUser.id,plan_id:'free',status:'active',passport_limit:10,
+          started_at:new Date().toISOString(),expires_at:null,provider:'manual'
+        }).select().single();
+        if(createError) throw createError;
+        data=created;
+      }
+      if(data.expires_at && new Date(data.expires_at)<new Date() && data.status==='active'){
+        data.status='expired';
+        membershipCache=data;
+        await supabaseClient.from('memberships').update({status:'expired',updated_at:new Date().toISOString()}).eq('id',data.id);
+      }
+      membershipCache=data;
+      return data;
+    }catch(e){console.warn('Membership unavailable',e);return membershipCache;}
+  }
+
+  function activePlan(){
+    const m=membershipCache;
+    if(!m || m.status!=='active') return PLANS.free;
+    return PLANS[m.plan_id]||{name:m.plan_id,price:0,limit:Number(m.passport_limit||10)};
+  }
+
+  function renderMembership(){
+    const box=document.getElementById('membershipSummary'), badge=document.getElementById('membershipStatusBadge');
+    if(!box)return;
+    const m=membershipCache, plan=activePlan(), used=Array.isArray(window.passports)?passports.length:0;
+    const limit=Number(m?.passport_limit||plan.limit||10), pct=Math.min(100,limit?Math.round(used/limit*100):0);
+    let expires='No expiry';
+    if(m?.expires_at) expires=new Date(m.expires_at).toLocaleDateString();
+    if(m?.status==='expired') expires='Expired';
+    if(badge) badge.textContent=(plan.name+' MEMBERSHIP'+(m?.status==='active'?'':' · '+String(m?.status||'').toUpperCase()));
+    box.innerHTML=
+      '<div class="lp-membership-stat"><small>Current plan</small><strong>'+esc(plan.name)+'</strong></div>'+
+      '<div class="lp-membership-stat"><small>Passports used</small><strong>'+used+' / '+limit+'</strong><div class="lp-membership-progress"><span style="width:'+pct+'%"></span></div></div>'+
+      '<div class="lp-membership-stat"><small>Monthly price</small><strong>₹'+Number(plan.price||0).toLocaleString('en-IN')+'</strong></div>'+
+      '<div class="lp-membership-stat"><small>Membership expiry</small><strong style="font-size:18px">'+esc(expires)+'</strong></div>';
+  }
+
+  window.openMembership=function(){
+    if(!currentUser){showPage('login');return;}
+    showPage('membership');
+    loadMembership().then(renderMembership);
+  };
+
+  window.selectMembershipPlan=async function(planId){
+    if(!currentUser){showPage('login');return;}
+    const p=PLANS[planId]; if(!p)return;
+    if(planId==='free'){toast('Free membership is available automatically.');return;}
+    toast(p.name+' selected. Connect a live payment provider to activate billing.');
+    const subject=encodeURIComponent('LIFEPASS '+p.name+' Membership');
+    const body=encodeURIComponent('Hello LIFEPASS Team,\n\nI want to activate the '+p.name+' monthly membership ('+p.limit+' passports).\n\nAccount email: '+(currentUser.email||'')+'\n');
+    window.location.href='mailto:lifepass.digital@gmail.com?subject='+subject+'&body='+body;
+  };
+
+  window.canCreatePassport=async function(){
+    if(!currentUser)return false;
+    const m=await loadMembership();
+    const limit=Number(m?.passport_limit||10);
+    const used=Array.isArray(window.passports)?passports.length:0;
+    if(used>=limit){
+      toast('Passport limit reached. Upgrade your membership to create more passports.');
+      openMembership();
+      return false;
+    }
+    return true;
+  };
+
+  const originalSave=window.savePassport;
+  if(typeof originalSave==='function'){
+    window.savePassport=async function(event){
+      const editing=document.getElementById('editingId')?.value;
+      if(!editing && !(await window.canCreatePassport())){event?.preventDefault?.();return;}
+      return originalSave.apply(this,arguments);
+    };
+  }
+
+  const originalShow=window.showPage;
+  if(typeof originalShow==='function'){
+    window.showPage=function(page){
+      originalShow.apply(this,arguments);
+      if(page==='membership')loadMembership().then(renderMembership);
+    };
+  }
+
+  function addNav(){
+    const nav=document.getElementById('mainNav');
+    if(nav && !document.getElementById('membershipNavButton')){
+      const b=document.createElement('button');b.id='membershipNavButton';b.type='button';b.textContent='Membership';b.onclick=openMembership;nav.appendChild(b);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    addNav();
+    if(window.currentUser)loadMembership().then(renderMembership);
+  });
+  setTimeout(()=>{addNav();if(window.currentUser)loadMembership().then(renderMembership)},1200);
+})();
+</script>
 </body>
 </html>
