@@ -5049,6 +5049,7 @@ window.addEventListener("load", function() {
   }
 
   function activePlan(){
+    if(window.isLifepassFreeAccess&&window.isLifepassFreeAccess()) return {name:'Founder Access',price:0,limit:999999};
     const m=membershipCache;
     if(!m || m.status!=='active') return PLANS.free;
     return PLANS[m.plan_id]||{name:m.plan_id,price:0,limit:Number(m.passport_limit||10)};
@@ -5139,6 +5140,7 @@ window.addEventListener("load", function() {
 
   window.canCreatePassport=async function(){
     if(!currentUser)return false;
+    if(window.isLifepassFreeAccess&&window.isLifepassFreeAccess()) return true;
     const m=await loadMembership();
     const limit=Number(m?.passport_limit||10);
     const used=Array.isArray(window.passports)?passports.length:0;
