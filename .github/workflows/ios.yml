@@ -1,0 +1,47 @@
+name: Build LIFEPASS iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  ios-simulator:
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prepare web assets
+        run: npm run mobile:prepare
+
+      - name: Add iOS platform
+        run: npx cap add ios --packagemanager SPM
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Build iOS simulator app
+        working-directory: ios
+        run: |
+          xcodebuild             -workspace App/App.xcworkspace             -scheme App             -sdk iphonesimulator             -configuration Debug             -derivedDataPath build             CODE_SIGNING_ALLOWED=NO
+
+      - name: Package simulator app
+        run: |
+          cd ios/build/Build/Products/Debug-iphonesimulator
+          zip -r "$GITHUB_WORKSPACE/LIFEPASS-iOS-Simulator.zip" App.app
+
+      - name: Upload iOS simulator app
+        uses: actions/upload-artifact@v4
+        with:
+          name: lifepass-ios-simulator
+          path: LIFEPASS-iOS-Simulator.zip
