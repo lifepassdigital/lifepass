@@ -1,0 +1,31 @@
+{
+  "name": "LIFEPASS \u2013 Digital Product Passport",
+  "short_name": "LIFEPASS",
+  "description": "Digital product passports with product history, warranty, service records, ownership and verification.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f9fb",
+  "theme_color": "#0b2a3f",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
