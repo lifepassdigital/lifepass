@@ -1,11 +1,12 @@
-const CACHE_NAME = "lifepass-v5";
+const CACHE_NAME = "lifepass-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./logo.png",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./member-system.js"
 ];
 
 self.addEventListener("install", (event) => {
