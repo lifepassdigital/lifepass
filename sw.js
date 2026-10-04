@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifepass-v3";
+const CACHE_NAME = "lifepass-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
