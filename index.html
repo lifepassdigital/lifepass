@@ -1258,41 +1258,32 @@ Owners upload product evidence here. Review the photos and passport details befo
 
 <!-- MEMBERSHIP PAGE -->
 <section id="page-membership" class="page">
-  <div class="lp-membership-wrap">
-    <div class="lp-membership-hero">
-      <div>
-        <span class="lp-membership-badge" id="membershipStatusBadge">FREE MEMBERSHIP</span>
-        <h2>Choose your LIFEPASS membership</h2>
-        <p>Create more product passports, keep your product history organized, and unlock higher monthly passport limits as your collection grows.</p>
-      </div>
-      <button class="btn" style="background:#fff;color:#102f50" onclick="showPage('dashboard')">Back to Dashboard</button>
-    </div>
-    <div class="lp-membership-summary" id="membershipSummary"></div>
-    <div class="title" style="text-align:left;margin-bottom:18px"><h2>Membership plans</h2><p>Monthly plans. Passport limits are enforced on your account.</p></div>
-    <div class="lp-plan-grid">
-      <article class="lp-plan">
-        <h3>Free</h3><div class="lp-price">₹0 <small>/ month</small></div>
-        <ul><li>10 passports</li><li>Digital product history</li><li>QR/public passport tools</li><li>Basic verification</li></ul>
-        <button class="btn outline" onclick="selectMembershipPlan('free')">Current / Free</button>
-      </article>
-      <article class="lp-plan featured">
-        <span class="popular">POPULAR</span><h3>Regular</h3><div class="lp-price">₹99 <small>/ month</small></div>
-        <ul><li>100 passports</li><li>Everything in Free</li><li>Documents & service history</li><li>Product value analysis</li><li>Priority feature access</li></ul>
-        <button class="btn primary" onclick="selectMembershipPlan('regular')">Choose Regular</button>
-      </article>
-      <article class="lp-plan">
-        <h3>Pro</h3><div class="lp-price">₹249 <small>/ month</small></div>
-        <ul><li>500 passports</li><li>Everything in Regular</li><li>Advanced marketplace tools</li><li>Enhanced analytics</li><li>Priority support</li></ul>
-        <button class="btn primary" onclick="selectMembershipPlan('pro')">Choose Pro</button>
-      </article>
-      <article class="lp-plan">
-        <h3>Business</h3><div class="lp-price">₹499 <small>/ month</small></div>
-        <ul><li>2,000 passports</li><li>Everything in Pro</li><li>Team-ready capacity</li><li>Business product management</li><li>Higher-volume workflows</li></ul>
-        <button class="btn primary" onclick="selectMembershipPlan('business')">Choose Business</button>
-      </article>
-    </div>
-    <div class="lp-membership-note">Payments are not activated yet. Plan selection is prepared in LIFEPASS; a live web payment provider (or Google Play Billing for the Android app) must be connected before real charges or automatic renewals can occur.</div>
-  </div>
+<div class="lp-membership-wrap">
+<div class="lp-membership-hero">
+<div><span class="lp-membership-badge" id="membershipStatusBadge">FREE MEMBERSHIP</span>
+<h2>Startup-friendly LIFEPASS plans</h2>
+<p>Start small, grow when your product collection grows. Low-cost plans with the tools a startup actually needs.</p></div>
+<button class="btn" style="background:#fff;color:#102f50" onclick="showPage('dashboard')">Back to Dashboard</button>
+</div>
+<div class="lp-membership-summary" id="membershipSummary"></div>
+<div class="title" style="text-align:left;margin-bottom:18px"><h2>Simple pricing for founders & small businesses</h2><p>No expensive entry plan. Upgrade only when you need more passports.</p></div>
+<div class="lp-plan-grid">
+<article class="lp-plan"><h3>Free</h3><div class="lp-price">₹0 <small>/ month</small></div><ul><li>10 passports</li><li>Digital product history</li><li>QR & public passport</li><li>Basic verification</li><li>Mobile PWA access</li></ul><button class="btn outline" onclick="selectMembershipPlan('free')">Current / Free</button></article>
+<article class="lp-plan featured"><span class="popular">STARTUP · ₹29</span><h3>Startup</h3><div class="lp-price">₹29 <small>/ month</small></div><ul><li>25 passports</li><li>Everything in Free</li><li>Warranty & expiry tracking</li><li>Service & ownership history</li><li>Marketplace & resale tools</li><li>Shareable QR passport</li><li>CSV / JSON data export</li></ul><button class="btn primary" onclick="selectMembershipPlan('startup')">Choose Startup</button></article>
+<article class="lp-plan"><span class="popular">MOST POPULAR</span><h3>Regular</h3><div class="lp-price">₹79 <small>/ month</small></div><ul><li>100 passports</li><li>Everything in Startup</li><li>Advanced verification</li><li>Product value analysis</li><li>Price insights</li><li>Notifications & security</li><li>Priority feature access</li></ul><button class="btn primary" onclick="selectMembershipPlan('regular')">Choose Regular</button></article>
+<article class="lp-plan"><h3>Pro</h3><div class="lp-price">₹199 <small>/ month</small></div><ul><li>500 passports</li><li>Everything in Regular</li><li>LIFEPASS AI assistance</li><li>Advanced analytics</li><li>Documents & evidence</li><li>Ownership transfer workflows</li><li>Priority support</li></ul><button class="btn primary" onclick="selectMembershipPlan('pro')">Choose Pro</button></article>
+<article class="lp-plan"><h3>Business</h3><div class="lp-price">₹399 <small>/ month</small></div><ul><li>2,000 passports</li><li>Everything in Pro</li><li>Team-ready capacity</li><li>Business product management</li><li>High-volume workflows</li><li>Future API / integrations</li><li>Founder-friendly scale pricing</li></ul><button class="btn primary" onclick="selectMembershipPlan('business')">Choose Business</button></article>
+</div>
+<div class="lp-feature-grid" style="margin-top:22px">
+<div class="lp-feature-card"><h3>🚀 Startup mode</h3><p>Low-cost entry, fast onboarding and upgrade only when you grow.</p></div>
+<div class="lp-feature-card"><h3>📦 Full product lifecycle</h3><p>Purchase, warranty, service, verification, ownership, resale and value in one passport.</p></div>
+<div class="lp-feature-card"><h3>🔗 QR + public verification</h3><p>Give customers and buyers a quick way to open and verify product information.</p></div>
+<div class="lp-feature-card"><h3>🛡️ Trust & security</h3><p>Verification requests, evidence, protected editing, password recovery and account security.</p></div>
+<div class="lp-feature-card"><h3>🛒 Resale & marketplace</h3><p>List products, compare value and make the passport useful when a product changes hands.</p></div>
+<div class="lp-feature-card"><h3>🤖 Smart tools</h3><p>AI assistance, analytics, price insight, notifications and mobile PWA support.</p></div>
+</div>
+<div class="lp-membership-note">Startup pricing is intentionally low for early users. Paid plan selection is prepared, but real charges and automatic renewals still require a live payment provider or Google Play Billing.</div>
+</div>
 </section>
 
 <!-- CREATE MODAL -->
@@ -5026,9 +5017,10 @@ window.addEventListener("load", function() {
 (function(){
   const PLANS={
     free:{name:'Free',price:0,limit:10},
-    regular:{name:'Regular',price:99,limit:100},
-    pro:{name:'Pro',price:249,limit:500},
-    business:{name:'Business',price:499,limit:2000}
+    startup:{name:'Startup',price:29,limit:25},
+    regular:{name:'Regular',price:79,limit:100},
+    pro:{name:'Pro',price:199,limit:500},
+    business:{name:'Business',price:399,limit:2000}
   };
   let membershipCache=null;
   window.LIFEPASS_PLANS=PLANS;
